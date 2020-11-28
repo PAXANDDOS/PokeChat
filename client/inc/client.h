@@ -15,44 +15,54 @@
 // #include "cJSON.h"
 
 // Windows 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 gint CUR_WIDTH;
 gint CUR_HEIGHT;
 
-// Colors
-#define HEX_1F1F1F 0.12
-#define HEX_E1E1E1 0.89
-
-// Structures
-struct s_settings
+typedef struct s_image_button
 {
+    bool active;
+    char *basic;
+    char *hovered;
+    char *pressed;
     GtkWidget *standard;
     GtkWidget *colorful;
-} t_settings;
+} t_image_button;
 
-struct s_contacts
-{
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_contacts;
+t_image_button home_img;
+t_image_button messages_img;
+t_image_button group_img;
+t_image_button events_img;
+t_image_button status_img;
+t_image_button settings_img;
 
-struct s_messages
-{
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_messages;
+t_image_button *t_active;
 
-// Event boxes
-struct s_eventbox
+struct
 {
-    GtkWidget *contacts_box;
-    GtkWidget *settings_box;
+    GtkWidget *home_box;
     GtkWidget *messages_box;
+    GtkWidget *group_box;
+    GtkWidget *events_box;
+    GtkWidget *status_box;
+    GtkWidget *settings_box;
 } t_img_event_box;
 
 void preload_images();
 void build_left_bar(GtkWidget **content_selection_area, GtkWidget **main_area);
-void build_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window);
-gboolean mx_draw_event_background(GtkWidget *widget, cairo_t *cr, gpointer user_data);
-gboolean mx_draw_event_chat_enter_area(GtkWidget *widget, cairo_t *cr, gpointer user_data);
+void build_main_area(GtkWidget **main_area, GtkWidget **window);
+void build_home_screen(GtkWidget **content_selection_area, GtkWidget **main_area);
+
+void home_enter_notify(GtkWidget *widget, gpointer data);
+void home_leave_notify(GtkWidget *widget, gpointer data);
+void home_click(GtkWidget *widget, gpointer data);
+void messages_enter_notify(GtkWidget *widget, gpointer data);
+void messages_leave_notify(GtkWidget *widget, gpointer data);
+void messages_click(GtkWidget *widget, gpointer data);
+void contacts_enter_notify(GtkWidget *widget, gpointer data);
+void contacts_leave_notify(GtkWidget *widget, gpointer data);
+void contacts_click(GtkWidget *widget, gpointer data);
+void settings_enter_notify(GtkWidget *widget, gpointer data);
+void settings_leave_notify(GtkWidget *widget, gpointer data);
+void settings_click(GtkWidget *widget, gpointer data);

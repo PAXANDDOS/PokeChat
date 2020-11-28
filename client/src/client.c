@@ -1,7 +1,6 @@
 #include "../inc/client.h"
 
 static GdkPixbuf *create_pixbuf(const gchar * filename) {
-    
    GdkPixbuf *pixbuf;
    GError *error = NULL;
    pixbuf = gdk_pixbuf_new_from_file(filename, &error);
@@ -14,21 +13,10 @@ static GdkPixbuf *create_pixbuf(const gchar * filename) {
    return pixbuf;
 }
 
-void build_main_area(GtkWidget **main_area, GtkWidget **background, GtkWidget **window) {
+void build_main_area(GtkWidget **main_area, GtkWidget **window) {
     *main_area = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(*window), *main_area);
     gtk_widget_set_size_request(GTK_WIDGET(*main_area), CUR_WIDTH, CUR_HEIGHT);
-
-    *background = gtk_drawing_area_new();
-
-    gtk_fixed_put(GTK_FIXED(*main_area), *background, 0, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(*background), CUR_WIDTH, CUR_HEIGHT);
-    g_signal_connect(G_OBJECT(*background), "draw",
-                     G_CALLBACK(mx_draw_event_background), NULL);
-    
-    GtkWidget *label = gtk_label_new("Select a chat to start conversation...");
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
-    gtk_fixed_put(GTK_FIXED(*main_area), label, CUR_WIDTH - CUR_WIDTH / 2.5, CUR_HEIGHT / 2);
 }
 
 int main(int argc, char *argv[]) {
@@ -36,10 +24,11 @@ int main(int argc, char *argv[]) {
     GdkPixbuf *icon = NULL;
     GtkWidget *main_area = NULL;
     GtkWidget *left_bar = NULL;
-    //GtkWidget *entry_search = NULL;
-    GtkWidget *background = NULL;
+    GtkWidget *home_screen = NULL;
 
     gtk_init(&argc, &argv);
+    CUR_WIDTH = 1280;
+    CUR_HEIGHT = 720;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "PokeChat");
@@ -49,10 +38,11 @@ int main(int argc, char *argv[]) {
     gtk_window_set_icon(GTK_WINDOW(window), icon);
 
     preload_images();
-    build_main_area(&main_area, &background, &window);
+    build_main_area(&main_area, &window);
     build_left_bar(&left_bar, &main_area);
+    build_home_screen(&home_screen, &main_area);
 
-    gtk_widget_show_all (window);
+    gtk_widget_show_all(window);
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
     gtk_main();
