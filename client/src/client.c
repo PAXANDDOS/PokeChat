@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     GdkPixbuf *icon = NULL;
     GtkWidget *main_area = NULL;
     GtkWidget *left_bar = NULL;
-    GtkWidget *home_screen = NULL;
 
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;
@@ -40,7 +39,6 @@ int main(int argc, char *argv[]) {
     preload_images();
     build_main_area(&main_area, &window);
     build_left_bar(&left_bar, &main_area);
-    build_home_screen(&home_screen, &main_area);
 
     gtk_widget_show_all(window);
 

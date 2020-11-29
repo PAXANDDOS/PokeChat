@@ -24,7 +24,14 @@ void home_click(GtkWidget *widget, gpointer data) {
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->basic);
     t_active = &home_img;
     t_active->active = true;
-    gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->pressed);
+    gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+}
+
+void goto_home(GtkWidget *widget, gpointer data)
+{
+    if(widget) {}
+    int num = 1;
+    data = GINT_TO_POINTER(num);
 }
 //============================================================
 
@@ -52,7 +59,14 @@ void messages_click(GtkWidget *widget, gpointer data) {
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->basic);
     t_active = &messages_img;
     t_active->active = true;
-    gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->pressed);
+    gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
+}
+
+void goto_msg(GtkWidget *widget, gpointer data)
+{
+    if(widget) {}
+    int num = 2;
+    data = GINT_TO_POINTER(num);
 }
 //============================================================
 
@@ -82,4 +96,6 @@ void settings_click(GtkWidget *widget, gpointer data) {
     t_active->active = true;
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
 }
+
+
 //============================================================

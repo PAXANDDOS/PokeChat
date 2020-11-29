@@ -4,9 +4,11 @@
 }
 #homescreen
 {
-  background: #38446c;
+  background-image: url("../images/homeBG.png");
+  border: none;
 }
 #messanger
 {
-  background: #39456d;
+  background-image: url("../images/messangerBG.png");
+  border: none;
 }

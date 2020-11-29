@@ -8,15 +8,17 @@ void build_home_screen(GtkWidget **content_selection_area, GtkWidget **main_area
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     //
     // Connecting leftbar widget to CSS
-    GtkWidget *left_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(left_box), "homescreen");
-    gtk_widget_set_size_request(GTK_WIDGET(left_box), CUR_WIDTH-93, CUR_HEIGHT); 
-    gtk_fixed_put(GTK_FIXED(*main_area), left_box, 93, 0);
+    GtkWidget *home_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);                   // Создаем виджет
+    gtk_widget_set_name(GTK_WIDGET(home_box), "+homescreen");                            // Присваиваем ему имя для связи с CSS
+    gtk_widget_set_size_request(GTK_WIDGET(home_box), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); // Настройка размера виджета
+    gtk_fixed_put(GTK_FIXED(*main_area), home_box, LEFTBAR_W, 0);                       // Настройка позиции виджета
     //
     // Creating selection area
     *content_selection_area = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_fixed_put(GTK_FIXED(*main_area), *content_selection_area, 0, 0);
     gtk_container_set_border_width(GTK_CONTAINER(*content_selection_area), 0);
-    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), CUR_WIDTH-100, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
     //
+    gtk_box_pack_start(GTK_BOX(home_box),
+        t_img_event_box.homeBG_box, TRUE, FALSE, 0);          
 }
