@@ -37,10 +37,12 @@ int main(int argc, char *argv[]) {
     gtk_window_set_icon(GTK_WINDOW(window), icon);
 
     preload_images();
+    avatar_generated = avatar_random();
     build_main_area(&main_area, &window);
-    build_left_bar(&left_bar, &main_area);
+    build_all(&left_bar, &main_area);
 
     gtk_widget_show_all(window);
+    gtk_widget_hide(GTK_WIDGET(msg_scr));
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
     gtk_main();

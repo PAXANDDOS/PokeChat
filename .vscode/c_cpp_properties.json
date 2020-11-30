@@ -1,0 +1,43 @@
+// 
+//      Напрописывал это говно чтобы не злилось на отсутсвие заголовочных файлов
+//
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:HOME}/.brew/opt/gtk+3/include/**",
+                "${env:HOME}/.brew/opt/cairo/include/**",
+                "${env:HOME}/.brew/opt/gtk+3/include/gtk-3.0",
+                "${env:HOME}/.brew/opt/gtk+3/include/gtk-3.0/gdk",
+                "${env:HOME}/.brew/opt/atk/include/atk-1.0",
+                "${env:HOME}/.brew/opt/glib/include/glib-2.0",
+                "${env:HOME}/.brew/opt/pango/include/pango-1.0",
+                "${env:HOME}/.brew/opt/harfbuzz/include/harfbuzz",
+                "${env:HOME}/.brew/opt/fribidi/include/fribidi",
+                "${env:HOME}/.brew/opt/freetype/include/freetype",
+                "${env:HOME}/.brew/opt/freetype2/include/freetype2",
+                "${env:HOME}/.brew/opt/libpng16/include/libpng16",
+                "${env:HOME}/.brew/opt/cairo/include/cairo",
+                "${env:HOME}/.brew/opt/pixman/include/pixman-1",
+                "${env:HOME}/.brew/opt/libmount/include/libmount",
+                "${env:HOME}/.brew/opt/blkid/include/blkid",
+                "${env:HOME}/.brew/opt/include/dbus-1.0",
+                "${env:HOME}/.brew/Cellar/gtk+3/3.24.23/include/gtk-3.0",
+                "${env:HOME}/.brew/Cellar/gdk-pixbuf/2.42.0/include/gdk-pixbuf-2.0",
+                "${env:HOME}/.brew/opt/glib/include/gio-unix-2.0",
+                "${env:HOME}/.brew/Cellar/glib/2.66.2_1/lib/glib-2.0/include/"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
