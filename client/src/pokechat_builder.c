@@ -4,7 +4,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
 {
     // Loading CSS file
     GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/data/css/theme.css", NULL);
+    gtk_css_provider_load_from_path(cssProvider, "client/data/css/leftbar.css", NULL);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     //
     // Connecting leftbar widget to CSS
@@ -13,16 +13,9 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     gtk_widget_set_size_request(GTK_WIDGET(left_box), LEFTBAR_W, CUR_HEIGHT);           // Настройка размера виджета
     gtk_fixed_put(GTK_FIXED(*main_area), left_box, 0, 0);                               // Настройка позиции виджета
 
-    home_scr = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);                              // Создаем виджет для домашней страницы
-    gtk_widget_set_name(GTK_WIDGET(home_scr), "homescreen");                            // Присваиваем ему имя для связи с CSS
-    gtk_widget_set_size_request(GTK_WIDGET(home_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); // Настройка размера виджета
-    gtk_fixed_put(GTK_FIXED(*main_area), home_scr, LEFTBAR_W, 0);                       // Настройка позиции виджета
-    active_screen = home_scr;
-
-    msg_scr = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);                               // Создаем виджет для страницы чата
-    gtk_widget_set_name(GTK_WIDGET(msg_scr), "messanger");                              // Присваиваем ему имя для связи с CSS
-    gtk_widget_set_size_request(GTK_WIDGET(msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);  // Настройка размера виджета
-    gtk_fixed_put(GTK_FIXED(*main_area), msg_scr, LEFTBAR_W, 0);                        // Настройка позиции виджета
+    build_home_screen(main_area);       // Вызываю постройку домашнего экрана
+    active_screen = home_scr;           // Назначаю домашний экран активным
+    build_messanger_screen(main_area);  // Вызываю постройку экрана сообщений
     //
     // Creating selection area
     *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Создаем вертикальный бокс для кнопок
@@ -58,13 +51,14 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     gtk_widget_set_halign(t_img_event_box.events_box, GTK_ALIGN_CENTER);
 
     GtkWidget *avatar_container = gtk_fixed_new();
+    gtk_widget_set_name(GTK_WIDGET(avatar_container), "statusbutton");
     GtkWidget *avatar = gtk_drawing_area_new();
     GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(mx_draw_event_avatar), NULL);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), NULL);
     gtk_box_pack_start(GTK_BOX(block), avatar_container, TRUE, FALSE, LEFTBAR_GAP);          
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container), status, 28, 28);
+    gtk_fixed_put(GTK_FIXED(avatar_container), status, 25, 25);
     gtk_widget_set_halign(avatar_container, GTK_ALIGN_CENTER);
 
     gtk_widget_set_name(GTK_WIDGET(t_img_event_box.settings_box), "settingsbutton");
@@ -100,6 +94,13 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
         G_CALLBACK(events_leave_notify), NULL);
     g_signal_connect(G_OBJECT(t_img_event_box.events_box), "button_press_event",
         G_CALLBACK(events_click), NULL);    
+
+    g_signal_connect(G_OBJECT(avatar_container), "enter-notify-event",
+        G_CALLBACK(status_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(avatar_container), "leave-notify-event",
+        G_CALLBACK(status_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(avatar_container), "button_press_event",
+        G_CALLBACK(status_click), NULL);    
 
     g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "enter-notify-event",
         G_CALLBACK(settings_enter_notify), NULL);

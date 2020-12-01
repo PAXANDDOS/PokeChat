@@ -1,0 +1,37 @@
+#homescreen
+{
+  background: #39456d;
+  background-size: 1215px;
+  border: none;
+}
+#activity
+{
+  background: #273254;
+  border-radius: 10px;
+  padding: 13px;
+}
+#active_text
+{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  font-size: 9px;
+}
+#fact
+{
+  background: #273254;
+  border-radius: 10px;
+  padding: 13px;
+}
+#fact_text
+{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+}
+#welcome
+{
+  background-image: url("../images/welcome.png");
+  border-radius: 10px;
+  background-size: 100%;
+  padding: 13px;
+}

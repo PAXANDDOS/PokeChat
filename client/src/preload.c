@@ -3,12 +3,12 @@
 void preload_images() 
 {
     home_img.active = true;
-    home_img.basic = "client/data/images/home-empty.png";
+    home_img.basic = "client/data/images/home.png";
     home_img.hovered = "client/data/images/home-hovered.png";
     home_img.standard = gtk_image_new_from_file(home_img.hovered);
 
     messages_img.active = false;
-    messages_img.basic = "client/data/images/messanger-empty.png";
+    messages_img.basic = "client/data/images/messanger.png";
     messages_img.hovered = "client/data/images/messanger-hovered.png";
     messages_img.standard = gtk_image_new_from_file(messages_img.basic);
 

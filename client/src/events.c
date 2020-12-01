@@ -88,6 +88,22 @@ void events_click(GtkWidget *widget, GdkEventButton *event) {
 }
 //============================================================
 
+// Status button
+//============================================================
+void status_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+}
+
+void status_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void status_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget) {}
+    if(event) {}
+}
+//============================================================
+
 // Settings button
 //============================================================
 void settings_enter_notify(GtkWidget *widget) {

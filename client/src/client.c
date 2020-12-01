@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     icon = create_pixbuf("client/data/images/logo.png");  
     gtk_window_set_icon(GTK_WINDOW(window), icon);
+    gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
 
     preload_images();
     avatar_generated = avatar_random();

@@ -4,14 +4,14 @@ char* avatar_random() {
     srand(time(NULL));                  // Initialization, should only be called once.
     int pick = rand() % 45;         // Returns a pseudo-random integer between 0 and RAND_MAX.
 
-    char *avatar = "client/data/avatars/luna_PAXANDDOS";
+    char *avatar = "client/data/avatars/luna_PAXANDDOS.png";
     switch(pick) {
         case 1: avatar = "client/data/avatars/Arbok.png"; break;
         case 2: avatar = "client/data/avatars/Coffing.png"; break;
         case 3: avatar = "client/data/avatars/Cresselia.png"; break;
         case 4: avatar = "client/data/avatars/Delcatty.png"; break;
         case 5: avatar = "client/data/avatars/Deoxys.png"; break;
-        case 6: avatar = "client/data/avatars/Dewdong.png"; break;
+        case 6: avatar = "client/data/avatars/Dewgong.png"; break;
         case 7: avatar = "client/data/avatars/Dialga.png"; break;
         case 8: avatar = "client/data/avatars/Dragonair.png"; break;
         case 9: avatar = "client/data/avatars/Dratini.png"; break;
@@ -21,7 +21,7 @@ char* avatar_random() {
         case 13: avatar = "client/data/avatars/Flareon.png"; break;
         case 14: avatar = "client/data/avatars/Ghastly.png"; break;
         case 15: avatar = "client/data/avatars/Glaceon.png"; break;
-        case 16: avatar = "client/data/avatars/Gyardos.png"; break;
+        case 16: avatar = "client/data/avatars/Gyrados.png"; break;
         case 17: avatar = "client/data/avatars/Haunter.png"; break;
         case 18: avatar = "client/data/avatars/Iggybuff.png"; break;
         case 19: avatar = "client/data/avatars/Jigglypuff.png"; break;
@@ -50,12 +50,12 @@ char* avatar_random() {
         case 42: avatar = "client/data/avatars/Vaporeon.png"; break;
         case 43: avatar = "client/data/avatars/Vulpix.png"; break;
         case 44: avatar = "client/data/avatars/Weezing.png"; break;
-        default: avatar = "client/data/avatars/luna_PAXANDDOS"; break;
+        default: avatar = "client/data/avatars/luna_PAXANDDOS.png"; break;
     }
     return avatar;
 }
 
-static GdkPixbuf *mx_create_pixbuf(const gchar *filename) {
+static GdkPixbuf *create_pixbuf(const gchar *filename) {
     GdkPixbuf *pixbuf;
     GError *error = NULL;
     pixbuf = gdk_pixbuf_new_from_file(filename, &error);
@@ -68,15 +68,15 @@ static GdkPixbuf *mx_create_pixbuf(const gchar *filename) {
     return pixbuf;
 }
 
-static GdkPixbuf *mx_get_pixbuf_with_size(char *path, int w, int h) {
-    GdkPixbuf *pixbuf = mx_create_pixbuf(path);
+static GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
+    GdkPixbuf *pixbuf = create_pixbuf(path);
     GdkPixbuf *result = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), w, h, GDK_INTERP_BILINEAR);
     g_object_unref(G_OBJECT(pixbuf));
     return result;
 }
 
-gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
-    GdkPixbuf *pixbuf = mx_get_pixbuf_with_size(avatar_generated, 40, 40);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(avatar_generated, 40, 40);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -97,6 +97,16 @@ gboolean mx_draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
     cairo_close_path (cr);
 
     cairo_fill(cr);
+    if (widget) {}
+    return FALSE;
+}
+
+gboolean draw_event_homebg(GtkWidget *widget, cairo_t *cr) {
+    GdkPixbuf *pixbuf = get_pixbuf_with_size("client/data/images/messangerBG.png", CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+    g_object_unref(G_OBJECT(pixbuf));
+    cairo_paint(cr);
+
     if (widget) {}
     return FALSE;
 }
