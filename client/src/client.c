@@ -13,7 +13,7 @@ static GdkPixbuf *create_pixbuf(const gchar * filename) {
    return pixbuf;
 }
 
-void build_main_area(GtkWidget **main_area, GtkWidget **window) {
+static void build_main_area(GtkWidget **main_area, GtkWidget **window) {
     *main_area = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(*window), *main_area);
     gtk_widget_set_size_request(GTK_WIDGET(*main_area), CUR_WIDTH, CUR_HEIGHT);

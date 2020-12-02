@@ -1,5 +1,7 @@
 #include "../inc/client.h"
 
+//====================== L E F T  B A R ======================================
+
 // Home button
 //============================================================
 void home_enter_notify(GtkWidget *widget) {
@@ -123,21 +125,5 @@ void settings_click(GtkWidget *widget, GdkEventButton *event) {
     t_active = &settings_img;
     t_active->active = true;
     gtk_image_set_from_file(GTK_IMAGE(t_active->standard), t_active->hovered);
-}
-//============================================================
-
-// Settings button
-//============================================================
-void tomsg_enter_notify(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-void tomsg_leave_notify(GtkWidget *widget) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-}
-
-void tomsg_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
 }
 //============================================================

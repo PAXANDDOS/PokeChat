@@ -75,15 +75,15 @@ static GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
     return result;
 }
 
-gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(avatar_generated, 40, 40);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size) {
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(avatar_generated, size, size);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
     double x = 0,
         y = 0,
-        width = 40,
-        height = 40,
+        width = size,
+        height = size,
         aspect = 1.0,                       /* aspect ratio */
         corner_radius = height / 2.0;       /* and corner curvature radius */
     double radius = corner_radius / aspect;

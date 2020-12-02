@@ -37,22 +37,57 @@
 }
 #tomsg
 {
-  border: inset 20px #ff0000;
   border-radius: 13px;
-  background-color: #ffffff;
-  transition: 0.3s;
+  background-color: #39456d;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
 }
 #tomsg:hover
 {
-  border: inset 20px #000000;
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
 }
 #togroup
 {
   border-radius: 13px;
   background-color: #39456d;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#togroup:hover
+{
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
 }
 #tosettings
 {
   border-radius: 13px;
   background-color: #39456d;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#tosettings:hover
+{
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
+}
+#active
+{
+  border-radius: 20px;
+  transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+#active:hover
+{
+  background: #0b1e43;
+}
+#active_name
+{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #5f74ba;
+  font-size: 15px;
+}
+#test
+{
+  border-radius: 8px;
+  background-color: #ffffff;
 }

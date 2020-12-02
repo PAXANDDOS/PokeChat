@@ -32,6 +32,8 @@ gint CUR_HEIGHT;
 #define ACTIVITY_H 271
 #define ACTIVITY_X 13
 #define ACTIVITY_Y 11
+#define ACTIVE_PERSON_W ACTIVITY_W-26
+#define ACTIVE_PERSON_H 40
 #define FACT_W ACTIVITY_W
 #define FACT_H 407
 #define FACT_X ACTIVITY_X
@@ -82,10 +84,9 @@ char* avatar_generated;
 void preload_images();
 char* avatar_random();
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
-void build_main_area(GtkWidget **main_area, GtkWidget **window);
 void build_home_screen(GtkWidget **main_area);
 void build_messanger_screen(GtkWidget **main_area);
-gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr);
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_homebg(GtkWidget *widget, cairo_t *cr);
 
 // Events
@@ -107,6 +108,28 @@ void status_click(GtkWidget *widget, GdkEventButton *event);
 void settings_enter_notify(GtkWidget *widget);
 void settings_leave_notify(GtkWidget *widget);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
+
+void active1_enter_notify(GtkWidget *widget);
+void active1_leave_notify(GtkWidget *widget);
+void active1_click(GtkWidget *widget, GdkEventButton *event);
+void active2_enter_notify(GtkWidget *widget);
+void active2_leave_notify(GtkWidget *widget);
+void active2_click(GtkWidget *widget, GdkEventButton *event);
+void active3_enter_notify(GtkWidget *widget);
+void active3_leave_notify(GtkWidget *widget);
+void active3_click(GtkWidget *widget, GdkEventButton *event);
+void active4_enter_notify(GtkWidget *widget);
+void active4_leave_notify(GtkWidget *widget);
+void active4_click(GtkWidget *widget, GdkEventButton *event);
+void active5_enter_notify(GtkWidget *widget);
+void active5_leave_notify(GtkWidget *widget);
+void active5_click(GtkWidget *widget, GdkEventButton *event);
 void tomsg_enter_notify(GtkWidget *widget);
 void tomsg_leave_notify(GtkWidget *widget);
 void tomsg_click(GtkWidget *widget, GdkEventButton *event);
+void togroup_enter_notify(GtkWidget *widget);
+void togroup_leave_notify(GtkWidget *widget);
+void togroup_click(GtkWidget *widget, GdkEventButton *event);
+void tosettings_enter_notify(GtkWidget *widget);
+void tosettings_leave_notify(GtkWidget *widget);
+void tosettings_click(GtkWidget *widget, GdkEventButton *event);

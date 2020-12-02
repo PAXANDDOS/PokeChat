@@ -54,7 +54,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     GtkWidget *avatar = gtk_drawing_area_new();
     GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), NULL);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)40);
     gtk_box_pack_start(GTK_BOX(block), avatar_container, TRUE, FALSE, LEFTBAR_GAP);          
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), status, 25, 25);
