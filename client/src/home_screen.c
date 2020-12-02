@@ -19,9 +19,9 @@ void build_home_screen(GtkWidget **homescreen)
 
     // Creating block for "ACTIVITY BANNER"
     GtkWidget *activity_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-    gtk_widget_set_name(GTK_WIDGET(activity_block), "activity");            // Имя
-    gtk_widget_set_size_request(GTK_WIDGET(activity_block), 347, 271);      // Размер
-    gtk_fixed_put(GTK_FIXED(main), activity_block, 13, 11);                 // Позиция
+    gtk_widget_set_name(GTK_WIDGET(activity_block), "activity");                       // Имя
+    gtk_widget_set_size_request(GTK_WIDGET(activity_block), ACTIVITY_W, ACTIVITY_H);   // Размер
+    gtk_fixed_put(GTK_FIXED(main), activity_block, ACTIVITY_X, ACTIVITY_Y);            // Позиция
     // Label for header
     GtkWidget *active_text = gtk_label_new("ACTIVE NOW");
     gtk_widget_set_name(GTK_WIDGET(active_text), "active_text");            // Имя
@@ -32,8 +32,8 @@ void build_home_screen(GtkWidget **homescreen)
     // Creating block for "FACT BANNER"
     GtkWidget *fact_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
     gtk_widget_set_name(GTK_WIDGET(fact_block), "fact");
-    gtk_widget_set_size_request(GTK_WIDGET(fact_block), 347, 407);
-    gtk_fixed_put(GTK_FIXED(main), fact_block, 13, 301);
+    gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
+    gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
     // Label for header
     GtkWidget *fact_text = gtk_label_new("HERE'S A FACT!");
     gtk_widget_set_name(GTK_WIDGET(fact_text), "fact_text");                // Имя
@@ -42,9 +42,33 @@ void build_home_screen(GtkWidget **homescreen)
     //  Дописать генерацию картинки и текста к ней
 
     // Creating block for "WELCOMING BANNER". The latest and the hardest
-    GtkWidget *welcome_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-    gtk_widget_set_name(GTK_WIDGET(welcome_block), "welcome");              // Имя
-    gtk_widget_set_size_request(GTK_WIDGET(welcome_block), 827, 698);       // Размер
-    gtk_fixed_put(GTK_FIXED(main), welcome_block, 374, 11);                 // Позиция
+    GtkWidget *welcome_container = gtk_fixed_new();                                 // Контейнер для всех блоков внутри
+    GtkWidget *welcome_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);          // Главный блок
+    gtk_widget_set_name(GTK_WIDGET(welcome_block), "welcome");                      // Имя
+    gtk_widget_set_size_request(GTK_WIDGET(welcome_block), WELCOME_W, WELCOME_H);   // Размер
+    gtk_fixed_put(GTK_FIXED(welcome_container), welcome_block, 0, 0);               // Позиция
+    gtk_fixed_put(GTK_FIXED(main), welcome_container, WELCOME_X, WELCOME_Y);        // Кладем контейнер в общий экран
+    // Placing linker block to messages
+    GtkWidget *tomsg = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_name(GTK_WIDGET(tomsg), "tomsg");                                        // Имя
+    gtk_widget_set_size_request(GTK_WIDGET(tomsg), WELCOME_LINK_W, WELCOME_LINK_H);         // Размер
+    gtk_fixed_put(GTK_FIXED(welcome_container), tomsg, WELCOME_LINK_MSG_X, WELCOME_LINK_Y); // Позиция
+    // Placing linker block to group chat
+    GtkWidget *togroup = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_name(GTK_WIDGET(togroup), "togroup");                                        // Имя
+    gtk_widget_set_size_request(GTK_WIDGET(togroup), WELCOME_LINK_W, WELCOME_LINK_H);           // Размер
+    gtk_fixed_put(GTK_FIXED(welcome_container), togroup, WELCOME_LINK_GROUP_X, WELCOME_LINK_Y); // Позиция
+    // Placing linker block to settings
+    GtkWidget *tosettings = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_name(GTK_WIDGET(tosettings), "tosettings");                                          // Имя
+    gtk_widget_set_size_request(GTK_WIDGET(tosettings), WELCOME_LINK_W, WELCOME_LINK_H);                // Размер
+    gtk_fixed_put(GTK_FIXED(welcome_container), tosettings, WELCOME_LINK_SETTINGS_X, WELCOME_LINK_Y);   // Позиция
     //
+
+    g_signal_connect(G_OBJECT(tomsg), "enter-notify-event",
+        G_CALLBACK(tomsg_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg), "leave-notify-event",
+        G_CALLBACK(tomsg_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg), "button_press_event",
+        G_CALLBACK(tomsg_click), NULL);
 }

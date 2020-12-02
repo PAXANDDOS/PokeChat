@@ -7,7 +7,7 @@
 #activity
 {
   background: #273254;
-  border-radius: 10px;
+  border-radius: 13px;
   padding: 13px;
 }
 #active_text
@@ -19,7 +19,7 @@
 #fact
 {
   background: #273254;
-  border-radius: 10px;
+  border-radius: 13px;
   padding: 13px;
 }
 #fact_text
@@ -31,7 +31,28 @@
 #welcome
 {
   background-image: url("../images/welcome.png");
-  border-radius: 10px;
+  border-radius: 13px;
   background-size: 100%;
   padding: 13px;
+}
+#tomsg
+{
+  border: inset 20px #ff0000;
+  border-radius: 13px;
+  background-color: #ffffff;
+  transition: 0.3s;
+}
+#tomsg:hover
+{
+  border: inset 20px #000000;
+}
+#togroup
+{
+  border-radius: 13px;
+  background-color: #39456d;
+}
+#tosettings
+{
+  border-radius: 13px;
+  background-color: #39456d;
 }

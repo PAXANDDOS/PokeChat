@@ -51,7 +51,6 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     gtk_widget_set_halign(t_img_event_box.events_box, GTK_ALIGN_CENTER);
 
     GtkWidget *avatar_container = gtk_fixed_new();
-    gtk_widget_set_name(GTK_WIDGET(avatar_container), "statusbutton");
     GtkWidget *avatar = gtk_drawing_area_new();
     GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
