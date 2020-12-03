@@ -25,6 +25,12 @@ int main(int argc, char *argv[]) {
     GtkWidget *main_area = NULL;
     GtkWidget *left_bar = NULL;
 
+    pokemon_fact_text = "client/data/pokemon-text/";
+    pokemon_fact_image = "client/data/pokemon/";
+    pokemon_random();
+    avatar_generated = "client/data/avatars/";
+    avatar_random();
+
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;
     CUR_HEIGHT = 720;
@@ -38,7 +44,7 @@ int main(int argc, char *argv[]) {
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
 
     preload_images();
-    avatar_generated = avatar_random();
+    
     build_main_area(&main_area, &window);
     build_all(&left_bar, &main_area);
 

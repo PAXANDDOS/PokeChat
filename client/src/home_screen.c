@@ -172,7 +172,7 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
     gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
     // Label for header
-    GtkWidget *fact_text = gtk_label_new("HERE'S A FACT!");
+    GtkWidget *fact_text = gtk_label_new("───── HERE'S A FACT! ─────");
     gtk_widget_set_name(GTK_WIDGET(fact_text), "fact_text");                // Имя
     gtk_widget_set_halign(fact_text, GTK_ALIGN_CENTER);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(fact_block), fact_text, FALSE, FALSE, 0);
@@ -182,7 +182,7 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_halign(pokemon, GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(pokemon), "draw", G_CALLBACK(draw_event_pokemon), (int*)POKEMON_SIZE);
     gtk_box_pack_start(GTK_BOX(fact_block), pokemon, FALSE, FALSE, 0);
-    GtkWidget *pokemon_text = gtk_label_new("Charmander is a small, bipedal, dinosaur-like Pokémon. Most of its body is colored orange, while its underbelly is a pale light-yellow color. Charmander, like its evolved forms, has a flame that constantly burns on the end of its tail. However, If the flame on Charmander's tail goes out, Charmander's life will come to an end.");
+    GtkWidget *pokemon_text = gtk_label_new(mx_file_to_str(pokemon_fact_text));
     gtk_label_set_line_wrap(GTK_LABEL(pokemon_text), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(pokemon_text), 100);
     gtk_widget_set_name(GTK_WIDGET(pokemon_text), "pokemon-text");                // Имя

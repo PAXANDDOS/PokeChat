@@ -13,6 +13,8 @@
 #include <arpa/inet.h>
 #include <cairo.h>
 #include <math.h>
+#include <sys/types.h>
+#include <dirent.h>
 #include <gtk/gtk.h>
 // #include "libmx.h"
 // #include "cJSON.h"
@@ -38,7 +40,7 @@ gint CUR_HEIGHT;
 #define FACT_H 407
 #define FACT_X ACTIVITY_X
 #define FACT_Y 301
-#define POKEMON_SIZE 200
+#define POKEMON_SIZE 170
 #define WELCOME_W 827
 #define WELCOME_H 698
 #define WELCOME_X 374
@@ -81,14 +83,22 @@ GtkWidget *msg_scr;
 GtkWidget *settings_menu;
 GtkWidget *active_screen;
 char* avatar_generated;
+char* pokemon_fact_image;
+char* pokemon_fact_text;
 
 void preload_images();
-char* avatar_random();
+void avatar_random();
+void pokemon_random();
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
 void build_home_screen(GtkWidget **main_area);
 void build_messanger_screen(GtkWidget **main_area);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
+
+// Удалить потом когда будет подключена либа
+char *mx_strnew(const int size);
+char *mx_file_to_str(const char *filename);
+char *mx_strjoin(const char *s1, const char *s2);
 
 // Events
 void home_enter_notify(GtkWidget *widget);

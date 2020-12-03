@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 #homescreen
 {
   background: #39456d;
@@ -14,7 +13,7 @@
 #active_text
 {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: #ffffff;
+  color: #d1dcff;
   font-size: 9px;
 }
 #fact
@@ -22,18 +21,20 @@
   background: #273254;
   border-radius: 13px;
   padding: 13px;
+  padding-bottom: 0px;
 }
 #fact_text
 {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: #ffffff;
+  color: #e7ecff;
   font-size: 20px;
 }
 #pokemon-text
 {
-  font-family: 'Ubuntu', sans-serif;
-  color: #ffffff;
-  font-size: 15px;
+  font-family: "Helvetica Neue Light", Geneva;
+  font-weight: 200;
+  color: #d1dcff;
+  font-size: 14px;
 }
 #welcome
 {
