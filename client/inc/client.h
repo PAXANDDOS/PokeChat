@@ -38,6 +38,7 @@ gint CUR_HEIGHT;
 #define FACT_H 407
 #define FACT_X ACTIVITY_X
 #define FACT_Y 301
+#define POKEMON_SIZE 200
 #define WELCOME_W 827
 #define WELCOME_H 698
 #define WELCOME_X 374
@@ -87,7 +88,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
 void build_home_screen(GtkWidget **main_area);
 void build_messanger_screen(GtkWidget **main_area);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
-gboolean draw_event_homebg(GtkWidget *widget, cairo_t *cr);
+gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 
 // Events
 void home_enter_notify(GtkWidget *widget);

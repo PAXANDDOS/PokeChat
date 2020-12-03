@@ -101,12 +101,12 @@ gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size) {
     return FALSE;
 }
 
-gboolean draw_event_homebg(GtkWidget *widget, cairo_t *cr) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size("client/data/images/messangerBG.png", CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size) {
+    GdkPixbuf *pixbuf = get_pixbuf_with_size("client/data/pokemon/004.png", size, size);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
-    cairo_paint(cr);
 
+    cairo_paint(cr);
     if (widget) {}
     return FALSE;
 }
