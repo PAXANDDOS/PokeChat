@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     pokemon_random();
     avatar_generated = "client/data/avatars/";
     avatar_random();
+    current_user_dm = "";
 
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;

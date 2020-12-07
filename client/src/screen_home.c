@@ -129,39 +129,39 @@ static void build_activity(GtkWidget *main)
 
     // ACTIVITY EVENTS
     g_signal_connect(G_OBJECT(active1_box), "enter-notify-event",
-        G_CALLBACK(tomsg_enter_notify), NULL);
+        G_CALLBACK(active1_enter_notify), NULL);
     g_signal_connect(G_OBJECT(active1_box), "leave-notify-event",
-        G_CALLBACK(tomsg_leave_notify), NULL);
+        G_CALLBACK(active1_leave_notify), NULL);
     g_signal_connect(G_OBJECT(active1_box), "button_press_event",
-        G_CALLBACK(tomsg_click), NULL);
+        G_CALLBACK(active1_click), NULL);
 
     g_signal_connect(G_OBJECT(active2_box), "enter-notify-event",
-        G_CALLBACK(togroup_enter_notify), NULL);
+        G_CALLBACK(active2_enter_notify), NULL);
     g_signal_connect(G_OBJECT(active2_box), "leave-notify-event",
-        G_CALLBACK(togroup_leave_notify), NULL);
+        G_CALLBACK(active2_leave_notify), NULL);
     g_signal_connect(G_OBJECT(active2_box), "button_press_event",
-        G_CALLBACK(togroup_click), NULL);
+        G_CALLBACK(active2_click), NULL);
 
     g_signal_connect(G_OBJECT(active3_box), "enter-notify-event",
-        G_CALLBACK(tosettings_enter_notify), NULL);
+        G_CALLBACK(active3_enter_notify), NULL);
     g_signal_connect(G_OBJECT(active3_box), "leave-notify-event",
-        G_CALLBACK(tosettings_leave_notify), NULL);
+        G_CALLBACK(active3_leave_notify), NULL);
     g_signal_connect(G_OBJECT(active3_box), "button_press_event",
-        G_CALLBACK(tosettings_click), NULL);
+        G_CALLBACK(active3_click), NULL);
 
     g_signal_connect(G_OBJECT(active4_box), "enter-notify-event",
-        G_CALLBACK(togroup_enter_notify), NULL);
+        G_CALLBACK(active4_enter_notify), NULL);
     g_signal_connect(G_OBJECT(active4_box), "leave-notify-event",
-        G_CALLBACK(togroup_leave_notify), NULL);
+        G_CALLBACK(active4_leave_notify), NULL);
     g_signal_connect(G_OBJECT(active4_box), "button_press_event",
-        G_CALLBACK(togroup_click), NULL);
+        G_CALLBACK(active4_click), NULL);
 
     g_signal_connect(G_OBJECT(active5_box), "enter-notify-event",
-        G_CALLBACK(tosettings_enter_notify), NULL);
+        G_CALLBACK(active5_enter_notify), NULL);
     g_signal_connect(G_OBJECT(active5_box), "leave-notify-event",
-        G_CALLBACK(tosettings_leave_notify), NULL);
+        G_CALLBACK(active5_leave_notify), NULL);
     g_signal_connect(G_OBJECT(active5_box), "button_press_event",
-        G_CALLBACK(tosettings_click), NULL);
+        G_CALLBACK(active5_click), NULL);
 }
 
 static void build_fact(GtkWidget *main)
@@ -182,11 +182,11 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_halign(pokemon, GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(pokemon), "draw", G_CALLBACK(draw_event_pokemon), (int*)POKEMON_SIZE);
     gtk_box_pack_start(GTK_BOX(fact_block), pokemon, FALSE, FALSE, 0);
-    GtkWidget *pokemon_text = gtk_label_new(mx_file_to_str(pokemon_fact_text));
+    pokemon_text = gtk_label_new(mx_file_to_str(pokemon_fact_text));
     gtk_label_set_line_wrap(GTK_LABEL(pokemon_text), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(pokemon_text), 100);
     gtk_widget_set_name(GTK_WIDGET(pokemon_text), "pokemon-text");                // Имя
-    gtk_widget_set_halign(pokemon_text, GTK_ALIGN_START);                     // Позиция текста
+    gtk_widget_set_halign(pokemon_text, GTK_ALIGN_CENTER);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(fact_block), pokemon_text, FALSE, FALSE, 0);
 } 
 
@@ -222,21 +222,17 @@ static void build_welcome(GtkWidget *main)
     g_signal_connect(G_OBJECT(tomsg), "leave-notify-event",
         G_CALLBACK(tomsg_leave_notify), NULL);
     g_signal_connect(G_OBJECT(tomsg), "button_press_event",
-        G_CALLBACK(tomsg_click), NULL);
+        G_CALLBACK(messages_click), NULL);
 
     g_signal_connect(G_OBJECT(togroup), "enter-notify-event",
         G_CALLBACK(togroup_enter_notify), NULL);
     g_signal_connect(G_OBJECT(togroup), "leave-notify-event",
         G_CALLBACK(togroup_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(togroup), "button_press_event",
-        G_CALLBACK(togroup_click), NULL);
 
     g_signal_connect(G_OBJECT(tosettings), "enter-notify-event",
         G_CALLBACK(tosettings_enter_notify), NULL);
     g_signal_connect(G_OBJECT(tosettings), "leave-notify-event",
         G_CALLBACK(tosettings_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(tosettings), "button_press_event",
-        G_CALLBACK(tosettings_click), NULL);
 }
 
 void build_home_screen(GtkWidget **homescreen) 

@@ -25,6 +25,10 @@ void home_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_hide(GTK_WIDGET(active_screen));
         active_screen = home_scr;
         gtk_widget_show(GTK_WIDGET(active_screen));
+        pokemon_fact_text = "client/data/pokemon-text/";
+        pokemon_fact_image = "client/data/pokemon/";
+        pokemon_random();
+        gtk_label_set_text(GTK_LABEL(pokemon_text), mx_file_to_str(pokemon_fact_text));
     }
 }
 //============================================================

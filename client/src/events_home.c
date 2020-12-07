@@ -92,10 +92,6 @@ void tomsg_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
-void tomsg_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
 //============================================================
 
 // Group link button
@@ -108,10 +104,6 @@ void togroup_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
-void togroup_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
 //============================================================
 
 // Settings link button
@@ -124,8 +116,4 @@ void tosettings_leave_notify(GtkWidget *widget) {
     gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
 }
 
-void tosettings_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
 //============================================================

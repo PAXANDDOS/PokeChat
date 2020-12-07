@@ -1,10 +1,94 @@
 #messanger
 {
-  background-image: url("../images/messangerBG.png");
-  background-size: 100%;
-  border: none;
+  background-color: #273255;
 }
 #list
 {
   background-color: #39456d;
+}
+#search_field
+{
+  font-family: "Helvetica Neue Light", Geneva;
+  border-radius: 13px;
+  border: none;
+  background-color: #18254e;
+  font-size: 12px;
+  box-shadow: none;
+  color: rgb(180, 191, 216);
+}
+#search_block
+{
+  border-radius: 13px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #18254e;
+}
+#adduser
+{
+  background-image: url("../images/add-user.png");
+  background-repeat: no-repeat;
+  background-size: 22px;
+}
+#adduser:hover
+{
+  background-image: url("../images/add-user-hover.png");
+}
+#dm_text
+{
+  font-family: "Helvetica Neue Light", Geneva;
+  color: #4f5b83;
+  font-size: 11px;
+  margin-left: 15px;
+}
+#entry_block
+{
+  background-color: #344065;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 13px;
+}
+#attach
+{
+  background-image: url("../images/attach.png");
+  background-repeat: no-repeat;
+  background-size: 26px;
+}
+#attach:hover
+{
+  background-image: url("../images/attach-hover.png");
+}
+#entry_text
+{
+  font-family: "Helvetica Neue Light", Geneva;
+  border: none;
+  background-color: #344065;
+  font-size: 14px;
+  box-shadow: none;
+  color: rgb(193, 206, 236);
+}
+#send
+{
+  background-image: url("../images/send.png");
+  background-repeat: no-repeat;
+  background-size: 26px;
+}
+#send:hover
+{
+  background-image: url("../images/send-hover.png");
+}
+#sticker
+{
+  background-image: url("../images/sticker.png");
+  background-repeat: no-repeat;
+  background-size: 26px;
+}
+#sticker:hover
+{
+  background-image: url("../images/sticker-hover.png");
+}
+#messages_block
+{
+  background-color: #273255;
 }

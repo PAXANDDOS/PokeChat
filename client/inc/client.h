@@ -55,6 +55,11 @@ gint CUR_HEIGHT;
 // Messanger screen size and positions
 #define LIST_W 360
 #define LIST_H WINDOW_HEIGHT
+#define CHAT_W WINDOW_WIDTH-LIST_W-LEFTBAR_W
+#define ENTRY_W CHAT_W
+#define ENTRY_H 72
+#define CHAT_H WINDOW_HEIGHT-ENTRY_H
+
 
 typedef struct s_image_button
 {
@@ -89,6 +94,8 @@ GtkWidget *active_screen;
 char* avatar_generated;
 char* pokemon_fact_image;
 char* pokemon_fact_text;
+GtkWidget *pokemon_text;
+char* current_user_dm;
 
 void preload_images();
 void avatar_random();
@@ -141,10 +148,20 @@ void active5_leave_notify(GtkWidget *widget);
 void active5_click(GtkWidget *widget, GdkEventButton *event);
 void tomsg_enter_notify(GtkWidget *widget);
 void tomsg_leave_notify(GtkWidget *widget);
-void tomsg_click(GtkWidget *widget, GdkEventButton *event);
 void togroup_enter_notify(GtkWidget *widget);
 void togroup_leave_notify(GtkWidget *widget);
-void togroup_click(GtkWidget *widget, GdkEventButton *event);
 void tosettings_enter_notify(GtkWidget *widget);
 void tosettings_leave_notify(GtkWidget *widget);
-void tosettings_click(GtkWidget *widget, GdkEventButton *event);
+
+void adduser_enter_notify(GtkWidget *widget);
+void adduser_leave_notify(GtkWidget *widget);
+void adduser_click(GtkWidget *widget, GdkEventButton *event);
+void attach_enter_notify(GtkWidget *widget);
+void attach_leave_notify(GtkWidget *widget);
+void attach_click(GtkWidget *widget, GdkEventButton *event);
+void send_enter_notify(GtkWidget *widget);
+void send_leave_notify(GtkWidget *widget);
+void send_click(GtkWidget *widget, GdkEventButton *event);
+void sticker_enter_notify(GtkWidget *widget);
+void sticker_leave_notify(GtkWidget *widget);
+void sticker_click(GtkWidget *widget, GdkEventButton *event);
