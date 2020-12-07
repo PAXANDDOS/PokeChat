@@ -52,6 +52,10 @@ gint CUR_HEIGHT;
 #define WELCOME_LINK_GROUP_X 301
 #define WELCOME_LINK_SETTINGS_X 545
 
+// Messanger screen size and positions
+#define LIST_W 360
+#define LIST_H WINDOW_HEIGHT
+
 typedef struct s_image_button
 {
     bool active;
@@ -90,8 +94,8 @@ void preload_images();
 void avatar_random();
 void pokemon_random();
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
-void build_home_screen(GtkWidget **main_area);
-void build_messanger_screen(GtkWidget **main_area);
+void build_home_screen(GtkWidget **homescreen);
+void build_messanger_screen(GtkWidget **msgscreen);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 

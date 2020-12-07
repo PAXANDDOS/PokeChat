@@ -1,6 +1,10 @@
 #messanger
 {
   background-image: url("../images/messangerBG.png");
-  background-size: 101%;
+  background-size: 100%;
   border: none;
+}
+#list
+{
+  background-color: #39456d;
 }
