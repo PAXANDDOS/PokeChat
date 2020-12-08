@@ -12,7 +12,7 @@
 }
 #active_text
 {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
   color: #d1dcff;
   font-size: 9px;
 }
@@ -25,14 +25,15 @@
 }
 #fact_text
 {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: Rubik;
+  font-weight: 700;
   color: #e7ecff;
   font-size: 20px;
 }
 #pokemon-text
 {
-  font-family: "Helvetica Neue Light", Geneva;
-  font-weight: 200;
+  font-family: Rubik;
+  font-weight: 400;
   color: #d1dcff;
   font-size: 14px;
 }
@@ -90,7 +91,7 @@
 }
 #active_name
 {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
   color: #8f9ed1;
   font-size: 13px;
 }

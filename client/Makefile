@@ -62,7 +62,10 @@ WFLGS := $(addprefix -W, all extra error pedantic)
 GTK_LINK_FLAGS = `pkg-config --cflags  --libs gtk+-3.0`
 GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
 
-all: install
+all: font install 
+
+font: 
+	@cp data/fonts/Rubik/* ${HOME}/Library/Fonts/
 
 install: uchat
 
