@@ -97,10 +97,33 @@
 }
 #messages_block
 {
-  margin: 20px;
-  background-color: #ffffff;
+  margin-left: 20px;
+  margin-right: 20px;
+  /* background-color: #ffffff; */
 }
+/* #messages_body
+{
+  background-color: #000000;
+} */
 #message
 {
-  background-color: #ffffff;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: rgb(193, 206, 236);
+
+  border: none;
+  border-radius: 13px;
+  box-shadow: none;
+  background-color: #5063a3;
+
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }

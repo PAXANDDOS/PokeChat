@@ -95,16 +95,25 @@ static void build_entryfield(GtkWidget *main)
 
 static void new_outgoing_message(GtkWidget *messages_block)
 {
-    GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-    //gtk_widget_set_size_request(message, CHAT_W, 100);
-    gtk_widget_set_name(GTK_WIDGET(message), "message");
+    GtkWidget *messages_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    //gtk_widget_set_size_request(messages_body, CHAT_W, 100);
+    gtk_widget_set_name(GTK_WIDGET(messages_body), "messages_body");
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_end(GTK_BOX(message), avatar, TRUE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(messages_body), avatar, FALSE, FALSE, 0);
+    GtkWidget *message = gtk_label_new(mx_file_to_str(pokemon_fact_text));
+    gtk_widget_set_name(GTK_WIDGET(message), "message");
+    gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);
+    //gtk_label_set_line_wrap_mode(GTK_LABEL(message), PANGO_WRAP_WORD);
+    gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
+    //GtkWidget *nickname = gtk_frame_new("PAXANDDOS");
+    //gtk_frame_set_label_widget (GTK_FRAME(nickname), message);
 
-    gtk_box_pack_end(GTK_BOX(messages_block), message, TRUE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(messages_body), message, FALSE, FALSE, 0);
+
+    gtk_box_pack_end(GTK_BOX(messages_block), messages_body, FALSE, FALSE, 0);
 }
 
 static void build_chat(GtkWidget *main)
