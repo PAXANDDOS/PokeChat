@@ -4,55 +4,61 @@
 }
 #homebutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #homebutton:hover
 {
+  border-radius: 10px;
   background: #0b1e43;
 }
 #msgbutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #msgbutton:hover
 {
+  border-radius: 10px;
   background: #0b1e43;
 }
 #groupbutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #groupbutton:hover
 {
+  border-radius: 10px;
   background-color: rgba(11, 30, 67, 0.35);
 }
 #eventsbutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #eventsbutton:hover
 {
+  border-radius: 10px;
   background-color: rgba(11, 30, 67, 0.35);
 }
 #statusbutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #statusbutton:hover
 {
+  border-radius: 10px;
   background: #0b1e43;
 }
 #settingsbutton
 {
-  border-radius: 10px;
+  border-radius: 20px;
   transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #settingsbutton:hover
 {
+  border-radius: 10px;
   background: #0b1e43;
 }

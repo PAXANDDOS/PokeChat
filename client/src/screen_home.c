@@ -25,12 +25,10 @@ static void build_activity(GtkWidget *main)
     GtkWidget *avatar_container = gtk_fixed_new();
     gtk_widget_set_halign(avatar_container, GTK_ALIGN_START);
     GtkWidget *avatar = gtk_drawing_area_new();
-    GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active1), avatar_container, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 3, 2);
-    gtk_fixed_put(GTK_FIXED(avatar_container), status, 20, 20);
     GtkWidget *active1_name = gtk_label_new("Gazaris");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active1_name), "active_name");
     gtk_widget_set_halign(active1_name, GTK_ALIGN_START);
@@ -48,12 +46,10 @@ static void build_activity(GtkWidget *main)
     GtkWidget *avatar_container2 = gtk_fixed_new();
     gtk_widget_set_halign(avatar_container2, GTK_ALIGN_START);
     GtkWidget *avatar2 = gtk_drawing_area_new();
-    GtkWidget *status2 = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar2), 35, 35);
     g_signal_connect(G_OBJECT(avatar2), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active2), avatar_container2, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container2), avatar2, 3, 2);
-    gtk_fixed_put(GTK_FIXED(avatar_container2), status2, 20, 20);
     GtkWidget *active2_name = gtk_label_new("leosh1d");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active2_name), "active_name");
     gtk_widget_set_halign(active2_name, GTK_ALIGN_START);
@@ -71,12 +67,10 @@ static void build_activity(GtkWidget *main)
     GtkWidget *avatar_container3 = gtk_fixed_new();
     gtk_widget_set_halign(avatar_container3, GTK_ALIGN_START);
     GtkWidget *avatar3 = gtk_drawing_area_new();
-    GtkWidget *status3 = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar3), 35, 35);
     g_signal_connect(G_OBJECT(avatar3), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active3), avatar_container3, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container3), avatar3, 3, 2);
-    gtk_fixed_put(GTK_FIXED(avatar_container3), status3, 20, 20);
     GtkWidget *active3_name = gtk_label_new("Overwolf94");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active3_name), "active_name");
     gtk_widget_set_halign(active3_name, GTK_ALIGN_START);
@@ -93,12 +87,10 @@ static void build_activity(GtkWidget *main)
     GtkWidget *avatar_container4 = gtk_fixed_new();
     gtk_widget_set_halign(avatar_container4, GTK_ALIGN_START);
     GtkWidget *avatar4 = gtk_drawing_area_new();
-    GtkWidget *status4 = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar4), 35, 35);
     g_signal_connect(G_OBJECT(avatar4), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active4), avatar_container4, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container4), avatar4, 3, 2);
-    gtk_fixed_put(GTK_FIXED(avatar_container4), status4, 20, 20);
     GtkWidget *active4_name = gtk_label_new("тюленьовчарка");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active4_name), "active_name");
     gtk_widget_set_halign(active4_name, GTK_ALIGN_START);
@@ -115,12 +107,10 @@ static void build_activity(GtkWidget *main)
     GtkWidget *avatar_container5 = gtk_fixed_new();
     gtk_widget_set_halign(avatar_container5, GTK_ALIGN_START);
     GtkWidget *avatar5 = gtk_drawing_area_new();
-    GtkWidget *status5 = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar5), 35, 35);
     g_signal_connect(G_OBJECT(avatar5), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active5), avatar_container5, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container5), avatar5, 3, 2);
-    gtk_fixed_put(GTK_FIXED(avatar_container5), status5, 20, 20);
     GtkWidget *active5_name = gtk_label_new("Neulen");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active5_name), "active_name");
     gtk_widget_set_halign(active5_name, GTK_ALIGN_START);
@@ -172,7 +162,7 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
     gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
     // Label for header
-    GtkWidget *fact_text = gtk_label_new("─── HERE'S A FACT! ───");
+    GtkWidget *fact_text = gtk_label_new("──── HERE'S A FACT! ────");
     gtk_widget_set_name(GTK_WIDGET(fact_text), "fact_text");                // Имя
     gtk_widget_set_halign(fact_text, GTK_ALIGN_CENTER);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(fact_block), fact_text, FALSE, FALSE, 0);

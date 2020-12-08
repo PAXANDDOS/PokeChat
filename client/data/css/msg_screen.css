@@ -8,7 +8,8 @@
 }
 #search_field
 {
-  font-family: "Helvetica Neue Light", Geneva;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 300;
   border-radius: 13px;
   border: none;
   background-color: #18254e;
@@ -35,8 +36,9 @@
 }
 #dm_text
 {
-  font-family: "Helvetica Neue Light", Geneva;
-  color: #4f5b83;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  color: #6776a7;
   font-size: 11px;
   margin-left: 15px;
 }
@@ -61,7 +63,8 @@
 }
 #entry_text
 {
-  font-family: "Helvetica Neue Light", Geneva;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 300;
   border: none;
   background-color: #344065;
   font-size: 14px;
@@ -88,7 +91,16 @@
 {
   background-image: url("../images/sticker-hover.png");
 }
-#messages_block
+#scrollable_msg
 {
   background-color: #273255;
+}
+#messages_block
+{
+  margin: 20px;
+  background-color: #ffffff;
+}
+#message
+{
+  background-color: #ffffff;
 }

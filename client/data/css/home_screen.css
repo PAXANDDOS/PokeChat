@@ -12,7 +12,8 @@
 }
 #active_text
 {
-  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 500;
   color: #d1dcff;
   font-size: 9px;
 }
@@ -25,14 +26,14 @@
 }
 #fact_text
 {
-  font-family: Rubik;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 700;
   color: #e7ecff;
   font-size: 20px;
 }
 #pokemon-text
 {
-  font-family: Rubik;
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 400;
   color: #d1dcff;
   font-size: 14px;
@@ -82,16 +83,18 @@
 }
 #active
 {
-  border-radius: 20px;
+  border-radius: 10px;
   transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 #active:hover
 {
+  border-radius: 20px;
   background: #0b1e43;
 }
 #active_name
 {
-  /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-family: Rubik, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
   color: #8f9ed1;
   font-size: 13px;
 }

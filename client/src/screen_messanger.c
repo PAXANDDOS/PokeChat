@@ -93,16 +93,35 @@ static void build_entryfield(GtkWidget *main)
         G_CALLBACK(sticker_click), NULL);
 }
 
+static void new_outgoing_message(GtkWidget *messages_block)
+{
+    GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    //gtk_widget_set_size_request(message, CHAT_W, 100);
+    gtk_widget_set_name(GTK_WIDGET(message), "message");
+
+    GtkWidget *avatar = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    gtk_box_pack_end(GTK_BOX(message), avatar, TRUE, FALSE, 0);
+
+    gtk_box_pack_end(GTK_BOX(messages_block), message, TRUE, FALSE, 0);
+}
+
 static void build_chat(GtkWidget *main)
 {
-    GtkWidget *scrollable = gtk_layout_new(NULL, NULL);
-    GtkWidget *messages_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-    gtk_widget_set_name(GTK_WIDGET(messages_block), "messages_block");
-    gtk_layout_set_size (GTK_LAYOUT(scrollable), CHAT_W, CHAT_H);
-    gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);
-    gtk_widget_set_size_request(GTK_WIDGET(messages_block), CHAT_W, CHAT_H);
-    gtk_layout_put (GTK_LAYOUT(scrollable), messages_block, 0, 0);
-    gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);
+    GtkWidget *scrollable = gtk_layout_new(NULL, NULL);                     // Зона, доступная для бесконечного скролла
+    gtk_widget_set_name(GTK_WIDGET(scrollable), "scrollable_msg");          // Имя 1
+    gtk_layout_set_size(GTK_LAYOUT(scrollable), CHAT_W, CHAT_H);            // Размер скроллабельной зоны
+    gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                // То же самое, но надо
+
+    GtkWidget *messages_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);   // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
+    gtk_widget_set_size_request(messages_block, CHAT_W, CHAT_H);            // 
+    gtk_widget_set_name(GTK_WIDGET(messages_block), "messages_block");      // Имя 2
+
+    new_outgoing_message(messages_block);                                   // Передавать как параметры: имя, фото, текст сообщения
+
+    gtk_layout_put(GTK_LAYOUT(scrollable), messages_block, 0, 0);           // Кладем блок с сообщениями в скролл зону
+    gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                   // Кладем скролл зону на главный экран
 }
 
 void build_messanger_screen(GtkWidget **msgscreen) 

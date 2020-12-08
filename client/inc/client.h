@@ -60,7 +60,6 @@ gint CUR_HEIGHT;
 #define ENTRY_H 72
 #define CHAT_H WINDOW_HEIGHT-ENTRY_H
 
-
 typedef struct s_image_button
 {
     bool active;
