@@ -41,6 +41,25 @@ void send_leave_notify(GtkWidget *widget) {
 void send_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event) {}
+    if(msg_data.content == NULL)
+        return;
+    msg_data.sent = true;
+    if(msg_data.sent) printf("SENT: TRUE\n");
+    else printf("SENT: FALSE\n");
+    printf("%s\n", msg_data.content);
+
+    if(msg_data.sent == true) {
+        printf("ACCEPTED\n");
+        new_outgoing_message(chat_screen);                                   // Передавать как параметры: имя, фото, текст сообщения
+        msg_data.sent = false;
+    }
+    else printf("REJECTED\n");
+}
+
+void entry_text_change_event(GtkWidget *widget, GdkEventButton *event) {
+    msg_data.content_len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
+    msg_data.content = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
+    if(event) {}
 }
 
 ////

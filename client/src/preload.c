@@ -3,7 +3,7 @@
 void preload_images() 
 {
     home_img.active = true;
-    home_img.basic = "client/data/images/home.png";
+    home_img.basic = "client/data/images/empty.png";
     home_img.hovered = "client/data/images/home-hovered.png";
     home_img.standard = gtk_image_new_from_file(home_img.hovered);
 

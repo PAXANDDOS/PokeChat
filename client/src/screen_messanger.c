@@ -36,6 +36,37 @@ static void build_list(GtkWidget *main)
         G_CALLBACK(adduser_click), NULL);
 }
 
+void new_outgoing_message(GtkWidget *messages_block)
+{
+    printf("ENTERED\n");
+    GtkWidget *messages_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    //gtk_widget_set_size_request(messages_body, CHAT_W, 100);
+    gtk_widget_set_name(GTK_WIDGET(messages_body), "messages_body");
+
+    GtkWidget *avatar = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    gtk_box_pack_end(GTK_BOX(messages_body), avatar, FALSE, FALSE, 0);
+    GtkWidget *message = gtk_label_new(msg_data.content);
+    gtk_widget_set_name(GTK_WIDGET(message), "message");
+    gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);
+    gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
+    // GtkWidget *nickname = gtk_frame_new("PAXANDDOS");
+    // gtk_frame_set_label_widget (GTK_FRAME(nickname), message);   Не работает
+    GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+    GtkWidget *time_label = gtk_label_new("4:20");
+    GtkWidget *nickname = gtk_label_new("PAXANDDOS");
+    gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
+    gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
+    gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(name_time_block), nickname, FALSE, FALSE, 0);
+    gtk_widget_set_valign(GTK_WIDGET(name_time_block), GTK_ALIGN_CENTER);
+
+    gtk_box_pack_end(GTK_BOX(messages_body), message, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(messages_body), name_time_block, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(messages_block), messages_body, FALSE, FALSE, 0);
+}
+
 static void build_entryfield(GtkWidget *main)
 {
     GtkWidget *entry_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
@@ -56,6 +87,7 @@ static void build_entryfield(GtkWidget *main)
     gtk_entry_set_placeholder_text(GTK_ENTRY(entry_text), entry_placeholder_text);
     gtk_entry_set_max_length(GTK_ENTRY(entry_text), 35);
     gtk_box_pack_start(GTK_BOX(entry_block), entry_text, TRUE, TRUE, 0);
+    g_signal_connect(G_OBJECT(entry_text), "changed", G_CALLBACK(entry_text_change_event), NULL);
 
     GtkWidget *send = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(send), "send");
@@ -83,7 +115,7 @@ static void build_entryfield(GtkWidget *main)
     g_signal_connect(G_OBJECT(send), "leave-notify-event",
         G_CALLBACK(send_leave_notify), NULL);
     g_signal_connect(G_OBJECT(send), "button_press_event",
-        G_CALLBACK(send_click), NULL);
+        G_CALLBACK(send_click), NULL); 
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event",
         G_CALLBACK(sticker_enter_notify), NULL);
@@ -93,29 +125,6 @@ static void build_entryfield(GtkWidget *main)
         G_CALLBACK(sticker_click), NULL);
 }
 
-static void new_outgoing_message(GtkWidget *messages_block)
-{
-    GtkWidget *messages_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-    //gtk_widget_set_size_request(messages_body, CHAT_W, 100);
-    gtk_widget_set_name(GTK_WIDGET(messages_body), "messages_body");
-
-    GtkWidget *avatar = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_end(GTK_BOX(messages_body), avatar, FALSE, FALSE, 0);
-    GtkWidget *message = gtk_label_new(mx_file_to_str(pokemon_fact_text));
-    gtk_widget_set_name(GTK_WIDGET(message), "message");
-    gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);
-    //gtk_label_set_line_wrap_mode(GTK_LABEL(message), PANGO_WRAP_WORD);
-    gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
-    //GtkWidget *nickname = gtk_frame_new("PAXANDDOS");
-    //gtk_frame_set_label_widget (GTK_FRAME(nickname), message);
-
-    gtk_box_pack_end(GTK_BOX(messages_body), message, FALSE, FALSE, 0);
-
-    gtk_box_pack_end(GTK_BOX(messages_block), messages_body, FALSE, FALSE, 0);
-}
-
 static void build_chat(GtkWidget *main)
 {
     GtkWidget *scrollable = gtk_layout_new(NULL, NULL);                     // Зона, доступная для бесконечного скролла
@@ -123,13 +132,11 @@ static void build_chat(GtkWidget *main)
     gtk_layout_set_size(GTK_LAYOUT(scrollable), CHAT_W, CHAT_H);            // Размер скроллабельной зоны
     gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                // То же самое, но надо
 
-    GtkWidget *messages_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);   // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
-    gtk_widget_set_size_request(messages_block, CHAT_W, CHAT_H);            // 
-    gtk_widget_set_name(GTK_WIDGET(messages_block), "messages_block");      // Имя 2
-
-    new_outgoing_message(messages_block);                                   // Передавать как параметры: имя, фото, текст сообщения
-
-    gtk_layout_put(GTK_LAYOUT(scrollable), messages_block, 0, 0);           // Кладем блок с сообщениями в скролл зону
+    chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);   // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
+    gtk_widget_set_size_request(chat_screen, CHAT_W, CHAT_H);            // 
+    gtk_widget_set_name(GTK_WIDGET(chat_screen), "messages_block");      // Имя 2
+    
+    gtk_layout_put(GTK_LAYOUT(scrollable), chat_screen, 0, 0);           // Кладем блок с сообщениями в скролл зону
     gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                   // Кладем скролл зону на главный экран
 }
 
@@ -150,6 +157,6 @@ void build_messanger_screen(GtkWidget **msgscreen)
     //
     //
     build_list(main);
-    build_entryfield(main);
     build_chat(main);
+    build_entryfield(main);
 }
