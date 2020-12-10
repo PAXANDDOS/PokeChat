@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;
     CUR_HEIGHT = 720;
-
+    // char *date = mx_str_getdate();
+    // printf("%s\n\n", date);
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "PokeChat");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);

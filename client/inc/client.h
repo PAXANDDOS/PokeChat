@@ -95,6 +95,14 @@ typedef struct s_msg_data
     int content_len;
 } t_msg_data;
 
+typedef struct s_chat_list
+{
+    char *nickname;
+    char *avatar;
+    char *status;
+    struct s_chat_list *next;
+}   t_chat_list;
+
 t_msg_data msg_data;
 
 GtkWidget *home_scr;
@@ -117,9 +125,13 @@ void build_messanger_screen(GtkWidget **msgscreen);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 
+GtkWidget *create_chatlist();
 void new_outgoing_message(GtkWidget *messages_block);
+void new_incoming_message(GtkWidget *messages_block);
+
 
 char *mx_str_gettime();
+char *mx_str_getdate();
 // Удалить потом когда будет подключена либа
 char *mx_strnew(const int size);
 char *mx_file_to_str(const char *filename);
@@ -176,8 +188,11 @@ void attach_leave_notify(GtkWidget *widget);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
 void send_enter_notify(GtkWidget *widget);
 void send_leave_notify(GtkWidget *widget);
-void send_click(GtkWidget *widget, GdkEventButton *event);
-void entry_text_change_event(GtkWidget *widget, GdkEventButton *event);
+void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
+void entry_text_change_event(GtkWidget *widget);
 void sticker_enter_notify(GtkWidget *widget);
 void sticker_leave_notify(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event);
+void single_event_enter_notify(GtkWidget *widget);
+void single_event_leave_notify(GtkWidget *widget);
+void single_event_click(GtkWidget *widget, GdkEventButton *event);
