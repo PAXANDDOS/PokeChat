@@ -27,11 +27,14 @@ int main(int argc, char *argv[]) {
 
     pokemon_fact_text = "client/data/pokemon-text/";
     pokemon_fact_image = "client/data/pokemon/";
+    pokemon_fact_audio = "client/data/pokemon-audio/";
     pokemon_random();
     avatar_generated = "client/data/avatars/";
     avatar_random();
     current_user_dm = "";
 
+    SDL_Init(SDL_INIT_AUDIO);
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;
     CUR_HEIGHT = 720;
@@ -58,6 +61,8 @@ int main(int argc, char *argv[]) {
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
     gtk_main();
     g_object_unref(icon);
+    Mix_CloseAudio();
+    SDL_Quit();
     free(tm_struct);
 
     return 0;

@@ -1,1 +1,3 @@
-// Заглушка
+void mx_encrypt() {
+    return;
+}

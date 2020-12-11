@@ -59,18 +59,32 @@ SRCS := $(wildcard src/*.c)
 HDRS := $(wildcard inc/*.h)
 
 WFLGS := $(addprefix -W, all extra error pedantic)
-GTK_LINK_FLAGS = `pkg-config --cflags  --libs gtk+-3.0`
-GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
+GTK_LINK_FLAGS = `pkg-config --cflags --libs gtk+-3.0`
+# GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
+SDL_INC_FLAGS = -rpath ./frameworks -F ../frameworks \
+				-framework SDL2 \
+				-framework SDL2_mixer \
+				-I ../frameworks/Gtk3.framework/include \
+				-I ../frameworks/Gtk3.framework/include/atk-1.0 \
+				-I ../frameworks/Gtk3.framework/include/cairo \
+				-I ../frameworks/Gtk3.framework/include/gdk-pixbuf-2.0 \
+				-I ../frameworks/Gtk3.framework/include/gtk-3.0 \
+				-I ../frameworks/Gtk3.framework/include/glib-2.0 \
+				-I ../frameworks/Gtk3.framework/include/pango-1.0 \
+				-I ../frameworks/Gtk3.framework/lib/glib-2.0/include \
+				-I ../frameworks/SDL2.framework/SDL2 \
+				-I ../frameworks/SDL2_mixer.framework/Headers
+LIB_INC = -I ../frameworks/libmx/inc
 
-all: font install 
+all: install 
 
-font: 
+font:
 	@cp data/fonts/Rubik/* ${HOME}/Library/Fonts/
 
 install: uchat
 
 uchat:
-	@clang -std=c11 $(WFLGS) $(GTK_INC_FLAGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS)
+	@clang -std=c11 $(WFLGS) $(SRCS) $(HDRS) $(SDL_INC_FLAGS) $(GTK_LINK_FLAGS) $(LIB_INC)
 	@mv a.out ../$@
 
 clean:

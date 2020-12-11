@@ -28,6 +28,7 @@ void home_click(GtkWidget *widget, GdkEventButton *event) {
         
         pokemon_fact_text = "client/data/pokemon-text/";
         pokemon_fact_image = "client/data/pokemon/";
+        pokemon_fact_audio = "client/data/pokemon-audio/";
         pokemon_random();
         gtk_label_set_text(GTK_LABEL(pokemon_text), mx_file_to_str(pokemon_fact_text));
     }

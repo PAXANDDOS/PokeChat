@@ -1,0 +1,81 @@
+/*******************
+ * check and radio *
+ *******************/
+.check row:selected,
+.check,
+.check row{
+	background-image: url("assets/buttons/check/unchecked.png");
+}
+.check,
+.check row{
+	border-radius: 2px;
+}
+.check:active,
+.check row:selected:active,
+.check row:selected:focused:active,
+.notebook .check:active{
+	background-image: url("assets/buttons/check/checked.png");
+}
+.check:active:hover,
+.check row:selected:active:hover,
+.check row:selected:focused:active:hover,
+.notebook .check:active:hover{
+	background-image: url("assets/buttons/check/checked.png");
+}
+.check row:selected,
+.check row:selected:active,
+.check row:selected:focused,
+.check row:selected:focused:active{
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+.check:insensitive{
+	background-image: url("assets/buttons/check/unchecked-insensitive.png");
+}
+.check:insensitive:active{
+	background-image: url("assets/buttons/check/checked-insensitive.png");
+}
+
+/* radio 																*/
+.radio row:selected,
+.radio,
+.radio row{
+	background-image: url("assets/buttons/radio/unselected.png");
+}
+.radio,
+.radio row{
+	border-radius: 10px;
+}
+.notebook .radio:active,
+.radio:active,
+.radio row:selected:active,
+.radio row:selected:focused:active{
+	background-image: url("assets/buttons/radio/selected.png");
+}
+.notebook .radio:active:hover,
+.radio:active:hover,
+.radio row:selected:active:hover,
+.radio row:selected:focused:active:hover{
+	background-image: url("assets/buttons/radio/selected.png");
+}
+.radio row:selected,
+.radio row:selected:active,
+.radio row:selected:focused,
+.radio row:selected:focused:active{
+	-unico-outer-stroke-color: @transparent;
+	-unico-outer-stroke-gradient: none;
+}
+.radio:insensitive{
+	background-image: url("assets/buttons/radio/unselected-insensitive.png");
+}
+.radio:insensitive:active{
+	background-image: url("assets/buttons/radio/selected-insensitive.png");
+}
+
+
+/***************
+ * resize grip *
+ ***************/
+.grip {
+    background-image: url("assets/resize-grip.png");
+}

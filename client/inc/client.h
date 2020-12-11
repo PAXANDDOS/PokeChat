@@ -16,6 +16,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <gtk/gtk.h>
+#include <SDL2/SDL.h>
+#include "SDL2_mixer/SDL_mixer.h"
 // #include "libmx.h"
 // #include "cJSON.h"
 
@@ -125,9 +127,11 @@ GtkWidget *active_screen;
 char* avatar_generated;
 char* pokemon_fact_image;
 char* pokemon_fact_text;
+char* pokemon_fact_audio;
 GtkWidget *pokemon_text;
 char* current_user_dm;
 
+void play_audio();
 void preload_images();
 void avatar_random();
 void pokemon_random();

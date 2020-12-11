@@ -27,7 +27,8 @@
                 "${env:HOME}/.brew/Cellar/gtk+3/3.24.23/include/gtk-3.0",
                 "${env:HOME}/.brew/Cellar/gdk-pixbuf/2.42.0/include/gdk-pixbuf-2.0",
                 "${env:HOME}/.brew/opt/glib/include/gio-unix-2.0",
-                "${env:HOME}/.brew/Cellar/glib/2.66.2_1/lib/glib-2.0/include/"
+                "${env:HOME}/.brew/Cellar/glib/2.66.2_1/lib/glib-2.0/include/",
+                "./client/inc/"
             ],
             "defines": [],
             "macFrameworkPath": [
