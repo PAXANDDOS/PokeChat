@@ -60,6 +60,11 @@ gint CUR_HEIGHT;
 #define ENTRY_H 72
 #define CHAT_H WINDOW_HEIGHT-ENTRY_H
 
+struct tm *tm_struct;
+char *mx_str_gettime();
+char *mx_str_getdate();
+int temp;
+
 typedef struct s_image_button
 {
     bool active;
@@ -108,8 +113,9 @@ t_msg_data msg_data;
 GtkWidget *home_scr;
 GtkWidget *msg_scr;
 GtkWidget *chat_screen;
-GtkWidget *settings_menu;
+GtkWidget *settings_scr;
 GtkWidget *active_screen;
+
 char* avatar_generated;
 char* pokemon_fact_image;
 char* pokemon_fact_text;
@@ -122,6 +128,8 @@ void pokemon_random();
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
 void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
+void build_settings_menu(GtkWidget **stgscreen);
+
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 
@@ -129,9 +137,6 @@ GtkWidget *create_chatlist();
 void new_outgoing_message(GtkWidget *messages_block);
 void new_incoming_message(GtkWidget *messages_block);
 
-
-char *mx_str_gettime();
-char *mx_str_getdate();
 // Удалить потом когда будет подключена либа
 char *mx_strnew(const int size);
 char *mx_file_to_str(const char *filename);

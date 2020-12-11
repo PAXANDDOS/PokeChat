@@ -2,7 +2,6 @@
 
 static GtkWidget *create_single()
 {
-    GtkWidget *single_event = gtk_event_box_new();
     GtkWidget *single = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_size_request(GTK_WIDGET(single), LIST_W-20, 46);
     gtk_widget_set_name(GTK_WIDGET(single), "single");
@@ -24,14 +23,6 @@ static GtkWidget *create_single()
     gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");                 // Имя
     gtk_box_pack_start(GTK_BOX(single), nickname, FALSE, FALSE, 5);
 
-    //gtk_container_add(GTK_CONTAINER(single_event), single);
-    g_signal_connect(G_OBJECT(single_event), "enter-notify-event",
-        G_CALLBACK(single_event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(single_event), "leave-notify-event",
-        G_CALLBACK(single_event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(single_event), "button_press_event",
-        G_CALLBACK(single_event_click), NULL);
-
     return single;
 }
 
@@ -41,8 +32,11 @@ GtkWidget *create_chatlist() {
 
     for(int i = 0; i < 5; i++) 
     {
+        GtkWidget *single_event = gtk_event_box_new();
+        gtk_widget_set_name(GTK_WIDGET(single_event), "single");
         GtkWidget *single = create_single();
-        gtk_box_pack_start(GTK_BOX(chatlist), single, FALSE, FALSE, 3);
+        gtk_container_add(GTK_CONTAINER(single_event), single);
+        gtk_box_pack_start(GTK_BOX(chatlist), single_event, FALSE, FALSE, 3);
     }
 
     return chatlist;

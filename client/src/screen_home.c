@@ -91,7 +91,7 @@ static void build_activity(GtkWidget *main)
     g_signal_connect(G_OBJECT(avatar4), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
     gtk_box_pack_start(GTK_BOX(active4), avatar_container4, FALSE, FALSE, 0);          
     gtk_fixed_put(GTK_FIXED(avatar_container4), avatar4, 3, 2);
-    GtkWidget *active4_name = gtk_label_new("тюленьовчарка");              // Получить имя
+    GtkWidget *active4_name = gtk_label_new("dashbug");              // Получить имя
     gtk_widget_set_name(GTK_WIDGET(active4_name), "active_name");
     gtk_widget_set_halign(active4_name, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(active4), active4_name, FALSE, FALSE, 5); 

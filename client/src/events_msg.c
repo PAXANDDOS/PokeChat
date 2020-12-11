@@ -44,18 +44,12 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
     if(msg_data.content == NULL || !strcmp(msg_data.content, ""))
         return;
     msg_data.sent = true;
-    if(msg_data.sent) printf("SENT: TRUE\n");
-    else printf("SENT: FALSE\n");
-    printf("%s\n", msg_data.content);
 
     if(msg_data.sent == true) {
-        printf("ACCEPTED\n");
         new_outgoing_message(chat_screen);                                   // Передавать как параметры: имя, фото, текст сообщения
-        printf("CLEARED\n");
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.sent = false;
     }
-    else printf("REJECTED\n");
 }
 
 void entry_text_change_event(GtkWidget *widget) {

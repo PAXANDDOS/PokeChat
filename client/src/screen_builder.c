@@ -14,8 +14,10 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     gtk_fixed_put(GTK_FIXED(*main_area), left_box, 0, 0);                               // Настройка позиции виджета
 
     build_home_screen(main_area);       // Вызываю постройку домашнего экрана
-    active_screen = home_scr;           // Назначаю домашний экран активным
     build_messanger_screen(main_area);  // Вызываю постройку экрана сообщений
+    build_settings_menu(main_area);     // Вызываю постройку экрана настроек
+    active_screen = home_scr;           // Назначаю домашний экран активным
+
     //
     // Creating selection area
     *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Создаем вертикальный бокс для кнопок
