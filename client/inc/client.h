@@ -99,6 +99,7 @@ typedef struct s_msg_data
     char *content;
     int content_len;
 } t_msg_data;
+t_msg_data msg_data;
 
 typedef struct s_chat_list
 {
@@ -108,7 +109,12 @@ typedef struct s_chat_list
     struct s_chat_list *next;
 }   t_chat_list;
 
-t_msg_data msg_data;
+struct
+{
+    GtkWidget *change_info;
+    GtkWidget *select_avatar;
+    GtkWidget *settings_active;
+} t_settings_scr;
 
 GtkWidget *home_scr;
 GtkWidget *msg_scr;
@@ -201,3 +207,6 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event);
 void single_event_enter_notify(GtkWidget *widget);
 void single_event_leave_notify(GtkWidget *widget);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
+
+void change_avatar_click(GtkWidget *widget, GdkEventButton *event);
+void change_info_click(GtkWidget *widget, GdkEventButton *event);

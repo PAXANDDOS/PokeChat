@@ -93,7 +93,9 @@ static void build_entryfield(GtkWidget *main)
     g_signal_connect(G_OBJECT(send), "leave-notify-event",
         G_CALLBACK(send_leave_notify), NULL);
     g_signal_connect(G_OBJECT(send), "button_press_event",
-        G_CALLBACK(send_click), (GtkWidget*)entry_text); 
+        G_CALLBACK(send_click), entry_text); 
+    g_signal_connect(entry_text, "activate", 
+        G_CALLBACK(send_click), entry_text);
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event",
         G_CALLBACK(sticker_enter_notify), NULL);

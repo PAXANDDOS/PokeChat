@@ -44,7 +44,6 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
     if(msg_data.content == NULL || !strcmp(msg_data.content, ""))
         return;
     msg_data.sent = true;
-
     if(msg_data.sent == true) {
         new_outgoing_message(chat_screen);                                   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");

@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all(window);
     gtk_widget_hide(GTK_WIDGET(msg_scr));
+    gtk_widget_hide(GTK_WIDGET(settings_scr));
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
     gtk_main();

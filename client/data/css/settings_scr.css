@@ -1,4 +1,51 @@
 #settings_scr
 {
+    background-color: #273255;
+}
+#menu_block
+{
+    border-radius: 13px;
+    background-color: #39456d;
+    margin: 10px;
+    padding-right: 30px;
+    padding-left: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#edit_button {
+    color: rgb(193, 206, 236);
+    font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    letter-spacing: .8px;
+    background: #273255;
+    border: .5px solid rgb(193, 206, 236);
+}
+#edit_button:hover {
+    background: rgb(193, 206, 236);
+    color: #273255;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#apply_button {
+    color: rgb(193, 206, 236);
+    font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    letter-spacing: .8px;
+    background: #273255;
+    border: .5px solid rgb(193, 206, 236);
+    margin-top: 40px;
+}
+#apply_button:hover {
+    background: rgb(193, 206, 236);
+    color: #273255;
+    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
+}
+#changing_setting
+{
     background-color: #fff;
+    margin-left: 50px;
+}
+#avatar_selection
+{
+    background-color: #000;
+    margin-left: 50px;
 }
