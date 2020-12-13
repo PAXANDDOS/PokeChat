@@ -28,9 +28,9 @@
                 "${env:HOME}/.brew/Cellar/gdk-pixbuf/2.42.0/include/gdk-pixbuf-2.0",
                 "${env:HOME}/.brew/opt/glib/include/gio-unix-2.0",
                 "${env:HOME}/.brew/Cellar/glib/2.66.2_1/lib/glib-2.0/include/",
-                "/Users/plitovka/Desktop/UCODE-uchat/frameworks/SDL2.framework/",
-                "/Users/plitovka/Desktop/UCODE-uchat/frameworks/",
-                "/Users/plitovka/Desktop/UCODE-uchat/frameworks/SDL2_mixer.framework/"
+                "${env:HOME}/Desktop/UCODE-uchat/frameworks/SDL2.framework/",
+                "${env:HOME}/Desktop/UCODE-uchat/frameworks/",
+                "${env:HOME}/Desktop/UCODE-uchat/frameworks/SDL2_mixer.framework/"
             ],
             "defines": [],
             "macFrameworkPath": [
