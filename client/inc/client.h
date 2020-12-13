@@ -62,6 +62,10 @@ gint CUR_HEIGHT;
 #define ENTRY_H 72
 #define CHAT_H WINDOW_HEIGHT-ENTRY_H
 
+// Settings screen size and positions
+#define TEAM_W 190
+#define TEAM_H 240
+
 struct tm *tm_struct;
 char *mx_str_gettime();
 char *mx_str_getdate();

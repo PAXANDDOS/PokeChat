@@ -44,6 +44,34 @@ static void build_account_menu(GtkWidget *main)
     g_signal_connect(G_OBJECT(info_butt), "clicked", G_CALLBACK(change_info_click), NULL);
 }
 
+static void build_teams_menu(GtkWidget *main)
+{
+    GtkWidget *teams_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+    gtk_widget_set_name(GTK_WIDGET(teams_block), "teams_block");
+    gtk_fixed_put(GTK_FIXED(main),teams_block, 0, 402+10);
+
+    GtkWidget *teams_text = gtk_label_new("────────────────────── SELECT TEAM ──────────────────────");
+    gtk_widget_set_name(GTK_WIDGET(teams_text), "teams_text");                // Имя
+    gtk_widget_set_halign(teams_text, GTK_ALIGN_CENTER);                     // Позиция текста
+    gtk_box_pack_start(GTK_BOX(teams_block), teams_text, FALSE, FALSE, 0);
+
+    GtkWidget *teams = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    gtk_widget_set_name(GTK_WIDGET(teams), "teams");
+    gtk_box_pack_start(GTK_BOX(teams_block), teams, FALSE, FALSE, 0);
+    GtkWidget *team_mystic = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_mystic), "mystic");
+    gtk_widget_set_size_request(GTK_WIDGET(team_mystic), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams), team_mystic, FALSE, FALSE, 0);
+    GtkWidget *team_instinct = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_instinct), "instinct");
+    gtk_widget_set_size_request(GTK_WIDGET(team_instinct), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams), team_instinct, FALSE, FALSE, 10);
+    GtkWidget *team_valor = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_valor), "valor");
+    gtk_widget_set_size_request(GTK_WIDGET(team_valor), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams), team_valor, FALSE, FALSE, 0);
+}
+
 void build_settings_menu(GtkWidget **stgscreen)
 {
     // Loading CSS file
@@ -61,6 +89,6 @@ void build_settings_menu(GtkWidget **stgscreen)
     //
 
     build_account_menu(main);
-    //build_chat(main);
+    build_teams_menu(main);
     //build_entryfield(main);
 }

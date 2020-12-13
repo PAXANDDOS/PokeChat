@@ -222,7 +222,6 @@ static void build_welcome(GtkWidget *main)
     gtk_fixed_put(GTK_FIXED(welcome_container), tosettings, WELCOME_LINK_SETTINGS_X, WELCOME_LINK_Y);   // Позиция
     //
     // Events
-        // WELCOME BANNER EVENTS
     g_signal_connect(G_OBJECT(tomsg), "enter-notify-event", G_CALLBACK(tomsg_enter_notify), NULL);
     g_signal_connect(G_OBJECT(tomsg), "leave-notify-event", G_CALLBACK(tomsg_leave_notify), NULL);
     g_signal_connect(G_OBJECT(tomsg_inner), "enter-notify-event", G_CALLBACK(tomsg_enter_notify), NULL);

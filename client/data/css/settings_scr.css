@@ -50,3 +50,39 @@
     background-color: #000;
     margin-left: 50px;
 }
+#teams_block
+{
+    border-radius: 13px;
+    background-color: #39456d;
+    margin: 10px;
+    padding: 10px;
+    padding-top: 5px;
+}
+#teams_text
+{
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  color: #e7ecff;
+  font-size: 15px;
+}
+#mystic
+{
+    border-radius: 20px;
+    background-color: #1f2846;
+    background-size: 100%;
+    background-image: url("../images/mystic.png");
+}
+#instinct
+{
+    border-radius: 20px;
+    background-color: #1f2846;
+    background-size: 100%;
+    background-image: url("../images/instinct.png");
+}
+#valor
+{
+    border-radius: 20px;
+    background-color: #1f2846;
+    background-size: 100%;
+    background-image: url("../images/valor.png");
+}
