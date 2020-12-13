@@ -17,7 +17,7 @@ void avatar_random() {
         if(sd->d_name[0] == '.')
             continue;
         if(counter == pick)
-            avatar_generated = mx_strjoin(avatar_generated, sd->d_name);
+            t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, sd->d_name);
         counter++;
     }
     closedir(dir);
@@ -47,10 +47,10 @@ void pokemon_random() {
     dir = NULL;
     sd = NULL;
  
-    pokemon_fact_image = mx_strjoin(pokemon_fact_image, mx_itoa(pick));
-    pokemon_fact_image = mx_strjoin(pokemon_fact_image, ".png");
-    pokemon_fact_text = mx_strjoin(pokemon_fact_text, mx_itoa(pick));
-    pokemon_fact_text = mx_strjoin(pokemon_fact_text, ".txt");
-    pokemon_fact_audio = mx_strjoin(pokemon_fact_audio, mx_itoa(pick));
-    pokemon_fact_audio = mx_strjoin(pokemon_fact_audio, ".wav");
+    t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, mx_itoa(pick));
+    t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, ".png");
+    t_pokefact.pokemon_fact_text = mx_strjoin(t_pokefact.pokemon_fact_text, mx_itoa(pick));
+    t_pokefact.pokemon_fact_text = mx_strjoin(t_pokefact.pokemon_fact_text, ".txt");
+    t_pokefact.pokemon_fact_audio = mx_strjoin(t_pokefact.pokemon_fact_audio, mx_itoa(pick));
+    t_pokefact.pokemon_fact_audio = mx_strjoin(t_pokefact.pokemon_fact_audio, ".wav");
 }

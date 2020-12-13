@@ -16,7 +16,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     build_home_screen(main_area);       // Вызываю постройку домашнего экрана
     build_messanger_screen(main_area);  // Вызываю постройку экрана сообщений
     build_settings_menu(main_area);     // Вызываю постройку экрана настроек
-    active_screen = home_scr;           // Назначаю домашний экран активным
+    t_main_scr.active_screen = t_main_scr.home_scr;           // Назначаю домашний экран активным
 
     //
     // Creating selection area

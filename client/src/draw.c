@@ -21,7 +21,7 @@ static GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
 }
 
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(avatar_generated, size, size);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(t_avatar.avatar_generated, size, size);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -47,7 +47,7 @@ gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size) {
 }
 
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(pokemon_fact_image, size, size);
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(t_pokefact.pokemon_fact_image, size, size);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);

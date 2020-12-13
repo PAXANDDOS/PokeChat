@@ -61,7 +61,7 @@ static void build_entryfield(GtkWidget *main)
 
     GtkWidget *entry_text = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_text), "entry_text");
-    char* entry_placeholder_text = mx_strjoin("Message ", current_user_dm);
+    char* entry_placeholder_text = mx_strjoin("Message ", t_dm.current_user_dm);
     gtk_entry_set_placeholder_text(GTK_ENTRY(entry_text), entry_placeholder_text);
     gtk_entry_set_max_length(GTK_ENTRY(entry_text), 1000);
     gtk_box_pack_start(GTK_BOX(entry_block), entry_text, TRUE, TRUE, 0);
@@ -112,11 +112,11 @@ static void build_chat(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(scrollable), "scrollable_msg");              // Имя 1
     gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                    // Размер
 
-    chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                     // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
-    gtk_widget_set_size_request(chat_screen, CHAT_W, CHAT_H);                   // Размер
-    gtk_widget_set_name(GTK_WIDGET(chat_screen), "messages_block");             // Имя 2
+    t_chats.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                     // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
+    gtk_widget_set_size_request(t_chats.chat_screen, CHAT_W, CHAT_H);                   // Размер
+    gtk_widget_set_name(GTK_WIDGET(t_chats.chat_screen), "messages_block");             // Имя 2
     
-    gtk_container_add(GTK_CONTAINER(scrollable), chat_screen);                  // Кладем чат в скролл зону
+    gtk_container_add(GTK_CONTAINER(scrollable), t_chats.chat_screen);                  // Кладем чат в скролл зону
     gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                       // Кладем скролл зону на главный экран
 }
 
@@ -128,12 +128,12 @@ void build_messanger_screen(GtkWidget **msgscreen)
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     //
     // Creating workspace
-    msg_scr = gtk_grid_new();
-    gtk_widget_set_name(GTK_WIDGET(msg_scr), "messanger");                            
-    gtk_widget_set_size_request(GTK_WIDGET(msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); 
-    gtk_fixed_put(GTK_FIXED(*msgscreen), msg_scr, LEFTBAR_W, 0);                       
+    t_main_scr.msg_scr = gtk_grid_new();
+    gtk_widget_set_name(GTK_WIDGET(t_main_scr.msg_scr), "messanger");                            
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); 
+    gtk_fixed_put(GTK_FIXED(*msgscreen), t_main_scr.msg_scr, LEFTBAR_W, 0);                       
     GtkWidget *main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(msg_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_grid_attach(GTK_GRID(t_main_scr.msg_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
     //
     //
     build_list(main);

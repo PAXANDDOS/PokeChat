@@ -25,13 +25,13 @@ int main(int argc, char *argv[]) {
     GtkWidget *main_area = NULL;
     GtkWidget *left_bar = NULL;
 
-    pokemon_fact_text = "client/data/pokemon-text/";
-    pokemon_fact_image = "client/data/pokemon/";
-    pokemon_fact_audio = "client/data/pokemon-audio/";
+    t_pokefact.pokemon_fact_text = "client/data/pokemon-text/";
+    t_pokefact.pokemon_fact_image = "client/data/pokemon/";
+    t_pokefact.pokemon_fact_audio = "client/data/pokemon-audio/";
     pokemon_random();
-    avatar_generated = "client/data/avatars/";
+    t_avatar.avatar_generated = "client/data/avatars/";
     avatar_random();
-    current_user_dm = "";
+    t_dm.current_user_dm = "";
 
     SDL_Init(SDL_INIT_AUDIO);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
@@ -55,8 +55,8 @@ int main(int argc, char *argv[]) {
     build_all(&left_bar, &main_area);
 
     gtk_widget_show_all(window);
-    gtk_widget_hide(GTK_WIDGET(msg_scr));
-    gtk_widget_hide(GTK_WIDGET(settings_scr));
+    gtk_widget_hide(GTK_WIDGET(t_main_scr.msg_scr));
+    gtk_widget_hide(GTK_WIDGET(t_main_scr.settings_scr));
 
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
     gtk_main();

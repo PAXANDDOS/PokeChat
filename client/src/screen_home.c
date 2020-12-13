@@ -172,13 +172,13 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_halign(pokemon, GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(pokemon), "draw", G_CALLBACK(draw_event_pokemon), (int*)POKEMON_SIZE);
     gtk_box_pack_start(GTK_BOX(fact_block), pokemon, FALSE, FALSE, 0);
-    pokemon_text = gtk_label_new(mx_file_to_str(pokemon_fact_text));
-    gtk_label_set_line_wrap(GTK_LABEL(pokemon_text), TRUE);
-    gtk_label_set_max_width_chars(GTK_LABEL(pokemon_text), 100);
-    gtk_label_set_line_wrap_mode(GTK_LABEL(pokemon_text), PANGO_WRAP_WORD);
-    gtk_widget_set_name(GTK_WIDGET(pokemon_text), "pokemon-text");                // Имя
-    gtk_widget_set_halign(pokemon_text, GTK_ALIGN_START);                     // Позиция текста
-    gtk_box_pack_start(GTK_BOX(fact_block), pokemon_text, FALSE, FALSE, 0);
+    t_pokefact.pokemon_text = gtk_label_new(mx_file_to_str(t_pokefact.pokemon_fact_text));
+    gtk_label_set_line_wrap(GTK_LABEL(t_pokefact.pokemon_text), TRUE);
+    gtk_label_set_max_width_chars(GTK_LABEL(t_pokefact.pokemon_text), 100);
+    gtk_label_set_line_wrap_mode(GTK_LABEL(t_pokefact.pokemon_text), PANGO_WRAP_WORD);
+    gtk_widget_set_name(GTK_WIDGET(t_pokefact.pokemon_text), "pokemon-text");                // Имя
+    gtk_widget_set_halign(t_pokefact.pokemon_text, GTK_ALIGN_START);                     // Позиция текста
+    gtk_box_pack_start(GTK_BOX(fact_block), t_pokefact.pokemon_text, FALSE, FALSE, 0);
 
     GtkWidget *pokemon_trigger = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(pokemon_trigger), FACT_W, FACT_H);           // Размер
@@ -248,12 +248,12 @@ void build_home_screen(GtkWidget **homescreen)
     //
 
     // Creating workspace
-    home_scr = gtk_grid_new();   // Эта падла меня задрала. Создал grid чтобы можно было применить CSS ибо в fixed нельзя.
-    gtk_widget_set_name(GTK_WIDGET(home_scr), "homescreen");                            
-    gtk_widget_set_size_request(GTK_WIDGET(home_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); 
-    gtk_fixed_put(GTK_FIXED(*homescreen), home_scr, LEFTBAR_W, 0);                       
+    t_main_scr.home_scr = gtk_grid_new();   // Эта падла меня задрала. Создал grid чтобы можно было применить CSS ибо в fixed нельзя.
+    gtk_widget_set_name(GTK_WIDGET(t_main_scr.home_scr), "homescreen");                            
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.home_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); 
+    gtk_fixed_put(GTK_FIXED(*homescreen), t_main_scr.home_scr, LEFTBAR_W, 0);                       
     GtkWidget *main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(home_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); // Запихиваю новый fixed в первую ячейку грида, для того чтобы можно было нормально размещать элементы.
+    gtk_grid_attach(GTK_GRID(t_main_scr.home_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); // Запихиваю новый fixed в первую ячейку грида, для того чтобы можно было нормально размещать элементы.
     //
 
     build_activity(main);

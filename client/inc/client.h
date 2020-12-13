@@ -75,13 +75,11 @@ typedef struct s_image_button
     GtkWidget *standard;
     GtkWidget *colorful;
 } t_image_button;
-
 t_image_button home_img;
 t_image_button messages_img;
 t_image_button group_img;
 t_image_button events_img;
 t_image_button settings_img;
-
 t_image_button *t_active;
 
 struct
@@ -116,20 +114,38 @@ struct
     GtkWidget *change_info;
     GtkWidget *select_avatar;
     GtkWidget *settings_active;
-} t_settings_scr;
+}   t_settings_scr;
 
-GtkWidget *home_scr;
-GtkWidget *msg_scr;
-GtkWidget *chat_screen;
-GtkWidget *settings_scr;
-GtkWidget *active_screen;
+struct
+{
+    GtkWidget *home_scr;
+    GtkWidget *msg_scr;
+    GtkWidget *settings_scr;
+    GtkWidget *active_screen;
+}   t_main_scr;
 
-char* avatar_generated;
-char* pokemon_fact_image;
-char* pokemon_fact_text;
-char* pokemon_fact_audio;
-GtkWidget *pokemon_text;
-char* current_user_dm;
+struct
+{
+    GtkWidget *chat_screen;
+}   t_chats;
+
+struct
+{
+    char* avatar_generated;
+}   t_avatar;
+
+struct
+{
+    GtkWidget *pokemon_text;
+    char* pokemon_fact_image;
+    char* pokemon_fact_text;
+    char* pokemon_fact_audio;
+}   t_pokefact;
+
+struct 
+{
+    char* current_user_dm;
+}   t_dm;
 
 void play_audio();
 void preload_images();
