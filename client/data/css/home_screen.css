@@ -48,14 +48,28 @@
 #tomsg
 {
   border-radius: 13px;
-  background-color: #39456d;
+  background-image: url("../images/tomsg_text.png");
+  background-size: 100%;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+  opacity: 1;
 }
 #tomsg:hover
 {
   box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
   box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
-  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
+  box-shadow: inset 0 0 0 3px rgb(99, 120, 189);
+}
+#tomsg_inner
+{
+  border-radius: 13px;
+  background-image: none;
+  opacity: 0.09;
+}
+#tomsg_inner:hover
+{
+  transition: 0.2s cubic-bezier(0.18,0.62,0.71,0.5);
+  background-size: 100%;
+  background-image: url("../images/tomsg_bg.png");
 }
 #togroup
 {
@@ -72,7 +86,9 @@
 #tosettings
 {
   border-radius: 13px;
-  background-color: #39456d;
+  background-image: url("../images/tosettings_text.png");
+  background-size: 100%;
+  opacity: 1;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
 }
 #tosettings:hover
@@ -80,6 +96,18 @@
   box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
   box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
   box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
+}
+#tosettings_inner
+{
+  border-radius: 13px;
+  background-image: none;
+  opacity: 0.09;
+}
+#tosettings_inner:hover
+{
+  transition: 0.2s cubic-bezier(0.18,0.62,0.71,0.5);
+  background-size: 100%;
+  background-image: url("../images/tosettings_bg.png");
 }
 #active
 {

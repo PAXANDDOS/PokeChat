@@ -200,36 +200,43 @@ static void build_welcome(GtkWidget *main)
     GtkWidget *tomsg = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(tomsg), "tomsg");                                        // Имя
     gtk_widget_set_size_request(GTK_WIDGET(tomsg), WELCOME_LINK_W, WELCOME_LINK_H);         // Размер
+    GtkWidget *tomsg_inner = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(tomsg_inner), "tomsg_inner");
+    gtk_container_add(GTK_CONTAINER(tomsg), tomsg_inner);
     gtk_fixed_put(GTK_FIXED(welcome_container), tomsg, WELCOME_LINK_MSG_X, WELCOME_LINK_Y); // Позиция
     // Placing linker block to group chat
     GtkWidget *togroup = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(togroup), "togroup");                                        // Имя
     gtk_widget_set_size_request(GTK_WIDGET(togroup), WELCOME_LINK_W, WELCOME_LINK_H);           // Размер
+    GtkWidget *togroup_inner = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(togroup_inner), "togroup_inner");
+    gtk_container_add(GTK_CONTAINER(togroup), togroup_inner);
     gtk_fixed_put(GTK_FIXED(welcome_container), togroup, WELCOME_LINK_GROUP_X, WELCOME_LINK_Y); // Позиция
     // Placing linker block to settings
     GtkWidget *tosettings = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(tosettings), "tosettings");                                          // Имя
     gtk_widget_set_size_request(GTK_WIDGET(tosettings), WELCOME_LINK_W, WELCOME_LINK_H);                // Размер
+    GtkWidget *tosettings_inner = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(tosettings_inner), "tosettings_inner");
+    gtk_container_add(GTK_CONTAINER(tosettings), tosettings_inner);
     gtk_fixed_put(GTK_FIXED(welcome_container), tosettings, WELCOME_LINK_SETTINGS_X, WELCOME_LINK_Y);   // Позиция
     //
     // Events
         // WELCOME BANNER EVENTS
-    g_signal_connect(G_OBJECT(tomsg), "enter-notify-event",
-        G_CALLBACK(tomsg_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(tomsg), "leave-notify-event",
-        G_CALLBACK(tomsg_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(tomsg), "button_press_event",
-        G_CALLBACK(messages_click), NULL);
+    g_signal_connect(G_OBJECT(tomsg), "enter-notify-event", G_CALLBACK(tomsg_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg), "leave-notify-event", G_CALLBACK(tomsg_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg_inner), "enter-notify-event", G_CALLBACK(tomsg_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg_inner), "leave-notify-event", G_CALLBACK(tomsg_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tomsg), "button_press_event", G_CALLBACK(messages_click), NULL);
 
-    g_signal_connect(G_OBJECT(togroup), "enter-notify-event",
-        G_CALLBACK(togroup_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(togroup), "leave-notify-event",
-        G_CALLBACK(togroup_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(togroup), "enter-notify-event", G_CALLBACK(togroup_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(togroup), "leave-notify-event", G_CALLBACK(togroup_leave_notify), NULL);
 
-    g_signal_connect(G_OBJECT(tosettings), "enter-notify-event",
-        G_CALLBACK(tosettings_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(tosettings), "leave-notify-event",
-        G_CALLBACK(tosettings_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tosettings), "enter-notify-event", G_CALLBACK(tosettings_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(tosettings), "leave-notify-event", G_CALLBACK(tosettings_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tosettings_inner), "enter-notify-event", G_CALLBACK(tosettings_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(tosettings_inner), "leave-notify-event", G_CALLBACK(tosettings_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(tosettings), "button_press_event", G_CALLBACK(settings_click), NULL);
 }
 
 void build_home_screen(GtkWidget **homescreen) 
