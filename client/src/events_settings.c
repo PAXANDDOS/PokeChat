@@ -1,17 +1,14 @@
 #include "../inc/client.h"
 
-void change_avatar_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-    gtk_widget_hide(GTK_WIDGET(t_settings_scr.settings_active));
-    t_settings_scr.settings_active = t_settings_scr.select_avatar;
-    gtk_widget_show(GTK_WIDGET(t_settings_scr.settings_active));
+void add_button_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
-void change_info_click(GtkWidget *widget, GdkEventButton *event) {
+void add_button_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void add_button_click_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event) {}
-    gtk_widget_hide(GTK_WIDGET(t_settings_scr.settings_active));
-    t_settings_scr.settings_active = t_settings_scr.change_info;
-    gtk_widget_show(GTK_WIDGET(t_settings_scr.settings_active));
 }

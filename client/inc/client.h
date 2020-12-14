@@ -63,8 +63,8 @@ gint CUR_HEIGHT;
 #define CHAT_H WINDOW_HEIGHT-ENTRY_H
 
 // Settings screen size and positions
-#define TEAM_W 190
-#define TEAM_H 240
+#define TEAM_W 220
+#define TEAM_H 264
 
 struct tm *tm_struct;
 char *mx_str_gettime();
@@ -232,5 +232,6 @@ void single_event_enter_notify(GtkWidget *widget);
 void single_event_leave_notify(GtkWidget *widget);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 
-void change_avatar_click(GtkWidget *widget, GdkEventButton *event);
-void change_info_click(GtkWidget *widget, GdkEventButton *event);
+void add_button_enter_notify(GtkWidget *widget);
+void add_button_leave_notify(GtkWidget *widget);
+void add_button_click_click(GtkWidget *widget, GdkEventButton *event);

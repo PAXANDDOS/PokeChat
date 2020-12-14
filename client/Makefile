@@ -80,6 +80,7 @@ all: install
 
 font:
 	@cp data/fonts/Rubik/* ${HOME}/Library/Fonts/
+	@cp data/fonts/UniSans/* ${HOME}/Library/Fonts/
 
 install: uchat
 
