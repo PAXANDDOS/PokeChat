@@ -86,7 +86,7 @@ t_image_button events_img;
 t_image_button settings_img;
 t_image_button *t_active;
 
-struct
+struct                      // Structure for event boxes on leftbar
 {
     GtkWidget *home_box;
     GtkWidget *messages_box;
@@ -95,32 +95,62 @@ struct
     GtkWidget *settings_box;
 } t_img_event_box;
 
-typedef struct s_msg_data
+struct                  // TEMPORAL Structure for current user account data
+{
+    char *username;     // For account username
+    char *name;         // For account real name
+    char *password;     // char* for password
+    char *code;         // 12-digit trainer code
+} t_account_temp;
+
+struct                  // Structure for current user account data
+{
+    char *username;     // For account username
+    char *name;         // For account real name
+    char *password;     // char* for password
+    char *code;         // 12-digit trainer code
+    int team;           // 1-3 team choice
+} t_account;
+
+struct                  // Labels for settings screen
+{
+    GtkWidget *username;
+    GtkWidget *name;
+}   t_settings_labels;
+
+struct
+{
+    GtkWidget *team_mystic;
+    GtkWidget *team_instinct;
+    GtkWidget *team_valor;
+}   t_teams;
+
+typedef struct s_msg_data   // Structure for data in messages
 {   
-    bool sent;
-    char *avatar;
-    char *nickname;
-    char *content;
-    int content_len;
+    bool sent;              // If send button was pressed
+    char *avatar;           // For avatars
+    char *nickname;         // For nicknmes
+    char *content;          // Content of message
+    int content_len;        // Length of message
 } t_msg_data;
 t_msg_data msg_data;
 
-typedef struct s_chat_list
+typedef struct s_chat_list      // Structure for people in the chat list
 {
     char *nickname;
     char *avatar;
     char *status;
-    struct s_chat_list *next;
+    struct s_chat_list *next;   // To next person
 }   t_chat_list;
 
-struct
+struct             // Я уже забыл что это
 {
     GtkWidget *change_info;
     GtkWidget *select_avatar;
     GtkWidget *settings_active;
 }   t_settings_scr;
 
-struct
+struct          // Structure for main screen switching
 {
     GtkWidget *home_scr;
     GtkWidget *msg_scr;
@@ -128,17 +158,17 @@ struct
     GtkWidget *active_screen;
 }   t_main_scr;
 
-struct
+struct      // Structure for chat switching
 {
     GtkWidget *chat_screen;
 }   t_chats;
 
-struct
+struct      // Structure for avatars
 {
     char* avatar_generated;
 }   t_avatar;
 
-struct
+struct      // Structure for random pokemon data
 {
     GtkWidget *pokemon_text;
     char* pokemon_fact_image;
@@ -146,11 +176,13 @@ struct
     char* pokemon_fact_audio;
 }   t_pokefact;
 
-struct 
+struct      // Selected user in chatlist
 {
     char* current_user_dm;
 }   t_dm;
 
+void test_autofill();
+void fill_pokemon();
 void play_audio();
 void preload_images();
 void avatar_random();
@@ -232,6 +264,22 @@ void single_event_enter_notify(GtkWidget *widget);
 void single_event_leave_notify(GtkWidget *widget);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 
+void username_field_change_event(GtkWidget *widget);
+void firstaname_field_change_event(GtkWidget *widget);
+void code_field_change_event(GtkWidget *widget);
+void apply_butt_click(GtkWidget *widget);
+void exit_button_enter_notify(GtkWidget *widget);
+void exit_button_leave_notify(GtkWidget *widget);
+void exit_button_click(GtkWidget *widget, GdkEventButton *event);
 void add_button_enter_notify(GtkWidget *widget);
 void add_button_leave_notify(GtkWidget *widget);
 void add_button_click_click(GtkWidget *widget, GdkEventButton *event);
+void team_mystic_enter_notify(GtkWidget *widget);
+void team_mystic_leave_notify(GtkWidget *widget);
+void team_mystic_click_click(GtkWidget *widget, GdkEventButton *event);
+void team_instinct_enter_notify(GtkWidget *widget);
+void team_instinct_leave_notify(GtkWidget *widget);
+void team_instinct_click_click(GtkWidget *widget, GdkEventButton *event);
+void team_valor_enter_notify(GtkWidget *widget);
+void team_valor_leave_notify(GtkWidget *widget);
+void team_valor_click_click(GtkWidget *widget, GdkEventButton *event);

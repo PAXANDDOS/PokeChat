@@ -232,7 +232,7 @@ static void build_welcome(GtkWidget *main)
     g_signal_connect(G_OBJECT(togroup), "leave-notify-event", G_CALLBACK(togroup_leave_notify), NULL);
     g_signal_connect(G_OBJECT(togroup_inner), "enter-notify-event", G_CALLBACK(togroup_enter_notify), NULL);
     g_signal_connect(G_OBJECT(togroup_inner), "leave-notify-event", G_CALLBACK(togroup_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(tomsg), "button_press_event", G_CALLBACK(messages_click), NULL);
+    g_signal_connect(G_OBJECT(togroup), "button_press_event", G_CALLBACK(messages_click), NULL);
 
     g_signal_connect(G_OBJECT(tosettings), "enter-notify-event", G_CALLBACK(tosettings_enter_notify), NULL);
     g_signal_connect(G_OBJECT(tosettings), "leave-notify-event", G_CALLBACK(tosettings_leave_notify), NULL);

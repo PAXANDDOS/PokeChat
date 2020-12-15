@@ -25,21 +25,14 @@ int main(int argc, char *argv[]) {
     GtkWidget *main_area = NULL;
     GtkWidget *left_bar = NULL;
 
-    t_pokefact.pokemon_fact_text = "client/data/pokemon-text/";
-    t_pokefact.pokemon_fact_image = "client/data/pokemon/";
-    t_pokefact.pokemon_fact_audio = "client/data/pokemon-audio/";
-    pokemon_random();
-    t_avatar.avatar_generated = "client/data/avatars/";
-    avatar_random();
-    t_dm.current_user_dm = "";
+    fill_pokemon();
+    test_autofill();
 
     SDL_Init(SDL_INIT_AUDIO);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     gtk_init(&argc, &argv);
     CUR_WIDTH = 1280;
     CUR_HEIGHT = 720;
-
-    printf("%s\n%s\n\n", mx_str_getdate(), mx_str_gettime());
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "PokeChat");

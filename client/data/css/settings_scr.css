@@ -1,11 +1,24 @@
 #settings_scr
 {
-    background-color: #39456d;
+    background-color: #1f2846;
+}
+#exit_button
+{
+    background-image: url("../images/exit.png");
+    background-size: 100%;
+    border-radius: 10%;
+    background-color: #374676;
+    transition: all .1s cubic-bezier(.17,.67,.83,.67);
+}
+#exit_button:hover
+{
+    background-color: #1f2846;
+    border-radius: 40%;
 }
 #menu_block
 {
     border-radius: 13px;
-    background-color: #39456d;
+    background-color: #1f2846;
     margin-left: 150px;
     margin-right: 150px;
     margin-top: 20px;
@@ -26,7 +39,7 @@
 #account_block
 {
     border-radius: 13px;
-    background-color: #242b42;
+    background-color: #374676;
     padding: 20px;
     padding-top: 0px;
     margin-top: 15px;
@@ -62,7 +75,7 @@
 #info_box
 {
     border-radius: 13px;
-    background-color: #39456d;
+    background-color: #323f69;
     padding: 20px;
 }
 #settings_fields
@@ -70,24 +83,28 @@
     font-family: Rubik, 'Helvetica Neue Light', sans-serif;
     font-weight: 200;
     background-color: #242b42;
-    border: none;
-    border-color: #4a5785;
+    /* border: none; */
+    border-color: #242b42;
     color: #c3c8da;
     letter-spacing: .9px;
+}
+#settings_fields:link
+{
+    border-color: #964444;
 }
 #apply_button {
     color: rgb(193, 206, 236);
     font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: 400;
     letter-spacing: .8px;
-    background: #273255;
-    border: .5px solid #273255;
+    background: #1f2846;
+    border: .5px solid #1f2846;
     margin-top: 40px;
+    transition: all .2s cubic-bezier(.17,.67,.83,.67);
 }
 #apply_button:hover {
     background: rgb(193, 206, 236);
     color: #273255;
-    transition: all 0.2s cubic-bezier(.17,.67,.83,.67);
 }
 #title2
 {
@@ -101,7 +118,7 @@
 #teams_block
 {
     border-radius: 13px;
-    background-color: #242b42;
+    background-color: #374676;
     padding: 20px;
     margin-top: 15px;
 }
@@ -110,19 +127,59 @@
     border-radius: 20px;
     background-color: #1f2846;
     background-size: 100%;
+    border: 1px solid #1f2846;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+    opacity: 1;
     background-image: url("../images/mystic.png");
+}
+#mystic:hover
+{
+    border: 1px solid rgba(0, 119, 241, 0.3);
+    border: 2px solid rgba(0, 119, 241, 0.6);
+    border: 3px solid rgb(0, 119, 241);
+}
+#mystic:link
+{
+    border: 3px solid rgb(0, 119, 241);
+    opacity: 0.5;
 }
 #instinct
 {
     border-radius: 20px;
     background-color: #1f2846;
     background-size: 100%;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+    opacity: 1;
     background-image: url("../images/instinct.png");
+}
+#instinct:hover
+{
+    border: 1px solid rgba(255, 186, 0, 0.3);
+    border: 2px solid rgba(255, 186, 0, 0.6);
+    border: 3px solid rgb(255, 186, 0);
+}
+#instinct:link
+{
+    border: 3px solid rgb(255, 186, 0);
+    opacity: 0.5;
 }
 #valor
 {
     border-radius: 20px;
     background-color: #1f2846;
     background-size: 100%;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+    opacity: 1;
     background-image: url("../images/valor.png");
+}
+#valor:hover
+{
+    border: 1px solid rgba(255, 13, 2, 0.3);
+    border: 2px solid rgba(255, 13, 2, 0.6);
+    border: 3px solid rgb(255, 13, 2);
+}
+#valor:link
+{
+    border: 3px solid rgb(255, 13, 2);
+    opacity: 0.5;
 }
