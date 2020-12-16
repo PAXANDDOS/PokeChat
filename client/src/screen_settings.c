@@ -20,7 +20,7 @@ static void build_account_menu(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(add_button), "add_button");
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
     gtk_widget_set_size_request(GTK_WIDGET(add_button), 32, 32);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)100);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), add_button, 70, 0);
     gtk_box_pack_start(GTK_BOX(user_box), avatar_container, FALSE, FALSE, 0);
@@ -154,6 +154,21 @@ static void build_teams_menu(GtkWidget *menu_block)
         G_CALLBACK(team_valor_click_click), NULL);
 }
 
+static GtkWidget *create_bg_preview(int bg_num)
+{
+    char *path = "client/data/bg-preview/";
+    path = mx_strjoin(path, mx_itoa(bg_num));
+    path = mx_strjoin(path, ".png");
+    GtkWidget *single = gtk_event_box_new();
+    GtkWidget *drawing = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(drawing), BGPREVIEW_W, BGPREVIEW_H);
+    g_signal_connect(G_OBJECT(drawing), "draw", G_CALLBACK(draw_event_bg_preview), (char*)path);
+    gtk_container_add(GTK_CONTAINER(single), drawing);
+    gtk_widget_show_all(GTK_WIDGET(single));
+
+    return single;
+}
+
 static void build_chat_menu(GtkWidget *menu_block)
 {
     GtkWidget *title3 = gtk_label_new("CUSTOMIZE CHAT");
@@ -161,7 +176,20 @@ static void build_chat_menu(GtkWidget *menu_block)
     gtk_widget_set_halign(title3, GTK_ALIGN_START);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(menu_block), title3, FALSE, FALSE, 0);
     //--//
-    
+    GtkWidget *chat_bgs = gtk_grid_new();
+    //gtk_widget_set_name(GTK_WIDGET(chat_bgs), "chat_bgs");
+    gtk_box_pack_start(GTK_BOX(menu_block), chat_bgs, FALSE, FALSE, 0);
+    int bg_num = 0;
+    for(int i = 0; i < 2; i++)         // Columns
+    {
+        for(int j = 0; j < 4; j++)     // Rows
+        {
+            GtkWidget *single = create_bg_preview(bg_num);
+            gtk_grid_attach(GTK_GRID(chat_bgs), single, j, i, BGPREVIEW_W, BGPREVIEW_H);
+            printf("%i\n", bg_num);
+            bg_num++;
+        }
+    }
 }
 
 void build_settings_menu(GtkWidget **stgscreen)

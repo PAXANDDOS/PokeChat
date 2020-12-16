@@ -23,11 +23,31 @@ void avatar_random() {
     closedir(dir);
 }
 
+char *get_avatar_by_number(int num)
+{
+    DIR* dir = NULL;
+    struct dirent *sd = NULL;
+    char *path = "client/data/avatars/";
+    char *error_avatar = "client/data/avatars/0.png";
+
+    dir = opendir(path);
+    if(dir == NULL) return error_avatar;
+
+    int max = 0;
+    while ((sd = readdir(dir)) != NULL)
+        if (sd->d_type == DT_REG)       /* If the entry is a regular file */
+            max++;
+    closedir(dir);
+    if(num > max) 
+        return error_avatar;
+
+    path = mx_strjoin(path, mx_itoa(num));
+    return mx_strjoin(path, ".png");
+}
+
 void pokemon_random() {
     DIR* dir = NULL;
     struct dirent *sd = NULL;
-
-    // COUNTING FILES !!!! AMOUNT OF FILES IN /POKEMON/ AND /POKEMON-TEXT/ SHOULD BE THE SAME
 
     int num = 0;
 

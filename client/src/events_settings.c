@@ -64,7 +64,9 @@ void apply_butt_click(GtkWidget *widget){
     t_account.username = t_account_temp.username;
     t_account.name = t_account_temp.name;
     t_account.code = t_account_temp.code;
-
+    t_avatar.avatar_chosen--;
+    t_account.avatar = get_avatar_by_number(t_avatar.avatar_chosen);
+    printf("%i\n", t_avatar.avatar_chosen);
     gtk_label_set_text(GTK_LABEL(t_settings_labels.username), t_account.username);
     gtk_label_set_text(GTK_LABEL(t_settings_labels.name), t_account.name);
 }

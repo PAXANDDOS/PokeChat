@@ -8,7 +8,7 @@ static bool check_date()
 void new_outgoing_message(GtkWidget *messages_block)
 {
     // check_date();   // Проверка на совпадение текущей даты с датой последнего сообщения. Если совпадает - не показывать и наоборот
-    if(!check_date() && temp == 0)
+    if(!check_date() && temp == 0) // temp - переменная чтобы дату показало лишь раз при первой отправке
     {
         GtkWidget *date = gtk_label_new(mx_str_getdate());
         gtk_widget_set_name(GTK_WIDGET(date), "date");

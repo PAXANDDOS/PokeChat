@@ -65,6 +65,8 @@ gint CUR_HEIGHT;
 // Settings screen size and positions
 #define TEAM_W 220
 #define TEAM_H 264
+#define BGPREVIEW_W 104
+#define BGPREVIEW_H 79
 
 struct tm *tm_struct;
 char *mx_str_gettime();
@@ -95,7 +97,7 @@ struct                      // Structure for event boxes on leftbar
     GtkWidget *settings_box;
 } t_img_event_box;
 
-struct                  // TEMPORAL Structure for current user account data
+struct                  // TEMPORAL Structure for tracking entries
 {
     char *username;     // For account username
     char *name;         // For account real name
@@ -110,7 +112,14 @@ struct                  // Structure for current user account data
     char *password;     // char* for password
     char *code;         // 12-digit trainer code
     int team;           // 1-3 team choice
+    char *avatar;       // Path to chosen avatar
 } t_account;
+
+struct      // Structure for avatars
+{
+    char* avatar_generated;
+    int avatar_chosen;
+}   t_avatar;
 
 struct                  // Labels for settings screen
 {
@@ -143,13 +152,6 @@ typedef struct s_chat_list      // Structure for people in the chat list
     struct s_chat_list *next;   // To next person
 }   t_chat_list;
 
-struct             // Я уже забыл что это
-{
-    GtkWidget *change_info;
-    GtkWidget *select_avatar;
-    GtkWidget *settings_active;
-}   t_settings_scr;
-
 struct          // Structure for main screen switching
 {
     GtkWidget *home_scr;
@@ -162,11 +164,6 @@ struct      // Structure for chat switching
 {
     GtkWidget *chat_screen;
 }   t_chats;
-
-struct      // Structure for avatars
-{
-    char* avatar_generated;
-}   t_avatar;
 
 struct      // Structure for random pokemon data
 {
@@ -192,8 +189,11 @@ void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
 
+char *get_avatar_by_number(int num);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
+gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
+gboolean draw_event_bg_preview(GtkWidget *widget, cairo_t *cr, char* path);
 
 GtkWidget *create_chatlist();
 void new_outgoing_message(GtkWidget *messages_block);

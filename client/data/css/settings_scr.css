@@ -183,3 +183,7 @@
     border: 3px solid rgb(255, 13, 2);
     opacity: 0.5;
 }
+#chat_bgs
+{
+    background-color: #fff;
+}
