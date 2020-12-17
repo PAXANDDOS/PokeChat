@@ -15,7 +15,7 @@ static void build_activity(GtkWidget *main)
 
     // ACTIVE PERSON 1
     GtkWidget *active1_box = gtk_event_box_new();
-    gtk_event_box_set_above_child (GTK_EVENT_BOX(active1_box), TRUE);
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(active1_box), TRUE);
     gtk_widget_set_name(GTK_WIDGET(active1_box), "active");
     GtkWidget *active1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(active1), ACTIVE_PERSON_W, ACTIVE_PERSON_H);

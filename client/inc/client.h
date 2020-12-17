@@ -68,6 +68,11 @@ gint CUR_HEIGHT;
 #define BGPREVIEW_W 104
 #define BGPREVIEW_H 79
 
+struct
+{
+    GtkWidget *window;
+}   t_main;
+
 struct tm *tm_struct;
 char *mx_str_gettime();
 char *mx_str_getdate();
@@ -99,10 +104,11 @@ struct                      // Structure for event boxes on leftbar
 
 struct                  // TEMPORAL Structure for tracking entries
 {
-    char *username;     // For account username
-    char *name;         // For account real name
-    char *password;     // char* for password
-    char *code;         // 12-digit trainer code
+    char *username;         // For account username
+    char *name;             // For account real name
+    char *password;         // char* for password
+    char *code;             // 12-digit trainer code
+    GdkPixbuf *avatar;   // For avatar-from-file
 } t_account_temp;
 
 struct                  // Structure for current user account data
@@ -152,6 +158,11 @@ typedef struct s_chat_list      // Structure for people in the chat list
     struct s_chat_list *next;   // To next person
 }   t_chat_list;
 
+struct
+{
+    GtkWidget *backgound;
+}   t_sgallery;
+
 struct          // Structure for main screen switching
 {
     GtkWidget *home_scr;
@@ -188,12 +199,17 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
 void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
+void create_gallery();
+GtkWidget *create_bg_preview(int bg_num);
 
 char *get_avatar_by_number(int num);
+GdkPixbuf *create_pixbuf(const gchar *filename);
+GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_bg_preview(GtkWidget *widget, cairo_t *cr, char* path);
+gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path);
 
 GtkWidget *create_chatlist();
 void new_outgoing_message(GtkWidget *messages_block);
@@ -274,6 +290,9 @@ void exit_button_click(GtkWidget *widget, GdkEventButton *event);
 void add_button_enter_notify(GtkWidget *widget);
 void add_button_leave_notify(GtkWidget *widget);
 void add_button_click_click(GtkWidget *widget, GdkEventButton *event);
+void gallery_button_enter_notify(GtkWidget *widget);
+void gallery_button_leave_notify(GtkWidget *widget);
+void gallery_button_click_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void team_mystic_enter_notify(GtkWidget *widget);
 void team_mystic_leave_notify(GtkWidget *widget);
 void team_mystic_click_click(GtkWidget *widget, GdkEventButton *event);

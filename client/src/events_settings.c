@@ -26,6 +26,38 @@ void add_button_leave_notify(GtkWidget *widget) {
 void add_button_click_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event) {}
+    GtkWidget *dialog;
+    GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+    gint res;
+
+    dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_main.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+
+    res = gtk_dialog_run (GTK_DIALOG (dialog));
+    if (res == GTK_RESPONSE_ACCEPT)
+    {
+        char *filename;
+        GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
+        filename = gtk_file_chooser_get_filename(chooser);
+        printf("Got: %s\n", filename);
+        //t_account.avatar = filename;
+        free(filename);
+    }
+
+    gtk_widget_destroy (dialog);
+}
+
+void gallery_button_enter_notify(GtkWidget *widget) {
+    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+}
+
+void gallery_button_leave_notify(GtkWidget *widget) {
+    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+}
+
+void gallery_button_click_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
+    if(widget) {}
+    if(event) {}
+    create_gallery(main);
 }
 
 //
@@ -64,9 +96,6 @@ void apply_butt_click(GtkWidget *widget){
     t_account.username = t_account_temp.username;
     t_account.name = t_account_temp.name;
     t_account.code = t_account_temp.code;
-    t_avatar.avatar_chosen--;
-    t_account.avatar = get_avatar_by_number(t_avatar.avatar_chosen);
-    printf("%i\n", t_avatar.avatar_chosen);
     gtk_label_set_text(GTK_LABEL(t_settings_labels.username), t_account.username);
     gtk_label_set_text(GTK_LABEL(t_settings_labels.name), t_account.name);
 }

@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-static void build_account_menu(GtkWidget *menu_block)
+static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
 {
     GtkWidget *title1 = gtk_label_new("MY ACCOUNT");
     gtk_widget_set_name(GTK_WIDGET(title1), "title1");                // Имя
@@ -18,11 +18,15 @@ static void build_account_menu(GtkWidget *menu_block)
     GtkWidget *avatar = gtk_drawing_area_new();
     GtkWidget *add_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(add_button), "add_button");
+    GtkWidget *gallery_button = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(gallery_button), "gallery_button");
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
     gtk_widget_set_size_request(GTK_WIDGET(add_button), 32, 32);
+    gtk_widget_set_size_request(GTK_WIDGET(gallery_button), 32, 32);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), add_button, 70, 0);
+    gtk_fixed_put(GTK_FIXED(avatar_container), gallery_button, 84, 32);
     gtk_box_pack_start(GTK_BOX(user_box), avatar_container, FALSE, FALSE, 0);
     GtkWidget *names_account = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_valign(GTK_WIDGET(names_account), GTK_ALIGN_CENTER);
@@ -99,6 +103,13 @@ static void build_account_menu(GtkWidget *menu_block)
         G_CALLBACK(add_button_leave_notify), NULL);
     g_signal_connect(G_OBJECT(add_button), "button_press_event",
         G_CALLBACK(add_button_click_click), NULL);
+
+    g_signal_connect(G_OBJECT(gallery_button), "enter-notify-event",
+        G_CALLBACK(gallery_button_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(gallery_button), "leave-notify-event",
+        G_CALLBACK(gallery_button_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(gallery_button), "button_press_event",
+        G_CALLBACK(gallery_button_click_click), main);
 }
 
 static void build_teams_menu(GtkWidget *menu_block)
@@ -154,21 +165,6 @@ static void build_teams_menu(GtkWidget *menu_block)
         G_CALLBACK(team_valor_click_click), NULL);
 }
 
-static GtkWidget *create_bg_preview(int bg_num)
-{
-    char *path = "client/data/bg-preview/";
-    path = mx_strjoin(path, mx_itoa(bg_num));
-    path = mx_strjoin(path, ".png");
-    GtkWidget *single = gtk_event_box_new();
-    GtkWidget *drawing = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(drawing), BGPREVIEW_W, BGPREVIEW_H);
-    g_signal_connect(G_OBJECT(drawing), "draw", G_CALLBACK(draw_event_bg_preview), (char*)path);
-    gtk_container_add(GTK_CONTAINER(single), drawing);
-    gtk_widget_show_all(GTK_WIDGET(single));
-
-    return single;
-}
-
 static void build_chat_menu(GtkWidget *menu_block)
 {
     GtkWidget *title3 = gtk_label_new("CUSTOMIZE CHAT");
@@ -177,16 +173,20 @@ static void build_chat_menu(GtkWidget *menu_block)
     gtk_box_pack_start(GTK_BOX(menu_block), title3, FALSE, FALSE, 0);
     //--//
     GtkWidget *chat_bgs = gtk_grid_new();
-    //gtk_widget_set_name(GTK_WIDGET(chat_bgs), "chat_bgs");
+    gtk_grid_set_row_spacing(GTK_GRID(chat_bgs), 2);
+    gtk_grid_set_column_spacing(GTK_GRID(chat_bgs), 2);
+    gtk_widget_set_name(GTK_WIDGET(chat_bgs), "chat_bgs");
     gtk_box_pack_start(GTK_BOX(menu_block), chat_bgs, FALSE, FALSE, 0);
     int bg_num = 0;
-    for(int i = 0; i < 2; i++)         // Columns
+    int i = 0;
+    int j = 0;
+    for(i = 0; i < 2; i++)         // Columns
     {
-        for(int j = 0; j < 4; j++)     // Rows
+        for(j = 0; j < 4; j++)     // Rows
         {
             GtkWidget *single = create_bg_preview(bg_num);
-            gtk_grid_attach(GTK_GRID(chat_bgs), single, j, i, BGPREVIEW_W, BGPREVIEW_H);
-            printf("%i\n", bg_num);
+            gtk_widget_set_size_request(GTK_WIDGET(single), BGPREVIEW_W, BGPREVIEW_H);
+            gtk_grid_attach(GTK_GRID(chat_bgs), single, j, i, 1, 1);
             bg_num++;
         }
     }
@@ -213,7 +213,7 @@ void build_settings_menu(GtkWidget **stgscreen)
     gtk_widget_set_name(GTK_WIDGET(menu_block), "menu_block");
     gtk_fixed_put(GTK_FIXED(main),menu_block, 0, 0);
     //--//--//
-    build_account_menu(menu_block);
+    build_account_menu(menu_block, main);
     build_teams_menu(menu_block);
     build_chat_menu(menu_block);
 }

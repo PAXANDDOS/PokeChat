@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-static GdkPixbuf *create_pixbuf(const gchar *filename) {
+GdkPixbuf *create_pixbuf(const gchar *filename) {
     GdkPixbuf *pixbuf;
     GError *error = NULL;
     pixbuf = gdk_pixbuf_new_from_file(filename, &error);
@@ -13,7 +13,7 @@ static GdkPixbuf *create_pixbuf(const gchar *filename) {
     return pixbuf;
 }
 
-static GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
+GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
     GdkPixbuf *pixbuf = create_pixbuf(path);
     GdkPixbuf *result = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), w, h, GDK_INTERP_HYPER);
     g_object_unref(G_OBJECT(pixbuf));
@@ -84,6 +84,16 @@ gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size) {
 
 gboolean draw_event_bg_preview(GtkWidget *widget, cairo_t *cr, char* path) {
     GdkPixbuf *pixbuf = get_pixbuf_with_size(path, BGPREVIEW_W, BGPREVIEW_H);
+    gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+    g_object_unref(G_OBJECT(pixbuf));
+    cairo_paint(cr);
+
+    if (widget) {}
+    return FALSE;
+}
+
+gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path) {
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, 80, 80);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);

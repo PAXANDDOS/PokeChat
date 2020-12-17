@@ -56,6 +56,49 @@
 {
     background-color: #878a96;
 }
+#gallery_button
+{
+    background-color: #c3c8da;
+    background-image: url("../images/gallery.png");
+    background-size: 100%;
+    border-radius: 50%;
+    transition: all 0.1s cubic-bezier(.17,.67,.83,.67);
+}
+#gallery_button:hover
+{
+    background-color: #878a96;
+}
+#sgallery
+{
+    background-color: rgba(0, 0, 0, 0);
+}
+#sgallery_box
+{
+    background-color: #1f2846;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 0 3px #374676;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+#sgallery_title
+{
+    font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    color: #c3c8da;
+    letter-spacing: .8px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+#avatars
+{
+    border-radius: 5px;
+    transition: all 0.1s cubic-bezier(.17,.67,.83,.67);
+}
+#avatars:hover
+{
+    border-radius: 15px;
+}
 #nickname-s
 {
     font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;

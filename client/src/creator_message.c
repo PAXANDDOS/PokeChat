@@ -24,7 +24,7 @@ void new_outgoing_message(GtkWidget *messages_block)
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)35);
     gtk_box_pack_end(GTK_BOX(message_body), avatar, FALSE, FALSE, 0);
     GtkWidget *message = gtk_label_new(msg_data.content);
     gtk_widget_set_name(GTK_WIDGET(message), "message");
@@ -35,7 +35,7 @@ void new_outgoing_message(GtkWidget *messages_block)
     // gtk_frame_set_label_widget (GTK_FRAME(nickname), message);   Не работает
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
     GtkWidget *time_label = gtk_label_new(mx_str_gettime());
-    GtkWidget *nickname = gtk_label_new("PAXANDDOS");
+    GtkWidget *nickname = gtk_label_new(t_account.username);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
     gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
     gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
