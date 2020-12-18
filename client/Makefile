@@ -1,66 +1,27 @@
-# NAME		= uchat
-
-# SRC_DIR		= src/
-# OBJ_DIR		= obj/
-# INC_DIR		= inc/
-# DIRS		= $(notdir $(wildcard $(SRC_DIR)*))
-# FILES		= $(foreach dir, $(DIRS), $(basename $(wildcard $(SRC_DIR)$(dir)/*.c)))
-# SRC			= $(FILES:%=%.c)
-# OBJ			= $(SRC:src/%.c=$(OBJ_DIR)%.o)
-# INC_H		= $(wildcard $(INC_DIR)*.h)
-
-# LIB_DIR		= ../frameworks
-# LIB_LIST	= $(notdir $(wildcard $(LIB_DIR)/*))
-# LIB_DIRS	= $(foreach libdirs, $(LIB_LIST), $(LIB_DIR)/$(libdirs)/)
-# LIB_BIN		= $(join $(LIB_DIRS), $(addsuffix .a, $(LIB_LIST)))
-# LIB_INC		= $(addsuffix $(INC_DIR), $(LIB_DIRS))
-
-# CC			= clang
-# GFLAGS		= -std=c11 -pipe -Wall -Wextra -Werror -Wpedantic -Wno-unused-command-line-argument -Wno-unused-variable -Wno-unused-function -Wno-unused-parameter -g3 -fsanitize=address,undefined -fno-omit-frame-pointer -O0
-# CFLAGS		= `pkg-config --cflags --libs gtk+-3.0`
-# IFLAGS		= $(addprefix -I, $(LIB_INC) $(INC_DIR))
-
-# COMPILE		= $(CC) $(GFLAGS) $(IFLAGS) $(CFLAGS) $(LIB_BIN)
-# MAKE_M		= make -sf Makefile -C
-# MKDIR		= mkdir -p
-# RM			= /bin/rm -rf
-
-# all: $(LIB_LIST) $(NAME)
-
-# $(NAME): $(OBJ_DIR) $(OBJ) $(LIB_BIN)
-# 	@$(COMPILE) $(OBJ) -lmx -o $(NAME)
-# 	@printf "\r\33[2K$@ \033[32;1mcreated\033[0m\n"
-
-# $(LIB_LIST): $(LIB_DIRS)
-# 	@$(MAKE_M) $(LIB_DIR)/$@
-
-# $(OBJ_DIR):
-# 	@$(MKDIR) $@ $(foreach dir, $(DIRS), $@/$(dir))
-
-# $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_H)
-# 	@$(COMPILE) -o $@ -c $<
-# 	@printf "\r\33[2K$(NAME) \033[33;1mcompile \033[0m$(<:$(SRC_DIR)/%.c=%) "
-
-# clean:
-# 	@$(RM) $(OBJ_DIR)
-# 	@printf "$(OBJ_DIR)\t   \033[31;1mdeleted\033[0m\n"
-
-# uninstall:
-# 	@$(RM) $(OBJ_DIR) $(NAME)
-# 	@printf "$(NAME) \033[31;1muninstalled\033[0m\n"
-
-# reinstall: uninstall all
-
-# .PHONY: all uninstall clean reinstall
-
-
-# temporal makefile
 SRCS := $(wildcard src/*.c)
 HDRS := $(wildcard inc/*.h)
 
 WFLGS := $(addprefix -W, all extra error pedantic)
+
+CJSON_DIR = ../frameworks/cJSON
+CJSON_FILES:= $(CJSON_DIR)/libcjson.a
+CJSON_INC_FILES:= $(CJSON_DIR)/inc
+
+LIB_DIR = ../frameworks/libmx
+LIB_FILES:= $(LIB_DIR)/libmx.a
+LIB_INC_FILES:= $(LIB_DIR)/inc
+
+SSL_DIR = ../frameworks/openssl
+SSL_FILES:= ../local_lib/lib
+SSL_INC_FILES:= $(SSL_DIR)
+
+LIBS_FLAGS = -lmx -lcjson -lssl -lcrypto \
+			 -L$(CJSON_DIR) -I$(CJSON_INC_FILES) \
+			 -L$(LIB_DIR) -I$(LIB_INC_FILES) \
+			 -L$(SSL_FILES) -I$(SSL_INC_FILES)
+
 GTK_LINK_FLAGS = `pkg-config --cflags --libs gtk+-3.0`
-# GTK_INC_FLAGS = `pkg-config --cflags gtk+-3.0`
+
 SDL_INC_FLAGS = -rpath ./frameworks -F ../frameworks \
 				-framework SDL2 \
 				-framework SDL2_mixer \
@@ -74,19 +35,23 @@ SDL_INC_FLAGS = -rpath ./frameworks -F ../frameworks \
 				-I ../frameworks/Gtk3.framework/lib/glib-2.0/include \
 				-I ../frameworks/SDL2.framework/SDL2 \
 				-I ../frameworks/SDL2_mixer.framework/Headers
-LIB_INC = -I ../frameworks/libmx/inc
 
-all: install 
+all: install
 
 font:
 	@cp data/fonts/Rubik/* ${HOME}/Library/Fonts/
-	@cp data/fonts/UniSans/* ${HOME}/Library/Fonts/
 
-install: uchat
+install: $(CJSON_FILES) $(LIB_FILES) uchat
 
 uchat:
-	@clang -std=c11 $(WFLGS) $(SRCS) $(HDRS) $(SDL_INC_FLAGS) $(GTK_LINK_FLAGS) $(LIB_INC)
+	@clang -std=c11 -lmx -lcjson $(WFLGS) $(SRCS) $(HDRS) $(GTK_LINK_FLAGS) $(SDL_INC_FLAGS) $(LIB_INC) $(LIBS_FLAGS)
 	@mv a.out ../$@
+
+$(CJSON_FILES):
+	@make -sC $(CJSON_DIR)
+
+$(LIB_FILES):
+	@make -sC $(LIB_DIR)
 
 clean:
 	@rm -rf inc/*.gch
@@ -95,3 +60,5 @@ uninstall: clean
 	@rm -rf ../uchat
 
 reinstall: uninstall install
+
+.PHONY: all install uninstall clean reinstall

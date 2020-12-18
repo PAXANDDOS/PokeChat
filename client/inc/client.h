@@ -18,8 +18,11 @@
 #include <gtk/gtk.h>
 #include <SDL2/SDL.h>
 #include "SDL2_mixer/SDL_mixer.h"
-// #include "libmx.h"
-// #include "cJSON.h"
+#include "libmx.h"
+#include "cJSON.h"
+#include "openssl/bio.h"
+#include "openssl/evp.h"
+#include <pthread.h>
 
 // Windows 
 #define WINDOW_WIDTH 1280
@@ -188,6 +191,11 @@ struct      // Selected user in chatlist
 {
     char* current_user_dm;
 }   t_dm;
+
+int ssl_client(char*, int, char*);
+void send_message();
+void send_sticker();
+void send_photo();
 
 void test_autofill();
 void fill_pokemon();

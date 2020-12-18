@@ -1,54 +1,48 @@
-NAME		= uchat_server
+SRCS := $(wildcard src/*.c)
+HDRS := $(wildcard inc/*.h)
 
-SRC_DIR		= src/
-OBJ_DIR		= obj/
-INC_DIR		= inc/
-DIRS		= $(notdir $(wildcard $(SRC_DIR)*))
-FILES		= $(foreach dir, $(DIRS), $(basename $(wildcard $(SRC_DIR)$(dir)/*.c)))
-SRC			= $(FILES:%=%.c)
-OBJ			= $(SRC:src/%.c=$(OBJ_DIR)%.o)
-INC_H		= $(wildcard $(INC_DIR)*.h)
+WFLGS := $(addprefix -W, all extra error pedantic)
 
-LIB_DIR		= ../frameworks
-LIB_LIST	= $(notdir $(wildcard $(LIB_DIR)/*))
-LIB_DIRS	= $(foreach libdirs, $(LIB_LIST), $(LIB_DIR)/$(libdirs)/)
-LIB_BIN		= $(join $(LIB_DIRS), $(addsuffix .a, $(LIB_LIST)))
-LIB_INC		= $(addsuffix $(INC_DIR), $(LIB_DIRS))
+CJSON_DIR = ../frameworks/cJSON
+CJSON_FILES:= $(CJSON_DIR)/libcjson.a
+CJSON_INC_FILES:= $(CJSON_DIR)/inc
 
-CC			= clang
-GFLAGS		= -std=c11 -pipe -Wall -Wextra -Werror -Wpedantic -Wno-unused-command-line-argument -Wno-unused-variable -Wno-unused-function -Wno-unused-parameter -g 
-CFLAGS		= -lsqlite3 -lpthread
-IFLAGS		= $(addprefix -I, $(LIB_INC) $(INC_DIR))
+LIB_DIR = ../frameworks/libmx
+LIB_FILES:= $(LIB_DIR)/libmx.a
+LIB_INC_FILES:= $(LIB_DIR)/inc
 
-COMPILE		= $(CC) $(GFLAGS) $(IFLAGS) $(CFLAGS) $(LIB_BIN)
-MAKE_M		= make -sf Makefile -C
-MKDIR		= mkdir -p
-RM			= /bin/rm -rf
+SSL_DIR = ../frameworks/openssl
+SSL_FILES:= ../local_lib/lib
+SSL_INC_FILES:= $(SSL_DIR)
 
-all: $(LIB_LIST) $(NAME)
+LIBS_FLAGS = -lmx -lcjson -lssl -lcrypto \
+			 -L$(CJSON_DIR) -I$(CJSON_INC_FILES) \
+			 -L$(LIB_DIR) -I$(LIB_INC_FILES) \
+			 -L$(SSL_FILES) -I$(SSL_INC_FILES)
 
-$(NAME): $(OBJ_DIR) $(OBJ) $(LIB_BIN)
-	@$(COMPILE) $(OBJ) -lmx -o $(NAME)
-	@printf "\r\33[2K$@ \033[32;1mcreated\033[0m\n"
+all: install
 
-$(LIB_LIST): $(LIB_DIRS)
-	@$(MAKE_M) $(LIB_DIR)/$@
+font:
+	@cp data/fonts/Rubik/* ${HOME}/Library/Fonts/
 
-$(OBJ_DIR):
-	@$(MKDIR) $@ $(foreach dir, $(DIRS), $@/$(dir))
+install: $(CJSON_FILES) $(LIB_FILES) uchat_server
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_H)
-	@$(COMPILE) -o $@ -c $<
-	@printf "\r\33[2K$(NAME) \033[33;1mcompile \033[0m$(<:$(SRC_DIR)/%.c=%) "
+uchat_server:
+	@clang -std=c11 -lmx -lcjson $(WFLGS) $(SRCS) $(HDRS) $(LIB_INC) $(LIBS_FLAGS)
+	@mv a.out ../$@
+
+$(CJSON_FILES):
+	@make -sC $(CJSON_DIR)
+
+$(LIB_FILES):
+	@make -sC $(LIB_DIR)
 
 clean:
-	@$(RM) $(OBJ_DIR)
-	@printf "$(OBJ_DIR)\t   \033[31;1mdeleted\033[0m\n"
+	@rm -rf inc/*.gch
 
-uninstall:
-	@$(RM) $(OBJ_DIR) $(NAME)
-	@printf "$(NAME) \033[31;1muninstalled\033[0m\n"
+uninstall: clean
+	@rm -rf ../uchat_server
 
-reinstall: uninstall all
+reinstall: uninstall install
 
-.PHONY: all uninstall clean reinstall
+.PHONY: all install uninstall clean reinstall

@@ -33,16 +33,26 @@ void add_button_click_click(GtkWidget *widget, GdkEventButton *event) {
     dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_main.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
 
     res = gtk_dialog_run (GTK_DIALOG (dialog));
-    if (res == GTK_RESPONSE_ACCEPT)
-    {
+    if (res == GTK_RESPONSE_ACCEPT) {
         char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
         filename = gtk_file_chooser_get_filename(chooser);
-        printf("Got: %s\n\n\n\n\n\n\n\n\n\n\n\n", filename);
-        t_account.avatar = "../../../../../../../../../../../..";
-        t_account.avatar = mx_strjoin(t_account.avatar, filename);        
-        //t_account.avatar = filename;
-        printf("Final: %s\n\n\n\n\n\n\n\n\n\n\n", t_account.avatar);
+        char *pwd = getenv("PWD");
+        char **path_split = mx_strsplit(pwd, '/');
+        int words_count = 0;
+        while (path_split[++words_count]);
+        char *backward = strdup("");
+        for (int i = 0; i < words_count; i++) {
+            backward = mx_strrejoin(backward, "..");
+            if (i != words_count - 1)
+                backward = mx_strrejoin(backward, "/");
+        }
+        backward = mx_strrejoin(backward, filename);
+        t_account.avatar = strdup(backward);
+        mx_strdel(&backward);
+        for (int i = 0; path_split[i]; i++)
+            free(path_split[i]);
+        free(path_split);
         free(filename);
     }
 

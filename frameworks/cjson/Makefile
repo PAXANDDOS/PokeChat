@@ -1,18 +1,11 @@
-# https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.htmlz
-# https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
-
-NAME = cjson.a
+NAME = libcjson.a
 
 SRC_DIR = src
-
 OBJ_DIR = obj
-
 INC_DIR = inc
 
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC_FILES:%.c=%.o)))
-
 INC_FILES = $(wildcard $(INC_DIR)/*.h)
 
 CC = clang

@@ -30,7 +30,8 @@
                 "${env:HOME}/.brew/Cellar/glib/2.66.2_1/lib/glib-2.0/include/",
                 "${env:HOME}/Desktop/UCODE-uchat/frameworks/SDL2.framework/",
                 "${env:HOME}/Desktop/UCODE-uchat/frameworks/",
-                "${env:HOME}/Desktop/UCODE-uchat/frameworks/SDL2_mixer.framework/"
+                "${env:HOME}/Desktop/UCODE-uchat/frameworks/SDL2_mixer.framework/",
+                "${env:HOME}/Desktop/UCODE-uchat/frameworks/openssl/"
             ],
             "defines": [],
             "macFrameworkPath": [

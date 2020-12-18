@@ -46,6 +46,7 @@ char *mx_strtrim(const char *str);
 char *mx_del_extra_spaces(const char *str);
 char **mx_strsplit(const char *s, char c);
 char *mx_strjoin(const char *s1, const char *s2);
+char *mx_strrejoin(char *s1, char const *s2);
 char *mx_file_to_str(const char *file);
 char *mx_replace_substr(const char *str, const char *sub, const char *replace);
 char *mx_strchr(const char *s, int c);
