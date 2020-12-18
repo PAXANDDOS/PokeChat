@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-void preload_images() 
+void preload_images()
 {
     home_img.active = true;
     home_img.basic = "client/data/images/empty.png";

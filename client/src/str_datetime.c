@@ -8,13 +8,13 @@ char *mx_str_gettime()
     int minutes = tm_struct->tm_min;
     // free(tm_struct);
     char *tlabel = NULL;
-    
+
     tlabel = mx_strjoin(tlabel, mx_itoa(hours));
     tlabel = mx_strjoin(tlabel, ":");
-    if(minutes < 10) 
+    if(minutes < 10)
         tlabel = mx_strjoin(tlabel, "0");
     tlabel = mx_strjoin(tlabel, mx_itoa(minutes));
-    
+
     return tlabel;
 }
 

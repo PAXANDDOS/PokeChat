@@ -10,12 +10,12 @@ static void build_list(GtkWidget *main)
     GtkWidget *search_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(search_block), "search_block");
     gtk_widget_set_size_request(GTK_WIDGET(search_block), 350, 40);
-    gtk_box_pack_start(GTK_BOX(list_block), search_block, FALSE, TRUE, 15); 
+    gtk_box_pack_start(GTK_BOX(list_block), search_block, FALSE, TRUE, 15);
     GtkWidget *search_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(search_field), "search_field");
     gtk_entry_set_placeholder_text(GTK_ENTRY(search_field), "Search for people");
     gtk_entry_set_max_length(GTK_ENTRY(search_field), 35);
-    gtk_box_pack_start(GTK_BOX(search_block), search_field, TRUE, TRUE, 0); 
+    gtk_box_pack_start(GTK_BOX(search_block), search_field, TRUE, TRUE, 0);
     GtkWidget *adduser = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(adduser), "adduser");
     gtk_widget_set_size_request(GTK_WIDGET(adduser), 22, 22);
@@ -37,12 +37,9 @@ static void build_list(GtkWidget *main)
     gtk_container_add(GTK_CONTAINER(scrollable), chatlist);
     gtk_box_pack_start(GTK_BOX(list_block), scrollable, FALSE, FALSE, 0);              // Кладем скролл зону на главный экран
 
-    g_signal_connect(G_OBJECT(adduser), "enter-notify-event",
-        G_CALLBACK(adduser_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(adduser), "leave-notify-event",
-        G_CALLBACK(adduser_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(adduser), "button_press_event",
-        G_CALLBACK(adduser_click), NULL);
+    g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(adduser_click), NULL);
 }
 
 static void build_entryfield(GtkWidget *main)
@@ -81,46 +78,36 @@ static void build_entryfield(GtkWidget *main)
     gtk_widget_set_halign(GTK_WIDGET(sticker), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(sticker), GTK_ALIGN_CENTER);
 
-    g_signal_connect(G_OBJECT(attach), "enter-notify-event",
-        G_CALLBACK(attach_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(attach), "leave-notify-event",
-        G_CALLBACK(attach_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(attach), "button_press_event",
-        G_CALLBACK(attach_click), NULL);
+    g_signal_connect(G_OBJECT(attach), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(attach), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(attach), "button_press_event", G_CALLBACK(attach_click), NULL);
 
-    g_signal_connect(G_OBJECT(send), "enter-notify-event",
-        G_CALLBACK(send_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(send), "leave-notify-event",
-        G_CALLBACK(send_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(send), "button_press_event",
-        G_CALLBACK(send_click), entry_text); 
-    g_signal_connect(entry_text, "activate", 
-        G_CALLBACK(send_click), entry_text);
+    g_signal_connect(G_OBJECT(send), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(send), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), entry_text);
+    g_signal_connect(entry_text, "activate", G_CALLBACK(send_click), entry_text);
 
-    g_signal_connect(G_OBJECT(sticker), "enter-notify-event",
-        G_CALLBACK(sticker_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(sticker), "leave-notify-event",
-        G_CALLBACK(sticker_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(sticker), "button_press_event",
-        G_CALLBACK(sticker_click), NULL);
+    g_signal_connect(G_OBJECT(sticker), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(sticker), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(sticker), "button_press_event", G_CALLBACK(sticker_click), NULL);
 }
 
 static void build_chat(GtkWidget *main)
 {
-    GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CHAT_H, 100, 100, CHAT_H);    // Параметры скролла
-    GtkWidget *scrollable = gtk_scrolled_window_new(NULL, vadjustment);         // Зона, доступная для бесконечного скролла
-    gtk_widget_set_name(GTK_WIDGET(scrollable), "scrollable_msg");              // Имя 1
-    gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                    // Размер
+    GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CHAT_H, 100, 100, CHAT_H); // Параметры скролла
+    GtkWidget *scrollable = gtk_scrolled_window_new(NULL, vadjustment);             // Зона, доступная для бесконечного скролла
+    gtk_widget_set_name(GTK_WIDGET(scrollable), "scrollable_msg");                  // Имя 1
+    gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                        // Размер
 
-    t_chats.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                     // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
-    gtk_widget_set_size_request(t_chats.chat_screen, CHAT_W, CHAT_H);                   // Размер
-    gtk_widget_set_name(GTK_WIDGET(t_chats.chat_screen), "messages_block");             // Имя 2
-    
-    gtk_container_add(GTK_CONTAINER(scrollable), t_chats.chat_screen);                  // Кладем чат в скролл зону
-    gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                       // Кладем скролл зону на главный экран
+    t_chats.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
+    gtk_widget_set_size_request(t_chats.chat_screen, CHAT_W, CHAT_H);               // Размер
+    gtk_widget_set_name(GTK_WIDGET(t_chats.chat_screen), "messages_block");         // Имя 2
+
+    gtk_container_add(GTK_CONTAINER(scrollable), t_chats.chat_screen);              // Кладем чат в скролл зону
+    gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                           // Кладем скролл зону на главный экран
 }
 
-void build_messanger_screen(GtkWidget **msgscreen) 
+void build_messanger_screen(GtkWidget **msgscreen)
 {
     // Loading CSS file
     GtkCssProvider *cssProvider = gtk_css_provider_new();
@@ -129,9 +116,9 @@ void build_messanger_screen(GtkWidget **msgscreen)
     //
     // Creating workspace
     t_main_scr.msg_scr = gtk_grid_new();
-    gtk_widget_set_name(GTK_WIDGET(t_main_scr.msg_scr), "messanger");                            
-    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); 
-    gtk_fixed_put(GTK_FIXED(*msgscreen), t_main_scr.msg_scr, LEFTBAR_W, 0);                       
+    gtk_widget_set_name(GTK_WIDGET(t_main_scr.msg_scr), "messanger");
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_fixed_put(GTK_FIXED(*msgscreen), t_main_scr.msg_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
     gtk_grid_attach(GTK_GRID(t_main_scr.msg_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
     //

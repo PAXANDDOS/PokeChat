@@ -30,7 +30,7 @@ GtkWidget *create_chatlist() {
     GtkWidget *chatlist = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(chatlist, LIST_W-20, LIST_H-104);
 
-    for(int i = 0; i < 5; i++) 
+    for(int i = 0; i < 5; i++)
     {
         GtkWidget *single_event = gtk_event_box_new();
         gtk_widget_set_name(GTK_WIDGET(single_event), "single");

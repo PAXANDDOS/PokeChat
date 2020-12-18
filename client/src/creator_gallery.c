@@ -96,6 +96,6 @@ void create_gallery(GtkWidget *main)
         }
     }
     gtk_container_add(GTK_CONTAINER(scrollable), avatars);
-   
+
     gtk_widget_show_all(GTK_WIDGET(t_sgallery.backgound));
 }

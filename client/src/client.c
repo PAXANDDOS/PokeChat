@@ -25,12 +25,12 @@ int main(int argc, char *argv[]) {
     gtk_window_set_title(GTK_WINDOW(t_main.window), "PokeChat");
     gtk_window_set_default_size(GTK_WINDOW(t_main.window), WINDOW_WIDTH, WINDOW_HEIGHT);
     gtk_window_set_position(GTK_WINDOW(t_main.window), GTK_WIN_POS_CENTER);
-    icon = create_pixbuf("client/data/images/logo.png");  
+    icon = create_pixbuf("client/data/images/logo.png");
     gtk_window_set_icon(GTK_WINDOW(t_main.window), icon);
     gtk_window_set_resizable(GTK_WINDOW(t_main.window), FALSE);
 
     preload_images();
-    
+
     build_main_area(&main_area, &t_main.window);
     build_all(&left_bar, &main_area);
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     gtk_widget_hide(GTK_WIDGET(t_main_scr.msg_scr));
     gtk_widget_hide(GTK_WIDGET(t_main_scr.settings_scr));
 
-    g_signal_connect(t_main.window, "destroy", G_CALLBACK(gtk_main_quit), NULL);  
+    g_signal_connect(t_main.window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_main();
     g_object_unref(icon);
     Mix_CloseAudio();

@@ -38,7 +38,7 @@ char *get_avatar_by_number(int num)
         if (sd->d_type == DT_REG)       /* If the entry is a regular file */
             max++;
     closedir(dir);
-    if(num > max) 
+    if(num > max)
         return error_avatar;
 
     path = mx_strjoin(path, mx_itoa(num));
@@ -66,7 +66,7 @@ void pokemon_random() {
     int pick = rand() % num + 1;
     dir = NULL;
     sd = NULL;
- 
+
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, mx_itoa(pick));
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, ".png");
     t_pokefact.pokemon_fact_text = mx_strjoin(t_pokefact.pokemon_fact_text, mx_itoa(pick));

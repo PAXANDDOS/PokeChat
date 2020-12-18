@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-void build_all(GtkWidget **content_selection_area, GtkWidget **main_area) 
+void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
 {
     // Loading CSS file
     GtkCssProvider *cssProvider = gtk_css_provider_new();
@@ -47,7 +47,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
         t_img_event_box.group_box, TRUE, FALSE, LEFTBAR_GAP);
     gtk_widget_set_halign(t_img_event_box.group_box, GTK_ALIGN_CENTER);
 
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.events_box), "eventsbutton");     
+    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.events_box), "eventsbutton");
     gtk_box_pack_start(GTK_BOX(*content_selection_area),
         t_img_event_box.events_box, TRUE, FALSE, LEFTBAR_GAP);
     gtk_widget_set_halign(t_img_event_box.events_box, GTK_ALIGN_CENTER);
@@ -57,7 +57,7 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)40);
-    gtk_box_pack_start(GTK_BOX(block), avatar_container, TRUE, FALSE, LEFTBAR_GAP);          
+    gtk_box_pack_start(GTK_BOX(block), avatar_container, TRUE, FALSE, LEFTBAR_GAP);
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), status, 25, 25);
     gtk_widget_set_halign(avatar_container, GTK_ALIGN_CENTER);
@@ -65,49 +65,31 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     gtk_widget_set_name(GTK_WIDGET(t_img_event_box.settings_box), "settingsbutton");
     gtk_box_pack_start(GTK_BOX(block),
         t_img_event_box.settings_box, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_widget_set_halign(t_img_event_box.settings_box, GTK_ALIGN_CENTER); 
+    gtk_widget_set_halign(t_img_event_box.settings_box, GTK_ALIGN_CENTER);
     //
     // Checking for events
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "enter-notify-event",   // Проверка на наведение мыши,                                                                      
-        G_CALLBACK(home_enter_notify), NULL);                                    // G_OBJECT - бокс с картинкой,
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "leave-notify-event",   // "...-...-event" ивенты из библиотеки,
-        G_CALLBACK(home_leave_notify), NULL);                                    // G_CALLBACK функция которая вызывается при действии.
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "button_press_event",   // gpointer - для доп. данных
-        G_CALLBACK(home_click), NULL);
- 
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "enter-notify-event",
-        G_CALLBACK(messages_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "leave-notify-event",
-        G_CALLBACK(messages_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "button_press_event",
-        G_CALLBACK(messages_click), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "button_press_event", G_CALLBACK(home_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "enter-notify-event",
-        G_CALLBACK(group_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "leave-notify-event",
-        G_CALLBACK(group_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "button_press_event",
-        G_CALLBACK(group_click), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "button_press_event", G_CALLBACK(messages_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "enter-notify-event",
-        G_CALLBACK(events_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "leave-notify-event",
-        G_CALLBACK(events_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "button_press_event",
-        G_CALLBACK(events_click), NULL);    
+    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "button_press_event", G_CALLBACK(group_click), NULL);
 
-    g_signal_connect(G_OBJECT(avatar_container), "enter-notify-event",
-        G_CALLBACK(status_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(avatar_container), "leave-notify-event",
-        G_CALLBACK(status_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(avatar_container), "button_press_event",
-        G_CALLBACK(status_click), NULL);    
+    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "button_press_event", G_CALLBACK(events_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "enter-notify-event",
-        G_CALLBACK(settings_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "leave-notify-event",
-        G_CALLBACK(settings_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "button_press_event",
-        G_CALLBACK(settings_click), NULL);
+    g_signal_connect(G_OBJECT(avatar_container), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(avatar_container), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(avatar_container), "button_press_event", G_CALLBACK(status_click), NULL);
+
+    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "button_press_event", G_CALLBACK(settings_click), NULL);
     //
 }

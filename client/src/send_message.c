@@ -86,7 +86,7 @@ void send_photo() {
     BIO_free_all(b64);
     BIO_free_all(file_bio);
     mx_strdel(&bitmap);
-    
+
     // testing
     char *result = mx_file_to_str(mx_strjoin(TEMP_FOLDER, "b64"));
 
@@ -99,7 +99,7 @@ void send_photo() {
     fclose(f);
 
     mx_strdel(&new_bitmap);
-    
+
 /*
     BIO *bio, *b64;
 

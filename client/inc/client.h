@@ -24,7 +24,7 @@
 #include "openssl/evp.h"
 #include <pthread.h>
 
-// Windows 
+// Windows
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 gint CUR_WIDTH;
@@ -144,7 +144,7 @@ struct
 }   t_teams;
 
 typedef struct s_msg_data   // Structure for data in messages
-{   
+{
     bool sent;              // If send button was pressed
     char *avatar;           // For avatars
     char *nickname;         // For nicknmes
@@ -230,83 +230,41 @@ char *mx_strjoin(const char *s1, const char *s2);
 char *mx_itoa(int number);
 
 // Events
-void home_enter_notify(GtkWidget *widget);
-void home_leave_notify(GtkWidget *widget);
+void event_enter_notify(GtkWidget *widget);
+void event_false_enter_notify(GtkWidget *widget);
+void event_leave_notify(GtkWidget *widget);
+
 void home_click(GtkWidget *widget, GdkEventButton *event);
-void messages_enter_notify(GtkWidget *widget);
-void messages_leave_notify(GtkWidget *widget);
 void messages_click(GtkWidget *widget, GdkEventButton *event);
-void group_enter_notify(GtkWidget *widget);
-void group_leave_notify(GtkWidget *widget);
 void group_click(GtkWidget *widget, GdkEventButton *event);
-void events_enter_notify(GtkWidget *widget);
-void events_leave_notify(GtkWidget *widget);
 void events_click(GtkWidget *widget, GdkEventButton *event);
-void status_enter_notify(GtkWidget *widget);
-void status_leave_notify(GtkWidget *widget);
 void status_click(GtkWidget *widget, GdkEventButton *event);
-void settings_enter_notify(GtkWidget *widget);
-void settings_leave_notify(GtkWidget *widget);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
 
-void active1_enter_notify(GtkWidget *widget);
-void active1_leave_notify(GtkWidget *widget);
 void active1_click(GtkWidget *widget, GdkEventButton *event);
-void active2_enter_notify(GtkWidget *widget);
-void active2_leave_notify(GtkWidget *widget);
 void active2_click(GtkWidget *widget, GdkEventButton *event);
-void active3_enter_notify(GtkWidget *widget);
-void active3_leave_notify(GtkWidget *widget);
 void active3_click(GtkWidget *widget, GdkEventButton *event);
-void active4_enter_notify(GtkWidget *widget);
-void active4_leave_notify(GtkWidget *widget);
 void active4_click(GtkWidget *widget, GdkEventButton *event);
-void active5_enter_notify(GtkWidget *widget);
-void active5_leave_notify(GtkWidget *widget);
 void active5_click(GtkWidget *widget, GdkEventButton *event);
-void tomsg_enter_notify(GtkWidget *widget);
-void tomsg_leave_notify(GtkWidget *widget);
-void togroup_enter_notify(GtkWidget *widget);
-void togroup_leave_notify(GtkWidget *widget);
-void tosettings_enter_notify(GtkWidget *widget);
-void tosettings_leave_notify(GtkWidget *widget);
 
-void adduser_enter_notify(GtkWidget *widget);
-void adduser_leave_notify(GtkWidget *widget);
 void adduser_click(GtkWidget *widget, GdkEventButton *event);
-void attach_enter_notify(GtkWidget *widget);
-void attach_leave_notify(GtkWidget *widget);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
-void send_enter_notify(GtkWidget *widget);
-void send_leave_notify(GtkWidget *widget);
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
 void entry_text_change_event(GtkWidget *widget);
-void sticker_enter_notify(GtkWidget *widget);
-void sticker_leave_notify(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event);
-void single_event_enter_notify(GtkWidget *widget);
-void single_event_leave_notify(GtkWidget *widget);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 
 void username_field_change_event(GtkWidget *widget);
 void firstaname_field_change_event(GtkWidget *widget);
 void code_field_change_event(GtkWidget *widget);
 void apply_butt_click(GtkWidget *widget);
-void exit_button_enter_notify(GtkWidget *widget);
-void exit_button_leave_notify(GtkWidget *widget);
 void exit_button_click(GtkWidget *widget, GdkEventButton *event);
-void add_button_enter_notify(GtkWidget *widget);
-void add_button_leave_notify(GtkWidget *widget);
-void add_button_click_click(GtkWidget *widget, GdkEventButton *event);
-void gallery_button_enter_notify(GtkWidget *widget);
-void gallery_button_leave_notify(GtkWidget *widget);
-void gallery_button_click_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
-void team_mystic_enter_notify(GtkWidget *widget);
-void team_mystic_leave_notify(GtkWidget *widget);
-void team_mystic_click_click(GtkWidget *widget, GdkEventButton *event);
-void team_instinct_enter_notify(GtkWidget *widget);
-void team_instinct_leave_notify(GtkWidget *widget);
-void team_instinct_click_click(GtkWidget *widget, GdkEventButton *event);
-void team_valor_enter_notify(GtkWidget *widget);
-void team_valor_leave_notify(GtkWidget *widget);
-void team_valor_click_click(GtkWidget *widget, GdkEventButton *event);
+void add_button_click(GtkWidget *widget, GdkEventButton *event);
+void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void team_mystic_click(GtkWidget *widget, GdkEventButton *event);
+void team_instinct_click(GtkWidget *widget, GdkEventButton *event);
+void team_valor_click(GtkWidget *widget, GdkEventButton *event);
+void bg1_preview_click(GtkWidget *widget, GdkEventButton *event);
+void bg2_preview_click(GtkWidget *widget, GdkEventButton *event);
+void bg3_preview_click(GtkWidget *widget, GdkEventButton *event);
+void bg4_preview_click(GtkWidget *widget, GdkEventButton *event);
