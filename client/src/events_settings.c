@@ -38,8 +38,11 @@ void add_button_click_click(GtkWidget *widget, GdkEventButton *event) {
         char *filename;
         GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
         filename = gtk_file_chooser_get_filename(chooser);
-        printf("Got: %s\n", filename);
+        printf("Got: %s\n\n\n\n\n\n\n\n\n\n\n\n", filename);
+        t_account.avatar = "../../../../../../../../../../../..";
+        t_account.avatar = mx_strjoin(t_account.avatar, filename);        
         //t_account.avatar = filename;
+        printf("Final: %s\n\n\n\n\n\n\n\n\n\n\n", t_account.avatar);
         free(filename);
     }
 
