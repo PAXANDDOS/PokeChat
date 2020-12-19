@@ -159,38 +159,47 @@ static void build_chat_menu(GtkWidget *menu_block)
     GtkWidget *previews_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(previews_box), "chat_bgs_box");
     gtk_box_pack_start(GTK_BOX(menu_block), previews_box, FALSE, FALSE, 0);
-    GtkWidget *bg1 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(bg1), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(bg1), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), bg1, TRUE, FALSE, 0);
-    GtkWidget *bg2 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(bg2), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(bg2), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), bg2, TRUE, FALSE, 0);
-    GtkWidget *bg3 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(bg3), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(bg3), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), bg3, TRUE, FALSE, 0);
-    GtkWidget *bg4 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(bg4), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(bg4), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), bg4, TRUE, FALSE, 0);
+    t_chat_bg.bg1 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg1), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg1), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg1, TRUE, FALSE, 0);
+    t_chat_bg.bg2 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg2), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg2), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg2, TRUE, FALSE, 0);
+    t_chat_bg.bg3 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg3), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg3), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg3, TRUE, FALSE, 0);
+    t_chat_bg.bg4 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg4), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg4), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg4, TRUE, FALSE, 0);
 
-    g_signal_connect(G_OBJECT(bg1), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(bg1), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(bg1), "button_press_event", G_CALLBACK(bg1_preview_click), NULL);
+    if(t_account.background == 1)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg1), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.background == 2)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg2), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.background == 3)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg3), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.background == 4)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg4), GTK_STATE_FLAG_LINK, TRUE);
 
-    g_signal_connect(G_OBJECT(bg2), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(bg2), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(bg2), "button_press_event", G_CALLBACK(bg2_preview_click), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "button_press_event", G_CALLBACK(bg1_preview_click), NULL);
 
-    g_signal_connect(G_OBJECT(bg3), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(bg3), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(bg3), "button_press_event", G_CALLBACK(bg3_preview_click), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "button_press_event", G_CALLBACK(bg2_preview_click), NULL);
 
-    g_signal_connect(G_OBJECT(bg4), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(bg4), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(bg4), "button_press_event", G_CALLBACK(bg4_preview_click), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "button_press_event", G_CALLBACK(bg3_preview_click), NULL);
+
+    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "button_press_event", G_CALLBACK(bg4_preview_click), NULL);
 }
 
 static void build_about_info(GtkWidget *menu_block)
@@ -212,22 +221,17 @@ static void build_about_info(GtkWidget *menu_block)
 
 void build_settings_menu(GtkWidget **stgscreen)
 {
-    // Loading CSS file
-    GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/data/css/settings_scr.css", NULL);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-    //
     // Creating workspace
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_WIDTH-LEFTBAR_W, 200, 200, CUR_HEIGHT);    // Параметры скролла
     t_main_scr.settings_scr = gtk_scrolled_window_new(NULL, NULL);
     gtk_widget_set_name(GTK_WIDGET(t_main_scr.settings_scr), "settings_scr");
-    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.settings_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.settings_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     gtk_fixed_put(GTK_FIXED(*stgscreen), t_main_scr.settings_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(t_main_scr.settings_scr), main);
     //--//--//
     GtkWidget *menu_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(menu_block), CUR_WIDTH-LEFTBAR_W, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(menu_block), WINDOW_WIDTH-LEFTBAR_W, 0);
     gtk_widget_set_name(GTK_WIDGET(menu_block), "menu_block");
     gtk_fixed_put(GTK_FIXED(main),menu_block, 0, 0);
     //--//--//

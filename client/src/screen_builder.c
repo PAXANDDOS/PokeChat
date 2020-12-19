@@ -2,15 +2,10 @@
 
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
 {
-    // Loading CSS file
-    GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/data/css/leftbar.css", NULL);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-    //
     // Connecting leftbar widget to CSS
     GtkWidget *left_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                     // Создаем виджет левого бара
     gtk_widget_set_name(GTK_WIDGET(left_box), "leftbar");                               // Присваиваем ему имя для связи с CSS
-    gtk_widget_set_size_request(GTK_WIDGET(left_box), LEFTBAR_W, CUR_HEIGHT);           // Настройка размера виджета
+    gtk_widget_set_size_request(GTK_WIDGET(left_box), LEFTBAR_W, WINDOW_HEIGHT);           // Настройка размера виджета
     gtk_fixed_put(GTK_FIXED(*main_area), left_box, 0, 0);                               // Настройка позиции виджета
 
     build_home_screen(main_area);       // Вызываю постройку домашнего экрана

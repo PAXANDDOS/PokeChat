@@ -228,19 +228,13 @@ static void build_welcome(GtkWidget *main)
 
 void build_home_screen(GtkWidget **homescreen)
 {
-    // Loading CSS file
-    GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/data/css/home_screen.css", NULL);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-    //
-
     // Creating workspace
     t_main_scr.home_scr = gtk_grid_new();   // Эта падла меня задрала. Создал grid чтобы можно было применить CSS ибо в fixed нельзя.
     gtk_widget_set_name(GTK_WIDGET(t_main_scr.home_scr), "homescreen");
-    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.home_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.home_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     gtk_fixed_put(GTK_FIXED(*homescreen), t_main_scr.home_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(t_main_scr.home_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT); // Запихиваю новый fixed в первую ячейку грида, для того чтобы можно было нормально размещать элементы.
+    gtk_grid_attach(GTK_GRID(t_main_scr.home_scr), main, 0, 0, WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT); // Запихиваю новый fixed в первую ячейку грида, для того чтобы можно было нормально размещать элементы.
     //
 
     build_activity(main);

@@ -60,7 +60,7 @@ void send_message() {
     cJSON_AddStringToObject(json, "text", text);
     char *json_string = cJSON_Print(json);
     printf("%s\n", json_string);
-    ssl_client("127.0.0.1", 4096, json_string);
+    ssl_client("10.11.4.9", 4096, json_string);
     mx_strdel(&json_string);
 }
 

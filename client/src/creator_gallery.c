@@ -50,7 +50,7 @@ void create_gallery(GtkWidget *main)
 {
     t_sgallery.backgound = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_sgallery.backgound), "sgallery");
-    gtk_widget_set_size_request(GTK_WIDGET(t_sgallery.backgound), CUR_WIDTH-100, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(t_sgallery.backgound), WINDOW_WIDTH-100, WINDOW_HEIGHT);
     g_signal_connect(G_OBJECT(t_sgallery.backgound), "button_press_event", G_CALLBACK(sgallery_click), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_sgallery.backgound, 0, 0);
 

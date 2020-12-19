@@ -28,8 +28,6 @@
 // Windows
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-gint CUR_WIDTH;
-gint CUR_HEIGHT;
 
 // Leftbar size and position
 #define LEFTBAR_W 67
@@ -79,6 +77,12 @@ struct {
 
 struct
 {
+    GtkCssProvider *styles;
+    GtkCssProvider *chat;
+}   t_providers;
+
+struct
+{
     GtkWidget *window;
 }   t_main;
 
@@ -118,7 +122,6 @@ struct                  // TEMPORAL Structure for tracking entries
     char *password;         // char* for password
     char *repass;
     char *code;             // 12-digit trainer code
-    GdkPixbuf *avatar;   // For avatar-from-file
 } t_account_temp;
 
 struct                  // Structure for current user account data
@@ -128,6 +131,7 @@ struct                  // Structure for current user account data
     char *password;     // char* for password
     char *code;         // 12-digit trainer code
     int team;           // 1-3 team choice
+    int background;     // 1-4 chat background
     char *avatar;       // Path to chosen avatar
 } t_account;
 
@@ -149,6 +153,14 @@ struct
     GtkWidget *team_instinct;
     GtkWidget *team_valor;
 }   t_teams;
+
+struct
+{
+    GtkWidget *bg1;
+    GtkWidget *bg2;
+    GtkWidget *bg3;
+    GtkWidget *bg4;
+}   t_chat_bg;
 
 typedef struct s_msg_data   // Structure for data in messages
 {

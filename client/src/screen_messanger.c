@@ -109,18 +109,13 @@ static void build_chat(GtkWidget *main)
 
 void build_messanger_screen(GtkWidget **msgscreen)
 {
-    // Loading CSS file
-    GtkCssProvider *cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(cssProvider, "client/data/css/msg_screen.css", NULL);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(cssProvider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-    //
     // Creating workspace
     t_main_scr.msg_scr = gtk_grid_new();
     gtk_widget_set_name(GTK_WIDGET(t_main_scr.msg_scr), "messanger");
-    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.msg_scr), CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.msg_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     gtk_fixed_put(GTK_FIXED(*msgscreen), t_main_scr.msg_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(t_main_scr.msg_scr), main, 0, 0, CUR_WIDTH-LEFTBAR_W, CUR_HEIGHT);
+    gtk_grid_attach(GTK_GRID(t_main_scr.msg_scr), main, 0, 0, WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     //
     //
     build_list(main);

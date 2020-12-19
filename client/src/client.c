@@ -1,9 +1,19 @@
 #include "../inc/client.h"
 
+static void load_providers()
+{
+    t_providers.styles = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(t_providers.styles, "client/data/css/styles.css", NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.styles), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    t_providers.chat = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg1.css", NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+}
+
 static void build_main_area(GtkWidget **main_area, GtkWidget **window) {
     *main_area = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(*window), *main_area);
-    gtk_widget_set_size_request(GTK_WIDGET(*main_area), CUR_WIDTH, CUR_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(*main_area), WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 int main(int argc, char *argv[]) {
@@ -18,8 +28,6 @@ int main(int argc, char *argv[]) {
     SDL_Init(SDL_INIT_AUDIO);
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     gtk_init(&argc, &argv);
-    CUR_WIDTH = 1280;
-    CUR_HEIGHT = 720;
 
     t_main.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(t_main.window), "PokeChat");
@@ -29,7 +37,9 @@ int main(int argc, char *argv[]) {
     gtk_window_set_icon(GTK_WINDOW(t_main.window), icon);
     gtk_window_set_resizable(GTK_WINDOW(t_main.window), FALSE);
 
+    load_providers();
     preload_images();
+    // Loading CSS file
 
     build_main_area(&main_area, &t_main.window);
     build_all(&left_bar, &main_area);

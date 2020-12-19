@@ -1,7 +1,3 @@
-#messanger
-{
-  background-color: #273255;
-}
 #list
 {
   background-color: #39456d;
@@ -90,10 +86,6 @@
 #sticker:hover
 {
   background-image: url("../images/sticker-hover.png");
-}
-#scrollable_msg
-{
-  background-color: #273255;
 }
 #messages_block
 {
