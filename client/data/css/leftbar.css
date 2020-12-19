@@ -1,7 +1,3 @@
-#leftbar
-{
-  background: #273254;
-}
 #homebutton
 {
   border-radius: 20px;
@@ -12,7 +8,6 @@
 #homebutton:hover
 {
   border-radius: 10px;
-  background: #0b1e43;
 }
 #msgbutton
 {
@@ -22,7 +17,6 @@
 #msgbutton:hover
 {
   border-radius: 10px;
-  background: #0b1e43;
 }
 #groupbutton
 {
@@ -32,7 +26,6 @@
 #groupbutton:hover
 {
   border-radius: 10px;
-  background-color: rgba(11, 30, 67, 0.35);
 }
 #eventsbutton
 {
@@ -42,7 +35,6 @@
 #eventsbutton:hover
 {
   border-radius: 10px;
-  background-color: rgba(11, 30, 67, 0.35);
 }
 #statusbutton
 {
@@ -52,7 +44,6 @@
 #statusbutton:hover
 {
   border-radius: 10px;
-  background: #0b1e43;
 }
 #settingsbutton
 {
@@ -62,5 +53,4 @@
 #settingsbutton:hover
 {
   border-radius: 10px;
-  background: #0b1e43;
 }

@@ -1,0 +1,51 @@
+#list
+{
+  background-color: #39456d;
+}
+#search_field
+{
+  background-color: #18254e;
+  color: rgb(180, 191, 216);
+}
+#search_block
+{
+  background-color: #18254e;
+}
+#dm_text
+{
+  color: #6776a7;
+}
+#entry_block
+{
+  background-color: #344065;
+}
+#entry_text
+{
+  background-color: #344065;
+  color: rgb(193, 206, 236);
+}
+#message
+{
+  color: rgb(193, 206, 236);
+  background-color: #5063a3;
+}
+#name_time
+{
+  color: #657dc9;
+}
+#nickname
+{
+  color: #657dc9;
+}
+#single
+{
+  background: #273254;
+}
+#single:hover
+{
+  background: #273254;
+}
+#date
+{
+  color: #657dc9;
+}

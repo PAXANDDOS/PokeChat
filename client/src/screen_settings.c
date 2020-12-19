@@ -149,6 +149,49 @@ static void build_teams_menu(GtkWidget *menu_block)
     g_signal_connect(G_OBJECT(t_teams.team_valor), "button_press_event", G_CALLBACK(team_valor_click), NULL);
 }
 
+static void build_appearance_menu(GtkWidget *menu_block)
+{
+    GtkWidget *title4 = gtk_label_new("CHANGE APPEARANCE");
+    gtk_widget_set_name(GTK_WIDGET(title4), "title4");                // Имя
+    gtk_widget_set_halign(title4, GTK_ALIGN_START);                     // Позиция текста
+    gtk_box_pack_start(GTK_BOX(menu_block), title4, FALSE, FALSE, 0);
+    //--//
+    GtkWidget *appearance_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(appearance_block), "chat_bgs_box");
+    gtk_box_pack_start(GTK_BOX(menu_block), appearance_block, FALSE, FALSE, 0);
+    t_theme.theme_default = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 200, 300);
+    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_default, TRUE, FALSE, 0);
+    t_theme.theme_dark = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 200, 300);
+    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_dark, TRUE, FALSE, 0);
+    t_theme.theme_light = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 200, 300);
+    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_light, TRUE, FALSE, 0);
+
+    if(t_account.theme == 1)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.theme == 2)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.theme == 3)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK, TRUE);
+
+    g_signal_connect(G_OBJECT(t_theme.theme_default), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_default), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_default), "button_press_event", G_CALLBACK(theme_default_click), NULL);
+
+    g_signal_connect(G_OBJECT(t_theme.theme_dark), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_dark), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_dark), "button_press_event", G_CALLBACK(theme_dark_click), NULL);
+
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "button_press_event", G_CALLBACK(theme_light_click), NULL);
+}
+
 static void build_chat_menu(GtkWidget *menu_block)
 {
     GtkWidget *title3 = gtk_label_new("CUSTOMIZE CHAT");
@@ -237,6 +280,7 @@ void build_settings_menu(GtkWidget **stgscreen)
     //--//--//
     build_account_menu(menu_block, main);
     build_teams_menu(menu_block);
+    build_appearance_menu(menu_block);
     build_chat_menu(menu_block);
     build_about_info(menu_block);
 }

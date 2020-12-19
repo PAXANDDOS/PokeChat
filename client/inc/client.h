@@ -79,6 +79,7 @@ struct
 {
     GtkCssProvider *styles;
     GtkCssProvider *chat;
+    GtkCssProvider *theme;
 }   t_providers;
 
 struct
@@ -131,6 +132,7 @@ struct                  // Structure for current user account data
     char *password;     // char* for password
     char *code;         // 12-digit trainer code
     int team;           // 1-3 team choice
+    int theme;          // 1-3 app theme
     int background;     // 1-4 chat background
     char *avatar;       // Path to chosen avatar
 } t_account;
@@ -153,6 +155,13 @@ struct
     GtkWidget *team_instinct;
     GtkWidget *team_valor;
 }   t_teams;
+
+struct
+{
+    GtkWidget *theme_default;
+    GtkWidget *theme_dark;
+    GtkWidget *theme_light;
+}   t_theme;
 
 struct
 {
@@ -280,6 +289,9 @@ void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *m
 void team_mystic_click(GtkWidget *widget, GdkEventButton *event);
 void team_instinct_click(GtkWidget *widget, GdkEventButton *event);
 void team_valor_click(GtkWidget *widget, GdkEventButton *event);
+void theme_default_click(GtkWidget *widget, GdkEventButton *event);
+void theme_dark_click(GtkWidget *widget, GdkEventButton *event);
+void theme_light_click(GtkWidget *widget, GdkEventButton *event);
 void bg1_preview_click(GtkWidget *widget, GdkEventButton *event);
 void bg2_preview_click(GtkWidget *widget, GdkEventButton *event);
 void bg3_preview_click(GtkWidget *widget, GdkEventButton *event);

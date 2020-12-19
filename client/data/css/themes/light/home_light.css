@@ -1,0 +1,50 @@
+#homescreen
+{
+  background: #39456d;
+}
+#activity
+{
+  background: #273254;
+}
+#active_text
+{
+  color: #d1dcff;
+}
+#fact
+{
+  background: #273254;
+}
+#fact_text
+{
+  color: #e7ecff;
+}
+#pokemon-text
+{
+  color: #d1dcff;
+}
+#tomsg:hover
+{
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 0 3px rgb(99, 120, 189);
+}
+#togroup:hover
+{
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
+}
+#tosettings:hover
+{
+  box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);
+  box-shadow: inset 0 0 0 2px rgba(82, 101, 161, 0.6);
+  box-shadow: inset 0 0 1px 3px rgb(99, 120, 189);
+}
+#active:hover
+{
+  background: #0b1e43;
+}
+#active_name
+{
+  color: #8f9ed1;
+}

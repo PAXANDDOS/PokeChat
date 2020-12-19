@@ -1,0 +1,171 @@
+#settings_scr
+{
+    background-color: #1f2846;
+}
+#exit_button
+{
+    background-color: #374676;
+}
+#exit_button:hover
+{
+    background-color: #1f2846;
+}
+#menu_block
+{
+    background-color: #1f2846;
+}
+#title1
+{
+    color: #c3c8da;
+}
+#account_block
+{
+    background-color: #374676;
+}
+#add_button
+{
+    background-color: #c3c8da;
+}
+#add_button:hover
+{
+    background-color: #878a96;
+}
+#gallery_button
+{
+    background-color: #c3c8da;
+}
+#gallery_button:hover
+{
+    background-color: #878a96;
+}
+#sgallery
+{
+    background-color: rgba(0, 0, 0, 0);
+}
+#sgallery_box
+{
+    background-color: #1f2846;
+    box-shadow: 0 0 0 3px #374676;
+}
+#sgallery_title
+{
+    color: #c3c8da;
+}
+#nickname-s
+{
+    color: #c3c8da;
+}
+#nickname-n
+{
+    color: #c3c8da;
+}
+#info_box
+{
+    background-color: #323f69;
+}
+#settings_fields
+{
+    background-color: #242b42;
+    border-color: #242b42;
+    color: #c3c8da;
+}
+#settings_fields:link
+{
+    border-color: #964444;
+}
+#settings_fields:active
+{
+    border-color: rgba(255, 186, 0, 0.6);
+}
+#apply_button {
+    color: rgb(193, 206, 236);
+    background: #1f2846;
+    border: .5px solid #1f2846;
+}
+#apply_button:hover {
+    background: rgb(193, 206, 236);
+    color: #273255;
+}
+#title2
+{
+    color: #c3c8da;
+}
+#teams_block
+{
+    background-color: #374676;
+}
+#mystic
+{
+    background-color: #1f2846;
+    border: 1px solid #1f2846;
+}
+#mystic:hover
+{
+    border: 1px solid rgba(0, 119, 241, 0.3);
+    border: 2px solid rgba(0, 119, 241, 0.6);
+    border: 3px solid rgb(0, 119, 241);
+}
+#mystic:link
+{
+    border: 3px solid rgb(0, 119, 241);
+    opacity: 0.5;
+}
+#instinct
+{
+    background-color: #1f2846;
+}
+#instinct:hover
+{
+    border: 1px solid rgba(255, 186, 0, 0.3);
+    border: 2px solid rgba(255, 186, 0, 0.6);
+    border: 3px solid rgb(255, 186, 0);
+}
+#instinct:link
+{
+    border: 3px solid rgb(255, 186, 0);
+    opacity: 0.5;
+}
+#valor
+{
+    background-color: #1f2846;
+}
+#valor:hover
+{
+    border: 1px solid rgba(255, 13, 2, 0.3);
+    border: 2px solid rgba(255, 13, 2, 0.6);
+    border: 3px solid rgb(255, 13, 2);
+}
+#valor:link
+{
+    border: 3px solid rgb(255, 13, 2);
+    opacity: 0.5;
+}
+#title3
+{
+    color: #c3c8da;
+}
+#title4
+{
+    color: #c3c8da;
+}
+#chat_bgs_box
+{
+    background-color: #374676;
+}
+#chat_bgs
+{
+    background-color: #374676;
+    box-shadow: inset 0 0 0 2px #1f2846;
+}
+#chat_bgs:hover
+{
+    box-shadow: inset 0 0 0 2px #c3c8da;
+}
+#chat_bgs:link
+{
+    box-shadow: inset 0 0 0 2px #c3c8da;
+}
+#about_info
+{
+    color: #374676;
+}
