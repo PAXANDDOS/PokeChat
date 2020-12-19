@@ -14,6 +14,7 @@
 #include <cairo.h>
 #include <math.h>
 #include <sys/types.h>
+#include <ctype.h>
 #include <dirent.h>
 #include <gtk/gtk.h>
 #include <SDL2/SDL.h>
@@ -71,6 +72,11 @@ gint CUR_HEIGHT;
 #define BGPREVIEW_W 104
 #define BGPREVIEW_H 79
 
+struct {
+    char *app;
+    char *user;
+}   t_application;
+
 struct
 {
     GtkWidget *window;
@@ -110,6 +116,7 @@ struct                  // TEMPORAL Structure for tracking entries
     char *username;         // For account username
     char *name;             // For account real name
     char *password;         // char* for password
+    char *repass;
     char *code;             // 12-digit trainer code
     GdkPixbuf *avatar;   // For avatar-from-file
 } t_account_temp;
@@ -223,12 +230,6 @@ GtkWidget *create_chatlist();
 void new_outgoing_message(GtkWidget *messages_block);
 void new_incoming_message(GtkWidget *messages_block);
 
-// Удалить потом когда будет подключена либа
-char *mx_strnew(const int size);
-char *mx_file_to_str(const char *filename);
-char *mx_strjoin(const char *s1, const char *s2);
-char *mx_itoa(int number);
-
 // Events
 void event_enter_notify(GtkWidget *widget);
 void event_false_enter_notify(GtkWidget *widget);
@@ -257,6 +258,9 @@ void single_event_click(GtkWidget *widget, GdkEventButton *event);
 void username_field_change_event(GtkWidget *widget);
 void firstaname_field_change_event(GtkWidget *widget);
 void code_field_change_event(GtkWidget *widget);
+void code_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
+void pass_field_change_event(GtkWidget *widget);
+void repass_field_change_event(GtkWidget *widget);
 void apply_butt_click(GtkWidget *widget);
 void exit_button_click(GtkWidget *widget, GdkEventButton *event);
 void add_button_click(GtkWidget *widget, GdkEventButton *event);

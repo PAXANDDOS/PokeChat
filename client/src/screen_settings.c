@@ -63,7 +63,9 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     gtk_entry_set_text(GTK_ENTRY(firstaname_field), t_account.name);
     gtk_box_pack_start(GTK_BOX(info_box), firstaname_field, TRUE, TRUE, 10);
     GtkWidget *code_field = gtk_entry_new();
+    gtk_entry_set_input_purpose(GTK_ENTRY(code_field), GTK_INPUT_PURPOSE_DIGITS);
     gtk_widget_set_name(GTK_WIDGET(code_field), "settings_fields");
+    g_signal_connect(G_OBJECT(code_field), "insert-text", G_CALLBACK(code_input_event), NULL);
     g_signal_connect(G_OBJECT(code_field), "changed", G_CALLBACK(code_field_change_event), NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(code_field), "Trainer code");
     gtk_entry_set_max_length(GTK_ENTRY(code_field), 12);
@@ -71,14 +73,14 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     gtk_box_pack_start(GTK_BOX(info_box), code_field, TRUE, TRUE, 10);
     GtkWidget *password_field = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(password_field), FALSE);
-    // g_signal_connect(G_OBJECT(password_field), "changed", G_CALLBACK(password_field_change_event), NULL);
+    g_signal_connect(G_OBJECT(password_field), "changed", G_CALLBACK(pass_field_change_event), NULL);
     gtk_widget_set_name(GTK_WIDGET(password_field), "settings_fields");
     gtk_entry_set_placeholder_text(GTK_ENTRY(password_field), "Password");
     gtk_entry_set_max_length(GTK_ENTRY(password_field), 16);
     gtk_box_pack_start(GTK_BOX(info_box), password_field, TRUE, TRUE, 10);
     GtkWidget *repassword_field = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(repassword_field), FALSE);
-    // g_signal_connect(G_OBJECT(repassword_field), "changed", G_CALLBACK(repassword_field_change_event), NULL);
+    g_signal_connect(G_OBJECT(repassword_field), "changed", G_CALLBACK(repass_field_change_event), NULL);
     gtk_widget_set_name(GTK_WIDGET(repassword_field), "settings_fields");
     gtk_entry_set_placeholder_text(GTK_ENTRY(repassword_field), "Repeat password");
     gtk_entry_set_max_length(GTK_ENTRY(repassword_field), 16);
@@ -197,12 +199,12 @@ static void build_about_info(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(box), "about_box");
     gtk_box_pack_start(GTK_BOX(menu_block), box, FALSE, FALSE, 0);
 
-    GtkWidget *name = gtk_label_new("PokeChat alpha 0.6.2");
+    GtkWidget *name = gtk_label_new(t_application.app);
     gtk_widget_set_name(GTK_WIDGET(name), "about_info");
     gtk_widget_set_halign(name, GTK_ALIGN_END);
     gtk_box_pack_start(GTK_BOX(box), name, FALSE, FALSE, 0);
 
-    GtkWidget *user = gtk_label_new(getenv("USER"));
+    GtkWidget *user = gtk_label_new(t_application.user);
     gtk_widget_set_name(GTK_WIDGET(user), "about_info");
     gtk_widget_set_halign(user, GTK_ALIGN_END);
     gtk_box_pack_start(GTK_BOX(box), user, FALSE, FALSE, 0);

@@ -76,15 +76,68 @@ void code_field_change_event(GtkWidget *widget) {
     t_account_temp.code = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
+void code_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data)
+{
+    if(position || data) {}
+    int i;
+    for (i = 0; i < length; i++) {
+        if (!isdigit(text[i])) {
+            g_signal_stop_emission_by_name(G_OBJECT(editable), "insert-text");
+            return;
+        }
+    }
+}
+
+void pass_field_change_event(GtkWidget *widget) {
+    if(strlen(gtk_entry_get_text(GTK_ENTRY(widget))) <= 4){
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_ACTIVE);
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+    }
+    else if(4 < strlen(gtk_entry_get_text(GTK_ENTRY(widget))) && 8 >= strlen(gtk_entry_get_text(GTK_ENTRY(widget)))) {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_ACTIVE, TRUE);
+    }
+    else {
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_ACTIVE);
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+    }
+    t_account_temp.password = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
+}
+
+void repass_field_change_event(GtkWidget *widget) {
+    t_account_temp.repass = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
+    if(!strcmp(t_account_temp.repass, t_account_temp.password))
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
+    else
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+}
+
 void apply_butt_click(GtkWidget *widget){
     if(widget) {}
-    if(t_account_temp.username == NULL || !strcmp(t_account_temp.username, "") || t_account_temp.name == NULL || !strcmp(t_account_temp.name, ""))
+    t_account_temp.username = mx_del_extra_spaces(t_account_temp.username);
+    t_account_temp.name = mx_del_extra_spaces(t_account_temp.name);
+    if(t_account_temp.username == NULL \
+    || !strcmp(t_account_temp.username, "") \
+    || t_account_temp.name == NULL \
+    || !strcmp(t_account_temp.name, ""))
         return;
     t_account.username = t_account_temp.username;
     t_account.name = t_account_temp.name;
     t_account.code = t_account_temp.code;
+    if(t_account_temp.password != NULL && t_account_temp.repass != NULL \
+    && strcmp(t_account_temp.password, "") && strcmp(t_account_temp.repass, "")) {
+        if(strlen(t_account_temp.password) > 4 && !strcmp(t_account_temp.repass, t_account_temp.password)){
+            t_account.password = t_account_temp.password;
+        }
+        else { return; }
+    }
+
     gtk_label_set_text(GTK_LABEL(t_settings_labels.username), t_account.username);
     gtk_label_set_text(GTK_LABEL(t_settings_labels.name), t_account.name);
+    printf("User = %s\n", t_account.username);
+    printf("Name = %s\n", t_account.name);
+    printf("Code = %s\n", t_account.code);
+    printf("Pass = %s\n", t_account.password);
 }
 
 //

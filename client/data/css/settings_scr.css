@@ -135,6 +135,10 @@
 {
     border-color: #964444;
 }
+#settings_fields:active
+{
+    border-color: rgba(255, 186, 0, 0.6);
+}
 #apply_button {
     color: rgb(193, 206, 236);
     font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

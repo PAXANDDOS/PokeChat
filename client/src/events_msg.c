@@ -13,7 +13,8 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
     if(widget) {}
     if(event) {}
-    if(msg_data.content == NULL || !strcmp(msg_data.content, ""))
+    msg_data.content = mx_strtrim(msg_data.content);
+    if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
         return;
     msg_data.sent = true;
     if(msg_data.sent == true) {
