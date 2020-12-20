@@ -1,42 +1,45 @@
 #settings_scr
 {
-    background-color: #040918;
+    background-color: #0e0e0e;
 }
 #exit_button
 {
-    background-color: #374676;
+    background-color: #202020;
+    background-image: url("../../../images/exit-dark.png");
 }
 #exit_button:hover
 {
-    background-color: #1f2846;
+    background-color: #4d4d4d;
 }
 #menu_block
 {
-    background-color: #1f2846;
+    background-color: #0e0e0e;
 }
 #title1
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #account_block
 {
-    background-color: #374676;
+    background-color: #202020;
 }
 #add_button
 {
-    background-color: #c3c8da;
+    background-color: #4d515e;
+    background-image: url("../../../images/add_photo_light.png");
 }
 #add_button:hover
 {
-    background-color: #878a96;
+    background-color: #cacaca;
 }
 #gallery_button
 {
-    background-color: #c3c8da;
+    background-color: #4d515e;
+    background-image: url("../../../images/gallery-light.png");
 }
 #gallery_button:hover
 {
-    background-color: #878a96;
+    background-color: #cacaca;
 }
 #sgallery
 {
@@ -49,25 +52,25 @@
 }
 #sgallery_title
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #nickname-s
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #nickname-n
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #info_box
 {
-    background-color: #323f69;
+    background-color: #222222;
 }
 #settings_fields
 {
-    background-color: #242b42;
-    border-color: #242b42;
-    color: #c3c8da;
+    background-color: #0e0e0e;
+    border-color: #0e0e0e;
+    color: #e0e0e0;
 }
 #settings_fields:link
 {
@@ -78,26 +81,26 @@
     border-color: rgba(255, 186, 0, 0.6);
 }
 #apply_button {
-    color: rgb(193, 206, 236);
-    background: #1f2846;
-    border: .5px solid #1f2846;
+    color: #e0e0e0;
+    background: #0e0e0e;
+    border: .5px solid #0e0e0e;
 }
 #apply_button:hover {
-    background: rgb(193, 206, 236);
-    color: #273255;
+    background: #e0e0e0;
+    color: #0e0e0e;
 }
 #title2
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #teams_block
 {
-    background-color: #374676;
+    background-color: #202020;
 }
 #mystic
 {
-    background-color: #1f2846;
-    border: 1px solid #1f2846;
+    background-color: #0e0e0e;
+    border: 1px solid #0e0e0e;
 }
 #mystic:hover
 {
@@ -112,7 +115,7 @@
 }
 #instinct
 {
-    background-color: #1f2846;
+    background-color: #0e0e0e;
 }
 #instinct:hover
 {
@@ -127,7 +130,7 @@
 }
 #valor
 {
-    background-color: #1f2846;
+    background-color: #0e0e0e;
 }
 #valor:hover
 {
@@ -140,32 +143,39 @@
     border: 3px solid rgb(255, 13, 2);
     opacity: 0.5;
 }
+#appearance_block
+{
+    background-color: #202020;
+}
 #title3
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
 #title4
 {
-    color: #c3c8da;
+    color: #e0e0e0;
 }
-#chat_bgs_box
+#title5
 {
-    background-color: #374676;
+    color: #e0e0e0;
+}
+#theme_label
+{
+    color: #dddddd;
 }
 #chat_bgs
 {
-    background-color: #374676;
-    box-shadow: inset 0 0 0 2px #1f2846;
+    box-shadow: inset 0 0 0 2px #333333;
 }
 #chat_bgs:hover
 {
-    box-shadow: inset 0 0 0 2px #c3c8da;
+    box-shadow: inset 0 0 0 2px #dddddd;
 }
 #chat_bgs:link
 {
-    box-shadow: inset 0 0 0 2px #c3c8da;
+    box-shadow: inset 0 0 0 2px #dddddd;
 }
 #about_info
 {
-    color: #374676;
+    color: #c3c8da;
 }

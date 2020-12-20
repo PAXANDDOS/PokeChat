@@ -1,42 +1,45 @@
 #settings_scr
 {
-    background-color: #99a6d1;
+    background-color: #d6d6d6;
 }
 #exit_button
 {
-    background-color: #374676;
+    background-color: #f0f0f0;
+    background-image: url("../../../images/exit.png");
 }
 #exit_button:hover
 {
-    background-color: #1f2846;
+    background-color: #adadad;
 }
 #menu_block
 {
-    background-color: #1f2846;
+    background-color: #d6d6d6;
 }
 #title1
 {
-    color: #c3c8da;
+    color: #343740;
 }
 #account_block
 {
-    background-color: #374676;
+    background-color: #f0f0f0;
 }
 #add_button
 {
-    background-color: #c3c8da;
+    background-color: #cacaca;
+    background-image: url("../../../images/add_photo_light.png");
 }
 #add_button:hover
 {
-    background-color: #878a96;
+    background-color: #4d515e;
 }
 #gallery_button
 {
-    background-color: #c3c8da;
+    background-color: #cacaca;
+    background-image: url("../../../images/gallery-light.png");
 }
 #gallery_button:hover
 {
-    background-color: #878a96;
+    background-color: #4d515e;
 }
 #sgallery
 {
@@ -44,30 +47,30 @@
 }
 #sgallery_box
 {
-    background-color: #1f2846;
-    box-shadow: 0 0 0 3px #374676;
+    background-color: #343740;
+    box-shadow: 0 0 0 3px #777b86;
 }
 #sgallery_title
 {
-    color: #c3c8da;
+    color: #cccccc;
 }
 #nickname-s
 {
-    color: #c3c8da;
+    color: #343740;
 }
 #nickname-n
 {
-    color: #c3c8da;
+    color: #343740;
 }
 #info_box
 {
-    background-color: #323f69;
+    background-color: #ebebeb;
 }
 #settings_fields
 {
-    background-color: #242b42;
-    border-color: #242b42;
-    color: #c3c8da;
+    background-color: #d6d6d6;
+    border-color: #d6d6d6;
+    color: #343740;
 }
 #settings_fields:link
 {
@@ -78,26 +81,26 @@
     border-color: rgba(255, 186, 0, 0.6);
 }
 #apply_button {
-    color: rgb(193, 206, 236);
-    background: #1f2846;
-    border: .5px solid #1f2846;
+    color: #343740;
+    background: #d6d6d6;
+    border: .5px solid #d6d6d6;
 }
 #apply_button:hover {
-    background: rgb(193, 206, 236);
-    color: #273255;
+    background: #343740;
+    color: #d6d6d6;
 }
 #title2
 {
-    color: #c3c8da;
+    color: #343740;
 }
 #teams_block
 {
-    background-color: #374676;
+    background-color: #f0f0f0;
 }
 #mystic
 {
-    background-color: #1f2846;
-    border: 1px solid #1f2846;
+    background-color: #d6d6d6;
+    border: 1px solid #d6d6d6;
 }
 #mystic:hover
 {
@@ -112,7 +115,7 @@
 }
 #instinct
 {
-    background-color: #1f2846;
+    background-color: #d6d6d6;
 }
 #instinct:hover
 {
@@ -127,7 +130,7 @@
 }
 #valor
 {
-    background-color: #1f2846;
+    background-color: #d6d6d6;
 }
 #valor:hover
 {
@@ -140,21 +143,28 @@
     border: 3px solid rgb(255, 13, 2);
     opacity: 0.5;
 }
+#appearance_block
+{
+    background-color: #f0f0f0;
+}
+#title5
+{
+    color: #343740;
+}
+#theme_label
+{
+    color: #343740;
+}
 #title3
 {
-    color: #c3c8da;
+    color: #343740;
 }
 #title4
 {
-    color: #c3c8da;
-}
-#chat_bgs_box
-{
-    background-color: #374676;
+    color: #343740;
 }
 #chat_bgs
 {
-    background-color: #374676;
     box-shadow: inset 0 0 0 2px #1f2846;
 }
 #chat_bgs:hover
@@ -167,5 +177,5 @@
 }
 #about_info
 {
-    color: #374676;
+    color: #343740;
 }

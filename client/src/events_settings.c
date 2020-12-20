@@ -175,51 +175,123 @@ void team_valor_click(GtkWidget *widget, GdkEventButton *event) {
 }
 
 //
-
-void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_light_click(GtkWidget *widget, GdkEventButton *event) {
     if(t_account.theme == 1) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK);
         gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 1;
         g_object_unref(G_OBJECT(t_providers.theme));
         t_providers.theme = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_default.css", NULL);
+        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_light.css", NULL);
         gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.theme), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.background == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 4)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Theme: %i\n", t_account.theme);
 }
 
-void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
     if(t_account.theme == 2) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK);
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK);
         gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 2;
         g_object_unref(G_OBJECT(t_providers.theme));
         t_providers.theme = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_dark.css", NULL);
+        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_default.css", NULL);
         gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.theme), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.background == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 4)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Theme: %i\n", t_account.theme);
 }
 
-void theme_light_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
     if(t_account.theme == 3) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
         gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK);
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK);
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 3;
         g_object_unref(G_OBJECT(t_providers.theme));
         t_providers.theme = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_light.css", NULL);
+        gtk_css_provider_load_from_path(t_providers.theme, "client/data/css/themes/theme_dark.css", NULL);
         gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.theme), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.background == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.background == 4)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Theme: %i\n", t_account.theme);
 }
+
 //
 
 void bg1_preview_click(GtkWidget *widget, GdkEventButton *event) {
@@ -231,9 +303,24 @@ void bg1_preview_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 1;
         g_object_unref(G_OBJECT(t_providers.chat));
-        t_providers.chat = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg1.css", NULL);
-        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.theme == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg1.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Background: %i\n", t_account.background);
 }
@@ -247,9 +334,24 @@ void bg2_preview_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 2;
         g_object_unref(G_OBJECT(t_providers.chat));
-        t_providers.chat = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg2.css", NULL);
-        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.theme == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg2.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Background: %i\n", t_account.background);
 }
@@ -263,9 +365,24 @@ void bg3_preview_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 3;
         g_object_unref(G_OBJECT(t_providers.chat));
-        t_providers.chat = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg3.css", NULL);
-        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.theme == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg3.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Background: %i\n", t_account.background);
 }
@@ -279,9 +396,24 @@ void bg4_preview_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 4;
         g_object_unref(G_OBJECT(t_providers.chat));
-        t_providers.chat = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg4.css", NULL);
-        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        if(t_account.theme == 1)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 2)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
+        else if(t_account.theme == 3)
+        {
+            t_providers.chat = gtk_css_provider_new();
+            gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_dark/chatbg4.css", NULL);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        }
     }
     printf("Background: %i\n", t_account.background);
 }

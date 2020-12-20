@@ -11,6 +11,14 @@
 {
   background-color: #18254e;
 }
+#adduser
+{
+  background-image: url("../../../images/add-user.png");  
+}
+#adduser:hover
+{
+  background-image: url("../../../images/add-user-hover.png");
+}
 #dm_text
 {
   color: #6776a7;
@@ -23,6 +31,30 @@
 {
   background-color: #344065;
   color: rgb(193, 206, 236);
+}
+#attach
+{
+  background-image: url("../../../images/attach.png");
+}
+#attach:hover
+{
+  background-image: url("../../../images/attach-hover.png");
+}
+#send
+{
+  background-image: url("../../../images/send.png");
+}
+#send:hover
+{
+  background-image: url("../../../images/send-hover.png");
+}
+#sticker
+{
+  background-image: url("../../../images/sticker.png");
+}
+#sticker:hover
+{
+  background-image: url("../../../images/sticker-hover.png");
 }
 #message
 {

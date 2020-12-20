@@ -22,6 +22,22 @@
 {
   color: #d1dcff;
 }
+#welcome
+{
+  background-image: url("../../../images/welcome.png");
+}
+#tomsg
+{
+  background-image: url("../../../images/tomsg_text.png");
+}
+#togroup
+{
+  background-image: url("../../../images/togroup_text.png");
+}
+#tosettings
+{
+  background-image: url("../../../images/tosettings_text.png");
+}
 #tomsg:hover
 {
   box-shadow: inset 0 0 0 1px rgba(73, 89, 139, 0.3);

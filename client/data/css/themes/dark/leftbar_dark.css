@@ -1,28 +1,28 @@
 #leftbar
 {
-  background: #273254;
+  background: #141414;
 }
 #homebutton:hover
 {
-  background: #0b1e43;
+  background: #333333;
 }
 #msgbutton:hover
 {
-  background: #0b1e43;
+  background: #333333;
 }
 #groupbutton:hover
 {
-  background-color: rgba(11, 30, 67, 0.35);
+  background-color: rgba(51, 51, 51, 0.3);
 }
 #eventsbutton:hover
 {
-  background-color: rgba(11, 30, 67, 0.35);
+  background-color: rgba(51, 51, 51, 0.3);
 }
 #statusbutton:hover
 {
-  background: #0b1e43;
+  background: #333333;
 }
 #settingsbutton:hover
 {
-  background: #0b1e43;
+  background: #333333;
 }

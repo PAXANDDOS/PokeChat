@@ -1,51 +1,83 @@
 #list
 {
-  background-color: #39456d;
+  background-color: #d6d6d6;
 }
 #search_field
 {
-  background-color: #18254e;
-  color: rgb(180, 191, 216);
+  background-color: #ebebeb;
+  color: #d6d6d6;
 }
 #search_block
 {
-  background-color: #18254e;
+  background-color: #ebebeb;
+}
+#adduser
+{
+  background-image: url("../../../images/add-user-light.png");  
+}
+#adduser:hover
+{
+  background-image: url("../../../images/add-user-hover-light.png");
 }
 #dm_text
 {
-  color: #6776a7;
+  color: #d6d6d6;
 }
 #entry_block
 {
-  background-color: #344065;
+  background-color: #d6d6d6;
 }
 #entry_text
 {
-  background-color: #344065;
-  color: rgb(193, 206, 236);
+  background-color: #d6d6d6;
+  color: #343740;
+}
+#attach
+{
+  background-image: url("../../../images/attach-light.png");
+}
+#attach:hover
+{
+  background-image: url("../../../images/attach-hover-light.png");
+}
+#send
+{
+  background-image: url("../../../images/send-light.png");
+}
+#send:hover
+{
+  background-image: url("../../../images/send-hover-light.png");
+}
+#sticker
+{
+  background-image: url("../../../images/sticker-light.png");
+}
+#sticker:hover
+{
+  background-image: url("../../../images/sticker-hover-light.png");
 }
 #message
 {
-  color: rgb(193, 206, 236);
-  background-color: #5063a3;
+  color: #343740;
+  background-color: #d6d6d6;
 }
 #name_time
 {
-  color: #657dc9;
+  color: #343740;
 }
 #nickname
 {
-  color: #657dc9;
+  color: #343740;
 }
 #single
 {
-  background: #273254;
+  background: #ebebeb;
 }
 #single:hover
 {
-  background: #273254;
+  background: #ebebeb;
 }
 #date
 {
-  color: #657dc9;
+  color: #343740;
 }

@@ -156,28 +156,57 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_widget_set_halign(title4, GTK_ALIGN_START);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(menu_block), title4, FALSE, FALSE, 0);
     //--//
-    GtkWidget *appearance_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_name(GTK_WIDGET(appearance_block), "chat_bgs_box");
+    GtkWidget *appearance_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(appearance_block), "appearance_block");
     gtk_box_pack_start(GTK_BOX(menu_block), appearance_block, FALSE, FALSE, 0);
-    t_theme.theme_default = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 200, 300);
-    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_default, TRUE, FALSE, 0);
-    t_theme.theme_dark = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 200, 300);
-    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_dark, TRUE, FALSE, 0);
+
+    GtkWidget *title5 = gtk_label_new("CHANGE THEME");
+    gtk_widget_set_name(GTK_WIDGET(title5), "title5");                // Имя
+    gtk_widget_set_halign(title5, GTK_ALIGN_START);                   // Позиция текста
+    gtk_widget_set_halign(GTK_WIDGET(title5), GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(appearance_block), title5, FALSE, FALSE, 0);
+    //--//
+    GtkWidget *appearance_menu = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_name(GTK_WIDGET(appearance_menu), "chat_bgs_box");
+    gtk_box_pack_start(GTK_BOX(appearance_block), appearance_menu, FALSE, FALSE, 0);
+    
     t_theme.theme_light = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "chat_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 200, 300);
-    gtk_box_pack_start(GTK_BOX(appearance_block), t_theme.theme_light, TRUE, FALSE, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 260, 50);
+    GtkWidget *light_label = gtk_label_new("LIGHT");
+    gtk_widget_set_name(GTK_WIDGET(light_label), "theme_label");
+    gtk_widget_set_halign(GTK_WIDGET(light_label), GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(t_theme.theme_light), light_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_light, TRUE, FALSE, 0);
+    
+    t_theme.theme_default = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 260, 50);
+    GtkWidget *default_label = gtk_label_new("DEFAULT");
+    gtk_widget_set_name(GTK_WIDGET(default_label), "theme_label");
+    gtk_widget_set_halign(GTK_WIDGET(default_label), GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(t_theme.theme_default), default_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_default, TRUE, FALSE, 0);
+    
+    t_theme.theme_dark = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "chat_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 260, 50);
+    GtkWidget *dark_label = gtk_label_new("DARK");
+    gtk_widget_set_name(GTK_WIDGET(dark_label), "theme_label");
+    gtk_widget_set_halign(GTK_WIDGET(dark_label), GTK_ALIGN_CENTER);
+    gtk_container_add(GTK_CONTAINER(t_theme.theme_dark ), dark_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_dark, TRUE, FALSE, 0);
 
     if(t_account.theme == 1)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK, TRUE);
-    else if(t_account.theme == 2)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK, TRUE);
-    else if(t_account.theme == 3)
         gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.theme == 2)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK, TRUE);
+    else if(t_account.theme == 3)
+        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK, TRUE);
+
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_theme.theme_light), "button_press_event", G_CALLBACK(theme_light_click), NULL);
 
     g_signal_connect(G_OBJECT(t_theme.theme_default), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
     g_signal_connect(G_OBJECT(t_theme.theme_default), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -187,21 +216,17 @@ static void build_appearance_menu(GtkWidget *menu_block)
     g_signal_connect(G_OBJECT(t_theme.theme_dark), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(t_theme.theme_dark), "button_press_event", G_CALLBACK(theme_dark_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "button_press_event", G_CALLBACK(theme_light_click), NULL);
-}
+    //
 
-static void build_chat_menu(GtkWidget *menu_block)
-{
     GtkWidget *title3 = gtk_label_new("CUSTOMIZE CHAT");
     gtk_widget_set_name(GTK_WIDGET(title3), "title3");                // Имя
     gtk_widget_set_halign(title3, GTK_ALIGN_START);                     // Позиция текста
-    gtk_box_pack_start(GTK_BOX(menu_block), title3, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(title3), GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(appearance_block), title3, FALSE, FALSE, 0);
     //--//
     GtkWidget *previews_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(previews_box), "chat_bgs_box");
-    gtk_box_pack_start(GTK_BOX(menu_block), previews_box, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(appearance_block), previews_box, FALSE, FALSE, 0);
     t_chat_bg.bg1 = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg1), "chat_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg1), 200, 300);
@@ -281,6 +306,5 @@ void build_settings_menu(GtkWidget **stgscreen)
     build_account_menu(menu_block, main);
     build_teams_menu(menu_block);
     build_appearance_menu(menu_block);
-    build_chat_menu(menu_block);
     build_about_info(menu_block);
 }

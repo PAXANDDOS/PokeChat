@@ -5,6 +5,7 @@
 #exit_button
 {
     background-color: #374676;
+    background-image: url("../../../images/exit.png");
 }
 #exit_button:hover
 {
@@ -25,6 +26,7 @@
 #add_button
 {
     background-color: #c3c8da;
+    background-image: url("../../../images/add_photo.png");
 }
 #add_button:hover
 {
@@ -33,6 +35,7 @@
 #gallery_button
 {
     background-color: #c3c8da;
+    background-image: url("../../../images/gallery.png");
 }
 #gallery_button:hover
 {
@@ -140,6 +143,10 @@
     border: 3px solid rgb(255, 13, 2);
     opacity: 0.5;
 }
+#appearance_block
+{
+    background-color: #374676;
+}
 #title3
 {
     color: #c3c8da;
@@ -148,13 +155,16 @@
 {
     color: #c3c8da;
 }
-#chat_bgs_box
+#title5
 {
-    background-color: #374676;
+    color: #c3c8da;
+}
+#theme_label
+{
+    color: #c3c8da;
 }
 #chat_bgs
 {
-    background-color: #374676;
     box-shadow: inset 0 0 0 2px #1f2846;
 }
 #chat_bgs:hover

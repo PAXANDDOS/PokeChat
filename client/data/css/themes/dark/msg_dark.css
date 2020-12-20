@@ -1,51 +1,83 @@
 #list
 {
-  background-color: #39456d;
+  background-color: #1b1b1b;
 }
 #search_field
 {
-  background-color: #18254e;
-  color: rgb(180, 191, 216);
+  background-color: #353535;
+  color: #e6e6e9;
 }
 #search_block
 {
-  background-color: #18254e;
+  background-color: #353535;
+}
+#adduser
+{
+  background-image: url("../../../images/add-user-dark.png");  
+}
+#adduser:hover
+{
+  background-image: url("../../../images/add-user-hover-dark.png");
+}
+#attach
+{
+  background-image: url("../../../images/attach-dark.png");
+}
+#attach:hover
+{
+  background-image: url("../../../images/attach-hover-dark.png");
+}
+#send
+{
+  background-image: url("../../../images/send-dark.png");
+}
+#send:hover
+{
+  background-image: url("../../../images/send-hover-dark.png");
+}
+#sticker
+{
+  background-image: url("../../../images/sticker-dark.png");
+}
+#sticker:hover
+{
+  background-image: url("../../../images/sticker-hover-dark.png");
 }
 #dm_text
 {
-  color: #6776a7;
+  color: #e6e6e9;
 }
 #entry_block
 {
-  background-color: #344065;
+  background-color: #202020;
 }
 #entry_text
 {
-  background-color: #344065;
-  color: rgb(193, 206, 236);
+  background-color: #202020;
+  color: #e6e6e9;
 }
 #message
 {
-  color: rgb(193, 206, 236);
-  background-color: #5063a3;
+  color: #e6e6e9;
+  background-color: #353535;
 }
 #name_time
 {
-  color: #657dc9;
+  color: #d4d4d4;
 }
 #nickname
 {
-  color: #657dc9;
+  color: #e6e6e9;
 }
 #single
 {
-  background: #273254;
+  background: #353535;
 }
 #single:hover
 {
-  background: #273254;
+  background: #353535;
 }
 #date
 {
-  color: #657dc9;
+  color: #e6e6e9;
 }

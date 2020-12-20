@@ -15,13 +15,8 @@
 }
 #adduser
 {
-  background-image: url("../images/add-user.png");
   background-repeat: no-repeat;
   background-size: 22px;
-}
-#adduser:hover
-{
-  background-image: url("../images/add-user-hover.png");
 }
 #dm_text
 {
@@ -40,13 +35,8 @@
 }
 #attach
 {
-  background-image: url("../images/attach.png");
   background-repeat: no-repeat;
   background-size: 26px;
-}
-#attach:hover
-{
-  background-image: url("../images/attach-hover.png");
 }
 #entry_text
 {
@@ -58,23 +48,13 @@
 }
 #send
 {
-  background-image: url("../images/send.png");
   background-repeat: no-repeat;
   background-size: 26px;
-}
-#send:hover
-{
-  background-image: url("../images/send-hover.png");
 }
 #sticker
 {
-  background-image: url("../images/sticker.png");
   background-repeat: no-repeat;
   background-size: 26px;
-}
-#sticker:hover
-{
-  background-image: url("../images/sticker-hover.png");
 }
 #messages_block
 {

@@ -34,7 +34,6 @@
 }
 #welcome
 {
-  background-image: url("../images/welcome.png");
   border-radius: 13px;
   background-size: 100%;
   padding: 13px;
@@ -42,7 +41,6 @@
 #tomsg
 {
   border-radius: 13px;
-  background-image: url("../images/tomsg_text.png");
   background-size: 100%;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
   opacity: 1;
@@ -62,7 +60,6 @@
 #togroup
 {
   border-radius: 13px;
-  background-image: url("../images/togroup_text.png");
   background-size: 100%;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
   opacity: 1;
@@ -82,7 +79,6 @@
 #tosettings
 {
   border-radius: 13px;
-  background-image: url("../images/tosettings_text.png");
   background-size: 100%;
   opacity: 1;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
