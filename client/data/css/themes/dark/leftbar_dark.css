@@ -1,28 +1,90 @@
 #leftbar
 {
-  background: #141414;
+  background-color: #141414;
+}
+
+#homebutton
+{
+  background-image: url("../../../images/home.png");
 }
 #homebutton:hover
 {
-  background: #333333;
+  border-radius: 10px;
+  background-color: #333333;
+}
+#homebutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
+}
+
+#msgbutton
+{
+  background-image: url("../../../images/messanger.png");
 }
 #msgbutton:hover
 {
-  background: #333333;
+  border-radius: 10px;
+  background-color: #333333;
+}
+#msgbutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
+}
+
+#groupbutton
+{
+  background-image: url("../../../images/group-inactive.png");
 }
 #groupbutton:hover
 {
+  border-radius: 10px;
   background-color: rgba(51, 51, 51, 0.3);
+}
+#groupbutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
+}
+
+#eventsbutton
+{
+  background-image: url("../../../images/events-inactive.png");
 }
 #eventsbutton:hover
 {
+  border-radius: 10px;
   background-color: rgba(51, 51, 51, 0.3);
 }
+#eventsbutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
+}
+
 #statusbutton:hover
 {
-  background: #333333;
+  border-radius: 10px;
+  background-color: #333333;
+}
+#statusbutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
+}
+
+#settingsbutton
+{
+  background-image: url("../../../images/settings-dark.png");
 }
 #settingsbutton:hover
 {
-  background: #333333;
+  border-radius: 10px;
+  background-color: #333333;
+}
+#settingsbutton:link
+{
+  border-radius: 10px;
+  background-color: #050505;
 }

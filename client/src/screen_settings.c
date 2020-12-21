@@ -31,14 +31,14 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     GtkWidget *names_account = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_valign(GTK_WIDGET(names_account), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(user_box), names_account, FALSE, FALSE, 20);
-    t_settings_labels.username = gtk_label_new(t_account.username);                                                                        // Получить ник пользователя
-    gtk_widget_set_name(GTK_WIDGET(t_settings_labels.username), "nickname-s");                // Имя
-    gtk_widget_set_halign(GTK_WIDGET(t_settings_labels.username), GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(names_account), t_settings_labels.username, FALSE, FALSE, 0);
-    t_settings_labels.name = gtk_label_new(t_account.name);
-    gtk_widget_set_name(GTK_WIDGET(t_settings_labels.name), "nickname-n");                // Имя
-    gtk_widget_set_halign(GTK_WIDGET(t_settings_labels.name), GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(names_account), t_settings_labels.name, FALSE, FALSE, 10);
+    t_settings.username = gtk_label_new(t_account.username);                                                                        // Получить ник пользователя
+    gtk_widget_set_name(GTK_WIDGET(t_settings.username), "nickname-s");                // Имя
+    gtk_widget_set_halign(GTK_WIDGET(t_settings.username), GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(names_account), t_settings.username, FALSE, FALSE, 0);
+    t_settings.name = gtk_label_new(t_account.name);
+    gtk_widget_set_name(GTK_WIDGET(t_settings.name), "nickname-n");                // Имя
+    gtk_widget_set_halign(GTK_WIDGET(t_settings.name), GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(names_account), t_settings.name, FALSE, FALSE, 10);
     GtkWidget *exit_button = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(exit_button), 50, 50);
     gtk_widget_set_name(GTK_WIDGET(exit_button), "exit_button");
@@ -292,12 +292,12 @@ void build_settings_menu(GtkWidget **stgscreen)
 {
     // Creating workspace
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_WIDTH-LEFTBAR_W, 200, 200, CUR_HEIGHT);    // Параметры скролла
-    t_main_scr.settings_scr = gtk_scrolled_window_new(NULL, NULL);
-    gtk_widget_set_name(GTK_WIDGET(t_main_scr.settings_scr), "settings_scr");
-    gtk_widget_set_size_request(GTK_WIDGET(t_main_scr.settings_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
-    gtk_fixed_put(GTK_FIXED(*stgscreen), t_main_scr.settings_scr, LEFTBAR_W, 0);
+    t_leftbar.settings_scr = gtk_scrolled_window_new(NULL, NULL);
+    gtk_widget_set_name(GTK_WIDGET(t_leftbar.settings_scr), "settings_scr");
+    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.settings_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
+    gtk_fixed_put(GTK_FIXED(*stgscreen), t_leftbar.settings_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
-    gtk_container_add(GTK_CONTAINER(t_main_scr.settings_scr), main);
+    gtk_container_add(GTK_CONTAINER(t_leftbar.settings_scr), main);
     //--//--//
     GtkWidget *menu_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(menu_block), WINDOW_WIDTH-LEFTBAR_W, 0);

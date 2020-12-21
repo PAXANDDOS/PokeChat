@@ -70,51 +70,27 @@
 #define BGPREVIEW_W 104
 #define BGPREVIEW_H 79
 
+int temp;
+
+//-------> Overall
 struct {
+    GtkWidget *window;
     char *app;
     char *user;
 }   t_application;
 
-struct
+struct                      // Structure for current user account data
 {
-    GtkCssProvider *styles;
-    GtkCssProvider *chat;
-    GtkCssProvider *theme;
-}   t_providers;
-
-struct
-{
-    GtkWidget *window;
-}   t_main;
-
-struct tm *tm_struct;
-char *mx_str_gettime();
-char *mx_str_getdate();
-int temp;
-
-typedef struct s_image_button
-{
-    bool active;
-    char *basic;
-    char *hovered;
-    GtkWidget *standard;
-    GtkWidget *colorful;
-} t_image_button;
-t_image_button home_img;
-t_image_button messages_img;
-t_image_button group_img;
-t_image_button events_img;
-t_image_button settings_img;
-t_image_button *t_active;
-
-struct                      // Structure for event boxes on leftbar
-{
-    GtkWidget *home_box;
-    GtkWidget *messages_box;
-    GtkWidget *group_box;
-    GtkWidget *events_box;
-    GtkWidget *settings_box;
-} t_img_event_box;
+    char *username;         // For account username
+    char *name;             // For account real name
+    char *password;         // char* for password
+    char *code;             // 12-digit trainer code
+    short team;             // 1-3 team choice
+    short theme;            // 1-3 app theme
+    short background;       // 1-4 chat background
+    char *avatar;           // Path to chosen avatar
+    short avatar_chosen;    // Number of chosen avatar. Transfers to t_account.avatar
+} t_account;
 
 struct                  // TEMPORAL Structure for tracking entries
 {
@@ -125,29 +101,74 @@ struct                  // TEMPORAL Structure for tracking entries
     char *code;             // 12-digit trainer code
 } t_account_temp;
 
-struct                  // Structure for current user account data
-{
-    char *username;     // For account username
-    char *name;         // For account real name
-    char *password;     // char* for password
-    char *code;         // 12-digit trainer code
-    int team;           // 1-3 team choice
-    int theme;          // 1-3 app theme
-    int background;     // 1-4 chat background
-    char *avatar;       // Path to chosen avatar
-} t_account;
 
-struct      // Structure for avatars
+//-------> Leftbar
+struct
+{   
+    GtkWidget *home_box;
+    GtkWidget *msg_box;
+    GtkWidget *group_box;
+    GtkWidget *events_box;
+    //GtkWidget *status_box;
+    GtkWidget *settings_box;
+    short active;
+    GtkWidget *home_scr;
+    GtkWidget *msg_scr;
+    GtkWidget *settings_scr;
+    GtkWidget *active_screen;
+}   t_leftbar;
+
+
+//-------> Home
+struct      // Structure for random pokemon data
 {
-    char* avatar_generated;
-    int avatar_chosen;
-}   t_avatar;
+    GtkWidget *pokemon_text;
+    char* pokemon_fact_image;
+    char* pokemon_fact_text;
+    char* pokemon_fact_audio;
+}   t_pokefact;
+
+
+//-------> Messages
+typedef struct s_msg_data   // Structure for data in messages
+{
+    bool sent;              // If send button was pressed
+    char *avatar;           // For avatars
+    char *nickname;         // For nicknmes
+    char *content;          // Content of message
+    int content_len;        // Length of message
+} t_msg_data;
+t_msg_data msg_data;
+
+typedef struct s_chat_list      // Structure for people in the chat list
+{
+    char *nickname;
+    char *avatar;
+    char *status;
+    struct s_chat_list *next;   // To next person
+}   t_chat_list;
+
+struct      // Selected user in chatlist
+{
+    GtkWidget *chat_screen;
+    char* current;
+}   t_chat;
+
+
+//-------> Settings
+struct
+{
+    GtkCssProvider *styles;
+    GtkCssProvider *chat;
+    GtkCssProvider *theme;
+}   t_providers;
 
 struct                  // Labels for settings screen
 {
     GtkWidget *username;
     GtkWidget *name;
-}   t_settings_labels;
+    GtkWidget *backgound;
+}   t_settings;
 
 struct
 {
@@ -171,54 +192,14 @@ struct
     GtkWidget *bg4;
 }   t_chat_bg;
 
-typedef struct s_msg_data   // Structure for data in messages
+struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
 {
-    bool sent;              // If send button was pressed
-    char *avatar;           // For avatars
-    char *nickname;         // For nicknmes
-    char *content;          // Content of message
-    int content_len;        // Length of message
-} t_msg_data;
-t_msg_data msg_data;
+    char* avatar_generated;
+}   t_avatar;
 
-typedef struct s_chat_list      // Structure for people in the chat list
-{
-    char *nickname;
-    char *avatar;
-    char *status;
-    struct s_chat_list *next;   // To next person
-}   t_chat_list;
-
-struct
-{
-    GtkWidget *backgound;
-}   t_sgallery;
-
-struct          // Structure for main screen switching
-{
-    GtkWidget *home_scr;
-    GtkWidget *msg_scr;
-    GtkWidget *settings_scr;
-    GtkWidget *active_screen;
-}   t_main_scr;
-
-struct      // Structure for chat switching
-{
-    GtkWidget *chat_screen;
-}   t_chats;
-
-struct      // Structure for random pokemon data
-{
-    GtkWidget *pokemon_text;
-    char* pokemon_fact_image;
-    char* pokemon_fact_text;
-    char* pokemon_fact_audio;
-}   t_pokefact;
-
-struct      // Selected user in chatlist
-{
-    char* current_user_dm;
-}   t_dm;
+struct tm *tm_struct;
+char *mx_str_gettime();
+char *mx_str_getdate();
 
 int ssl_client(char*, int, char*);
 void send_message();
@@ -236,7 +217,6 @@ void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery();
-GtkWidget *create_bg_preview(int bg_num);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);

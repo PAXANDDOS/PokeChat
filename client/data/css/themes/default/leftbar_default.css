@@ -1,28 +1,90 @@
 #leftbar
 {
-  background: #273254;
+  background-color: #273254;
+}
+
+#homebutton
+{
+  background-image: url("../../../images/home.png");
 }
 #homebutton:hover
 {
-  background: #0b1e43;
+  border-radius: 10px;
+  background-color: #39456d;
+}
+#homebutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
+}
+
+#msgbutton
+{
+  background-image: url("../../../images/messanger.png");
 }
 #msgbutton:hover
 {
-  background: #0b1e43;
+  border-radius: 10px;
+  background-color: #39456d;
+}
+#msgbutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
+}
+
+#groupbutton
+{
+  background-image: url("../../../images/group-inactive.png");
 }
 #groupbutton:hover
 {
-  background-color: rgba(11, 30, 67, 0.35);
+  border-radius: 10px;
+  background-color: rgba(57, 69, 109, 0.3);
+}
+#groupbutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
+}
+
+#eventsbutton
+{
+  background-image: url("../../../images/events-inactive.png");
 }
 #eventsbutton:hover
 {
-  background-color: rgba(11, 30, 67, 0.35);
+  border-radius: 10px;
+  background-color: rgba(57, 69, 109, 0.3); 
 }
+#eventsbutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
+}
+
 #statusbutton:hover
 {
-  background: #0b1e43;
+  border-radius: 10px;
+  background-color: #39456d;
+}
+#statusbutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
+}
+
+#settingsbutton
+{
+  background-image: url("../../../images/settings.png");
 }
 #settingsbutton:hover
 {
-  background: #0b1e43;
+  border-radius: 10px;
+  background-color: #39456d;
+}
+#settingsbutton:link
+{
+  border-radius: 10px;
+  background-color: #39456d;
 }

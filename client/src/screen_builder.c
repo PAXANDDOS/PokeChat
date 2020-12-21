@@ -3,88 +3,82 @@
 void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
 {
     // Connecting leftbar widget to CSS
-    GtkWidget *left_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                     // Создаем виджет левого бара
-    gtk_widget_set_name(GTK_WIDGET(left_box), "leftbar");                               // Присваиваем ему имя для связи с CSS
-    gtk_widget_set_size_request(GTK_WIDGET(left_box), LEFTBAR_W, WINDOW_HEIGHT);           // Настройка размера виджета
-    gtk_fixed_put(GTK_FIXED(*main_area), left_box, 0, 0);                               // Настройка позиции виджета
+    *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                         // Создаем виджет левого бара
+    gtk_widget_set_name(GTK_WIDGET(*content_selection_area), "leftbar");                         // Присваиваем ему имя для связи с CSS
+    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), LEFTBAR_W, WINDOW_HEIGHT);  // Настройка размера виджета
+    gtk_fixed_put(GTK_FIXED(*main_area), *content_selection_area, 0, 0);                         // Настройка позиции виджета
 
     build_home_screen(main_area);       // Вызываю постройку домашнего экрана
     build_messanger_screen(main_area);  // Вызываю постройку экрана сообщений
     build_settings_menu(main_area);     // Вызываю постройку экрана настроек
-    t_main_scr.active_screen = t_main_scr.home_scr;           // Назначаю домашний экран активным
+    t_leftbar.active_screen = t_leftbar.home_scr;           // Назначаю домашний экран активным
 
-    //
-    // Creating selection area
-    *content_selection_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Создаем вертикальный бокс для кнопок
-    gtk_fixed_put(GTK_FIXED(*main_area), *content_selection_area, 0, 0);                // Настройка позиции
-    gtk_container_set_border_width(GTK_CONTAINER(*content_selection_area), 0);          // Настройка чего-то
-    gtk_widget_set_size_request(GTK_WIDGET(*content_selection_area), LEFTBAR_W, 0);     // Настройка границ
-    //
-    // Creating selection area for settings
-    GtkWidget *block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0); // Создаем такой же бокс, только для кнопок снизу-вверх
-    gtk_fixed_put(GTK_FIXED(*main_area), block, 0, 585);         // 640
-    gtk_container_set_border_width(GTK_CONTAINER(block), 0);
-    gtk_widget_set_size_request(GTK_WIDGET(block), LEFTBAR_W, 0);
-    //
-    // Placing icons
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.home_box), "homebutton");
-    gtk_box_pack_start(GTK_BOX(*content_selection_area),
-        t_img_event_box.home_box, TRUE, FALSE, LEFTBAR_GAP);            // Вызываем функцию ддя размещения иконки из бокса
-    gtk_widget_set_halign(t_img_event_box.home_box, GTK_ALIGN_CENTER);  // Центрируем
+    t_leftbar.home_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_leftbar.home_box), "homebutton");
+    gtk_widget_set_halign(GTK_WIDGET(t_leftbar.home_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.home_box), 50, 50);
+    gtk_box_pack_start(GTK_BOX(*content_selection_area), t_leftbar.home_box, FALSE, FALSE, 10);
+    gtk_widget_set_state_flags(GTK_WIDGET(t_leftbar.home_box), GTK_STATE_FLAG_LINK, FALSE);
 
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.messages_box), "msgbutton");
-    gtk_box_pack_start(GTK_BOX(*content_selection_area),
-        t_img_event_box.messages_box, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_widget_set_halign(t_img_event_box.messages_box, GTK_ALIGN_CENTER);
+    t_leftbar.msg_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_leftbar.msg_box), "msgbutton");
+    gtk_widget_set_halign(GTK_WIDGET(t_leftbar.msg_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.msg_box), 50, 50);
+    gtk_box_pack_start(GTK_BOX(*content_selection_area), t_leftbar.msg_box, FALSE, FALSE, 10);
 
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.group_box), "groupbutton");
-    gtk_box_pack_start(GTK_BOX(*content_selection_area),
-        t_img_event_box.group_box, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_widget_set_halign(t_img_event_box.group_box, GTK_ALIGN_CENTER);
+    t_leftbar.group_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_leftbar.group_box), "groupbutton");
+    gtk_widget_set_halign(GTK_WIDGET(t_leftbar.group_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.group_box), 50, 50);
+    gtk_box_pack_start(GTK_BOX(*content_selection_area), t_leftbar.group_box, FALSE, FALSE, 10);
 
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.events_box), "eventsbutton");
-    gtk_box_pack_start(GTK_BOX(*content_selection_area),
-        t_img_event_box.events_box, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_widget_set_halign(t_img_event_box.events_box, GTK_ALIGN_CENTER);
+    t_leftbar.events_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_leftbar.events_box), "eventsbutton");
+    gtk_widget_set_halign(GTK_WIDGET(t_leftbar.events_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.events_box), 50, 50);
+    gtk_box_pack_start(GTK_BOX(*content_selection_area), t_leftbar.events_box, FALSE, FALSE, 10);
 
-    GtkWidget *avatar_container = gtk_fixed_new();
+    t_leftbar.settings_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET( t_leftbar.settings_box), "settingsbutton");
+    gtk_widget_set_halign(GTK_WIDGET( t_leftbar.settings_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET( t_leftbar.settings_box), 50, 50);
+    gtk_box_pack_end(GTK_BOX(*content_selection_area),  t_leftbar.settings_box, FALSE, FALSE, 10);
+
+    GtkWidget* status_box = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(status_box), "statusbutton");
+    gtk_widget_set_halign(GTK_WIDGET(status_box), GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(status_box), 50, 50);
+    gtk_box_pack_end(GTK_BOX(*content_selection_area), status_box, FALSE, FALSE, 10);
     GtkWidget *avatar = gtk_drawing_area_new();
-    GtkWidget *status = gtk_image_new_from_file("client/data/images/status_online.png");    // Дописать функцию выбора статуса
-    gtk_widget_set_size_request(GTK_WIDGET(avatar), 40, 40);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)40);
-    gtk_box_pack_start(GTK_BOX(block), avatar_container, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container), status, 25, 25);
-    gtk_widget_set_halign(avatar_container, GTK_ALIGN_CENTER);
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 46, 46);
+    gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)46);
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(status_box), TRUE);
+    gtk_container_add(GTK_CONTAINER(status_box), avatar);
 
-    gtk_widget_set_name(GTK_WIDGET(t_img_event_box.settings_box), "settingsbutton");
-    gtk_box_pack_start(GTK_BOX(block),
-        t_img_event_box.settings_box, TRUE, FALSE, LEFTBAR_GAP);
-    gtk_widget_set_halign(t_img_event_box.settings_box, GTK_ALIGN_CENTER);
-    //
     // Checking for events
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.home_box), "button_press_event", G_CALLBACK(home_click), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.home_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.home_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.home_box), "button_press_event", G_CALLBACK(home_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.messages_box), "button_press_event", G_CALLBACK(messages_click), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.msg_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.msg_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.msg_box), "button_press_event", G_CALLBACK(messages_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.group_box), "button_press_event", G_CALLBACK(group_click), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.group_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.group_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.group_box), "button_press_event", G_CALLBACK(group_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.events_box), "button_press_event", G_CALLBACK(events_click), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.events_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.events_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.events_box), "button_press_event", G_CALLBACK(events_click), NULL);
 
-    g_signal_connect(G_OBJECT(avatar_container), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(avatar_container), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(avatar_container), "button_press_event", G_CALLBACK(status_click), NULL);
+    g_signal_connect(G_OBJECT(status_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(status_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(status_box), "button_press_event", G_CALLBACK(status_click), NULL);
 
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_img_event_box.settings_box), "button_press_event", G_CALLBACK(settings_click), NULL);
-    //
+    g_signal_connect(G_OBJECT(t_leftbar.settings_box), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.settings_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(t_leftbar.settings_box), "button_press_event", G_CALLBACK(settings_click), NULL);
 }

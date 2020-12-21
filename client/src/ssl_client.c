@@ -81,7 +81,7 @@ int ssl_client(char* hostname, int portnum, char* message) {
 
     // just for test
     msg_data.content = buf;
-    new_incoming_message(t_chats.chat_screen);
+    new_incoming_message(t_chat.chat_screen);
 
     return EXIT_SUCCESS;
 }

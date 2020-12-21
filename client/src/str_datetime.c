@@ -6,7 +6,6 @@ char *mx_str_gettime()
     tm_struct = localtime(&cur_time);
     int hours = tm_struct->tm_hour;
     int minutes = tm_struct->tm_min;
-    // free(tm_struct);
     char *tlabel = NULL;
 
     tlabel = mx_strjoin(tlabel, mx_itoa(hours));
@@ -25,7 +24,6 @@ char *mx_str_getdate()
     int day = tm_struct->tm_mday;
     int month = tm_struct->tm_mon;
     int year = tm_struct->tm_year;
-    //free(tm_struct);
     char *dlabel = NULL;
 
     if(day < 10) dlabel = mx_strjoin(dlabel, "0");

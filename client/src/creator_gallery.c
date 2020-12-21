@@ -13,7 +13,7 @@ static void avatar_click(GtkWidget *widget) {
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
     char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
     t_account.avatar = get_avatar_by_number(atoi(chosen));
-    gtk_widget_destroy(GTK_WIDGET(t_sgallery.backgound));
+    gtk_widget_destroy(GTK_WIDGET(t_settings.backgound));
     if(widget) {}
 }
 
@@ -48,18 +48,18 @@ static GtkWidget *create_avatar_list(int avatar_num)
 
 void create_gallery(GtkWidget *main)
 {
-    t_sgallery.backgound = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_sgallery.backgound), "sgallery");
-    gtk_widget_set_size_request(GTK_WIDGET(t_sgallery.backgound), WINDOW_WIDTH-100, WINDOW_HEIGHT);
-    g_signal_connect(G_OBJECT(t_sgallery.backgound), "button_press_event", G_CALLBACK(sgallery_click), NULL);
-    gtk_fixed_put(GTK_FIXED(main), t_sgallery.backgound, 0, 0);
+    t_settings.backgound = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_settings.backgound), "sgallery");
+    gtk_widget_set_size_request(GTK_WIDGET(t_settings.backgound), WINDOW_WIDTH-100, WINDOW_HEIGHT);
+    g_signal_connect(G_OBJECT(t_settings.backgound), "button_press_event", G_CALLBACK(sgallery_click), NULL);
+    gtk_fixed_put(GTK_FIXED(main), t_settings.backgound, 0, 0);
 
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
     //gtk_widget_set_size_request(GTK_WIDGET(clickable), , 0);
     g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(sgallery2_click), NULL);
-    gtk_container_add(GTK_CONTAINER(t_sgallery.backgound), clickable);
+    gtk_container_add(GTK_CONTAINER(t_settings.backgound), clickable);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(box), "sgallery_box");
@@ -97,5 +97,5 @@ void create_gallery(GtkWidget *main)
     }
     gtk_container_add(GTK_CONTAINER(scrollable), avatars);
 
-    gtk_widget_show_all(GTK_WIDGET(t_sgallery.backgound));
+    gtk_widget_show_all(GTK_WIDGET(t_settings.backgound));
 }

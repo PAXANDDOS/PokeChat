@@ -13,7 +13,7 @@ void test_autofill()
     t_avatar.avatar_generated = "client/data/avatars/";
     avatar_random();
 
-    t_dm.current_user_dm = "";
+    t_chat.current = "Gazaris";
 
     t_account.username = "PAXANDDOS";
     t_account.name = "Paul";
@@ -22,9 +22,9 @@ void test_autofill()
     t_account.team = 1;
     t_account.theme = 2;
     t_account.background = 1;
-    t_avatar.avatar_chosen = 54;
-    t_account.avatar = get_avatar_by_number(t_avatar.avatar_chosen);
+    t_account.avatar_chosen = 54;
+    t_account.avatar = get_avatar_by_number(t_account.avatar_chosen);
 
-    t_application.app = "PokeChat alpha 0.7.0";
+    t_application.app = "PokeChat alpha 0.7.1";
     t_application.user = getenv("USER");
 }

@@ -18,7 +18,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         return;
     msg_data.sent = true;
     if(msg_data.sent == true) {
-        new_outgoing_message(t_chats.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
+        new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         send_message();
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.sent = false;

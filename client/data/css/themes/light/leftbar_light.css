@@ -2,27 +2,77 @@
 {
   background-color: #ebebeb;
 }
+
+#homebutton
+{
+  background-image: url("../../../images/home.png");
+}
 #homebutton:hover
 {
+  background-color: #dddddd;
+}
+#homebutton:link
+{
   background-color: #d6d6d6;
+}
+
+#msgbutton
+{
+  background-image: url("../../../images/messanger.png");
 }
 #msgbutton:hover
 {
+  background-color: #dddddd;
+}
+#msgbutton:link
+{
   background-color: #d6d6d6;
+}
+
+#groupbutton
+{
+  background-image: url("../../../images/group-inactive.png");
 }
 #groupbutton:hover
 {
+  background-color: #dddddd;
+}
+#groupbutton:link
+{
   background-color: #d6d6d6;
+}
+
+#eventsbutton
+{
+  background-image: url("../../../images/events-inactive.png");
 }
 #eventsbutton:hover
 {
-  background-color: #d6d6d6;
+  background-color: #dddddd;
 }
-#statusbutton:hover
+#eventsbutton:link
 {
   background-color: #d6d6d6;
 }
+
+#statusbutton:hover
+{
+  background-color: #dddddd;
+}
+#statusbutton:link
+{
+  background-color: #d6d6d6;
+}
+
+#settingsbutton
+{
+  background-image: url("../../../images/settings-light.png");
+}
 #settingsbutton:hover
+{
+  background-color: #dddddd;
+}
+#settingsbutton:link
 {
   background-color: #d6d6d6;
 }

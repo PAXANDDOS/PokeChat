@@ -12,7 +12,7 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
     GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
     gint res;
 
-    dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_main.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+    dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
 
     res = gtk_dialog_run (GTK_DIALOG (dialog));
     if (res == GTK_RESPONSE_ACCEPT) {
@@ -144,8 +144,8 @@ void apply_butt_click(GtkWidget *widget){
         else { return; }
     }
 
-    gtk_label_set_text(GTK_LABEL(t_settings_labels.username), t_account.username);
-    gtk_label_set_text(GTK_LABEL(t_settings_labels.name), t_account.name);
+    gtk_label_set_text(GTK_LABEL(t_settings.username), t_account.username);
+    gtk_label_set_text(GTK_LABEL(t_settings.name), t_account.name);
     printf("User = %s\n", t_account.username);
     printf("Name = %s\n", t_account.name);
     printf("Code = %s\n", t_account.code);
