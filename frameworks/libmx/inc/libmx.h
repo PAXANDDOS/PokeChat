@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <fcntl.h>
 #include <malloc/malloc.h>
+#include <wchar.h>
+#include <locale.h>
 
 // Utils pack
 void mx_printchar(char c);
@@ -56,6 +58,7 @@ bool mx_isdigit(int c);
 bool mx_isspace(char c);
 bool mx_islower(int c);
 bool mx_isupper(int c);
+bool mx_isutf(wchar_t c);
 
 // Memory pack
 void *mx_memset(void *b, int c, size_t len);

@@ -255,6 +255,7 @@ void new_incoming_message(GtkWidget *messages_block);
 void event_enter_notify(GtkWidget *widget);
 void event_false_enter_notify(GtkWidget *widget);
 void event_leave_notify(GtkWidget *widget);
+void all_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 
 void home_click(GtkWidget *widget, GdkEventButton *event);
 void messages_click(GtkWidget *widget, GdkEventButton *event);

@@ -29,7 +29,7 @@ static void load_providers()
     }
     else if(t_account.theme == 2) {
         t_providers.chat = gtk_css_provider_new();
-        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg_light/chatbg1.css", NULL);
+        gtk_css_provider_load_from_path(t_providers.chat, "client/data/css/chat_bg/chatbg1.css", NULL);
         gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
     }
     else if(t_account.theme == 3) { 

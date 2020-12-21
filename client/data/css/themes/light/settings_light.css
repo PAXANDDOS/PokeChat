@@ -5,7 +5,7 @@
 #exit_button
 {
     background-color: #f0f0f0;
-    background-image: url("../../../images/exit.png");
+    background-image: url("../../../images/exit-light.png");
 }
 #exit_button:hover
 {
@@ -25,7 +25,7 @@
 }
 #add_button
 {
-    background-color: #cacaca;
+    background-color: #ebebeb;
     background-image: url("../../../images/add_photo_light.png");
 }
 #add_button:hover
@@ -34,7 +34,7 @@
 }
 #gallery_button
 {
-    background-color: #cacaca;
+    background-color: #ebebeb;
     background-image: url("../../../images/gallery-light.png");
 }
 #gallery_button:hover

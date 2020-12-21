@@ -88,6 +88,18 @@ void code_input_event(GtkEditable *editable, const gchar *text, gint length, gin
     }
 }
 
+void all_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data)
+{
+    if(position || data) {}
+    int i;
+    for (i = 0; i < length; i++) {
+        if (!mx_isutf(((wchar_t)text[i]))) {
+            g_signal_stop_emission_by_name(G_OBJECT(editable), "insert-text");
+            return;
+        }
+    }
+}
+
 void pass_field_change_event(GtkWidget *widget) {
     if(strlen(gtk_entry_get_text(GTK_ENTRY(widget))) <= 4){
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_ACTIVE);
