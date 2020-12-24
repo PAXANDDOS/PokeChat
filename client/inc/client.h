@@ -143,15 +143,17 @@ t_msg_data msg_data;
 typedef struct s_chat_list      // Structure for people in the chat list
 {
     char *nickname;
-    char *avatar;
-    char *status;
+    int avatar;
+    bool status;
     struct s_chat_list *next;   // To next person
 }   t_chat_list;
 
-struct      // Selected user in chatlist
+struct s_chat   // Selected user in chatlist
 {
     GtkWidget *chat_screen;
     char* current;
+    GtkWidget *stickers;
+    struct s_chat *next;
 }   t_chat;
 
 
@@ -195,6 +197,7 @@ struct
 struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
 {
     char* avatar_generated;
+    char *avatar_path;
 }   t_avatar;
 
 struct tm *tm_struct;
@@ -216,18 +219,20 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
 void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
-void create_gallery();
+void create_gallery(GtkWidget *main);
+void create_stickerlist(GtkWidget *main);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
 GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h);
-gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int size);
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int avatar);
 gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
-gboolean draw_event_bg_preview(GtkWidget *widget, cairo_t *cr, char* path);
 gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path);
+gboolean draw_event_status(GtkWidget *widget, cairo_t *cr, int size);
+gboolean draw_event_sticker_list(GtkWidget *widget, cairo_t *cr, char* path);
 
-GtkWidget *create_chatlist();
+GtkWidget *create_chatlist(t_chat_list* list);
 void new_outgoing_message(GtkWidget *messages_block);
 void new_incoming_message(GtkWidget *messages_block);
 
@@ -254,7 +259,7 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
 void entry_text_change_event(GtkWidget *widget);
-void sticker_click(GtkWidget *widget, GdkEventButton *event);
+void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 
 void username_field_change_event(GtkWidget *widget);

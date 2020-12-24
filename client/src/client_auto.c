@@ -25,6 +25,6 @@ void test_autofill()
     t_account.avatar_chosen = 54;
     t_account.avatar = get_avatar_by_number(t_account.avatar_chosen);
 
-    t_application.app = "PokeChat alpha 0.7.1";
+    t_application.app = "PokeChat alpha 0.7.2";
     t_application.user = getenv("USER");
 }

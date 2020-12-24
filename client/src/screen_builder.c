@@ -41,19 +41,19 @@ void build_all(GtkWidget **content_selection_area, GtkWidget **main_area)
     t_leftbar.settings_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET( t_leftbar.settings_box), "settingsbutton");
     gtk_widget_set_halign(GTK_WIDGET( t_leftbar.settings_box), GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(GTK_WIDGET( t_leftbar.settings_box), 50, 50);
+    gtk_widget_set_size_request(GTK_WIDGET( t_leftbar.settings_box), 46, 46);
     gtk_box_pack_end(GTK_BOX(*content_selection_area),  t_leftbar.settings_box, FALSE, FALSE, 10);
 
     GtkWidget* status_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(status_box), "statusbutton");
     gtk_widget_set_halign(GTK_WIDGET(status_box), GTK_ALIGN_CENTER);
-    gtk_widget_set_size_request(GTK_WIDGET(status_box), 50, 50);
+    gtk_widget_set_size_request(GTK_WIDGET(status_box), 42, 42);
     gtk_box_pack_end(GTK_BOX(*content_selection_area), status_box, FALSE, FALSE, 10);
     GtkWidget *avatar = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar), 46, 46);
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 42, 42);
     gtk_widget_set_halign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
     gtk_widget_set_valign(GTK_WIDGET(avatar), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)46);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)42);
     gtk_event_box_set_above_child(GTK_EVENT_BOX(status_box), TRUE);
     gtk_container_add(GTK_CONTAINER(status_box), avatar);
 

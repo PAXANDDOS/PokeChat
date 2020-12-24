@@ -30,9 +30,10 @@ void entry_text_change_event(GtkWidget *widget) {
     msg_data.content = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
-void sticker_click(GtkWidget *widget, GdkEventButton *event) {
+void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(widget) {}
     if(event) {}
+    create_stickerlist(main);
 }
 
 void single_event_click(GtkWidget *widget, GdkEventButton *event) {

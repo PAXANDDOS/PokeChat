@@ -67,17 +67,30 @@
 }
 #nickname
 {
-  color: #343740;
+  color: rgba(52, 55, 64, 0.85);
 }
 #single
 {
-  background: #ebebeb;
+  background-color: rgba(235, 235, 235, 0);
 }
 #single:hover
 {
-  background: #ebebeb;
+  background-color: rgba(235, 235, 235, 0.9);
+}
+#single:link
+{
+  background-color: rgb(235, 235, 235);
+}
+#single:link #nickname
+{
+  color: rgb(52, 55, 64);
 }
 #date
 {
   color: #343740;
+}
+#stickerlist
+{
+  background-color: #d6d6d6;
+  box-shadow: inset 0 0 0 2px #343740;
 }

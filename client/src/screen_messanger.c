@@ -1,5 +1,40 @@
 #include "../inc/client.h"
 
+static t_chat_list *chat_create_node(char *nickname, int avatar, bool status) {
+    t_chat_list *new_node = NULL;
+    new_node = malloc(sizeof(t_chat_list));
+    new_node->nickname = nickname;
+    new_node->avatar = avatar;
+    new_node->status = status;
+    new_node->next = NULL;
+    return new_node;
+}
+
+static void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status) {
+    t_chat_list *back_list = chat_create_node(nickname, avatar, status);
+    t_chat_list *p = NULL;
+    if (list == NULL || *list == NULL)
+        *list = back_list;
+    else {
+        p = *list;
+        while (p->next != NULL)
+            p = p->next;
+        p->next = back_list;
+    }
+}
+
+static void chat_clear_list(t_chat_list **list) {
+    t_chat_list *p;
+    while (*list) {
+        p = NULL;
+        if (list) {
+            p = (*list)->next;
+            free(*list);
+            *list = p;
+        }
+    }
+}
+
 static void build_list(GtkWidget *main)
 {
     GtkWidget *list_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -32,7 +67,17 @@ static void build_list(GtkWidget *main)
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);                 // Зона, доступная для бесконечного скролла
     gtk_widget_set_size_request(scrollable, LIST_W, LIST_H-104);
     gtk_widget_set_name(GTK_WIDGET(scrollable), "chatlist");
-    GtkWidget *chatlist = create_chatlist();
+
+    t_chat_list* list = NULL;
+    chat_push_back(&list, "Neulen", 40, false);
+    chat_push_back(&list, "Gazaris", 40, true);
+    chat_push_back(&list, "dashbug", 40, true);
+    chat_push_back(&list, "Savolus", 40, false);
+    chat_push_back(&list, "Overwolf", 40, false);
+    chat_push_back(&list, "sp", 40, true);
+    chat_push_back(&list, "if", 40, false);
+    GtkWidget *chatlist = create_chatlist(list);
+    chat_clear_list(&list);
 
     gtk_container_add(GTK_CONTAINER(scrollable), chatlist);
     gtk_box_pack_start(GTK_BOX(list_block), scrollable, FALSE, FALSE, 0);              // Кладем скролл зону на главный экран
@@ -89,7 +134,7 @@ static void build_entryfield(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(sticker), "button_press_event", G_CALLBACK(sticker_click), NULL);
+    g_signal_connect(G_OBJECT(sticker), "button_press_event", G_CALLBACK(sticker_click), main);
 }
 
 static void build_chat(GtkWidget *main)

@@ -107,16 +107,24 @@
 #single
 {
   border-radius: 13px;
-  padding-left: 5px;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
 }
-#status
+#singlepad
 {
-  background-image: url("../images/status_online.png");
-  background-size: 100%;
+  padding-left: 6px;
 }
 #date
 {
   font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 300;
   font-size: 14px;
+}
+#stickerlist
+{
+  border-radius: 10px;
+  padding: 6px;
+}
+#hidden
+{
+  opacity: 0;
 }

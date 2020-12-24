@@ -1,13 +1,5 @@
 #include "../inc/client.h"
 
-static void avatar_enter_notify(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
-}
-
-static void avatar_leave_notify(GtkWidget *widget) {
-    gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
-}
-
 static void avatar_click(GtkWidget *widget) {
     GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
@@ -89,8 +81,8 @@ void create_gallery(GtkWidget *main)
             gtk_widget_set_size_request(GTK_WIDGET(single), 80, 80);
             gtk_grid_attach(GTK_GRID(avatars), single, j, i, 1, 1);
             gtk_widget_set_name(GTK_WIDGET(single), "avatars");
-            g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(avatar_enter_notify), NULL);
-            g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(avatar_leave_notify), NULL);
+            g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+            g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
             g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(avatar_click), NULL);
             avatar_num++;
         }
