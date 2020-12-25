@@ -159,11 +159,11 @@ void build_messanger_screen(GtkWidget **msgscreen)
     gtk_widget_set_name(GTK_WIDGET(t_leftbar.msg_scr), "messanger");
     gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.msg_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     gtk_fixed_put(GTK_FIXED(*msgscreen), t_leftbar.msg_scr, LEFTBAR_W, 0);
-    GtkWidget *main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(t_leftbar.msg_scr), main, 0, 0, WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
+    t_msg.main = gtk_fixed_new();
+    gtk_grid_attach(GTK_GRID(t_leftbar.msg_scr), t_msg.main, 0, 0, WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     //
     //
-    build_list(main);
-    build_chat(main);
-    build_entryfield(main);
+    build_list(t_msg.main);
+    build_chat(t_msg.main);
+    build_entryfield(t_msg.main);
 }

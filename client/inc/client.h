@@ -156,6 +156,11 @@ struct s_chat   // Selected user in chatlist
     struct s_chat *next;
 }   t_chat;
 
+struct
+{
+    GtkWidget *main;
+    GtkWidget *embedded_view;
+}   t_msg;
 
 //-------> Settings
 struct
@@ -231,10 +236,17 @@ gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path);
 gboolean draw_event_status(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_sticker_list(GtkWidget *widget, cairo_t *cr, char* path);
+gboolean draw_event_sticker(GtkWidget *widget, cairo_t *cr, char* path);
+gboolean draw_event_embedded(GtkWidget *widget, cairo_t *cr, char* path);
+gboolean draw_event_embedded_full(GtkWidget *widget, cairo_t *cr, char* path);
 
 GtkWidget *create_chatlist(t_chat_list* list);
 void new_outgoing_message(GtkWidget *messages_block);
 void new_incoming_message(GtkWidget *messages_block);
+void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num);
+void new_incoming_sticker(GtkWidget *messages_block, int sticker_num);
+void new_outgoing_embedded(GtkWidget *messages_block, char* path);
+void new_incoming_embedded(GtkWidget *messages_block, char* path);
 
 // Events
 void event_enter_notify(GtkWidget *widget);

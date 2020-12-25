@@ -69,6 +69,10 @@
 {
   color: rgba(230, 230, 233, 0.85);
 }
+#msg_name
+{
+  color: #d4d4d4;
+}
 #single
 {
   background-color: rgba(53, 53, 53, 0);

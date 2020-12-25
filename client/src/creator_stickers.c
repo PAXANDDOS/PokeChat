@@ -12,7 +12,7 @@ static void onsticker_click(GtkWidget *widget) {
     GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
     char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-    // chosen - > send sticker
+    new_outgoing_sticker(t_chat.chat_screen, atoi(chosen));
     printf("Sticker: %s\n", chosen);
     if(chosen) {}
     gtk_widget_destroy(GTK_WIDGET(t_chat.stickers));
@@ -83,7 +83,6 @@ void create_stickerlist(GtkWidget *main)
             sticker_num++;
             if(sticker_num > 42) break;
         }
-        if(sticker_num > 42) break;
     }
     gtk_container_add(GTK_CONTAINER(scrollable), stickers);
 

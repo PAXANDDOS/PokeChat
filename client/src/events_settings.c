@@ -2,49 +2,61 @@
 
 void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event) {}
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    {
+
+    }
 }
 
 void add_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event) {}
-    GtkWidget *dialog;
-    GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
-    gint res;
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    {
+        GtkWidget *dialog;
+        GtkFileFilter *filter = gtk_file_filter_new();
 
-    dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+        GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+        gint res;
 
-    res = gtk_dialog_run (GTK_DIALOG (dialog));
-    if (res == GTK_RESPONSE_ACCEPT) {
-        char *filename;
-        GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
-        filename = gtk_file_chooser_get_filename(chooser);
-        char *pwd = getenv("PWD");
-        char **path_split = mx_strsplit(pwd, '/');
-        int words_count = 0;
-        while (path_split[++words_count]);
-        char *backward = strdup("");
-        for (int i = 0; i < words_count; i++) {
-            backward = mx_strrejoin(backward, "..");
-            if (i != words_count - 1)
-                backward = mx_strrejoin(backward, "/");
+        gtk_file_filter_add_mime_type(filter, "image/ *");
+        gtk_file_filter_add_pattern(filter, "*.png");
+        dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+
+        res = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (res == GTK_RESPONSE_ACCEPT) {
+            char *filename;
+            GtkFileChooser *chooser = NULL;
+            gtk_file_chooser_add_filter(chooser, filter);
+            gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+            chooser = GTK_FILE_CHOOSER(dialog);
+            filename = gtk_file_chooser_get_filename(chooser);
+            char *pwd = getenv("PWD");
+            char **path_split = mx_strsplit(pwd, '/');
+            int words_count = 0;
+            while (path_split[++words_count]);
+            char *backward = strdup("");
+            for (int i = 0; i < words_count; i++) {
+                backward = mx_strrejoin(backward, "..");
+                if (i != words_count - 1)
+                    backward = mx_strrejoin(backward, "/");
+            }
+            backward = mx_strrejoin(backward, filename);
+            t_account.avatar = strdup(backward);
+            mx_strdel(&backward);
+            for (int i = 0; path_split[i]; i++)
+                free(path_split[i]);
+            free(path_split);
+            free(filename);
         }
-        backward = mx_strrejoin(backward, filename);
-        t_account.avatar = strdup(backward);
-        mx_strdel(&backward);
-        for (int i = 0; path_split[i]; i++)
-            free(path_split[i]);
-        free(path_split);
-        free(filename);
-    }
 
-    gtk_widget_destroy (dialog);
+        gtk_widget_destroy (dialog);
+    }
 }
 
 void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(widget) {}
-    if(event) {}
-    create_gallery(main);
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+        create_gallery(main);
 }
 
 //
