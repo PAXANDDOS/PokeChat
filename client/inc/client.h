@@ -199,6 +199,16 @@ struct
     GtkWidget *bg4;
 }   t_chat_bg;
 
+//-------> Authorization
+struct
+{
+    GtkWidget *login_menu;
+    GtkWidget *registration_menu;
+    GtkWidget *mystic_event;
+    GtkWidget *instinct_event;
+    GtkWidget *valor_event;
+}   t_auth;
+
 struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
 {
     char* avatar_generated;
@@ -217,10 +227,13 @@ void send_photo();
 void test_autofill();
 void fill_pokemon();
 void play_audio();
-void preload_images();
 void avatar_random();
 void pokemon_random();
-void build_all(GtkWidget **content_selection_area, GtkWidget **main_area);
+char* random_phrase();
+
+void build_authorization(GtkWidget **main_area);
+void build_registration(GtkWidget **main_area);
+void build_all(GtkWidget **main_area);
 void build_home_screen(GtkWidget **homescreen);
 void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
@@ -275,7 +288,7 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 
 void username_field_change_event(GtkWidget *widget);
-void firstaname_field_change_event(GtkWidget *widget);
+void firstname_field_change_event(GtkWidget *widget);
 void code_field_change_event(GtkWidget *widget);
 void code_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 void pass_field_change_event(GtkWidget *widget);
@@ -294,3 +307,9 @@ void bg1_preview_click(GtkWidget *widget, GdkEventButton *event);
 void bg2_preview_click(GtkWidget *widget, GdkEventButton *event);
 void bg3_preview_click(GtkWidget *widget, GdkEventButton *event);
 void bg4_preview_click(GtkWidget *widget, GdkEventButton *event);
+
+void login_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);
+void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);
+void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event);
+void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
+void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);

@@ -39,49 +39,43 @@ static void load_providers()
     }
 }
 
-static void build_main_area(GtkWidget **main_area, GtkWidget **window) {
-    *main_area = gtk_fixed_new();
-    gtk_container_add(GTK_CONTAINER(*window), *main_area);
-    gtk_widget_set_size_request(GTK_WIDGET(*main_area), WINDOW_WIDTH, WINDOW_HEIGHT);
-}
-
 int main(int argc, char *argv[]) {
-    t_application.window = NULL;
-    GdkPixbuf *icon = NULL;
-    GtkWidget *main_area = NULL;
-    GtkWidget *left_bar = NULL;
+    gtk_init(&argc, &argv);                             // Initializing GTK
+    SDL_Init(SDL_INIT_AUDIO);                           // Initializing SDL
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);  // Initializing SDL Mixer
+    
+    t_application.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);                                 // Creating main window
+    gtk_window_set_title(GTK_WINDOW(t_application.window), "PokeChat");                         // Setting window title
+    gtk_window_set_default_size(GTK_WINDOW(t_application.window), WINDOW_WIDTH, WINDOW_HEIGHT); // Setting window size
+    gtk_window_set_position(GTK_WINDOW(t_application.window), GTK_WIN_POS_CENTER);              // Setting window start position
+    gtk_window_set_resizable(GTK_WINDOW(t_application.window), FALSE);                          // Disabling window resize
 
-    fill_pokemon();
-    test_autofill();
+    GdkPixbuf *icon = create_pixbuf("client/data/images/logo.png");                 // Creating icon for window tab (windows only)
+    gtk_window_set_icon(GTK_WINDOW(t_application.window), icon);                    // Setting icon to window
+    
+    load_providers();   // Loading chosen CSS providers
+    GtkWidget *main_area = gtk_fixed_new();                                         // Creating main area
+    gtk_container_add(GTK_CONTAINER(t_application.window), main_area);              // Applying main area to current window
+    gtk_widget_set_size_request(GTK_WIDGET(main_area), WINDOW_WIDTH, WINDOW_HEIGHT);// Setting size
 
-    SDL_Init(SDL_INIT_AUDIO);
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    gtk_init(&argc, &argv);
+    build_authorization(&main_area); // Закомиентируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
 
-    t_application.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(t_application.window), "PokeChat");
-    gtk_window_set_default_size(GTK_WINDOW(t_application.window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    gtk_window_set_position(GTK_WINDOW(t_application.window), GTK_WIN_POS_CENTER);
-    icon = create_pixbuf("client/data/images/logo.png");
-    gtk_window_set_icon(GTK_WINDOW(t_application.window), icon);
-    gtk_window_set_resizable(GTK_WINDOW(t_application.window), FALSE);
+    // fill_pokemon();     // Filling random data on home tab
+    // test_autofill();    // Заполнение данных аккаунта
 
-    load_providers();
+    // t_leftbar.active = 1;   // Active button in leftbar
+    // build_all(&main_area);  // Main builder function
 
-    build_main_area(&main_area, &t_application.window);
-    t_leftbar.active = 1;
-    build_all(&left_bar, &main_area);
+    gtk_widget_show_all(t_application.window);          // Showing window
+    // gtk_widget_hide(GTK_WIDGET(t_leftbar.msg_scr));     // Hiding messanger tab
+    // gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));// Hiding settings tab
 
-    gtk_widget_show_all(t_application.window);
-    gtk_widget_hide(GTK_WIDGET(t_leftbar.msg_scr));
-    gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));
-
-    g_signal_connect(t_application.window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    gtk_main();
-    g_object_unref(icon);
-    Mix_CloseAudio();
-    SDL_Quit();
-    free(tm_struct);
+    g_signal_connect(t_application.window, "destroy", G_CALLBACK(gtk_main_quit), NULL); // When window is closed - exit program
+    gtk_main();             // Looping program
+    g_object_unref(icon);   // Destroying icon
+    Mix_CloseAudio();       // Closing SDL Mixer
+    SDL_Quit();             // Closing SDL
+    free(tm_struct);        // Freeing time&date struct
 
     return 0;
 }

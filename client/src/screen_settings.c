@@ -58,7 +58,7 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     gtk_box_pack_start(GTK_BOX(info_box), username_field, TRUE, TRUE, 10);
     GtkWidget *firstaname_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(firstaname_field), "settings_fields");
-    g_signal_connect(G_OBJECT(firstaname_field), "changed", G_CALLBACK(firstaname_field_change_event), NULL);
+    g_signal_connect(G_OBJECT(firstaname_field), "changed", G_CALLBACK(firstname_field_change_event), NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(firstaname_field), "Name");
     gtk_entry_set_max_length(GTK_ENTRY(firstaname_field), 10);
     gtk_entry_set_text(GTK_ENTRY(firstaname_field), t_account.name);

@@ -74,3 +74,32 @@ void pokemon_random() {
     t_pokefact.pokemon_fact_audio = mx_strjoin(t_pokefact.pokemon_fact_audio, mx_itoa(pick));
     t_pokefact.pokemon_fact_audio = mx_strjoin(t_pokefact.pokemon_fact_audio, ".wav");
 }
+
+char* random_phrase()
+{
+    srand(time(NULL)); 
+    int num = rand() % 20 + 1;
+    char *phrase[] = {"There's no one here!",
+    "Hey, I know. I’ll use my trusty frying pan as a drying pan.", 
+    "Don’t worry that pretty blue head of yours, I’ve got a plan.", 
+    "Err...my name is...Tom Ato!",
+    "I see now that one’s birth is irrelevant. It’s what you do that determines who you are.",
+    "We do have a lot in common. The same earth, the same air, the same sky. Maybe if we started looking at what’s the same, instead of looking at what’s different, well, who knows?",
+    "A Caterpie may change into a Butterfree, but the heart that beats inside remains the same.",
+    "There’s no sense in going out of your way to get somebody to like you.",
+    "I didn't know Vikings still existed...",
+    "I am the Flaming Moltres!",
+    "It's following Pikachu around like its a streaker or something!",
+    "Even If we don’t understand each other, that’s not a reason to reject each other.",
+    "Everybody makes a wrong turn once in a while.",
+    "Strong Pokemon. Weak Pokemon. That is only the selfish perception of people.",
+    "Make your wonderful dream a reality, it will become your truth. If anyone can, it’s you.",
+    "Take charge of your destiny!",
+    "Do you always need a reason to help somebody?",
+    "You see, sometimes friends have to go away, but a part of them stays behind with you.",
+    "The important thing is not how long you live. It’s what you accomplish with your life.",
+    "I will show you that my love for my friends permeates every cell in my body.",
+    "Me give up? No way!"};
+
+    return phrase[num];
+}

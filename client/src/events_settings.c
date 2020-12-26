@@ -70,7 +70,7 @@ void username_field_change_event(GtkWidget *widget) {
     t_account_temp.username = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
-void firstaname_field_change_event(GtkWidget *widget) {
+void firstname_field_change_event(GtkWidget *widget) {
     if(strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
     else
