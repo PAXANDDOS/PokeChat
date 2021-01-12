@@ -181,9 +181,8 @@
     border-radius: 13px;
     padding: 20px 10px
 }
-#chat_bgs
+#theme_bgs
 {
-    background-image: url("../bg-preview/bg_preview.png");
     background-size: 100%;
     border-radius: 15px;
     transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);

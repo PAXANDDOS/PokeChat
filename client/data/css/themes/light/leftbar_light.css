@@ -5,7 +5,8 @@
 
 #homebutton
 {
-  background-image: url("../../../images/home.png");
+  background-color: #343740;
+  background-image: url("../../../images/logo.png");
 }
 #homebutton:hover
 {

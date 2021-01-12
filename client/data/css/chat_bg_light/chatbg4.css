@@ -1,8 +1,10 @@
 #scrollable_msg
 {
-  background-color: #a200ca;
+  background-color: #86bff4;
+  background-image: url("../../chat-background/light/magnemite.png");
+  background-size: 100%;
 }
 #messanger
 {
-  background-color: #a200ca;
+  background-color: #86bff4;
 }

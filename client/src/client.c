@@ -58,10 +58,10 @@ int main(int argc, char *argv[]) {
     gtk_container_add(GTK_CONTAINER(t_application.window), main_area);              // Applying main area to current window
     gtk_widget_set_size_request(GTK_WIDGET(main_area), WINDOW_WIDTH, WINDOW_HEIGHT);// Setting size
 
-    build_authorization(&main_area); // Закомиентируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
+    build_authorization(&main_area); // Закомментируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
 
     // fill_pokemon();     // Filling random data on home tab
-    // test_autofill();    // Заполнение данных аккаунта
+    // test_autofill();    // Заполнение данных аккаунта // Оставь это
 
     // t_leftbar.active = 1;   // Active button in leftbar
     // build_all(&main_area);  // Main builder function

@@ -1,8 +1,10 @@
 #scrollable_msg
 {
-  background-color: #51ca00;
+  background-color: #141414;
+  background-image: url("../../chat-background/dark/umbreon.png");
+  background-size: 100%;
 }
 #messanger
 {
-  background-color: #51ca00;
+  background-color: #141414;
 }

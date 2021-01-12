@@ -1,8 +1,10 @@
 #scrollable_msg
 {
-  background-color: #51ca00;
+  background-color: #ddf0f6;
+  background-image: url("../../chat-background/light/lapras.png");
+  background-size: 100%;
 }
 #messanger
 {
-  background-color: #51ca00;
+  background-color: #ddf0f6;
 }

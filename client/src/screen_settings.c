@@ -172,7 +172,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_box_pack_start(GTK_BOX(appearance_block), appearance_menu, FALSE, FALSE, 0);
     
     t_theme.theme_light = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 260, 50);
     GtkWidget *light_label = gtk_label_new("LIGHT");
     gtk_widget_set_name(GTK_WIDGET(light_label), "theme_label");
@@ -181,7 +181,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_light, TRUE, FALSE, 0);
     
     t_theme.theme_default = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 260, 50);
     GtkWidget *default_label = gtk_label_new("DEFAULT");
     gtk_widget_set_name(GTK_WIDGET(default_label), "theme_label");
@@ -190,7 +190,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_default, TRUE, FALSE, 0);
     
     t_theme.theme_dark = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 260, 50);
     GtkWidget *dark_label = gtk_label_new("DARK");
     gtk_widget_set_name(GTK_WIDGET(dark_label), "theme_label");
@@ -229,19 +229,19 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(previews_box), "chat_bgs_box");
     gtk_box_pack_start(GTK_BOX(appearance_block), previews_box, FALSE, FALSE, 0);
     t_chat_bg.bg1 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg1), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg1), "chat_bg1");
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg1), 200, 300);
     gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg1, TRUE, FALSE, 0);
     t_chat_bg.bg2 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg2), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg2), "chat_bg2");
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg2), 200, 300);
     gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg2, TRUE, FALSE, 0);
     t_chat_bg.bg3 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg3), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg3), "chat_bg3");
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg3), 200, 300);
     gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg3, TRUE, FALSE, 0);
     t_chat_bg.bg4 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg4), "chat_bgs");
+    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg4), "chat_bg4");
     gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg4), 200, 300);
     gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg4, TRUE, FALSE, 0);
 

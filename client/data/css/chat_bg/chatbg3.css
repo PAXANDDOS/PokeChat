@@ -1,8 +1,10 @@
 #scrollable_msg
 {
-  background-color: #ca5b00;
+  background-color: #1e2442;
+  background-image: url("../../chat-background/default/pokeball.png");
+  background-size: 100%;
 }
 #messanger
 {
-  background-color: #ca5b00;
+  background-color: #1e2442;
 }

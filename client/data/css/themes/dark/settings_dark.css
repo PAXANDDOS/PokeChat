@@ -163,18 +163,85 @@
 {
     color: #dddddd;
 }
-#chat_bgs
+
+#theme_bgs
 {
     box-shadow: inset 0 0 0 2px #333333;
 }
-#chat_bgs:hover
+#theme_bgs:hover
 {
     box-shadow: inset 0 0 0 2px #dddddd;
 }
-#chat_bgs:link
+#theme_bgs:link
 {
     box-shadow: inset 0 0 0 2px #dddddd;
 }
+
+#chat_bg1
+{
+    background-color: #141414;
+    background-size: 100%;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 2px #333333;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#chat_bg1:hover
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg1:link
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg2
+{
+    background-image: url("../../../chat-background/preview/dark/Umbreon.png");
+    background-size: 100%;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 2px #333333;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#chat_bg2:hover
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg2:link
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg3
+{
+    background-image: url("../../../chat-background/preview/dark/dratini.png");
+    background-size: 100%;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 2px #333333;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#chat_bg3:hover
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg3:link
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg4
+{
+    background-image: url("../../../chat-background/preview/dark/pikachu.png");
+    background-size: 100%;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 2px #333333;
+    transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#chat_bg4:hover
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+#chat_bg4:link
+{
+    box-shadow: inset 0 0 0 2px #dddddd;
+}
+
 #about_info
 {
     color: #c3c8da;

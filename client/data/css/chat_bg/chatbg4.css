@@ -1,8 +1,10 @@
 #scrollable_msg
 {
-  background-color: #a200ca;
+  background-color: #538dcb;
+  background-image: url("../../chat-background/default/magikarp.png");
+  background-size: 100%;
 }
 #messanger
 {
-  background-color: #a200ca;
+  background-color: #538dcb;
 }
