@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-static void load_providers()
+void load_providers()
 {
     t_providers.styles = gtk_css_provider_new();
     gtk_css_provider_load_from_path(t_providers.styles, "client/data/css/styles.css", NULL);
@@ -58,17 +58,18 @@ int main(int argc, char *argv[]) {
     gtk_container_add(GTK_CONTAINER(t_application.window), main_area);              // Applying main area to current window
     gtk_widget_set_size_request(GTK_WIDGET(main_area), WINDOW_WIDTH, WINDOW_HEIGHT);// Setting size
 
-    build_authorization(&main_area); // Закомментируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
+    t_application.auth = gtk_fixed_new();
+    gtk_fixed_put(GTK_FIXED(main_area), t_application.auth, 0, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(t_application.auth), WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    // fill_pokemon();     // Filling random data on home tab
-    // test_autofill();    // Заполнение данных аккаунта // Оставь это
+    t_application.messanger = gtk_fixed_new();
+    gtk_fixed_put(GTK_FIXED(main_area), t_application.messanger, 0, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(t_application.messanger), WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    // t_leftbar.active = 1;   // Active button in leftbar
-    // build_all(&main_area);  // Main builder function
+    test_autofill();    // Заполнение данных аккаунта // Оставь это
+    build_authorization(&t_application.auth); // Закомментируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
 
     gtk_widget_show_all(t_application.window);          // Showing window
-    // gtk_widget_hide(GTK_WIDGET(t_leftbar.msg_scr));     // Hiding messanger tab
-    // gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));// Hiding settings tab
 
     g_signal_connect(t_application.window, "destroy", G_CALLBACK(gtk_main_quit), NULL); // When window is closed - exit program
     gtk_main();             // Looping program

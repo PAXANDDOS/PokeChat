@@ -15,16 +15,6 @@ void test_autofill()
 
     t_chat.current = "Gazaris";
 
-    t_account.username = "PAXANDDOS";
-    t_account.name = "Paul";
-    t_account.password = "lunarnet";
-    t_account.code =  "926228672849";
-    t_account.team = 1;
-    t_account.theme = 2;
-    t_account.background = 1;
-    t_account.avatar_chosen = 54;
-    t_account.avatar = get_avatar_by_number(t_account.avatar_chosen);
-
-    t_application.app = "PokeChat alpha 0.7.8";
+    t_application.app = "PokeChat alpha 0.7.9";
     t_application.user = getenv("USER");
 }

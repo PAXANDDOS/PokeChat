@@ -4,7 +4,13 @@ void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
     {
-
+        gtk_widget_destroy(GTK_WIDGET(t_application.messanger));
+        t_account.username = NULL;
+        t_account.name = NULL;
+        t_account.password = NULL;
+        t_account.code = NULL;
+        t_account.avatar = NULL;
+        gtk_window_close(GTK_WINDOW(t_application.window));
     }
 }
 

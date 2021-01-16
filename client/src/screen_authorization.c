@@ -103,11 +103,12 @@ void build_registration(GtkWidget **main_area)
     gtk_container_add(GTK_CONTAINER(t_auth.valor_event), team_valor);
     gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.valor_event, TRUE, FALSE, 0);
 
-    GtkWidget *login_butt = gtk_button_new_with_label("Create an account");
-    gtk_widget_set_name(GTK_WIDGET(login_butt), "login_button");
-    gtk_button_set_relief(GTK_BUTTON(login_butt), GTK_RELIEF_NONE);
-    gtk_widget_set_size_request(GTK_WIDGET(login_butt), 100, 20);
-    gtk_box_pack_start(GTK_BOX(box), login_butt, FALSE, FALSE, 0);
+    GtkWidget *reg_button = gtk_button_new_with_label("Create an account");
+    gtk_widget_set_name(GTK_WIDGET(reg_button), "login_button");
+    gtk_button_set_relief(GTK_BUTTON(reg_button), GTK_RELIEF_NONE);
+    gtk_widget_set_size_request(GTK_WIDGET(reg_button), 100, 20);
+    gtk_box_pack_start(GTK_BOX(box), reg_button, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(reg_button), "clicked", G_CALLBACK(reg_butt_click), NULL);
 
     GtkWidget *event_login = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(event_login), "event_register");
@@ -196,6 +197,7 @@ void build_authorization(GtkWidget **main_area)
     gtk_button_set_relief(GTK_BUTTON(login_butt), GTK_RELIEF_NONE);
     gtk_widget_set_size_request(GTK_WIDGET(login_butt), 100, 20);
     gtk_box_pack_start(GTK_BOX(box), login_butt, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(login_butt), "clicked", G_CALLBACK(login_butt_click), NULL);
 
     GtkWidget *event_register = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(event_register), "event_register");

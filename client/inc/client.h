@@ -75,6 +75,8 @@ int temp;
 //-------> Overall
 struct {
     GtkWidget *window;
+    GtkWidget *auth;
+    GtkWidget *messanger;
     char *app;
     char *user;
 }   t_application;
@@ -98,6 +100,7 @@ struct                  // TEMPORAL Structure for tracking entries
     char *name;             // For account real name
     char *password;         // char* for password
     char *repass;
+    short team;
     char *code;             // 12-digit trainer code
 } t_account_temp;
 
@@ -211,7 +214,7 @@ struct
 
 struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
 {
-    char* avatar_generated;
+    char *avatar_generated;
     char *avatar_path;
 }   t_avatar;
 
@@ -224,6 +227,7 @@ void send_message();
 void send_sticker();
 void send_photo();
 
+void load_providers();
 void test_autofill();
 void fill_pokemon();
 void play_audio();
@@ -313,3 +317,5 @@ void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer ma
 void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);
+void login_butt_click(GtkWidget *widget);
+void reg_butt_click(GtkWidget *widget);
