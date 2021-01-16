@@ -94,6 +94,7 @@
     font-family: Rubik, 'Helvetica Neue Light', sans-serif;
     font-weight: 200;
     letter-spacing: .9px;
+    caret-color: rgb(180, 191, 216);
 }
 #apply_button {
     font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

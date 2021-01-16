@@ -50,30 +50,6 @@ void LoadCertificates(SSL_CTX* ctx, char* CertFile, char* KeyFile) {
     }
 }
 
-void Servlet(SSL* ssl) {
-    char buf[1024];
-    char reply[1024];
-    int sd, bytes;
-    const char* answer = "echo: %s";
-
-    if (SSL_accept(ssl) == -1)
-        ERR_print_errors_fp(stderr);
-    else {
-        bytes = SSL_read(ssl, buf, sizeof(buf));
-        if ( bytes > 0 ) {
-            buf[bytes] = 0;
-            printf("Client message: \"%s\"\n", buf);
-            sprintf(reply, answer, buf);
-            SSL_write(ssl, reply, strlen(reply));
-        }
-        else
-            ERR_print_errors_fp(stderr);
-    }
-    sd = SSL_get_fd(ssl);
-    SSL_free(ssl);
-    close(sd);
-}
-
 void ssl_server(int portnum) {
     SSL_CTX *ctx;
     int server;
@@ -92,13 +68,13 @@ void ssl_server(int portnum) {
         printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
         ssl = SSL_new(ctx);
         SSL_set_fd(ssl, client);
-        Servlet(ssl);
+        requests_handler(ssl);
     }
     close(server);
     SSL_CTX_free(ctx);
 }
 
 int main() {
-    int portnum = 4096;
+    int portnum = 10000;
     ssl_server(portnum);
 }

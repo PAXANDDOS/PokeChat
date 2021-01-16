@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UCHAT_H
+#define UCHAT_H
 
 #include <stdio.h>
 #include <unistd.h>
@@ -70,6 +71,11 @@
 #define BGPREVIEW_W 104
 #define BGPREVIEW_H 79
 
+#define UCHAT_HOST "127.0.0.1"  // "10.11.4.9"
+#define UCHAT_PORT 10000
+#define DB_NAME "database.db"
+
+
 int temp;
 
 //-------> Overall
@@ -83,6 +89,7 @@ struct {
 
 struct                      // Structure for current user account data
 {
+    unsigned int id;
     char *username;         // For account username
     char *name;             // For account real name
     char *password;         // char* for password
@@ -139,9 +146,18 @@ typedef struct s_msg_data   // Structure for data in messages
     char *avatar;           // For avatars
     char *nickname;         // For nicknmes
     char *content;          // Content of message
+    char *content_final;    // For async func
     int content_len;        // Length of message
 } t_msg_data;
 t_msg_data msg_data;
+
+typedef struct s_updater
+{
+    int *chats_id;
+    int *messages_id;
+    int count;
+}   t_updater;
+t_updater upd_data;
 
 typedef struct s_chat_list      // Structure for people in the chat list
 {
@@ -219,13 +235,16 @@ struct      // Удалить после нормальной реализаци
 }   t_avatar;
 
 struct tm *tm_struct;
+
+
 char *mx_str_gettime();
 char *mx_str_getdate();
 
-int ssl_client(char*, int, char*);
-void send_message();
+int ssl_client(char*, char**);
+void *send_message();
 void send_sticker();
 void send_photo();
+void *updater();
 
 void load_providers();
 void test_autofill();
@@ -319,3 +338,6 @@ void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void login_butt_click(GtkWidget *widget);
 void reg_butt_click(GtkWidget *widget);
+
+
+#endif

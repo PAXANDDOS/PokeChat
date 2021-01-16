@@ -90,6 +90,7 @@ void reg_butt_click(GtkWidget *widget){
     t_account.password = t_account_temp.password;
     t_account.theme = 2;
     t_account.background = 1;
+    t_account.id = 1;  // Temporary, should to send a server request to get the ID
     
     printf("REGISTERED:\nUser = %s\n", t_account.username);
     printf("Name = %s\n", t_account.name);

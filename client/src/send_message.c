@@ -51,25 +51,41 @@ static BIO *base64_encrypt(char *data, int dlen) {
 //     return buffer;
 // }
 
-void send_message() {
-    int chat_id = 1000;
-    char *text = msg_data.content;
+void *send_message() {
+    int chat_id = 1;
+    int sender_id = t_account.id; // 1 or 2 for test
+    char *text = msg_data.content_final;
     printf("%s\n", text);
     cJSON *json = cJSON_CreateObject();
-    cJSON_AddNumberToObject(json, "chat_id", (double)chat_id);
-    cJSON_AddStringToObject(json, "text", text);
-    char *json_string = cJSON_Print(json);
+    cJSON *json_send_message = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_send_message, "sender_id", sender_id);
+    cJSON_AddNumberToObject(json_send_message, "chat_id", chat_id);
+    cJSON_AddStringToObject(json_send_message, "text", text);
+    cJSON_AddItemToObject(json, "send_message", json_send_message);
+    char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);
-    ssl_client("10.11.4.11", 4096, json_string);
-    //ssl_client("10.11.4.9", 4096, json_string);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    cJSON *response = cJSON_Parse(result);
+    if (!cJSON_IsNull(response))
+        for (int i = 0; i < upd_data.count; i++)
+            if (upd_data.chats_id[i] == chat_id) {
+                upd_data.messages_id[i] = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "message_id"));
+                break;
+            }
+    mx_strdel(&result);
     mx_strdel(&json_string);
+    mx_strdel(&msg_data.content_final);
+    cJSON_Delete(json);
+    cJSON_Delete(response);
+    return NULL;
 }
 
 void send_sticker() {
     int chat_id = 1000;
     int sticker_id = 1;
     cJSON *json = cJSON_CreateObject();
-    cJSON_AddNumberToObject(json, "chat_id", (double)chat_id);
+    cJSON_AddNumberToObject(json, "chat_id", chat_id);
     cJSON_AddNumberToObject(json, "sticker", sticker_id);
     printf("%s\n", cJSON_Print(json));
 }
@@ -87,7 +103,7 @@ void send_photo() {
     BIO_free_all(b64);
     BIO_free_all(file_bio);
     mx_strdel(&bitmap);
-
+    
     // testing
     char *result = mx_file_to_str(mx_strjoin(TEMP_FOLDER, "b64"));
 
@@ -100,7 +116,7 @@ void send_photo() {
     fclose(f);
 
     mx_strdel(&new_bitmap);
-
+    
 /*
     BIO *bio, *b64;
 

@@ -45,6 +45,7 @@
   border: none;
   font-size: 14px;
   box-shadow: none;
+  caret-color: rgb(180, 191, 216);
 }
 #send
 {

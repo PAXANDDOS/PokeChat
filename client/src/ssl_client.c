@@ -47,11 +47,11 @@ SSL_CTX* InitCTX(void) {
     return ctx;
 }
 
-int ssl_client(char* hostname, int portnum, char* message) {
+int ssl_client(char *message, char **response) {
     SSL_CTX *ctx;
     int server;
     SSL *ssl;
-    char buf[1024];
+    char buf[4096];
     int bytes;
     // int fd = socket(AF_INET, SOCK_STREAM, 0);
     // struct timeval tv;
@@ -62,7 +62,7 @@ int ssl_client(char* hostname, int portnum, char* message) {
     SSL_library_init();
 
     ctx = InitCTX();
-    server = OpenConnection(hostname, portnum);
+    server = OpenConnection(UCHAT_HOST, UCHAT_PORT);
     ssl = SSL_new(ctx);
     SSL_set_mode(ssl, SSL_MODE_ASYNC);
     SSL_set_fd(ssl, server);
@@ -79,9 +79,10 @@ int ssl_client(char* hostname, int portnum, char* message) {
     close(server);
     SSL_CTX_free(ctx);
 
+    *response = strdup(buf);
     // just for test
-    msg_data.content = buf;
-    new_incoming_message(t_chat.chat_screen);
+    // msg_data.content = strdup(buf);
+    // new_incoming_message(t_chats.chat_screen);
 
     return EXIT_SUCCESS;
 }

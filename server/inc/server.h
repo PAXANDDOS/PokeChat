@@ -19,3 +19,14 @@
 #include "openssl/err.h"
 #include "libmx.h"
 #include "cJSON.h"
+#include <sqlite3.h>
+
+#define DB_NAME "database.db"
+#define DB_TABLE_USERS "users"
+#define DB_TABLE_CHATS "chats"
+#define DB_TABLE_MESSAGES "messages"
+#define DB_LIST     0x01
+#define DB_LAST_ID  0x02
+
+void requests_handler(SSL*);
+void *sqlite3_exec_db(char *query, int type);

@@ -72,6 +72,11 @@ int main(int argc, char *argv[]) {
     gtk_widget_show_all(t_application.window);          // Showing window
 
     g_signal_connect(t_application.window, "destroy", G_CALLBACK(gtk_main_quit), NULL); // When window is closed - exit program
+
+    // comment 2 lines below if wanna run without getting updates from server
+    pthread_t thread = NULL;
+    pthread_create(&thread, NULL, updater, NULL);
+
     gtk_main();             // Looping program
     g_object_unref(icon);   // Destroying icon
     Mix_CloseAudio();       // Closing SDL Mixer
