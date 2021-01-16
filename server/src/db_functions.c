@@ -11,7 +11,7 @@ static void sqlite3_create_db() {
         exit(EXIT_FAILURE);
     }
     sql = mx_strrejoin(sql, "PRAGMA encoding = \"UTF-8\";");
-    sql = mx_strrejoin(sql, "CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `username` VARCHAR(10) NOT NULL , `name` VARCHAR(10) NOT NULL , `code` BIGINT(12) NOT NULL , `password` VARCHAR(16) NOT NULL );");
+    sql = mx_strrejoin(sql, "CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `username` VARCHAR(10) NOT NULL , `name` VARCHAR(10) NOT NULL , `code` VARCHAR(12) NOT NULL , `password` VARCHAR(16) NOT NULL );");
     sql = mx_strrejoin(sql, "CREATE TABLE `chats` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `title` VARCHAR(16) NOT NULL , `members` INT(4) NOT NULL DEFAULT '2' );");
     sql = mx_strrejoin(sql, "CREATE TABLE `members` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `admin` BOOLEAN NOT NULL DEFAULT FALSE );");
     sql = mx_strrejoin(sql, "CREATE TABLE `messages` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `message_id` INT NOT NULL , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `text` VARCHAR(1024) NULL DEFAULT NULL , `sticker_id` INT NULL DEFAULT NULL , `photo_id` INT NULL DEFAULT NULL );");

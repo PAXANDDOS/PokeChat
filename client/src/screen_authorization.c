@@ -188,6 +188,7 @@ void build_authorization(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), pass_label, FALSE, FALSE, 4);
     GtkWidget *pass_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(pass_field), "login_fields");
+    g_signal_connect(G_OBJECT(pass_field), "changed", G_CALLBACK(pass_field_change_event), NULL);
     gtk_entry_set_max_length(GTK_ENTRY(pass_field), 10);
     gtk_entry_set_visibility(GTK_ENTRY(pass_field), FALSE);
     gtk_box_pack_start(GTK_BOX(box), pass_field, TRUE, TRUE, 0);

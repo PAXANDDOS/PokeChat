@@ -1,27 +1,29 @@
 #include "../inc/server.h"
 
-int escape_apostrophe(char *original, char **modyfied) {
+static void escape_apostrophe(char **str) {
     int quotes = 0;
-    for (int i = 0; original[i]; i++) {
-        if (original[i] == '\'')
+    char *temp = NULL;
+    for (int i = 0; (*str)[i]; i++) {
+        if ((*str)[i] == '\'')
             quotes++;
     }
     if (quotes == 0) {
-        *modyfied = original;
-        return 0;
+        return;
     }
-    *modyfied = malloc(strlen(original) + quotes + 1);
+    temp = malloc(strlen(*str) + quotes + 1);
     char p[2];
-    for (int i = 0; original[i]; i++) {
-        if (original[i] == '\'')
-            *modyfied = mx_strrejoin(*modyfied, "''");
+    for (int i = 0; (*str)[i]; i++) {
+        if ((*str)[i] == '\'')
+            temp = mx_strrejoin(temp, "''");
         else {
-            p[0] = original[i];
+            p[0] = (*str)[i];
             p[1] = '\0';
-            *modyfied = mx_strrejoin(*modyfied, p);
+            temp = mx_strrejoin(temp, p);
         }
     }
-    return 1;
+    mx_strdel(&(*str));
+    *str = mx_strdup(temp);
+    mx_strdel(&temp);
 }
 
 static void message_handler(char msg[], char **reply) {
@@ -30,6 +32,8 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_get_chats_count = cJSON_GetObjectItem(json, "get_chats_count");
     cJSON *json_get_chats = cJSON_GetObjectItem(json, "get_chats");
     cJSON *json_send_message = cJSON_GetObjectItem(json, "send_message");
+    cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
+    cJSON *json_login_user = cJSON_GetObjectItem(json, "login_user");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
@@ -133,9 +137,8 @@ static void message_handler(char msg[], char **reply) {
     else if (json_send_message) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "chat_id"));
-        char *text_temp = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "text"));
-        char *text = NULL;
-        int modified = escape_apostrophe(text_temp, &text);
+        char *text = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "text")));
+        escape_apostrophe(&text);
         printf("SEND MESSAGE\nchat_id: %d\nuser_id: %d\ntext: %s\n\n", chat_id, sender_id, text);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
@@ -147,6 +150,8 @@ static void message_handler(char msg[], char **reply) {
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
+            mx_strdel(&sql_query);
+            mx_strdel(&text);
             *reply = strdup("null");
             return;
         }
@@ -163,13 +168,78 @@ static void message_handler(char msg[], char **reply) {
         sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, text) VALUES (%d, %d, %d, '%s');";
         asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, text);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
-        if (modified == 1)
-            mx_strdel(&text);
+        mx_strdel(&text);
         cJSON *json_reply = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_reply, "message_id", last_id + 1);
         *reply = strdup(cJSON_PrintUnformatted(json_reply));
         mx_strdel(&sql_query);
         cJSON_Delete(json_reply);
+    }
+    else if (json_register_user) {
+        char *username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "username")));
+        char *name = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "name")));
+        char *code = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "code")));
+        char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "password")));
+        printf("%s\n", username);
+        escape_apostrophe(&username);
+        escape_apostrophe(&name);
+        escape_apostrophe(&code);
+        escape_apostrophe(&password);
+        printf("REGISTER USER\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT EXISTS (SELECT id FROM users WHERE username=('%s'));";
+        asprintf(&sql_query, sql_pattern, username);
+        t_list *ex = NULL;
+        ex = sqlite3_exec_db(sql_query, DB_LIST);
+        int exist = atoi(ex->data);
+        printf("exist: %d\n", exist);
+        mx_clear_list(&ex);
+        mx_strdel(&sql_query);
+        if (exist == 1) {
+            *reply = strdup("{\"user_id\": -1}");
+            return;
+        }
+        sql_pattern = "INSERT INTO users (username, name, code, password) VALUES ('%s', '%s', '%s', '%s');";
+        asprintf(&sql_query, sql_pattern, username, name, code, password);
+        int *ai = sqlite3_exec_db(sql_query, DB_LAST_ID);
+        int user_id = *ai;
+        mx_strdel(&username);
+        mx_strdel(&name);
+        mx_strdel(&code);
+        mx_strdel(&password);
+        cJSON *json_reply = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_reply, "user_id", user_id);
+        *reply = strdup(cJSON_PrintUnformatted(json_reply));
+        mx_strdel(&sql_query);
+        cJSON_Delete(json_reply);
+    }
+    else if (json_login_user) {
+        char *username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_login_user, "username")));
+        char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_login_user, "password")));
+        escape_apostrophe(&username);
+        escape_apostrophe(&password);
+        printf("LOGIN USER\nusername: %s\npassword: %s\n\n", username, password);
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT id, name, code FROM users WHERE username=('%s') AND password=('%s');";
+        asprintf(&sql_query, sql_pattern, username, password);
+        t_list *list = NULL;
+        list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        mx_strdel(&username);
+        mx_strdel(&password);
+        if (list == NULL) {
+            *reply = strdup("null");
+            return;
+        }
+        cJSON *json_login_data = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_login_data, "user_id", atoi(list->data));
+        list = list->next;
+        cJSON_AddStringToObject(json_login_data, "name", list->data);
+        list = list->next;
+        cJSON_AddStringToObject(json_login_data, "code", list->data);
+        mx_clear_list(&list);
+        *reply = strdup(cJSON_PrintUnformatted(json_login_data));
+        cJSON_Delete(json_login_data);
     }
     else {
         *reply = strdup("null");

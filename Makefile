@@ -7,6 +7,7 @@ CLIENT_DIR = client
 
 LIBMX_DIR = frameworks/libmx
 LIBCJSON_DIR = frameworks/cjson
+LIBSQLITE_DIR = frameworks/sqlite3
 
 MAKE_M = make -sf Makefile -C
 RM = /bin/rm -rf
@@ -30,6 +31,7 @@ uninstall:
 	@$(MAKE_M) $(SERVER_DIR) $@
 	@$(MAKE_M) $(LIBMX_DIR) $@
 	@$(MAKE_M) $(LIBCJSON_DIR) $@
+	@$(MAKE_M) $(LIBSQLITE_DIR) $@
 
 reinstall: uninstall all
 
