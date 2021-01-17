@@ -88,7 +88,7 @@ void login_butt_click(GtkWidget *widget){
         t_account.code = code;
         t_account.username = t_account_temp.username;
         t_account.password = t_account_temp.password;
-        t_account.avatar = get_avatar_by_number(avatar);
+        t_account.avatar = get_avatar_by_number(avatar); // make check by id (custom file or builtin)
         t_account.team = team;
         t_account.theme = theme;
         t_account.background = bg;

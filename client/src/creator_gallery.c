@@ -1,12 +1,25 @@
 #include "../inc/client.h"
 
+static void update_user_avatar(int num) {
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_fields = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);
+    cJSON_AddNumberToObject(json_fields, "avatar", num);
+    cJSON_AddItemToObject(json, "update_user_avatar", json_fields);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&result);
+    cJSON_Delete(json);
+}
+
 static void avatar_click(GtkWidget *widget) {
     GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-    char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-    t_account.avatar = get_avatar_by_number(atoi(chosen));
+    int chosen = atoi((char*)gtk_label_get_text(GTK_LABEL(children->data)));
+    t_account.avatar = get_avatar_by_number(chosen);
     gtk_widget_destroy(GTK_WIDGET(t_settings.backgound));
-    if(widget) {}
+    update_user_avatar(chosen);
 }
 
 static void sgallery_click(GtkWidget *widget) {

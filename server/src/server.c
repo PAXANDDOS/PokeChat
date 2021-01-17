@@ -81,18 +81,12 @@ static void *display_running() {
     while (true) {
         if (i == 4)
             i = 0;
-        if (++msec % 5 == 0) {
-            msec = 0;
-            sec++;
-        }
-        if (sec / 60 == 1) {
-            sec = 0;
-            min++;
-        }
-        if (min / 60 == 1) {
-            min = 0;
-            hour++;
-        }
+        if (++msec % 5 == 0)
+            msec = 0, sec++;
+        if (sec == 60)
+            sec = 0, min++;
+        if (min == 60)
+            min = 0, hour++;
         mx_printstr("\r\x1b[32mServer is running \x1b[35m");
         if (min > 0) {
             mx_printint(min);

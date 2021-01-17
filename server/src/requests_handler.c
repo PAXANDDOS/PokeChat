@@ -35,6 +35,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
     cJSON *json_login_user = cJSON_GetObjectItem(json, "login_user");
     cJSON *json_update_user_main = cJSON_GetObjectItem(json, "update_user_main");
+    cJSON *json_update_user_avatar= cJSON_GetObjectItem(json, "update_user_avatar");
     cJSON *json_update_user_team = cJSON_GetObjectItem(json, "update_user_team");
     cJSON *json_update_user_theme = cJSON_GetObjectItem(json, "update_user_theme");
     cJSON *json_update_user_background = cJSON_GetObjectItem(json, "update_user_background");
@@ -273,6 +274,17 @@ static void message_handler(char msg[], char **reply) {
         mx_strdel(&name);
         mx_strdel(&code);
         mx_strdel(&password);
+        *reply = strdup("null");
+    }
+    else if (json_update_user_avatar) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_avatar, "user_id"));
+        int avatar_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_avatar, "avatar"));
+        printf("UPDATE USER AVATAR\navatar_id: %d\n\n", avatar_id);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET avatar=(%d) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, avatar_id, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
         *reply = strdup("null");
     }
     else if (json_update_user_team) {
