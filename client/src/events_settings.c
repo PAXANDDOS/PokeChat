@@ -1,5 +1,64 @@
 #include "../inc/client.h"
 
+/* =========== SERVER REQUESTS ZONE ===========*/
+
+static void update_user_main() {
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_fields = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);
+    cJSON_AddStringToObject(json_fields, "username", t_account.username);
+    cJSON_AddStringToObject(json_fields, "name", t_account.name);
+    cJSON_AddStringToObject(json_fields, "code", t_account.code);
+    cJSON_AddStringToObject(json_fields, "password", t_account.password);
+    cJSON_AddItemToObject(json, "update_user_main", json_fields);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&result);
+    cJSON_Delete(json);
+}
+
+static void update_user_team() {
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_fields = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);
+    cJSON_AddNumberToObject(json_fields, "team", t_account.team);
+    cJSON_AddItemToObject(json, "update_user_team", json_fields);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&result);
+    cJSON_Delete(json);
+}
+
+static void update_user_theme() {
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_fields = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);
+    cJSON_AddNumberToObject(json_fields, "theme", t_account.theme);
+    cJSON_AddItemToObject(json, "update_user_theme", json_fields);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&result);
+    cJSON_Delete(json);
+}
+
+static void update_user_background() {
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_fields = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);
+    cJSON_AddNumberToObject(json_fields, "background", t_account.background);
+    cJSON_AddItemToObject(json, "update_user_background", json_fields);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&result);
+    cJSON_Delete(json);
+}
+
+/* ========== GTK WIDGET EVENTS ZONE ========= */
+
 void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
@@ -168,6 +227,7 @@ void apply_butt_click(GtkWidget *widget){
     printf("Name = %s\n", t_account.name);
     printf("Code = %s\n", t_account.code);
     printf("Pass = %s\n", t_account.password);
+    update_user_main();
 }
 
 //
@@ -180,6 +240,8 @@ void team_mystic_click(GtkWidget *widget, GdkEventButton *event) {
         t_account.team = 1;
     }
     printf("Team: %i\n", t_account.team);
+    update_user_team();
+
 }
 
 void team_instinct_click(GtkWidget *widget, GdkEventButton *event) {
@@ -191,6 +253,7 @@ void team_instinct_click(GtkWidget *widget, GdkEventButton *event) {
         t_account.team = 2;
     }
     printf("Team: %i\n", t_account.team);
+    update_user_team();
 }
 
 void team_valor_click(GtkWidget *widget, GdkEventButton *event) {
@@ -202,6 +265,7 @@ void team_valor_click(GtkWidget *widget, GdkEventButton *event) {
         t_account.team = 3;
     }
     printf("Team: %i\n", t_account.team);
+    update_user_team();
 }
 
 //
@@ -242,6 +306,7 @@ void theme_light_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Theme: %i\n", t_account.theme);
+    update_user_theme();
 }
 
 void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
@@ -281,6 +346,7 @@ void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Theme: %i\n", t_account.theme);
+    update_user_theme();
 }
 
 void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
@@ -320,6 +386,7 @@ void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Theme: %i\n", t_account.theme);
+    update_user_theme();
 }
 
 //
@@ -353,6 +420,7 @@ void bg1_preview_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Background: %i\n", t_account.background);
+    update_user_background();
 }
 
 void bg2_preview_click(GtkWidget *widget, GdkEventButton *event) {
@@ -384,6 +452,7 @@ void bg2_preview_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Background: %i\n", t_account.background);
+    update_user_background();
 }
 
 void bg3_preview_click(GtkWidget *widget, GdkEventButton *event) {
@@ -415,6 +484,7 @@ void bg3_preview_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Background: %i\n", t_account.background);
+    update_user_background();
 }
 
 void bg4_preview_click(GtkWidget *widget, GdkEventButton *event) {
@@ -446,4 +516,5 @@ void bg4_preview_click(GtkWidget *widget, GdkEventButton *event) {
         }
     }
     printf("Background: %i\n", t_account.background);
+    update_user_background();
 }

@@ -34,6 +34,10 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_send_message = cJSON_GetObjectItem(json, "send_message");
     cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
     cJSON *json_login_user = cJSON_GetObjectItem(json, "login_user");
+    cJSON *json_update_user_main = cJSON_GetObjectItem(json, "update_user_main");
+    cJSON *json_update_user_team = cJSON_GetObjectItem(json, "update_user_team");
+    cJSON *json_update_user_theme = cJSON_GetObjectItem(json, "update_user_theme");
+    cJSON *json_update_user_background = cJSON_GetObjectItem(json, "update_user_background");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
@@ -220,7 +224,7 @@ static void message_handler(char msg[], char **reply) {
         escape_apostrophe(&password);
         printf("LOGIN USER\nusername: %s\npassword: %s\n\n", username, password);
         char *sql_query = NULL;
-        char *sql_pattern = "SELECT id, name, code FROM users WHERE username=('%s') AND password=('%s');";
+        char *sql_pattern = "SELECT id, name, code, team, avatar, theme, background FROM users WHERE username=('%s') AND password=('%s');";
         asprintf(&sql_query, sql_pattern, username, password);
         t_list *list = NULL;
         list = sqlite3_exec_db(sql_query, DB_LIST);
@@ -237,9 +241,72 @@ static void message_handler(char msg[], char **reply) {
         cJSON_AddStringToObject(json_login_data, "name", list->data);
         list = list->next;
         cJSON_AddStringToObject(json_login_data, "code", list->data);
+        list = list->next;
+        cJSON_AddNumberToObject(json_login_data, "team", atoi(list->data));
+        list = list->next;
+        cJSON_AddNumberToObject(json_login_data, "avatar", atoi(list->data));
+        list = list->next;
+        cJSON_AddNumberToObject(json_login_data, "theme", atoi(list->data));
+        list = list->next;
+        cJSON_AddNumberToObject(json_login_data, "background", atoi(list->data));
         mx_clear_list(&list);
         *reply = strdup(cJSON_PrintUnformatted(json_login_data));
         cJSON_Delete(json_login_data);
+    }
+    else if (json_update_user_main) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_main, "user_id"));
+        char *username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_update_user_main, "username")));
+        char *name = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_update_user_main, "name")));
+        char *code = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_update_user_main, "code")));
+        char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_update_user_main, "password")));
+        escape_apostrophe(&username);
+        escape_apostrophe(&name);
+        escape_apostrophe(&code);
+        escape_apostrophe(&password);
+        printf("UPDATE USER MAIN\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET username=('%s'), name=('%s'), code=('%s'), password=('%s') WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, username, name, code, password, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        mx_strdel(&username);
+        mx_strdel(&name);
+        mx_strdel(&code);
+        mx_strdel(&password);
+        *reply = strdup("null");
+    }
+    else if (json_update_user_team) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_team, "user_id"));
+        int team = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_team, "team"));
+        printf("UPDATE USER TEAM\nteam: %d\n\n", team);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET team=(%d) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, team, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
+    else if (json_update_user_theme) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_theme, "user_id"));
+        int theme = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_theme, "theme"));
+        printf("UPDATE USER THEME\ntheme: %d\n\n", theme);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET theme=(%d) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, theme, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
+    else if (json_update_user_background) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_background, "user_id"));
+        int bg = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_background, "background"));
+        printf("UPDATE USER BG\nbackground: %d\n\n", bg);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET background=(%d) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, bg, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
     }
     else {
         *reply = strdup("null");

@@ -73,20 +73,25 @@ void login_butt_click(GtkWidget *widget){
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "user_id"));
         char *name = cJSON_GetStringValue(cJSON_GetObjectItem(response, "name"));
         char *code = cJSON_GetStringValue(cJSON_GetObjectItem(response, "code"));
+        short team = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "team"));
+        int avatar = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "avatar"));
+        short theme = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "theme"));
+        short bg = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "background"));
         printf("My old user id: %d\n", user_id);
         printf("My name: %s\n", name);
         printf("My code: %s\n", code);
+        printf("My team: %d\n", team);
+        printf("My theme: %d\n", theme);
+        printf("My bg: %d\n", bg);
         t_account.id = user_id;
         t_account.name = name;
         t_account.code = code;
         t_account.username = t_account_temp.username;
         t_account.password = t_account_temp.password;
-
-        // remake, give from bd
-        t_account.avatar = t_avatar.avatar_generated;
-        t_account.team = t_account_temp.team;
-        t_account.theme = 2;
-        t_account.background = 1;
+        t_account.avatar = get_avatar_by_number(avatar);
+        t_account.team = team;
+        t_account.theme = theme;
+        t_account.background = bg;
 
         fill_pokemon();     // Filling random data on home tab
         t_leftbar.active = 1;   // Active button in leftbar

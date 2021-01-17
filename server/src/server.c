@@ -74,7 +74,46 @@ void ssl_server(int portnum) {
     SSL_CTX_free(ctx);
 }
 
+static void *display_running() {
+    char load[] = "\\|/-";
+    int i = 0, msec = 0;
+    long sec = 0, min = 0, hour = 0;
+    while (true) {
+        if (i == 4)
+            i = 0;
+        if (++msec % 5 == 0) {
+            msec = 0;
+            sec++;
+        }
+        if (sec / 60 == 1) {
+            sec = 0;
+            min++;
+        }
+        if (min / 60 == 1) {
+            min = 0;
+            hour++;
+        }
+        mx_printstr("\r\x1b[32mServer is running \x1b[35m");
+        if (min > 0) {
+            mx_printint(min);
+            mx_printstr(" m. ");
+        }
+        if (hour > 0) {
+            mx_printint(hour);
+            mx_printstr(" h. ");
+        }
+        mx_printint(sec);
+        mx_printstr(" s. \x1b[36m");
+        mx_printchar(load[i++]);
+        mx_printstr("\x1b[0m");
+        usleep(200000);
+    }
+    return NULL;
+}
+
 int main() {
+    pthread_t display_thread = NULL;
+    pthread_create(&display_thread, NULL, display_running, NULL);
     int portnum = 10000;
     ssl_server(portnum);
 }
