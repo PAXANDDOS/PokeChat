@@ -103,3 +103,32 @@
   background-color: rgb(44, 54, 85);
   border-radius: 8px;
 }
+#msggroup
+{
+  background-image: url("../../../images/create-group.png");
+  background-size: 100%;
+  background-color: #18254e;
+  box-shadow: inset 0 0 0 1.5px rgba(69, 100, 167, 0);
+}
+#msggroup:hover
+{
+  box-shadow: inset 0 0 0 2.5px #4564a7;
+}
+#crgroup_box
+{
+  background-color: #1f2846;
+  box-shadow: 0 0 0 3px #374676;
+}
+#crgroup_search_field
+{
+  background-color: #151a2c;
+  color: rgb(180, 191, 216);
+}
+#crgroup_search_block
+{
+  background-color: #151a2c;
+}
+#creategroup_title
+{
+  color: #c3c8da;
+}

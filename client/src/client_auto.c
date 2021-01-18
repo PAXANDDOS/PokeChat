@@ -13,8 +13,8 @@ void test_autofill()
     t_avatar.avatar_generated = "client/data/avatars/";
     avatar_random();
 
-    t_chat.current = "Gazaris";
+    t_msg.current = "Gazaris";
 
-    t_application.app = "PokeChat alpha 0.7.9";
+    t_application.app = "PokeChat alpha 0.8.0";
     t_application.user = getenv("USER");
 }

@@ -178,8 +178,6 @@ typedef struct s_chat_list      // Structure for people in the chat list
 struct s_chat   // Selected user in chatlist
 {
     GtkWidget *chat_screen;
-    char* current;
-    GtkWidget *stickers;
     struct s_chat *next;
 }   t_chat;
 
@@ -187,6 +185,9 @@ struct
 {
     GtkWidget *main;
     GtkWidget *embedded_view;
+    GtkWidget *background;
+    GtkWidget *stickers;
+    char* current;
 }   t_msg;
 
 //-------> Settings
@@ -201,7 +202,7 @@ struct                  // Labels for settings screen
 {
     GtkWidget *username;
     GtkWidget *name;
-    GtkWidget *backgound;
+    GtkWidget *background;
 }   t_settings;
 
 struct
@@ -270,6 +271,7 @@ void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
+void create_group(GtkWidget *main);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
@@ -317,6 +319,9 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
+void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void create_group_button_click(GtkWidget *widget, GdkEventButton *event);
+void crgroup_adduser_click(GtkWidget *widget, GdkEventButton *event);
 
 void username_field_change_event(GtkWidget *widget);
 void firstname_field_change_event(GtkWidget *widget);

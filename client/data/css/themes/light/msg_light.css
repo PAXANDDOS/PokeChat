@@ -98,3 +98,32 @@
   background-color: #d6d6d6;
   box-shadow: inset 0 0 0 2px #343740;
 }
+#msggroup
+{
+  background-image: url("../../../images/create-group-light.png");
+  background-size: 100%;
+  background-color: #ebebeb;
+  box-shadow: inset 0 0 0 1.5px rgba(52, 55, 64, 0);
+}
+#msggroup:hover
+{
+  box-shadow: inset 0 0 0 2.5px #343740;
+}
+#crgroup_box
+{
+  background-color: #343740;
+  box-shadow: 0 0 0 3px #777b86;
+}
+#crgroup_search_field
+{
+  background-color: #ebebeb;
+  color: #d6d6d6;
+}
+#crgroup_search_block
+{
+  background-color: #ebebeb;
+}
+#creategroup_title
+{
+  color: #cccccc;
+}

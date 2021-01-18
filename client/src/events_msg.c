@@ -18,6 +18,10 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
         gint res;
         
         dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+        GtkFileFilter *filter = gtk_file_filter_new();
+        gtk_file_filter_add_pattern(filter, "*.png");
+        gtk_file_filter_add_pattern(filter, "*.jpg");
+        gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
         res = gtk_dialog_run (GTK_DIALOG (dialog));
         if (res == GTK_RESPONSE_ACCEPT) {
@@ -79,6 +83,27 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
 }
 
 void single_event_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget) {}
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    {
+
+    }
+}
+
+void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
+    if(widget) {}
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
+        create_group(main);
+}
+
+void create_group_button_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget || event) {}
+    // if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+    //     // чето здесь
+    // }
+}
+
+void crgroup_adduser_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
     {

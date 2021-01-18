@@ -62,6 +62,12 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(dm_text), "dm_text");                 // Имя
     gtk_widget_set_halign(dm_text, GTK_ALIGN_START);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(list_block), dm_text, FALSE, FALSE, 0);
+    //
+
+    GtkWidget *group = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(group), "msggroup");
+    gtk_widget_set_size_request(GTK_WIDGET(group), 50, 50);
+    gtk_fixed_put(GTK_FIXED(main), group, LIST_W-68, LIST_H-66);
 
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, LIST_H-100, 100, 100, LIST_H-100);    // Параметры скролла
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);                 // Зона, доступная для бесконечного скролла
@@ -69,6 +75,20 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(scrollable), "chatlist");
 
     t_chat_list* list = NULL;
+    chat_push_back(&list, "Neulen", 40, false);
+    chat_push_back(&list, "Gazaris", 40, true);
+    chat_push_back(&list, "dashbug", 40, true);
+    chat_push_back(&list, "Savolus", 40, false);
+    chat_push_back(&list, "Overwolf", 40, false);
+    chat_push_back(&list, "sp", 40, true);
+    chat_push_back(&list, "if", 40, false);
+    chat_push_back(&list, "Neulen", 40, false);
+    chat_push_back(&list, "Gazaris", 40, true);
+    chat_push_back(&list, "dashbug", 40, true);
+    chat_push_back(&list, "Savolus", 40, false);
+    chat_push_back(&list, "Overwolf", 40, false);
+    chat_push_back(&list, "sp", 40, true);
+    chat_push_back(&list, "if", 40, false);
     chat_push_back(&list, "Neulen", 40, false);
     chat_push_back(&list, "Gazaris", 40, true);
     chat_push_back(&list, "dashbug", 40, true);
@@ -85,6 +105,10 @@ static void build_list(GtkWidget *main)
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(adduser_click), NULL);
+
+    g_signal_connect(G_OBJECT(group), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(group), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(group), "button_press_event", G_CALLBACK(msggroup_click), main);
 }
 
 static void build_entryfield(GtkWidget *main)
@@ -103,7 +127,7 @@ static void build_entryfield(GtkWidget *main)
 
     GtkWidget *entry_text = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_text), "entry_text");
-    char* entry_placeholder_text = mx_strjoin("Message ", t_chat.current);
+    char* entry_placeholder_text = mx_strjoin("Message ", t_msg.current);
     gtk_entry_set_placeholder_text(GTK_ENTRY(entry_text), entry_placeholder_text);
     gtk_entry_set_max_length(GTK_ENTRY(entry_text), 1000);
     gtk_box_pack_start(GTK_BOX(entry_block), entry_text, TRUE, TRUE, 0);

@@ -78,15 +78,15 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
     {
         GtkWidget *dialog;
-        GtkFileFilter *filter = gtk_file_filter_new();
 
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        gtk_file_filter_add_mime_type(filter, "image/ *");
-        gtk_file_filter_add_pattern(filter, "*.png");
         dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
-
+        GtkFileFilter *filter = gtk_file_filter_new();
+        gtk_file_filter_add_pattern(filter, "*.png");
+        gtk_file_filter_add_pattern(filter, "*.jpg");
+        gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
         res = gtk_dialog_run (GTK_DIALOG (dialog));
         if (res == GTK_RESPONSE_ACCEPT) {
             char *filename;

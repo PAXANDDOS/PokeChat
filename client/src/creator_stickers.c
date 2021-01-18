@@ -14,7 +14,7 @@ static void onsticker_click(GtkWidget *widget) {
     int sticker_id = atoi((char*)gtk_label_get_text(GTK_LABEL(children->data)));
     new_outgoing_sticker(t_chat.chat_screen, sticker_id);
     printf("Sticker: %d\n", sticker_id);
-    gtk_widget_destroy(GTK_WIDGET(t_chat.stickers));
+    gtk_widget_destroy(GTK_WIDGET(t_msg.stickers));
     if(widget) {}
     sticker_data.chat_id = 1;  // TODO: just for test
     sticker_data.sticker_id = sticker_id;
@@ -46,16 +46,16 @@ static GtkWidget *create_list(int sticker_num)
 
 void create_stickerlist(GtkWidget *main)
 {
-    t_chat.stickers = gtk_event_box_new();
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat.stickers), WINDOW_WIDTH-90, WINDOW_HEIGHT-ENTRY_H);
-    g_signal_connect(G_OBJECT(t_chat.stickers), "button_press_event", G_CALLBACK(s_click), NULL);
-    gtk_fixed_put(GTK_FIXED(main), t_chat.stickers, 0, 0);
+    t_msg.stickers = gtk_event_box_new();
+    gtk_widget_set_size_request(GTK_WIDGET(t_msg.stickers), WINDOW_WIDTH-90, WINDOW_HEIGHT-ENTRY_H);
+    g_signal_connect(G_OBJECT(t_msg.stickers), "button_press_event", G_CALLBACK(s_click), NULL);
+    gtk_fixed_put(GTK_FIXED(main), t_msg.stickers, 0, 0);
 
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_END);
     g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(s2_click), NULL);
-    gtk_container_add(GTK_CONTAINER(t_chat.stickers), clickable);
+    gtk_container_add(GTK_CONTAINER(t_msg.stickers), clickable);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(box), "stickerlist");
@@ -89,5 +89,5 @@ void create_stickerlist(GtkWidget *main)
     }
     gtk_container_add(GTK_CONTAINER(scrollable), stickers);
 
-    gtk_widget_show_all(GTK_WIDGET(t_chat.stickers));
+    gtk_widget_show_all(GTK_WIDGET(t_msg.stickers));
 }
