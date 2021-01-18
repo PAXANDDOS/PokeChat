@@ -32,6 +32,7 @@ uninstall:
 	@$(MAKE_M) $(LIBMX_DIR) $@
 	@$(MAKE_M) $(LIBCJSON_DIR) $@
 	@$(MAKE_M) $(LIBSQLITE_DIR) $@
+	rm database.db
 
 reinstall: uninstall all
 

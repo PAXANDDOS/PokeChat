@@ -148,8 +148,16 @@ typedef struct s_msg_data   // Structure for data in messages
     char *content;          // Content of message
     char *content_final;    // For async func
     int content_len;        // Length of message
+    int chat_id;            // TODO: implement
 } t_msg_data;
 t_msg_data msg_data;
+
+typedef struct s_sticker_data
+{
+    int sticker_id;
+    int chat_id;
+} t_sticker_data;
+t_sticker_data sticker_data;
 
 typedef struct s_updater
 {
@@ -242,7 +250,7 @@ char *mx_str_getdate();
 
 int ssl_client(char*, char**);
 void *send_message();
-void send_sticker();
+void *send_sticker();
 void send_photo();
 void *updater();
 

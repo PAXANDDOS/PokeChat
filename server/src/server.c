@@ -99,7 +99,7 @@ static void *display_running() {
         mx_printint(sec);
         mx_printstr(" s. \x1b[36m");
         mx_printchar(load[i++]);
-        mx_printstr("\x1b[0m");
+        mx_printstr("\x1b[0m  ");
         usleep(200000);
     }
     return NULL;

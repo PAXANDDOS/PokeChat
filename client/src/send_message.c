@@ -53,7 +53,7 @@ static BIO *base64_encrypt(char *data, int dlen) {
 
 void *send_message() {
     int chat_id = 1;
-    int sender_id = t_account.id; // 1 or 2 for test
+    int sender_id = t_account.id;
     char *text = msg_data.content_final;
     printf("%s\n", text);
     cJSON *json = cJSON_CreateObject();
@@ -81,13 +81,32 @@ void *send_message() {
     return NULL;
 }
 
-void send_sticker() {
-    int chat_id = 1000;
-    int sticker_id = 1;
+void *send_sticker() {
+    int chat_id = sticker_data.chat_id;
+    int sender_id = t_account.id;
     cJSON *json = cJSON_CreateObject();
-    cJSON_AddNumberToObject(json, "chat_id", chat_id);
-    cJSON_AddNumberToObject(json, "sticker", sticker_id);
-    printf("%s\n", cJSON_Print(json));
+    cJSON *json_send_sticker = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_send_sticker, "sender_id", sender_id);
+    cJSON_AddNumberToObject(json_send_sticker, "chat_id", chat_id);
+    cJSON_AddNumberToObject(json_send_sticker, "sticker_id", sticker_data.sticker_id);
+    cJSON_AddItemToObject(json, "send_sticker", json_send_sticker);
+    char *json_string = cJSON_PrintUnformatted(json);
+    printf("%s\n", json_string);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    cJSON *response = cJSON_Parse(result);
+    if (!cJSON_IsNull(response))
+        for (int i = 0; i < upd_data.count; i++)
+            if (upd_data.chats_id[i] == chat_id) {
+                upd_data.messages_id[i] = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "message_id"));
+                break;
+            }
+    mx_strdel(&result);
+    mx_strdel(&json_string);
+    mx_strdel(&msg_data.content_final);
+    cJSON_Delete(json);
+    cJSON_Delete(response);
+    return NULL;
 }
 
 void send_photo() {

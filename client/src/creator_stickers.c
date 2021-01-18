@@ -11,12 +11,15 @@ static void s2_click(GtkWidget *widget) {
 static void onsticker_click(GtkWidget *widget) {
     GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-    char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-    new_outgoing_sticker(t_chat.chat_screen, atoi(chosen));
-    printf("Sticker: %s\n", chosen);
-    if(chosen) {}
+    int sticker_id = atoi((char*)gtk_label_get_text(GTK_LABEL(children->data)));
+    new_outgoing_sticker(t_chat.chat_screen, sticker_id);
+    printf("Sticker: %d\n", sticker_id);
     gtk_widget_destroy(GTK_WIDGET(t_chat.stickers));
     if(widget) {}
+    sticker_data.chat_id = 1;  // TODO: just for test
+    sticker_data.sticker_id = sticker_id;
+    pthread_t thread = NULL;
+    pthread_create(&thread, NULL, send_sticker, NULL);
 }
 
 static GtkWidget *create_list(int sticker_num)
