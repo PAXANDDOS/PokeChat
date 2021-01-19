@@ -10,7 +10,7 @@ static t_chat_list *chat_create_node(char *nickname, int avatar, bool status) {
     return new_node;
 }
 
-static void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status) {
+void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status) {
     t_chat_list *back_list = chat_create_node(nickname, avatar, status);
     t_chat_list *p = NULL;
     if (list == NULL || *list == NULL)
@@ -23,17 +23,17 @@ static void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool 
     }
 }
 
-static void chat_clear_list(t_chat_list **list) {
-    t_chat_list *p;
-    while (*list) {
-        p = NULL;
-        if (list) {
-            p = (*list)->next;
-            free(*list);
-            *list = p;
-        }
-    }
-}
+// static void chat_clear_list(t_chat_list **list) {
+//     t_chat_list *p;
+//     while (*list) {
+//         p = NULL;
+//         if (list) {
+//             p = (*list)->next;
+//             free(*list);
+//             *list = p;
+//         }
+//     }
+// }
 
 static void build_list(GtkWidget *main)
 {
@@ -74,37 +74,38 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_size_request(scrollable, LIST_W, LIST_H-104);
     gtk_widget_set_name(GTK_WIDGET(scrollable), "chatlist");
 
-    t_chat_list* list = NULL;
-    chat_push_back(&list, "Neulen", 40, false);
-    chat_push_back(&list, "Gazaris", 40, true);
-    chat_push_back(&list, "dashbug", 40, true);
-    chat_push_back(&list, "Savolus", 40, false);
-    chat_push_back(&list, "Overwolf", 40, false);
-    chat_push_back(&list, "sp", 40, true);
-    chat_push_back(&list, "if", 40, false);
-    chat_push_back(&list, "Neulen", 40, false);
-    chat_push_back(&list, "Gazaris", 40, true);
-    chat_push_back(&list, "dashbug", 40, true);
-    chat_push_back(&list, "Savolus", 40, false);
-    chat_push_back(&list, "Overwolf", 40, false);
-    chat_push_back(&list, "sp", 40, true);
-    chat_push_back(&list, "if", 40, false);
-    chat_push_back(&list, "Neulen", 40, false);
-    chat_push_back(&list, "Gazaris", 40, true);
-    chat_push_back(&list, "dashbug", 40, true);
-    chat_push_back(&list, "Savolus", 40, false);
-    chat_push_back(&list, "Overwolf", 40, false);
-    chat_push_back(&list, "sp", 40, true);
-    chat_push_back(&list, "if", 40, false);
-    GtkWidget *chatlist = create_chatlist(list);
-    chat_clear_list(&list);
+    chat_push_back(&tchatlist, "Neulen", 25, false);
+    chat_push_back(&tchatlist, "Gazaris", 36, true);
+    chat_push_back(&tchatlist, "dashbug", 40, true);
+    chat_push_back(&tchatlist, "Savolus", 89, false);
+    chat_push_back(&tchatlist, "Overwolf", 5, false);
+    chat_push_back(&tchatlist, "sp", 99, true);
+    chat_push_back(&tchatlist, "if", 65, false);
+    t_msg.chatlist = create_chatlist();
+    //chat_clear_list(&chatlist);
 
-    gtk_container_add(GTK_CONTAINER(scrollable), chatlist);
+    // GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
+    // while(parent){
+    //     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+    //     GtkWidget *single = GTK_WIDGET(children->data);
+    //     GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
+    //     children2 = children2->next;
+    //     char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
+    //     printf("%s\n", chosen);
+
+    //     g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    //     g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    //     g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
+
+    //     parent = parent->next;
+    // }
+
+    gtk_container_add(GTK_CONTAINER(scrollable), t_msg.chatlist);
     gtk_box_pack_start(GTK_BOX(list_block), scrollable, FALSE, FALSE, 0);              // Кладем скролл зону на главный экран
 
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(adduser_click), NULL);
+    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(adduser_click), search_field);
 
     g_signal_connect(G_OBJECT(group), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(group), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);

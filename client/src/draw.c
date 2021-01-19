@@ -20,8 +20,8 @@ GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
     return result;
 }
 
-gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int avatar) {
-    char* a = get_avatar_by_number(avatar);
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
+    char* a = get_avatar_by_number((int)(uintptr_t)avatar);
     GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 34, 34);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));

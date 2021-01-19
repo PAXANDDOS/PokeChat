@@ -1,10 +1,30 @@
 #include "../inc/client.h"
 
-void adduser_click(GtkWidget *widget, GdkEventButton *event) {
+void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
     {
+        char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)search_field)));
+        if(name != NULL)
+            name = mx_del_extra_spaces(name);
+        if(!strcmp(name, "") || !strcmp(name, " ")) 
+            return;
 
+        // проверить имя пользователя name на существование
+        printf("Added: %s\n", name);
+        gtk_entry_set_text(GTK_ENTRY(search_field), "");
+        
+        // Получить данные пользователя: аватар, имя, статус
+        chat_push_back(&tchatlist, name, 54, true);
+        t_chat_list *copy = tchatlist;
+        for(;copy->next; copy = copy->next);
+        GtkWidget *single = add_single(copy);
+        gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
+        gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
+
+        g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+        g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
     }
 }
 

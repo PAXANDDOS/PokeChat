@@ -168,13 +168,14 @@ typedef struct s_updater
 }   t_updater;
 t_updater upd_data;
 
-typedef struct s_chat_list      // Structure for people in the chat list
+typedef struct s_chat_list              // Structure for people in the chat list
 {
     char *nickname;
     int avatar;
     bool status;
     struct s_chat_list *next;   // To next person
 }   t_chat_list;
+t_chat_list *tchatlist;
 
 struct s_chat   // Selected user in chatlist
 {
@@ -189,6 +190,7 @@ struct
     GtkWidget *background;
     GtkWidget *stickers;
     GtkWidget *crlist;
+    GtkWidget *chatlist;
     char* current;
 }   t_msg;
 
@@ -278,7 +280,7 @@ void create_group(GtkWidget *main);
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
 GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h);
-gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, int avatar);
+gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar);
 gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path);
@@ -288,7 +290,8 @@ gboolean draw_event_sticker(GtkWidget *widget, cairo_t *cr, char* path);
 gboolean draw_event_embedded(GtkWidget *widget, cairo_t *cr, char* path);
 gboolean draw_event_embedded_full(GtkWidget *widget, cairo_t *cr, char* path);
 
-GtkWidget *create_chatlist(t_chat_list* list);
+GtkWidget *create_chatlist();
+GtkWidget *add_single(t_chat_list* list);
 void new_outgoing_message(GtkWidget *messages_block);
 void new_incoming_message(GtkWidget *messages_block);
 void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num);
@@ -315,12 +318,14 @@ void active3_click(GtkWidget *widget, GdkEventButton *event);
 void active4_click(GtkWidget *widget, GdkEventButton *event);
 void active5_click(GtkWidget *widget, GdkEventButton *event);
 
-void adduser_click(GtkWidget *widget, GdkEventButton *event);
+void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
+void person_click(GtkWidget *widget);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 
 void username_field_change_event(GtkWidget *widget);
