@@ -78,6 +78,7 @@ static void *display_running() {
     char load[] = "\\|/-";
     int i = 0, msec = 0;
     long sec = 0, min = 0, hour = 0;
+    mx_printstr("\033[1;33mNOTE: \033[33mPress \033[1;33mCtrl+C \033[33mto exit\033[0m\n");
     while (true) {
         if (i == 4)
             i = 0;
@@ -87,19 +88,19 @@ static void *display_running() {
             sec = 0, min++;
         if (min == 60)
             min = 0, hour++;
-        mx_printstr("\r\x1b[32mServer is running \x1b[35m");
-        if (min > 0) {
-            mx_printint(min);
-            mx_printstr(" m. ");
-        }
+        mx_printstr("\r\033[32mServer is running \033[35m");
         if (hour > 0) {
             mx_printint(hour);
             mx_printstr(" h. ");
         }
+        if (min > 0) {
+            mx_printint(min);
+            mx_printstr(" m. ");
+        }
         mx_printint(sec);
-        mx_printstr(" s. \x1b[36m");
+        mx_printstr(" s. \033[36m");
         mx_printchar(load[i++]);
-        mx_printstr("\x1b[0m  ");
+        mx_printstr("\033[0m  ");
         usleep(200000);
     }
     return NULL;

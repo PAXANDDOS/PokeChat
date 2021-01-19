@@ -5,6 +5,37 @@ static bool check_date()
     return FALSE;
 }
 
+void *scrolling_msg() {
+    int height = (strlen(msg_data.content_final) / 50 + 1) * 15;
+    mx_strdel(&msg_data.content_final);
+    usleep(100000);
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message));
+    printf("-- %f\n", gtk_adjustment_get_value(adjustment));
+    for (int i = 1; i <= height; i++) {
+        gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
+        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message), adjustment);
+        usleep(5000);
+        printf("%d\n", i);
+    }
+    gtk_widget_hide(scrolled_message);
+    gtk_widget_show(scrolled_message);
+    return NULL;
+}
+
+void *scrolling_sticker() {
+    usleep(100000);
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message));
+    for (int i = 1; i <= 30; i++) {
+        gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
+        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message), adjustment);
+        usleep(5000);
+        printf("%d\n", i);
+    }
+    gtk_widget_hide(scrolled_message);
+    gtk_widget_show(scrolled_message);
+    return NULL;
+}
+
 void new_outgoing_message(GtkWidget *messages_block)
 {
     // check_date();   // Проверка на совпадение текущей даты с датой последнего сообщения. Если совпадает - не показывать и наоборот
@@ -48,6 +79,9 @@ void new_outgoing_message(GtkWidget *messages_block)
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(message_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(message_body));
+
+    pthread_t display_thread = NULL;
+    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
 }
 
 void new_incoming_message(GtkWidget *messages_block)
@@ -81,6 +115,9 @@ void new_incoming_message(GtkWidget *messages_block)
     gtk_box_pack_start(GTK_BOX(message_body), time_label, FALSE, FALSE, 0);
 
     gtk_widget_show_all(GTK_WIDGET(message_body));
+
+    pthread_t display_thread = NULL;
+    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
 }
 
 void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
@@ -115,6 +152,9 @@ void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(sticker_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(sticker_body));
+
+    pthread_t display_thread = NULL;
+    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
 }
 
 void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
@@ -149,6 +189,9 @@ void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(sticker_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(sticker_body));
+
+    pthread_t display_thread = NULL;
+    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
 }
 
 void new_outgoing_embedded(GtkWidget *messages_block, char* path)

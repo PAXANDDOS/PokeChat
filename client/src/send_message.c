@@ -103,7 +103,6 @@ void *send_sticker() {
             }
     mx_strdel(&result);
     mx_strdel(&json_string);
-    mx_strdel(&msg_data.content_final);
     cJSON_Delete(json);
     cJSON_Delete(response);
     return NULL;

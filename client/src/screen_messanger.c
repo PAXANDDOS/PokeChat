@@ -164,16 +164,16 @@ static void build_entryfield(GtkWidget *main)
 static void build_chat(GtkWidget *main)
 {
     GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CHAT_H, 100, 100, CHAT_H); // Параметры скролла
-    GtkWidget *scrollable = gtk_scrolled_window_new(NULL, vadjustment);             // Зона, доступная для бесконечного скролла
-    gtk_widget_set_name(GTK_WIDGET(scrollable), "scrollable_msg");                  // Имя 1
-    gtk_widget_set_size_request(scrollable, CHAT_W, CHAT_H);                        // Размер
+    scrolled_message = gtk_scrolled_window_new(NULL, vadjustment);             // Зона, доступная для бесконечного скролла
+    gtk_widget_set_name(GTK_WIDGET(scrolled_message), "scrollable_msg");                  // Имя 1
+    gtk_widget_set_size_request(scrolled_message, CHAT_W, CHAT_H);                        // Размер
 
     t_chat.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
     gtk_widget_set_size_request(t_chat.chat_screen, CHAT_W, CHAT_H);               // Размер
     gtk_widget_set_name(GTK_WIDGET(t_chat.chat_screen), "messages_block");         // Имя 2
 
-    gtk_container_add(GTK_CONTAINER(scrollable), t_chat.chat_screen);              // Кладем чат в скролл зону
-    gtk_fixed_put(GTK_FIXED(main),scrollable, LIST_W, 0);                           // Кладем скролл зону на главный экран
+    gtk_container_add(GTK_CONTAINER(scrolled_message), t_chat.chat_screen);              // Кладем чат в скролл зону
+    gtk_fixed_put(GTK_FIXED(main),scrolled_message, LIST_W, 0);                           // Кладем скролл зону на главный экран
 }
 
 void build_messanger_screen(GtkWidget **msgscreen)

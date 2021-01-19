@@ -77,6 +77,7 @@
 
 
 int temp;
+GtkWidget *scrolled_message;
 
 //-------> Overall
 struct {
