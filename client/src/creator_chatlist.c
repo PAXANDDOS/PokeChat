@@ -1,5 +1,13 @@
 #include "../inc/client.h"
 
+static void person_click(GtkWidget *widget) {
+    GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
+    GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+    children = children->next;
+    char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+    printf("%s\n", chosen);
+}
+
 static GtkWidget *create_single(t_chat_list* list)
 {
     char *nname = list->nickname;
@@ -46,6 +54,7 @@ GtkWidget *create_chatlist(t_chat_list* list) {
         gtk_box_pack_start(GTK_BOX(chatlist), single_event, FALSE, FALSE, 3);
         g_signal_connect(G_OBJECT(single_event), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+        g_signal_connect(G_OBJECT(single_event), "button_press_event", G_CALLBACK(person_click), NULL);
         list = list->next;
     }
 

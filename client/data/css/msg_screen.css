@@ -182,3 +182,18 @@
   font-size: 12px;
   box-shadow: none;
 }
+#crlist
+{
+  border-radius: 10px;
+  margin-top: 6px;
+}
+#crlist_person
+{
+  border-radius: 10px;
+  padding: 6px 0 6px 0;
+}
+#crlist_person_h
+{
+  border-radius: 10px;
+  padding: 6px 0 6px 0;
+}

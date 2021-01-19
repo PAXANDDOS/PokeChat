@@ -95,18 +95,3 @@ void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
         create_group(main);
 }
-
-void create_group_button_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget || event) {}
-    // if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
-    //     // чето здесь
-    // }
-}
-
-void crgroup_adduser_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
-    {
-
-    }
-}

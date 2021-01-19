@@ -8,6 +8,71 @@ static void s2_click(GtkWidget *widget) {
     if(widget) {}
 }
 
+static void remove_person(GtkWidget *widget) {
+    gtk_widget_destroy(GTK_WIDGET(widget));
+}
+
+static GtkWidget *create_single_person(char *name) {
+    GtkWidget *single_event = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(single_event), "crlist_person");
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(single_event), TRUE);
+
+    GtkWidget *single = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    gtk_widget_set_name(GTK_WIDGET(single), "crlist_person_h");
+    gtk_container_add(GTK_CONTAINER(single_event), single);
+
+    GtkWidget *avatar = gtk_drawing_area_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 34, 34);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)40);   // Получить avatar пользовтеля
+    gtk_widget_set_halign(avatar, GTK_ALIGN_START);
+    gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(single), avatar, FALSE, FALSE, 6);
+
+    GtkWidget *nickname = gtk_label_new(name);                        // Получить username пользователя
+    gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");                 // Имя
+    gtk_box_pack_start(GTK_BOX(single), nickname, FALSE, FALSE, 5);
+
+    return single_event;
+}
+
+static void add_person(GtkWidget *widget, GdkEventButton *event, gpointer search_field) {
+    if(widget) {}
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)search_field)));
+        if(name != NULL)
+            name = mx_del_extra_spaces(name);
+        if(!strcmp(name, "") || !strcmp(name, " ")) 
+            return;
+
+        // проверить имя пользователя name на существование
+        printf("Added: %s\n", name);
+        // если такой существует, мы договорились что вернешь его id
+        // id надо записывать в список, при добавлении и удалять из списка при удалении
+
+        gtk_entry_set_text(GTK_ENTRY(search_field), "");
+        GtkWidget *single = create_single_person(name);
+        gtk_box_pack_start(GTK_BOX(t_msg.crlist), single, FALSE, FALSE, 0);
+        gtk_widget_show_all(GTK_WIDGET(t_msg.crlist));
+
+        g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+        g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), NULL);
+    }
+}
+
+static void create_group_button_click(GtkWidget *widget) {
+    if(widget) {}
+    GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
+    while(parent != NULL) {
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
+        children2 = children2->next;
+        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
+        printf("Found: %s\n", chosen);
+        parent = parent->next;
+    }
+}
+
 void create_group(GtkWidget *main)
 {
     t_msg.background = gtk_event_box_new();
@@ -50,14 +115,16 @@ void create_group(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(crgroup_adduser_click), NULL);
+    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(add_person), search_field);
     //
 
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);
     gtk_widget_set_size_request(GTK_WIDGET(scrollable), 416, 260);
     gtk_box_pack_start(GTK_BOX(box), scrollable, FALSE, FALSE, 0);
 
-    // Список добавленых пользователей добавить сюда
+    t_msg.crlist = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
+    gtk_widget_set_name(GTK_WIDGET(t_msg.crlist), "crlist");
+    gtk_container_add(GTK_CONTAINER(scrollable), t_msg.crlist);
 
     GtkWidget *create_group_button = gtk_button_new_with_label("Create group");
     gtk_widget_set_name(GTK_WIDGET(create_group_button), "apply_button");

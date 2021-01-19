@@ -127,3 +127,11 @@
 {
   color: #cccccc;
 }
+#crlist_person
+{
+  background-color: #e0e0e0;
+}
+#crlist_person:hover
+{
+  background-color: #ebebeb;
+}

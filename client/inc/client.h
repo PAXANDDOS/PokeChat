@@ -187,6 +187,7 @@ struct
     GtkWidget *embedded_view;
     GtkWidget *background;
     GtkWidget *stickers;
+    GtkWidget *crlist;
     char* current;
 }   t_msg;
 
@@ -320,8 +321,6 @@ void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void single_event_click(GtkWidget *widget, GdkEventButton *event);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
-void create_group_button_click(GtkWidget *widget, GdkEventButton *event);
-void crgroup_adduser_click(GtkWidget *widget, GdkEventButton *event);
 
 void username_field_change_event(GtkWidget *widget);
 void firstname_field_change_event(GtkWidget *widget);

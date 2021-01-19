@@ -35,7 +35,7 @@
 
 #groupbutton
 {
-  background-image: url("../../../images/group-inactive.png");
+  background-image: url("../../../images/team.png");
 }
 #groupbutton:hover
 {
@@ -50,7 +50,7 @@
 
 #eventsbutton
 {
-  background-image: url("../../../images/events-inactive.png");
+  background-image: url("../../../images/events.png");
 }
 #eventsbutton:hover
 {

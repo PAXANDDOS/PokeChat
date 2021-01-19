@@ -132,3 +132,11 @@
 {
   color: #c3c8da;
 }
+#crlist_person
+{
+  background-color: #191f35;
+}
+#crlist_person:hover
+{
+  background-color: #151a2c;
+}
