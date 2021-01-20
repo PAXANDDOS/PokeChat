@@ -1,14 +1,5 @@
 #include "../inc/client.h"
 
-void person_click(GtkWidget *widget) {
-    GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
-    GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-    children = children->next;
-    char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-    printf("%s\n", chosen);
-    gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
-}
-
 static GtkWidget *create_single(t_chat_list* list)
 {
     GtkWidget *single = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);

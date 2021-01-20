@@ -102,11 +102,25 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
         create_stickerlist(main);
 }
 
-void single_event_click(GtkWidget *widget, GdkEventButton *event) {
+void person_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
     {
-
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        children = children->next;
+        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        printf("%s\n", chosen);
+        gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
+    }
+    if(event->type == GDK_BUTTON_PRESS && event->button == 3) 
+    {
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        children = children->next;
+        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        printf("Right click: %s\n", chosen);
+        creator_userprofile(t_msg.main);
     }
 }
 

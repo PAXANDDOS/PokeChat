@@ -288,6 +288,7 @@ void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
+void creator_userprofile(GtkWidget *main);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
@@ -336,8 +337,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status);
-void single_event_click(GtkWidget *widget, GdkEventButton *event);
-void person_click(GtkWidget *widget);
+void person_click(GtkWidget *widget, GdkEventButton *event);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 
 void username_field_change_event(GtkWidget *widget);

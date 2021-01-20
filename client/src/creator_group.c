@@ -10,7 +10,6 @@ static void s2_click(GtkWidget *widget) {
 
 static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer user_id) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        printf("%i\n", (int)(uintptr_t)user_id);
         gtk_widget_destroy(GTK_WIDGET(widget));
         new_group->count = new_group->count - 1;
         int *temp = malloc(sizeof(int*) * new_group->count);
@@ -77,6 +76,8 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 static void create_group_button_click(GtkWidget *widget, t_new_group *group) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
+    if(parent == NULL) 
+        return;
     while(parent != NULL) {
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
@@ -86,6 +87,7 @@ static void create_group_button_click(GtkWidget *widget, t_new_group *group) {
         parent = parent->next;
     }
     create_group(group);
+    gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 
 void creator_group(GtkWidget *main)
@@ -110,12 +112,27 @@ void creator_group(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(title), "creategroup_title");
     gtk_widget_set_halign(title, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(box), title, FALSE, FALSE, 0);
+    //
+    //
+    GtkWidget *infobox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start(GTK_BOX(box), infobox, FALSE, TRUE, 15);
 
+    GtkWidget* avatar = gtk_event_box_new();
+    gtk_widget_set_size_request(GTK_WIDGET(avatar), 80, 80);
+    gtk_widget_set_name(GTK_WIDGET(avatar), "group_people");
+    gtk_box_pack_start(GTK_BOX(infobox), avatar, FALSE, FALSE, 0);
+
+    GtkWidget *group_name = gtk_entry_new();
+    gtk_widget_set_name(GTK_WIDGET(group_name), "crgroup_name_field");
+    gtk_entry_set_placeholder_text(GTK_ENTRY(group_name), "Group name");
+    gtk_entry_set_max_length(GTK_ENTRY(group_name), 10);
+    gtk_box_pack_start(GTK_BOX(infobox), group_name, TRUE, TRUE, 10);
+    //
     //
     GtkWidget *search_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(search_block), "crgroup_search_block");
     gtk_widget_set_size_request(GTK_WIDGET(search_block), 350, 40);
-    gtk_box_pack_start(GTK_BOX(box), search_block, FALSE, TRUE, 15);
+    gtk_box_pack_start(GTK_BOX(box), search_block, FALSE, TRUE, 0);
     GtkWidget *search_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(search_field), "crgroup_search_field");
     gtk_entry_set_placeholder_text(GTK_ENTRY(search_field), "Add some people...");

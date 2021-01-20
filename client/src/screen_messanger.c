@@ -82,23 +82,6 @@ static void build_list(GtkWidget *main)
     chat_push_back(&tchatlist, "sp", 99, true);
     chat_push_back(&tchatlist, "if", 65, false);
     t_msg.chatlist = create_chatlist();
-    //chat_clear_list(&chatlist);
-
-    // GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
-    // while(parent){
-    //     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-    //     GtkWidget *single = GTK_WIDGET(children->data);
-    //     GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
-    //     children2 = children2->next;
-    //     char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
-    //     printf("%s\n", chosen);
-
-    //     g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    //     g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    //     g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
-
-    //     parent = parent->next;
-    // }
 
     gtk_container_add(GTK_CONTAINER(scrollable), t_msg.chatlist);
     gtk_box_pack_start(GTK_BOX(list_block), scrollable, FALSE, FALSE, 0);              // Кладем скролл зону на главный экран

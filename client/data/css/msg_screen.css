@@ -197,3 +197,20 @@
   border-radius: 10px;
   padding: 6px 0 6px 0;
 }
+#group_people
+{
+  border-radius: 50%;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+  background-image: url("../images/group-people.png");
+  background-size: 100%;
+}
+#crgroup_name_field
+{
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 300;
+  border-radius: 13px;
+  border: none;
+  font-size: 12px;
+  box-shadow: none;
+  margin: 20px 0 20px 0;
+}

@@ -140,3 +140,13 @@
 {
   background-color: #151a2c;
 }
+#group_people
+{
+  background-color: #18254e;
+  box-shadow: inset 0 0 0 1.5px rgba(55, 70, 118, 0.6);
+}
+#crgroup_name_field
+{
+  background-color: #151a2c;
+  color: rgb(180, 191, 216);
+}
