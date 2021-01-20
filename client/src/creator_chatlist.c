@@ -6,6 +6,7 @@ void person_click(GtkWidget *widget) {
     children = children->next;
     char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
     printf("%s\n", chosen);
+    gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
 }
 
 static GtkWidget *create_single(t_chat_list* list)

@@ -8,19 +8,21 @@ static void s2_click(GtkWidget *widget) {
     if(widget) {}
 }
 
-static void remove_person(GtkWidget *widget, gpointer user_id) {
-    printf("-- %d\n", (int)(intptr_t)user_id);
-    gtk_widget_destroy(GTK_WIDGET(widget));
-    new_group->count = new_group->count - 1;
-    int *temp = malloc(sizeof(int*) * new_group->count);
-    for (int i = 0, j = 0; i < new_group->count + 1; i++)
-        if (new_group->users_id[i] != (int)(intptr_t)user_id)
-            temp[j++] = new_group->users_id[i];
-    free(new_group->users_id);
-    new_group->users_id = malloc(sizeof(int*) * new_group->count);
-    for (int i = 0; i < new_group->count; i++)
-        new_group->users_id[i] = temp[i];
-    free(temp);
+static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer user_id) {
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        printf("%i\n", (int)(uintptr_t)user_id);
+        gtk_widget_destroy(GTK_WIDGET(widget));
+        new_group->count = new_group->count - 1;
+        int *temp = malloc(sizeof(int*) * new_group->count);
+        for (int i = 0, j = 0; i < new_group->count + 1; i++)
+            if (new_group->users_id[i] != (int)(uintptr_t)user_id)
+                temp[j++] = new_group->users_id[i];
+        free(new_group->users_id);
+        new_group->users_id = malloc(sizeof(int*) * new_group->count);
+        for (int i = 0; i < new_group->count; i++)
+            new_group->users_id[i] = temp[i];
+        free(temp);
+    }
 }
 
 static GtkWidget *create_single_person(char *name, int avatar_id) {
