@@ -241,6 +241,16 @@ struct
     GtkWidget *valor_event;
 }   t_auth;
 
+//-------> Group creation
+typedef struct s_new_group
+{
+    GtkWidget *search_field;
+    int *users_id;
+    int count;
+    int current_user_id;
+}   t_new_group;
+t_new_group *new_group;
+
 struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
 {
     char *avatar_generated;
@@ -258,6 +268,8 @@ void *send_message();
 void *send_sticker();
 void send_photo();
 void *updater();
+bool add_user_to_group(char*, int*, int*);
+void create_group();
 
 void load_providers();
 void test_autofill();
@@ -275,7 +287,7 @@ void build_messanger_screen(GtkWidget **msgscreen);
 void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
-void create_group(GtkWidget *main);
+void creator_group(GtkWidget *main);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);

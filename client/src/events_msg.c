@@ -113,5 +113,5 @@ void single_event_click(GtkWidget *widget, GdkEventButton *event) {
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
-        create_group(main);
+        creator_group(main);
 }

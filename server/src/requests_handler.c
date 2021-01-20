@@ -31,6 +31,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_update_message_id = cJSON_GetObjectItem(json, "update_message_id");
     cJSON *json_get_chats_count = cJSON_GetObjectItem(json, "get_chats_count");
     cJSON *json_get_chats = cJSON_GetObjectItem(json, "get_chats");
+    cJSON *json_get_user_id = cJSON_GetObjectItem(json, "get_user_id");
     cJSON *json_send_message = cJSON_GetObjectItem(json, "send_message");
     cJSON *json_send_sticker = cJSON_GetObjectItem(json, "send_sticker");
     cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
@@ -139,6 +140,31 @@ static void message_handler(char msg[], char **reply) {
         *reply = strdup(cJSON_PrintUnformatted(json_chats));
         mx_strdel(&sql_query);
         cJSON_Delete(json_chats);
+    }
+    else if (json_get_user_id) {
+        char *username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_get_user_id, "username")));
+        escape_apostrophe(&username);
+        printf("GET USER ID\nusername: %s\n\n", username);
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT id, avatar FROM users WHERE username=('%s');";
+        asprintf(&sql_query, sql_pattern, username);
+        t_list *list = NULL;
+        int user_id = 0, avatar = 0;
+        list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        int list_size = mx_list_size(list);
+        if (list_size == 0) {
+            *reply = strdup("null");
+            return;
+        }
+        user_id = atoi(list->data);
+        list = list->next;
+        avatar = atoi(list->data);
+        cJSON *json_user_id = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_user_id, "user_id", user_id);
+        cJSON_AddNumberToObject(json_user_id, "avatar", avatar);
+        *reply = strdup(cJSON_PrintUnformatted(json_user_id));
+        cJSON_Delete(json_user_id);
     }
     else if (json_send_message) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "sender_id"));

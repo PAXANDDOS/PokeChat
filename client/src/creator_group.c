@@ -8,11 +8,22 @@ static void s2_click(GtkWidget *widget) {
     if(widget) {}
 }
 
-static void remove_person(GtkWidget *widget) {
+static void remove_person(GtkWidget *widget, gpointer user_id) {
+    printf("-- %d\n", (int)(intptr_t)user_id);
     gtk_widget_destroy(GTK_WIDGET(widget));
+    new_group->count = new_group->count - 1;
+    int *temp = malloc(sizeof(int*) * new_group->count);
+    for (int i = 0, j = 0; i < new_group->count + 1; i++)
+        if (new_group->users_id[i] != (int)(intptr_t)user_id)
+            temp[j++] = new_group->users_id[i];
+    free(new_group->users_id);
+    new_group->users_id = malloc(sizeof(int*) * new_group->count);
+    for (int i = 0; i < new_group->count; i++)
+        new_group->users_id[i] = temp[i];
+    free(temp);
 }
 
-static GtkWidget *create_single_person(char *name) {
+static GtkWidget *create_single_person(char *name, int avatar_id) {
     GtkWidget *single_event = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(single_event), "crlist_person");
     gtk_event_box_set_above_child(GTK_EVENT_BOX(single_event), TRUE);
@@ -23,7 +34,7 @@ static GtkWidget *create_single_person(char *name) {
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 34, 34);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)40);   // Получить avatar пользовтеля
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (gpointer)(intptr_t)avatar_id);   // Получить avatar пользовтеля
     gtk_widget_set_halign(avatar, GTK_ALIGN_START);
     gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(single), avatar, FALSE, FALSE, 6);
@@ -35,32 +46,33 @@ static GtkWidget *create_single_person(char *name) {
     return single_event;
 }
 
-static void add_person(GtkWidget *widget, GdkEventButton *event, gpointer search_field) {
+static void add_person(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)search_field)));
+        char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)new_group->search_field)));
         if(name != NULL)
             name = mx_del_extra_spaces(name);
         if(!strcmp(name, "") || !strcmp(name, " ")) 
             return;
 
         // проверить имя пользователя name на существование
-        printf("Added: %s\n", name);
-        // если такой существует, мы договорились что вернешь его id
-        // id надо записывать в список, при добавлении и удалять из списка при удалении
+        printf("Username: %s\n", name);
+        int avatar = 0, user_id = 0;
+        if (!add_user_to_group(name, &user_id, &avatar))
+            return;
 
-        gtk_entry_set_text(GTK_ENTRY(search_field), "");
-        GtkWidget *single = create_single_person(name);
+        gtk_entry_set_text(GTK_ENTRY(new_group->search_field), "");
+        GtkWidget *single = create_single_person(name, avatar);
         gtk_box_pack_start(GTK_BOX(t_msg.crlist), single, FALSE, FALSE, 0);
         gtk_widget_show_all(GTK_WIDGET(t_msg.crlist));
 
         g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), NULL);
+        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), (gpointer)(intptr_t)user_id); // TODO
     }
 }
 
-static void create_group_button_click(GtkWidget *widget) {
+static void create_group_button_click(GtkWidget *widget, t_new_group *group) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
     while(parent != NULL) {
@@ -71,9 +83,10 @@ static void create_group_button_click(GtkWidget *widget) {
         printf("Found: %s\n", chosen);
         parent = parent->next;
     }
+    create_group(group);
 }
 
-void create_group(GtkWidget *main)
+void creator_group(GtkWidget *main)
 {
     t_msg.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_msg.background), "crgroup");
@@ -113,9 +126,14 @@ void create_group(GtkWidget *main)
     gtk_widget_set_halign(GTK_WIDGET(adduser), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(adduser), GTK_ALIGN_CENTER);
 
+    new_group = malloc(sizeof(t_new_group));
+    new_group->search_field = search_field;
+    new_group->count = 0;
+    new_group->users_id = NULL;
+
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(add_person), search_field);
+    g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(add_person), NULL);
     //
 
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);
