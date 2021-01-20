@@ -61,6 +61,8 @@ void *send_message() {
     cJSON_AddNumberToObject(json_send_message, "sender_id", sender_id);
     cJSON_AddNumberToObject(json_send_message, "chat_id", chat_id);
     cJSON_AddStringToObject(json_send_message, "text", text);
+    cJSON_AddStringToObject(json_send_message, "date", mx_str_getdate());
+    cJSON_AddStringToObject(json_send_message, "time", mx_str_gettime());
     cJSON_AddItemToObject(json, "send_message", json_send_message);
     char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);
@@ -89,6 +91,8 @@ void *send_sticker() {
     cJSON_AddNumberToObject(json_send_sticker, "sender_id", sender_id);
     cJSON_AddNumberToObject(json_send_sticker, "chat_id", chat_id);
     cJSON_AddNumberToObject(json_send_sticker, "sticker_id", sticker_data.sticker_id);
+    cJSON_AddStringToObject(json_send_sticker, "date", mx_str_getdate());
+    cJSON_AddStringToObject(json_send_sticker, "time", mx_str_gettime());
     cJSON_AddItemToObject(json, "send_sticker", json_send_sticker);
     char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);

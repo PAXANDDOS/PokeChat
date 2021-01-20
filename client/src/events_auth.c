@@ -86,8 +86,8 @@ void login_butt_click(GtkWidget *widget){
         t_account.id = user_id;
         t_account.name = name;
         t_account.code = code;
-        t_account.username = t_account_temp.username;
-        t_account.password = t_account_temp.password;
+        t_account.username = strdup(t_account_temp.username);
+        t_account.password = strdup(t_account_temp.password);
         t_account.avatar = get_avatar_by_number(avatar); // make check by id (custom file or builtin)
         t_account.team = team;
         t_account.theme = theme;
@@ -165,12 +165,12 @@ void reg_butt_click(GtkWidget *widget){
         return;
     
     t_account.avatar = t_avatar.avatar_generated;
-    t_account.username = t_account_temp.username;
+    t_account.username = strdup(t_account_temp.username);
     t_account.name = t_account_temp.name;
     if(t_account_temp.code == NULL || !strcmp(t_account_temp.code, "")) t_account.code = "000000000000";
     else t_account.code = mx_strjoin(t_account_temp.code, "\0");
     t_account.team = t_account_temp.team;
-    t_account.password = t_account_temp.password;
+    t_account.password = strdup(t_account_temp.password);
     t_account.theme = 2;
     t_account.background = 1;
     t_account.id = 0;

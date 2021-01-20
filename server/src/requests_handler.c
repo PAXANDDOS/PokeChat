@@ -41,6 +41,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_update_user_team = cJSON_GetObjectItem(json, "update_user_team");
     cJSON *json_update_user_theme = cJSON_GetObjectItem(json, "update_user_theme");
     cJSON *json_update_user_background = cJSON_GetObjectItem(json, "update_user_background");
+    cJSON *json_create_chat = cJSON_GetObjectItem(json, "create_chat");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
@@ -75,7 +76,7 @@ static void message_handler(char msg[], char **reply) {
             cJSON *message_array = cJSON_CreateArray();
             // Заполняем массив из недостающих сообщений
             for (int i = message_id + 1; i <= last_id; i++) {
-                sql_pattern = "SELECT user_id, text, sticker_id, photo_id FROM messages WHERE chat_id=(%d) AND message_id=(%d);";
+                sql_pattern = "SELECT user_id, date, time, text, sticker_id, photo_id FROM messages WHERE chat_id=(%d) AND message_id=(%d);";
                 asprintf(&sql_query, sql_pattern, chat_id, i);
                 t_list *list = NULL;
                 list = sqlite3_exec_db(sql_query, DB_LIST);
@@ -83,6 +84,10 @@ static void message_handler(char msg[], char **reply) {
                 cJSON *json_message = cJSON_CreateObject();
                 cJSON_AddNumberToObject(json_message, "message_id", i);
                 cJSON_AddNumberToObject(json_message, "user_id", atoi(list->data));
+                list = list->next;
+                cJSON_AddStringToObject(json_message, "date", list->data);
+                list = list->next;
+                cJSON_AddStringToObject(json_message, "time", list->data);
                 list = list->next;
                 if (strcmp(list->data, "NULL") != 0)
                     cJSON_AddStringToObject(json_message, "text", list->data);
@@ -170,6 +175,8 @@ static void message_handler(char msg[], char **reply) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "chat_id"));
         char *text = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "text")));
+        char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "date"));
+        char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "time"));
         escape_apostrophe(&text);
         printf("SEND MESSAGE\nchat_id: %d\nuser_id: %d\ntext: %s\n\n", chat_id, sender_id, text);
         char *sql_query = NULL;
@@ -197,8 +204,8 @@ static void message_handler(char msg[], char **reply) {
         if (list_size > 0)
             last_id = atoi(mes_list->data);
         mx_clear_list(&mes_list);
-        sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, text) VALUES (%d, %d, %d, '%s');";
-        asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, text);
+        sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, date, time, text) VALUES (%d, %d, %d, '%s', '%s', '%s');";
+        asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, date, time, text);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         mx_strdel(&text);
         cJSON *json_reply = cJSON_CreateObject();
@@ -211,6 +218,8 @@ static void message_handler(char msg[], char **reply) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "chat_id"));
         int sticker_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "sticker_id"));
+        char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "date"));
+        char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "time"));
         printf("SEND STICKER\nchat_id: %d\nuser_id: %d\nsticker: %d\n\n", chat_id, sender_id, sticker_id);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
@@ -236,8 +245,8 @@ static void message_handler(char msg[], char **reply) {
         if (list_size > 0)
             last_id = atoi(mes_list->data);
         mx_clear_list(&mes_list);
-        sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, sticker_id) VALUES (%d, %d, %d, %d);";
-        asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, sticker_id);
+        sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, date, time, sticker_id) VALUES (%d, %d, %d, '%s', '%s', %d);";
+        asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, date, time, sticker_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         cJSON *json_reply = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_reply, "message_id", last_id + 1);
@@ -383,6 +392,49 @@ static void message_handler(char msg[], char **reply) {
         asprintf(&sql_query, sql_pattern, bg, user_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
+    else if (json_create_chat) {
+        int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_create_chat, "sender_id"));
+        char *title = strdup("Chat test title");
+        escape_apostrophe(&title);
+        cJSON *users = cJSON_GetObjectItem(json_create_chat, "users_id");
+        int members = cJSON_GetArraySize(users);
+        printf("CREATE CHAT\n\n");
+        char *sql_query = NULL;
+        char *sql_pattern = "INSERT INTO chats (title, members) VALUES ('%s', %d);";
+        asprintf(&sql_query, sql_pattern, title, members + 1);
+        int *ai = sqlite3_exec_db(sql_query, DB_LAST_ID);
+        int chat_id = *ai;
+        mx_strdel(&sql_query);
+
+        char *sql_array = NULL;
+        char *temp_chat_id = mx_itoa(chat_id);
+        for (int i = 0; i < members; i++) {
+            int user_id = cJSON_GetNumberValue(cJSON_GetArrayItem(users, i));
+            sql_array = mx_strrejoin(sql_array, "(");
+            sql_array = mx_strrejoin(sql_array, temp_chat_id);
+            sql_array = mx_strrejoin(sql_array, ",");
+            char *temp_user_id = mx_itoa(user_id);
+            sql_array = mx_strrejoin(sql_array, temp_user_id);
+            sql_array = mx_strrejoin(sql_array, ",0),");
+            mx_strdel(&temp_user_id);
+        }
+        sql_array = mx_strrejoin(sql_array, "(");
+        sql_array = mx_strrejoin(sql_array, temp_chat_id);
+        sql_array = mx_strrejoin(sql_array, ",");
+        char *temp_user_id = mx_itoa(sender_id);
+        sql_array = mx_strrejoin(sql_array, temp_user_id);
+        sql_array = mx_strrejoin(sql_array, ",1)");
+        mx_strdel(&temp_chat_id);
+        mx_strdel(&temp_user_id);
+        sql_query = strdup("INSERT INTO members (chat_id, user_id, admin) VALUES ");
+        sql_query = mx_strrejoin(sql_query, sql_array);
+        sql_query = mx_strrejoin(sql_query, ";");
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&title);
+        mx_strdel(&sql_query);
+        mx_strdel(&sql_array);
         *reply = strdup("null");
     }
     else {

@@ -13,8 +13,8 @@ static void add_new_int(int **arr, int new_int, int count) {
 }
 
 bool add_user_to_group(char *name, int *user_id, int *avatar) {
-    // if (!strcmp(name, t_account.username))
-    //     return false;
+    if (!strcmp(name, t_account.username))
+        return false;
     cJSON *json = cJSON_CreateObject();
     cJSON *json_get_user_id = cJSON_CreateObject();
     cJSON_AddStringToObject(json_get_user_id, "username", name);
@@ -46,7 +46,10 @@ bool add_user_to_group(char *name, int *user_id, int *avatar) {
 
 void create_group() {
     cJSON *json = cJSON_CreateObject();
-    cJSON *json_create_chat = cJSON_CreateIntArray(new_group->users_id, new_group->count);
+    cJSON *json_create_chat = cJSON_CreateObject();
+    cJSON *json_users_id = cJSON_CreateIntArray(new_group->users_id, new_group->count);
+    cJSON_AddItemToObject(json_create_chat, "users_id", json_users_id);
+    cJSON_AddNumberToObject(json_create_chat, "sender_id", t_account.id);
     cJSON_AddItemToObject(json,  "create_chat", json_create_chat);
     char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);

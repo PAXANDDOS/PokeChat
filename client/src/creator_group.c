@@ -35,13 +35,13 @@ static GtkWidget *create_single_person(char *name, int avatar_id) {
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 34, 34);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (gpointer)(intptr_t)avatar_id);   // Получить avatar пользовтеля
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (gpointer)(intptr_t)avatar_id);
     gtk_widget_set_halign(avatar, GTK_ALIGN_START);
     gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(single), avatar, FALSE, FALSE, 6);
 
-    GtkWidget *nickname = gtk_label_new(name);                        // Получить username пользователя
-    gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");                 // Имя
+    GtkWidget *nickname = gtk_label_new(name);
+    gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");
     gtk_box_pack_start(GTK_BOX(single), nickname, FALSE, FALSE, 5);
 
     return single_event;
@@ -69,11 +69,11 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 
         g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), (gpointer)(intptr_t)user_id); // TODO
+        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), (gpointer)(intptr_t)user_id);
     }
 }
 
-static void create_group_button_click(GtkWidget *widget, t_new_group *group) {
+static void create_group_button_click(GtkWidget *widget) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
     if(parent == NULL) 
@@ -86,7 +86,7 @@ static void create_group_button_click(GtkWidget *widget, t_new_group *group) {
         printf("Found: %s\n", chosen);
         parent = parent->next;
     }
-    create_group(group);
+    create_group();
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 

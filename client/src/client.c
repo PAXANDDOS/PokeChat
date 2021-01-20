@@ -82,6 +82,8 @@ int main(int argc, char *argv[]) {
     Mix_CloseAudio();       // Closing SDL Mixer
     SDL_Quit();             // Closing SDL
     free(tm_struct);        // Freeing time&date struct
+    mx_strdel(&t_account.username);
+    mx_strdel(&t_account.password);
 
     return 0;
 }
