@@ -14,7 +14,7 @@ static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer use
         new_group->count = new_group->count - 1;
         int *temp = malloc(sizeof(int*) * new_group->count);
         for (int i = 0, j = 0; i < new_group->count + 1; i++)
-            if (new_group->users_id[i] != (int)(uintptr_t)user_id)
+            if (new_group->users_id[i] != (int)(intptr_t)user_id)
                 temp[j++] = new_group->users_id[i];
         free(new_group->users_id);
         new_group->users_id = malloc(sizeof(int*) * new_group->count);
@@ -56,6 +56,17 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         if(!strcmp(name, "") || !strcmp(name, " ")) 
             return;
 
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
+        while(parent != NULL) {
+            GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+            GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
+            children2 = children2->next;
+            char* copy = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
+            if(!strcmp(copy, name))
+                return;
+            parent = parent->next;
+        }
+
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
         int avatar = 0, user_id = 0;
@@ -73,11 +84,19 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
     }
 }
 
-static void create_group_button_click(GtkWidget *widget) {
+static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
     if(parent == NULL) 
         return;
+
+    char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)group_name)));
+    if(name != NULL)
+        name = mx_del_extra_spaces(name);
+    if(!strcmp(name, ""))
+        return;
+    printf("Group name: %s \n", name);
+    
     while(parent != NULL) {
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
@@ -156,7 +175,7 @@ void creator_group(GtkWidget *main)
     //
 
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);
-    gtk_widget_set_size_request(GTK_WIDGET(scrollable), 416, 260);
+    gtk_widget_set_size_request(GTK_WIDGET(scrollable), 400, 200);
     gtk_box_pack_start(GTK_BOX(box), scrollable, FALSE, FALSE, 0);
 
     t_msg.crlist = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
@@ -168,7 +187,7 @@ void creator_group(GtkWidget *main)
     gtk_button_set_relief(GTK_BUTTON(create_group_button), GTK_RELIEF_NONE);
     gtk_widget_set_size_request(GTK_WIDGET(create_group_button), 100, 10);
     gtk_box_pack_start(GTK_BOX(box), create_group_button, FALSE, FALSE, 0);
-    g_signal_connect(G_OBJECT(create_group_button), "clicked", G_CALLBACK(create_group_button_click), NULL);
+    g_signal_connect(G_OBJECT(create_group_button), "clicked", G_CALLBACK(create_group_button_click), group_name);
 
     gtk_widget_show_all(GTK_WIDGET(t_msg.background));
 }
