@@ -22,7 +22,7 @@ GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
 
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
     char* a = get_avatar_by_number((int)(intptr_t)avatar);
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 34, 34);  // Добавить сюда функцию в которой указан конкретный аватар для аккаунта. Сейчас - рандом
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 34, 34);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -30,6 +30,33 @@ gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
         y = 0,
         width = 34,
         height = 34,
+        aspect = 1.0,                       /* aspect ratio */
+        corner_radius = height / 2.0;       /* and corner curvature radius */
+    double radius = corner_radius / aspect;
+    double degrees = M_PI / 180.0;
+
+    cairo_new_sub_path (cr);
+    cairo_arc (cr, x + width - radius, y + radius, radius, -90 * degrees, 0 * degrees);
+    cairo_arc (cr, x + width - radius, y + height - radius, radius, 0 * degrees, 90 * degrees);
+    cairo_arc (cr, x + radius, y + height - radius, radius, 90 * degrees, 180 * degrees);
+    cairo_arc (cr, x + radius, y + radius, radius, 180 * degrees, 270 * degrees);
+    cairo_close_path (cr);
+
+    cairo_fill(cr);
+    if (widget) {}
+    return FALSE;
+}
+
+gboolean draw_event_avatar_profile(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
+    char* a = get_avatar_by_number((int)(intptr_t)avatar);
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 90, 90);
+    gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
+    g_object_unref(G_OBJECT(pixbuf));
+
+    double x = 0,
+        y = 0,
+        width = 90,
+        height = 90,
         aspect = 1.0,                       /* aspect ratio */
         corner_radius = height / 2.0;       /* and corner curvature radius */
     double radius = corner_radius / aspect;

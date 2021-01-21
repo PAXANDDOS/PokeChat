@@ -75,7 +75,6 @@
 #define UCHAT_PORT 10000
 #define DB_NAME "database.db"
 
-
 int temp;
 GtkWidget *scrolled_message;
 
@@ -259,7 +258,7 @@ struct      // Удалить после нормальной реализаци
 
 struct tm *tm_struct;
 
-
+void tooltip(char *str, void *data);
 char *mx_str_gettime();
 char *mx_str_getdate();
 
@@ -288,13 +287,14 @@ void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
-void creator_userprofile(GtkWidget *main);
+void creator_userprofile(GtkWidget *main, char *username, bool status);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
 GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h);
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar);
 gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size);
+gboolean draw_event_avatar_profile(GtkWidget *widget, cairo_t *cr, gpointer avatar);
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size);
 gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path);
 gboolean draw_event_status(GtkWidget *widget, cairo_t *cr, int size);

@@ -145,3 +145,31 @@
   background-color: #ebebeb;
   color: #d6d6d6;
 }
+#crgroup_button
+{
+  color: #343740;
+  background: #d6d6d6;
+  border: .5px solid #d6d6d6;
+}
+#crgroup_button:hover {
+  background: #343740;
+  color: #d6d6d6;
+}
+#username_profile
+{
+  color: #ebebeb;
+}
+#status_profile
+{
+  color: rgba(235, 235, 235, 0.6);
+}
+#sendmessage_profile
+{
+  color: #343740;
+  background: #d6d6d6;
+  border: .5px solid #d6d6d6;
+}
+#sendmessage_profile:hover {
+  background: #343740;
+  color: #d6d6d6;
+}

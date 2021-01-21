@@ -150,3 +150,31 @@
   background-color: #151a2c;
   color: rgb(180, 191, 216);
 }
+#crgroup_button
+{
+  color: rgb(193, 206, 236);
+  background: #374676;
+  border: .5px solid #374676;
+}
+#crgroup_button:hover {
+  background: rgb(193, 206, 236);
+  color: #273255;
+}
+#username_profile
+{
+  color: #c3c8da;
+}
+#status_profile
+{
+  color: rgba(195, 200, 218, 0.6);
+}
+#sendmessage_profile
+{
+  color: rgb(193, 206, 236);
+  background: #374676;
+  border: .5px solid #374676;
+}
+#sendmessage_profile:hover {
+  background: rgb(193, 206, 236);
+  color: #273255;
+}

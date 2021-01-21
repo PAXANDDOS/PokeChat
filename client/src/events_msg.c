@@ -118,9 +118,14 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         children = children->next;
-        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        printf("Right click: %s\n", chosen);
-        creator_userprofile(t_msg.main);
+        char* username = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+
+        bool status = false;
+        children = children->next;
+        if(children != NULL)
+            status = true;
+
+        creator_userprofile(t_msg.main, username, status);
     }
 }
 

@@ -214,3 +214,50 @@
   box-shadow: none;
   margin: 20px 0 20px 0;
 }
+#crgroup_button
+{
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  letter-spacing: .8px;
+  transition: all .2s cubic-bezier(.17,.67,.83,.67);
+}
+#username_profile
+{
+  font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;
+  font-weight: 600;
+  letter-spacing: .9px;
+  font-size: 25px;
+}
+#status_profile
+{
+  font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;
+  font-weight: 300;
+  letter-spacing: .9px;
+  font-size: 14px;
+  margin-left: 6px;
+}
+#teammystic_profile
+{
+  background-image: url("../images/badge-mystic.png");
+  background-size: 100%;
+}
+#teaminstinct_profile
+{
+  background-image: url("../images/badge-instinct.png");
+  background-size: 100%;
+}
+#teamvalor_profile
+{
+  background-image: url("../images/badge-valor.png");
+  background-size: 100%;
+}
+#sendmessage_profile
+{
+  font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  letter-spacing: .8px;
+  transition: all .2s cubic-bezier(.17,.67,.83,.67);
+  margin-top: 26px;
+  margin-bottom: 26px;
+  margin-left: 80px;
+}

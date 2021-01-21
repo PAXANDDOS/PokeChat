@@ -183,7 +183,7 @@ void creator_group(GtkWidget *main)
     gtk_container_add(GTK_CONTAINER(scrollable), t_msg.crlist);
 
     GtkWidget *create_group_button = gtk_button_new_with_label("Create group");
-    gtk_widget_set_name(GTK_WIDGET(create_group_button), "apply_button");
+    gtk_widget_set_name(GTK_WIDGET(create_group_button), "crgroup_button");
     gtk_button_set_relief(GTK_BUTTON(create_group_button), GTK_RELIEF_NONE);
     gtk_widget_set_size_request(GTK_WIDGET(create_group_button), 100, 10);
     gtk_box_pack_start(GTK_BOX(box), create_group_button, FALSE, FALSE, 0);
