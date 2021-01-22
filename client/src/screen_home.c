@@ -147,7 +147,7 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
     gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
     // Label for header
-    GtkWidget *fact_text = gtk_label_new("──── HERE'S A FACT! ────");
+    GtkWidget *fact_text = gtk_label_new("───── DID YOU KNOW? ─────");
     gtk_widget_set_name(GTK_WIDGET(fact_text), "fact_text");                // Имя
     gtk_widget_set_halign(fact_text, GTK_ALIGN_CENTER);                     // Позиция текста
     gtk_box_pack_start(GTK_BOX(fact_block), fact_text, FALSE, FALSE, 0);

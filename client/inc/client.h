@@ -334,6 +334,7 @@ void active5_click(GtkWidget *widget, GdkEventButton *event);
 void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
+void send_press(GtkWidget *widget);
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status);

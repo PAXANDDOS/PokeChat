@@ -146,6 +146,11 @@
 {
   opacity: 0;
 }
+#arrowdown
+{
+  border-radius: 50%;
+  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+}
 #msggroup
 {
   border-radius: 50%;
@@ -221,6 +226,16 @@
   letter-spacing: .8px;
   transition: all .2s cubic-bezier(.17,.67,.83,.67);
 }
+#profile_box
+{
+  border-radius: 15px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+#profile_avatarbox
+{
+  margin: 10px -10px 10px 10px;
+}
 #username_profile
 {
   font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;
@@ -260,4 +275,62 @@
   margin-top: 26px;
   margin-bottom: 26px;
   margin-left: 80px;
+}
+#remove_user
+{
+  background-image: url("../images/remove-user.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  transition: all .2s cubic-bezier(.17,.67,.83,.67);
+}
+#databox_profile
+{
+  padding: 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+#infolabel_profile
+{
+  font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;
+  font-weight: 500;
+  letter-spacing: .9px;
+  font-size: 15px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 8px;
+}
+#realdata_profile
+{
+  font-family: 'Uni Sans', Rubik, 'Helvetica Neue Light', sans-serif;
+  font-weight: 300;
+  letter-spacing: 1.1px;
+  font-size: 15px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 8px;
+}
+#bg_mystic_profile
+{
+  background-image: url("../images/mystic.png");
+  background-size: 40%;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+#bg_instinct_profile
+{
+  background-image: url("../images/instinct.png");
+  background-size: 40%;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+#bg_valor_profile
+{
+  background-image: url("../images/valor.png");
+  background-size: 40%;
+  background-position: right;
+  background-repeat: no-repeat;
 }

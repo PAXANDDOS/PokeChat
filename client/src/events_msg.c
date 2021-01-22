@@ -91,6 +91,20 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
     }
 }
 
+void send_press(GtkWidget *widget) {
+    msg_data.content = mx_strtrim(msg_data.content);
+    if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
+        return;
+    msg_data.sent = true;
+    msg_data.content_final = strdup(msg_data.content);
+    pthread_t thread = NULL;
+    pthread_create(&thread, NULL, send_message, NULL);
+    new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
+    send_message();
+    gtk_entry_set_text(GTK_ENTRY(widget), "");
+    msg_data.sent = false;
+}
+
 void entry_text_change_event(GtkWidget *widget) {
     msg_data.content_len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
     msg_data.content = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));

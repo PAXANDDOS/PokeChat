@@ -131,6 +131,12 @@ static void build_entryfield(GtkWidget *main)
     gtk_widget_set_halign(GTK_WIDGET(sticker), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(sticker), GTK_ALIGN_CENTER);
 
+    GtkWidget *arrow = gtk_event_box_new();
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(arrow), TRUE);
+    gtk_widget_set_name(GTK_WIDGET(arrow), "arrowdown");
+    gtk_widget_set_size_request(GTK_WIDGET(arrow), 44, 44);
+    gtk_fixed_put(GTK_FIXED(main), arrow, WINDOW_WIDTH-130, WINDOW_HEIGHT-120);
+
     g_signal_connect(G_OBJECT(attach), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(attach), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(attach), "button_press_event", G_CALLBACK(attach_click), NULL);
@@ -138,11 +144,15 @@ static void build_entryfield(GtkWidget *main)
     g_signal_connect(G_OBJECT(send), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(send), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), entry_text);
-    g_signal_connect(entry_text, "activate", G_CALLBACK(send_click), entry_text);
+    g_signal_connect(G_OBJECT(entry_text), "activate", G_CALLBACK(send_press), NULL);
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "button_press_event", G_CALLBACK(sticker_click), main);
+
+    g_signal_connect(G_OBJECT(arrow), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(arrow), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    //g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(attach_click), NULL);
 }
 
 static void build_chat(GtkWidget *main)

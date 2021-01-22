@@ -103,6 +103,16 @@
   background-color: rgb(44, 54, 85);
   border-radius: 8px;
 }
+#arrowdown
+{
+  background-image: url("../../../images/arrow-down.png");
+  background-size: 100%;
+  background-color: rgba(52, 64, 101, 0.4);
+}
+#arrowdown:hover
+{
+  background-color: rgba(52, 64, 101, 0.6);
+}
 #msggroup
 {
   background-image: url("../../../images/create-group.png");
@@ -160,6 +170,11 @@
   background: rgb(193, 206, 236);
   color: #273255;
 }
+#profile_box
+{
+  background-color: #1f2846;
+  box-shadow: 0 0 0 3px #374676;
+}
 #username_profile
 {
   color: #c3c8da;
@@ -177,4 +192,22 @@
 #sendmessage_profile:hover {
   background: rgb(193, 206, 236);
   color: #273255;
+}
+#remove_user:hover
+{
+  background-color: #374676;
+}
+#databox_profile
+{
+  background: linear-gradient(90deg, rgb(22, 28, 48) 50%, rgba(22,28,48,0.7) 80%, rgba(22,28,48,0) 100%);
+}
+#infolabel_profile
+{
+  color: #c3c8da;
+  background-color: rgba(12, 16, 31, 0.6);
+}
+#realdata_profile
+{
+  color: rgba(195, 200, 218, 0.8);
+  background-color: #1a223b;
 }
