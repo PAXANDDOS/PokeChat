@@ -61,7 +61,7 @@ static void update_user_background() {
 
 void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_destroy(GTK_WIDGET(t_application.messanger));
         t_account.username = NULL;
@@ -75,7 +75,7 @@ void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
 
 void add_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         GtkWidget *dialog;
 
@@ -120,7 +120,7 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
 
 void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
         create_gallery(main);
 }
 

@@ -53,7 +53,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)new_group->search_field)));
         if(name != NULL)
             name = mx_del_extra_spaces(name);
-        if(!strcmp(name, "") || !strcmp(name, " ")) 
+        if(!strcmp(name, "") || !strcmp(name, " "))
             return;
 
         GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
@@ -66,6 +66,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
                 return;
             parent = parent->next;
         }
+        // g_list_free(parent);
 
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
@@ -87,7 +88,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
-    if(parent == NULL) 
+    if(parent == NULL)
         return;
 
     char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)group_name)));
@@ -96,7 +97,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(!strcmp(name, ""))
         return;
     printf("Group name: %s \n", name);
-    
+
     while(parent != NULL) {
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
@@ -106,6 +107,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         parent = parent->next;
     }
     create_group();
+    // g_list_free(parent);
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 

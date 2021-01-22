@@ -114,7 +114,7 @@ struct                  // TEMPORAL Structure for tracking entries
 
 //-------> Leftbar
 struct
-{   
+{
     GtkWidget *home_box;
     GtkWidget *msg_box;
     GtkWidget *group_box;

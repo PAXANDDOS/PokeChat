@@ -77,11 +77,11 @@ void pokemon_random() {
 
 char* random_phrase()
 {
-    srand(time(NULL)); 
+    srand(time(NULL));
     int num = rand() % 20 + 1;
     char *phrase[] = {"There's no one here!",
-    "Hey, I know. I’ll use my trusty frying pan as a drying pan.", 
-    "Don’t worry that pretty blue head of yours, I’ve got a plan.", 
+    "Hey, I know. I’ll use my trusty frying pan as a drying pan.",
+    "Don’t worry that pretty blue head of yours, I’ve got a plan.",
     "Err...my name is...Tom Ato!",
     "I see now that one’s birth is irrelevant. It’s what you do that determines who you are.",
     "We do have a lot in common. The same earth, the same air, the same sky. Maybe if we started looking at what’s the same, instead of looking at what’s different, well, who knows?",

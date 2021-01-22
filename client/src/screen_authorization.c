@@ -88,14 +88,14 @@ void build_registration(GtkWidget **main_area)
     gtk_widget_set_name(GTK_WIDGET(team_mystic), "team_mystic_selection");
     gtk_container_add(GTK_CONTAINER(t_auth.mystic_event), team_mystic);
     gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.mystic_event, TRUE, FALSE, 0);
-    
+
     t_auth.instinct_event = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_auth.instinct_event), "instinct_event");
     GtkWidget *team_instinct = gtk_label_new("Instinct");
     gtk_widget_set_name(GTK_WIDGET(team_instinct), "team_instinct_selection");
     gtk_container_add(GTK_CONTAINER(t_auth.instinct_event), team_instinct);
     gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.instinct_event, TRUE, FALSE, 0);
-    
+
     t_auth.valor_event = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_auth.valor_event), "valor_event");
     GtkWidget *team_valor = gtk_label_new("Valor");
@@ -159,7 +159,7 @@ void build_authorization(GtkWidget **main_area)
 
     int i = 0;
     char *phrase = ";";
-    while(i == 0) 
+    while(i == 0)
     {
         phrase = random_phrase();
         i++;

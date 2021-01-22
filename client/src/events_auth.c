@@ -23,7 +23,7 @@ void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer ma
 
 void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event)
 {
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.instinct_event), GTK_STATE_FLAG_LINK);
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.valor_event), GTK_STATE_FLAG_LINK);
@@ -35,7 +35,7 @@ void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event)
 void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event)
 {
     if(widget){}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.mystic_event), GTK_STATE_FLAG_LINK);
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.valor_event), GTK_STATE_FLAG_LINK);
@@ -47,7 +47,7 @@ void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event)
 void valor_event_button_click(GtkWidget *widget, GdkEventButton *event)
 {
     if(widget){}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.mystic_event), GTK_STATE_FLAG_LINK);
         gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.instinct_event), GTK_STATE_FLAG_LINK);
@@ -151,7 +151,7 @@ void reg_butt_click(GtkWidget *widget){
 
     t_account_temp.username = mx_del_extra_spaces(t_account_temp.username);
     t_account_temp.name = mx_del_extra_spaces(t_account_temp.name);
-    
+
     if(t_account_temp.username == NULL \
     || !strcmp(t_account_temp.username, "") \
     || t_account_temp.name == NULL \
@@ -163,7 +163,7 @@ void reg_butt_click(GtkWidget *widget){
     || strlen(t_account_temp.password) < 5 \
     || strcmp(t_account_temp.repass, t_account_temp.password))
         return;
-    
+
     t_account.avatar = t_avatar.avatar_generated;
     t_account.username = strdup(t_account_temp.username);
     t_account.name = t_account_temp.name;
@@ -174,7 +174,7 @@ void reg_butt_click(GtkWidget *widget){
     t_account.theme = 2;
     t_account.background = 1;
     t_account.id = 0;
-    
+
     printf("REGISTERED:\nUser = %s\n", t_account.username);
     printf("Name = %s\n", t_account.name);
     printf("Code = %s\n", t_account.code);

@@ -20,6 +20,8 @@ static void onsticker_click(GtkWidget *widget) {
     sticker_data.sticker_id = sticker_id;
     pthread_t thread = NULL;
     pthread_create(&thread, NULL, send_sticker, NULL);
+    // g_list_free(children);
+    // g_list_free(parent);
 }
 
 static GtkWidget *create_list(int sticker_num)

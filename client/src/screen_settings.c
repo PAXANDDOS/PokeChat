@@ -170,7 +170,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     GtkWidget *appearance_menu = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(appearance_menu), "chat_bgs_box");
     gtk_box_pack_start(GTK_BOX(appearance_block), appearance_menu, FALSE, FALSE, 0);
-    
+
     t_theme.theme_light = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 260, 50);
@@ -179,7 +179,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_widget_set_halign(GTK_WIDGET(light_label), GTK_ALIGN_CENTER);
     gtk_container_add(GTK_CONTAINER(t_theme.theme_light), light_label);
     gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_light, TRUE, FALSE, 0);
-    
+
     t_theme.theme_default = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 260, 50);
@@ -188,7 +188,7 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_widget_set_halign(GTK_WIDGET(default_label), GTK_ALIGN_CENTER);
     gtk_container_add(GTK_CONTAINER(t_theme.theme_default), default_label);
     gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_default, TRUE, FALSE, 0);
-    
+
     t_theme.theme_dark = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "theme_bgs");
     gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 260, 50);

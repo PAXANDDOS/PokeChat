@@ -47,9 +47,9 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
     gtk_widget_set_name(GTK_WIDGET(username_label), "username_profile");
     gtk_widget_set_halign(GTK_WIDGET(username_label), GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(usernamebox), username_label, FALSE, FALSE, 0);
-    
+
     if(status){
-        GtkWidget *status_label = gtk_label_new("Online"); 
+        GtkWidget *status_label = gtk_label_new("Online");
         gtk_widget_set_name(GTK_WIDGET(status_label), "status_profile");
         gtk_widget_set_halign(GTK_WIDGET(status_label), GTK_ALIGN_START);
         gtk_box_pack_start(GTK_BOX(usernamebox), status_label, FALSE, FALSE, 0);
@@ -57,7 +57,7 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
 
     short team = 1; // Получить команду (1-3)
     char *team_char;
-    
+
     GtkWidget *badge = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(badge), 26, 26);
     switch(team) {

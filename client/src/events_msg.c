@@ -2,18 +2,18 @@
 
 void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)search_field)));
         if(name != NULL)
             name = mx_del_extra_spaces(name);
-        if(!strcmp(name, "") || !strcmp(name, " ")) 
+        if(!strcmp(name, "") || !strcmp(name, " "))
             return;
 
         // проверить имя пользователя name на существование
         printf("Added: %s\n", name);
         gtk_entry_set_text(GTK_ENTRY(search_field), "");
-        
+
         // Получить данные пользователя: аватар, имя, статус
         chat_push_back(&tchatlist, name, 54, true);
         t_chat_list *copy = tchatlist;
@@ -31,12 +31,12 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
 void attach_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     char *path = NULL;
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         GtkWidget *dialog;
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
-        
+
         dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
         GtkFileFilter *filter = gtk_file_filter_new();
         gtk_file_filter_add_pattern(filter, "*.png");
@@ -75,7 +75,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         msg_data.content = mx_strtrim(msg_data.content);
         if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
@@ -104,7 +104,7 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
 
 void person_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
@@ -112,8 +112,10 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s\n", chosen);
         gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
+        // g_list_free(children);
+        // g_list_free(parent);
     }
-    if(event->type == GDK_BUTTON_PRESS && event->button == 3) 
+    if(event->type == GDK_BUTTON_PRESS && event->button == 3)
     {
         GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
@@ -126,6 +128,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             status = true;
 
         creator_userprofile(t_msg.main, username, status);
+        // g_list_free(children);
+        // g_list_free(parent);
     }
 }
 

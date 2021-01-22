@@ -61,7 +61,7 @@ void new_outgoing_message(GtkWidget *messages_block)
     gtk_widget_set_name(GTK_WIDGET(nickname), "msg_name");
     gtk_widget_set_halign(GTK_WIDGET(nickname), GTK_ALIGN_END);
     gtk_box_pack_start(GTK_BOX(name_message_block), nickname, FALSE, FALSE, 0);
-    
+
     GtkWidget *message = gtk_label_new(msg_data.content);
     gtk_widget_set_name(GTK_WIDGET(message), "message");
     gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);

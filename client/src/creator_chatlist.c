@@ -24,7 +24,7 @@ static GtkWidget *create_single(t_chat_list* list)
         gtk_widget_set_valign(status, GTK_ALIGN_CENTER);
         gtk_box_pack_start(GTK_BOX(single), status, FALSE, FALSE, 0);
     }
-    
+
     return single;
 }
 
@@ -58,7 +58,7 @@ GtkWidget *add_single(t_chat_list* list)
         gtk_widget_set_valign(status, GTK_ALIGN_CENTER);
         gtk_box_pack_start(GTK_BOX(single), status, FALSE, FALSE, 0);
     }
-    
+
     return single_event;
 }
 
@@ -77,7 +77,7 @@ GtkWidget *create_chatlist() {
         GtkWidget *single = create_single(copy);
         gtk_widget_set_name(GTK_WIDGET(single), "singlepad");
         gtk_container_add(GTK_CONTAINER(single_event), single);
-        
+
         g_signal_connect(G_OBJECT(single_event), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "button_press_event", G_CALLBACK(person_click), NULL);

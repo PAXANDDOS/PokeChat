@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);                             // Initializing GTK
     SDL_Init(SDL_INIT_AUDIO);                           // Initializing SDL
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);  // Initializing SDL Mixer
-    
+
     t_application.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);                                 // Creating main window
     gtk_window_set_title(GTK_WINDOW(t_application.window), "PokeChat");                         // Setting window title
     gtk_window_set_default_size(GTK_WINDOW(t_application.window), WINDOW_WIDTH, WINDOW_HEIGHT); // Setting window size
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     GdkPixbuf *icon = create_pixbuf("client/data/images/logo.png");                 // Creating icon for window tab (windows only)
     gtk_window_set_icon(GTK_WINDOW(t_application.window), icon);                    // Setting icon to window
-    
+
     load_providers();   // Loading chosen CSS providers
     GtkWidget *main_area = gtk_fixed_new();                                         // Creating main area
     gtk_container_add(GTK_CONTAINER(t_application.window), main_area);              // Applying main area to current window

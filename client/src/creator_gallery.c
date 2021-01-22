@@ -20,6 +20,8 @@ static void avatar_click(GtkWidget *widget) {
     t_account.avatar = get_avatar_by_number(chosen);
     gtk_widget_destroy(GTK_WIDGET(t_settings.background));
     update_user_avatar(chosen);
+    // g_list_free(children);
+    // g_list_free(parent);
 }
 
 static void sgallery_click(GtkWidget *widget) {
