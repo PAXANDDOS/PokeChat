@@ -81,6 +81,7 @@ GtkWidget *create_chatlist() {
         g_signal_connect(G_OBJECT(single_event), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "button_press_event", G_CALLBACK(person_click), NULL);
+        tooltip("Message/Profile",single_event);
         copy = copy->next;
     }
 

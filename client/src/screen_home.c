@@ -168,6 +168,7 @@ static void build_fact(GtkWidget *main)
     GtkWidget *pokemon_trigger = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(pokemon_trigger), FACT_W, FACT_H);               // Размер
     gtk_fixed_put(GTK_FIXED(main), pokemon_trigger, FACT_X, FACT_Y);
+    tooltip("Play sound",pokemon_trigger);
 
     g_signal_connect(G_OBJECT(pokemon_trigger), "button_press_event", G_CALLBACK(play_audio), NULL);
 }

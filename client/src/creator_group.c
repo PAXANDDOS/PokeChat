@@ -85,6 +85,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
         g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(remove_person), (gpointer)(intptr_t)user_id);
+        tooltip("Remove",single);
     }
 }
 
@@ -179,6 +180,7 @@ void creator_group(GtkWidget *main)
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(add_person), NULL);
+    tooltip("Add",adduser);
     //
 
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);

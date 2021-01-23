@@ -57,6 +57,7 @@ static void build_list(GtkWidget *main)
     gtk_box_pack_start(GTK_BOX(search_block), adduser, FALSE, FALSE, 10);
     gtk_widget_set_halign(GTK_WIDGET(adduser), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(adduser), GTK_ALIGN_CENTER);
+    tooltip("Add",adduser);
     //
     GtkWidget *dm_text = gtk_label_new("DIRECT MESSAGES");
     gtk_widget_set_name(GTK_WIDGET(dm_text), "dm_text");                 // Имя
@@ -68,6 +69,7 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(group), "msggroup");
     gtk_widget_set_size_request(GTK_WIDGET(group), 50, 50);
     gtk_fixed_put(GTK_FIXED(main), group, LIST_W-68, LIST_H-66);
+    tooltip("Create group",group);
 
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, LIST_H-100, 100, 100, LIST_H-100);    // Параметры скролла
     GtkWidget *scrollable = gtk_scrolled_window_new(NULL, NULL);                 // Зона, доступная для бесконечного скролла
@@ -108,6 +110,7 @@ static void build_entryfield(GtkWidget *main)
     gtk_box_pack_start(GTK_BOX(entry_block), attach, FALSE, FALSE, 15);
     gtk_widget_set_halign(GTK_WIDGET(attach), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(attach), GTK_ALIGN_CENTER);
+    tooltip("Attach image",attach);
 
     GtkWidget *entry_text = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(entry_text), "entry_text");
@@ -123,6 +126,7 @@ static void build_entryfield(GtkWidget *main)
     gtk_box_pack_end(GTK_BOX(entry_block), send, FALSE, FALSE, 15);
     gtk_widget_set_halign(GTK_WIDGET(send), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(send), GTK_ALIGN_CENTER);
+    tooltip("Send",send);
 
     GtkWidget *sticker = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(sticker), "sticker");
@@ -130,11 +134,13 @@ static void build_entryfield(GtkWidget *main)
     gtk_box_pack_end(GTK_BOX(entry_block), sticker, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(sticker), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(sticker), GTK_ALIGN_CENTER);
+    tooltip("Stickers",sticker);
 
     GtkWidget *arrow = gtk_event_box_new();
     gtk_event_box_set_above_child(GTK_EVENT_BOX(arrow), TRUE);
     gtk_widget_set_name(GTK_WIDGET(arrow), "arrowdown");
     gtk_widget_set_size_request(GTK_WIDGET(arrow), 44, 44);
+    tooltip("Jump to present",arrow);
     gtk_fixed_put(GTK_FIXED(main), arrow, WINDOW_WIDTH-130, WINDOW_HEIGHT-120);
 
     g_signal_connect(G_OBJECT(attach), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);

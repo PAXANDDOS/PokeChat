@@ -18,30 +18,35 @@ void build_all(GtkWidget **main_area)
     gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.home_box), 50, 50);
     gtk_box_pack_start(GTK_BOX(content_selection_area), t_leftbar.home_box, FALSE, FALSE, 10);
     gtk_widget_set_state_flags(GTK_WIDGET(t_leftbar.home_box), GTK_STATE_FLAG_LINK, FALSE);
+    tooltip("Home",t_leftbar.home_box);
 
     t_leftbar.msg_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_leftbar.msg_box), "msgbutton");
     gtk_widget_set_halign(GTK_WIDGET(t_leftbar.msg_box), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.msg_box), 50, 50);
     gtk_box_pack_start(GTK_BOX(content_selection_area), t_leftbar.msg_box, FALSE, FALSE, 10);
+    tooltip("Messages",t_leftbar.msg_box);
 
     t_leftbar.group_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_leftbar.group_box), "groupbutton");
     gtk_widget_set_halign(GTK_WIDGET(t_leftbar.group_box), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.group_box), 50, 50);
     gtk_box_pack_start(GTK_BOX(content_selection_area), t_leftbar.group_box, FALSE, FALSE, 10);
+    tooltip("Team chat",t_leftbar.group_box);
 
     t_leftbar.events_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_leftbar.events_box), "eventsbutton");
     gtk_widget_set_halign(GTK_WIDGET(t_leftbar.events_box), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.events_box), 50, 50);
     gtk_box_pack_start(GTK_BOX(content_selection_area), t_leftbar.events_box, FALSE, FALSE, 10);
+    tooltip("Team events",t_leftbar.events_box);
 
     t_leftbar.settings_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET( t_leftbar.settings_box), "settingsbutton");
     gtk_widget_set_halign(GTK_WIDGET( t_leftbar.settings_box), GTK_ALIGN_CENTER);
     gtk_widget_set_size_request(GTK_WIDGET( t_leftbar.settings_box), 46, 46);
     gtk_box_pack_end(GTK_BOX(content_selection_area),  t_leftbar.settings_box, FALSE, FALSE, 10);
+    tooltip("Settings",t_leftbar.settings_box);
 
     GtkWidget* status_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(status_box), "statusbutton");

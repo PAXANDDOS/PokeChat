@@ -18,11 +18,13 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     GtkWidget *avatar = gtk_drawing_area_new();
     GtkWidget *add_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(add_button), "add_button");
+    tooltip("Upload picture",add_button);
     GtkWidget *gallery_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(gallery_button), "gallery_button");
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
     gtk_widget_set_size_request(GTK_WIDGET(add_button), 32, 32);
     gtk_widget_set_size_request(GTK_WIDGET(gallery_button), 32, 32);
+    tooltip("Choose picture",gallery_button);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), add_button, 70, 0);
@@ -44,6 +46,7 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(exit_button), "exit_button");
     gtk_widget_set_valign(GTK_WIDGET(exit_button), GTK_ALIGN_CENTER);
     gtk_box_pack_end(GTK_BOX(user_box), exit_button, FALSE, FALSE, 0);
+    tooltip("Exit",exit_button);
     //
     GtkWidget *info_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(info_box), "info_box");
@@ -121,14 +124,17 @@ static void build_teams_menu(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(t_teams.team_mystic), "mystic");
     gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_mystic), TEAM_W, TEAM_H);
     gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_mystic, TRUE, FALSE, 0);
+    tooltip("Choose Mystic",t_teams.team_mystic);
     t_teams.team_instinct = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_teams.team_instinct), "instinct");
     gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_instinct), TEAM_W, TEAM_H);
     gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_instinct, TRUE, FALSE, 0);
+    tooltip("Choose Instinct",t_teams.team_instinct);
     t_teams.team_valor = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_teams.team_valor), "valor");
     gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_valor), TEAM_W, TEAM_H);
     gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_valor, TRUE, FALSE, 0);
+    tooltip("Choose Valor",t_teams.team_valor);
 
     if(t_account.team == 1)
         gtk_widget_set_state_flags(GTK_WIDGET(t_teams.team_mystic), GTK_STATE_FLAG_LINK, TRUE);
