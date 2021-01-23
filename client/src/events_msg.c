@@ -45,7 +45,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+        dialog = gtk_file_chooser_dialog_new("Select an image (<3 Mb)", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
         GtkFileFilter *filter = gtk_file_filter_new();
         gtk_file_filter_add_pattern(filter, "*.png");
         gtk_file_filter_add_pattern(filter, "*.jpg");
@@ -78,7 +78,10 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
     }
     if(path == NULL)
         return;
-    new_outgoing_embedded(t_chat.chat_screen, path);
+    struct stat buf;
+    stat(path, &buf);
+    if (buf.st_size < 3145728) // 3mb
+        new_outgoing_embedded(t_chat.chat_screen, path);
 }
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
@@ -107,17 +110,27 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
 }
 
 void send_press(GtkWidget *widget) {
-    msg_data.content = mx_strtrim(msg_data.content);
-    if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
-        return;
-    msg_data.sent = true;
-    msg_data.content_final = strdup(msg_data.content);
-    pthread_t thread = NULL;
-    pthread_create(&thread, NULL, send_message, NULL);
-    new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
-    send_message();
-    gtk_entry_set_text(GTK_ENTRY(widget), "");
-    msg_data.sent = false;
+    if(msg_data.chat_id)
+    {
+        msg_data.content = mx_strtrim(msg_data.content);
+        if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
+            return;
+        msg_data.sent = true;
+        if (msg_data.date) {
+            mx_strdel(&msg_data.date_prev);
+            msg_data.date_prev = strdup(msg_data.date);
+        }
+        mx_strdel(&msg_data.date);
+        msg_data.date = mx_str_getdate();
+        mx_strdel(&msg_data.time);
+        msg_data.time = mx_str_gettime();
+        msg_data.content_final = strdup(msg_data.content);
+        pthread_t thread = NULL;
+        pthread_create(&thread, NULL, send_message, NULL);
+        new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
+        gtk_entry_set_text(GTK_ENTRY(widget), "");
+        msg_data.sent = false;
+    }
 }
 
 void entry_text_change_event(GtkWidget *widget) {
