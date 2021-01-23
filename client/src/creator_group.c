@@ -62,11 +62,14 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
             GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
             children2 = children2->next;
             char* copy = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
+
+            g_list_free(g_steal_pointer(&children2));
+            g_list_free(g_steal_pointer(&children));
             if(!strcmp(copy, name))
                 return;
             parent = parent->next;
         }
-        // g_list_free(parent);
+        g_list_free(g_steal_pointer(&parent));
 
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
@@ -104,10 +107,12 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         children2 = children2->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
         printf("Found: %s\n", chosen);
+        g_list_free(g_steal_pointer(&children2));
+        g_list_free(g_steal_pointer(&children));
         parent = parent->next;
     }
     create_group();
-    // g_list_free(parent);
+    g_list_free(g_steal_pointer(&parent));
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 

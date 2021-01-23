@@ -126,8 +126,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s\n", chosen);
         gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
-        // g_list_free(children);
-        // g_list_free(parent);
+        g_list_free(g_steal_pointer(&children));
+        g_list_free(g_steal_pointer(&parent));
     }
     if(event->type == GDK_BUTTON_PRESS && event->button == 3)
     {
@@ -142,8 +142,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             status = true;
 
         creator_userprofile(t_msg.main, username, status);
-        // g_list_free(children);
-        // g_list_free(parent);
+        g_list_free(g_steal_pointer(&children));
+        g_list_free(g_steal_pointer(&parent));
     }
 }
 
