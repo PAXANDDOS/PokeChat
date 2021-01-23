@@ -105,6 +105,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         pthread_create(&thread, NULL, send_message, NULL);
         new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
+        msg_data.content = NULL;
         msg_data.sent = false;
     }
 }
@@ -149,13 +150,13 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
     {
         upd_data.suspend = true;
         gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
-        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget)); // GList *parent_c = parent;
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
         children = children->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s\n", chosen);
-        g_list_free(g_steal_pointer(&children));
-        g_list_free(g_steal_pointer(&parent));
+        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
+        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
         for (int i = 0; i < upd_data.count; i++)
             if (upd_data.chats_id[i] == msg_data.chat_id)
                 upd_data.messages_id[i] = 0;
@@ -164,8 +165,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
     }
     if(event->type == GDK_BUTTON_PRESS && event->button == 3)
     {
-        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget)); // GList *parent_c = parent;
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
         children = children->next;
         char* username = (char*)gtk_label_get_text(GTK_LABEL(children->data));
 
@@ -175,8 +176,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             status = true;
 
         creator_userprofile(t_msg.main, username, status);
-        g_list_free(g_steal_pointer(&children));
-        g_list_free(g_steal_pointer(&parent));
+        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
+        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
     }
 }
 

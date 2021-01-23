@@ -59,20 +59,20 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         if(!strcmp(name, "") || !strcmp(name, " "))
             return;
 
-        GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
         while(parent != NULL) {
-            GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-            GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
+            GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
+            GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data)); // GList *children2_c = children2;
             children2 = children2->next;
             char* copy = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
 
-            g_list_free(g_steal_pointer(&children2));
-            g_list_free(g_steal_pointer(&children));
+            // g_list_free(children2_c); // g_list_free(g_steal_pointer(&children2));
+            // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
             if(!strcmp(copy, name))
                 return;
             parent = parent->next;
         }
-        g_list_free(g_steal_pointer(&parent));
+        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
 
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
@@ -94,7 +94,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 
 static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
-    GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
+    GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
     if(parent == NULL)
         return;
 
@@ -106,18 +106,18 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     printf("Group name: %s \n", name);
 
     while(parent != NULL) {
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
+        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data)); // GList *children2_c = children2;
         children2 = children2->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
         printf("Found: %s\n", chosen);
-        g_list_free(g_steal_pointer(&children2));
-        g_list_free(g_steal_pointer(&children));
+        // g_list_free(children2_c); // g_list_free(g_steal_pointer(&children2));
+        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
         parent = parent->next;
     }
     new_group->title = strdup(name);
     create_group();
-    g_list_free(g_steal_pointer(&parent));
+    // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 
@@ -156,7 +156,8 @@ void creator_group(GtkWidget *main)
     GtkWidget *group_name = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(group_name), "crgroup_name_field");
     gtk_entry_set_placeholder_text(GTK_ENTRY(group_name), "Group name");
-    gtk_entry_set_max_length(GTK_ENTRY(group_name), 10);
+    g_signal_connect(G_OBJECT(group_name), "insert-text", G_CALLBACK(all_input_event), NULL);
+    gtk_entry_set_max_length(GTK_ENTRY(group_name), MAX_USERNAME);
     gtk_box_pack_start(GTK_BOX(infobox), group_name, TRUE, TRUE, 10);
     //
     //
@@ -167,7 +168,8 @@ void creator_group(GtkWidget *main)
     GtkWidget *search_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(search_field), "crgroup_search_field");
     gtk_entry_set_placeholder_text(GTK_ENTRY(search_field), "Add some people...");
-    gtk_entry_set_max_length(GTK_ENTRY(search_field), 10);
+    g_signal_connect(G_OBJECT(search_field), "insert-text", G_CALLBACK(all_input_event), NULL);
+    gtk_entry_set_max_length(GTK_ENTRY(search_field), MAX_USERNAME);
     gtk_box_pack_start(GTK_BOX(search_block), search_field, TRUE, TRUE, 0);
     GtkWidget *adduser = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(adduser), "adduser");

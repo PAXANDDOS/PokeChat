@@ -4,27 +4,27 @@ void *scrolling_msg() {
     int height = (strlen(msg_data.content_final) / 50 + 1) * 15;
     mx_strdel(&msg_data.content_final);
     usleep(100000);
-    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message));
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
     for (int i = 1; i <= height; i++) {
         gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
-        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message), adjustment);
+        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
         usleep(5000);
     }
-    gtk_widget_hide(scrolled_message);
-    gtk_widget_show(scrolled_message);
+    gtk_widget_hide(t_msg.scrolled_message);
+    gtk_widget_show(t_msg.scrolled_message);
     return NULL;
 }
 
 void *scrolling_sticker() {
     usleep(100000);
-    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message));
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
     for (int i = 1; i <= 30; i++) {
         gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
-        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(scrolled_message), adjustment);
+        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
         usleep(5000);
     }
-    gtk_widget_hide(scrolled_message);
-    gtk_widget_show(scrolled_message);
+    gtk_widget_hide(t_msg.scrolled_message);
+    gtk_widget_show(t_msg.scrolled_message);
     return NULL;
 }
 

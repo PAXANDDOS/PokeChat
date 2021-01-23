@@ -71,13 +71,15 @@
 #define TEAM_H 264
 #define BGPREVIEW_W 104
 #define BGPREVIEW_H 79
+#define MAX_USERNAME 10
+#define MAX_NAME 20
+#define MAX_CODE 12
+#define MAX_PASS 16
+#define MAX_MESSAGE 1000
 
 #define UCHAT_HOST "127.0.0.1"  // "10.11.4.9"
 #define UCHAT_PORT 10000
 #define DB_NAME "database.db"
-
-int temp;
-GtkWidget *scrolled_message;
 
 //-------> Overall
 struct {
@@ -196,6 +198,7 @@ struct
     GtkWidget *stickers;
     GtkWidget *crlist;
     GtkWidget *chatlist;
+    GtkWidget *scrolled_message;
     char* current;
 }   t_msg;
 
@@ -350,6 +353,7 @@ void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 
 void username_field_change_event(GtkWidget *widget);
 void firstname_field_change_event(GtkWidget *widget);
+void firstname_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 void code_field_change_event(GtkWidget *widget);
 void code_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 void pass_field_change_event(GtkWidget *widget);

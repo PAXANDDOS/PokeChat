@@ -27,8 +27,9 @@ void build_registration(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), username_label, FALSE, FALSE, 4);
     GtkWidget *username_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(username_field), "login_fields");
+    g_signal_connect(G_OBJECT(username_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(username_field), "changed", G_CALLBACK(username_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(username_field), 10);
+    gtk_entry_set_max_length(GTK_ENTRY(username_field), MAX_USERNAME);
     gtk_box_pack_start(GTK_BOX(box), username_field, TRUE, TRUE, 0);
 
     GtkWidget *name_label = gtk_label_new("NAME");
@@ -37,8 +38,9 @@ void build_registration(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), name_label, FALSE, FALSE, 4);
     GtkWidget *name_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(name_field), "login_fields");
+    g_signal_connect(G_OBJECT(name_field), "insert-text", G_CALLBACK(firstname_input_event), NULL);
     g_signal_connect(G_OBJECT(name_field), "changed", G_CALLBACK(firstname_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(name_field), 10);
+    gtk_entry_set_max_length(GTK_ENTRY(name_field), MAX_NAME);
     gtk_box_pack_start(GTK_BOX(box), name_field, TRUE, TRUE, 0);
 
     GtkWidget *pass_label = gtk_label_new("PASSWORD");
@@ -48,8 +50,9 @@ void build_registration(GtkWidget **main_area)
     GtkWidget *pass_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(pass_field), "login_fields");
     gtk_entry_set_visibility(GTK_ENTRY(pass_field), FALSE);
+    g_signal_connect(G_OBJECT(pass_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(pass_field), "changed", G_CALLBACK(pass_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(pass_field), 20);
+    gtk_entry_set_max_length(GTK_ENTRY(pass_field), MAX_PASS);
     gtk_box_pack_start(GTK_BOX(box), pass_field, TRUE, TRUE, 0);
 
     GtkWidget *repass_label = gtk_label_new("REPEAT PASSWORD");
@@ -59,8 +62,9 @@ void build_registration(GtkWidget **main_area)
     GtkWidget *repass_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(repass_field), "login_fields");
     gtk_entry_set_visibility(GTK_ENTRY(repass_field), FALSE);
+    g_signal_connect(G_OBJECT(repass_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(repass_field), "changed", G_CALLBACK(repass_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(repass_field), 20);
+    gtk_entry_set_max_length(GTK_ENTRY(repass_field), MAX_PASS);
     gtk_box_pack_start(GTK_BOX(box), repass_field, TRUE, TRUE, 0);
 
     GtkWidget *code_label = gtk_label_new("TRAINER CODE");
@@ -69,7 +73,7 @@ void build_registration(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), code_label, FALSE, FALSE, 4);
     GtkWidget *code_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(code_field), "login_fields");
-    gtk_entry_set_max_length(GTK_ENTRY(code_field), 12);
+    gtk_entry_set_max_length(GTK_ENTRY(code_field), MAX_CODE);
     g_signal_connect(G_OBJECT(code_field), "insert-text", G_CALLBACK(code_input_event), NULL);
     g_signal_connect(G_OBJECT(code_field), "changed", G_CALLBACK(code_field_change_event), NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(code_field), "(optional)");
@@ -178,8 +182,9 @@ void build_authorization(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), login_label, FALSE, FALSE, 4);
     GtkWidget *username_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(username_field), "login_fields");
+    g_signal_connect(G_OBJECT(username_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(username_field), "changed", G_CALLBACK(username_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(username_field), 10);
+    gtk_entry_set_max_length(GTK_ENTRY(username_field), MAX_USERNAME);
     gtk_box_pack_start(GTK_BOX(box), username_field, TRUE, TRUE, 0);
 
     GtkWidget *pass_label = gtk_label_new("PASSWORD");
@@ -188,8 +193,9 @@ void build_authorization(GtkWidget **main_area)
     gtk_box_pack_start(GTK_BOX(box), pass_label, FALSE, FALSE, 4);
     GtkWidget *pass_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(pass_field), "login_fields");
+    g_signal_connect(G_OBJECT(pass_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(pass_field), "changed", G_CALLBACK(pass_field_change_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(pass_field), 10);
+    gtk_entry_set_max_length(GTK_ENTRY(pass_field), MAX_PASS);
     gtk_entry_set_visibility(GTK_ENTRY(pass_field), FALSE);
     gtk_box_pack_start(GTK_BOX(box), pass_field, TRUE, TRUE, 0);
 

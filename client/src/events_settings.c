@@ -144,6 +144,18 @@ void firstname_field_change_event(GtkWidget *widget) {
     t_account_temp.name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
+void firstname_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data)
+{
+    if(position || data) {}
+    int i;
+    for (i = 0; i < length; i++) {
+        if (!isalpha(text[i])) {
+            g_signal_stop_emission_by_name(G_OBJECT(editable), "insert-text");
+            return;
+        }
+    }
+}
+
 void code_field_change_event(GtkWidget *widget) {
     if(strlen(gtk_entry_get_text(GTK_ENTRY(widget))) > 0)
         gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK);
@@ -170,7 +182,7 @@ void all_input_event(GtkEditable *editable, const gchar *text, gint length, gint
     if(position || data) {}
     int i;
     for (i = 0; i < length; i++) {
-        if (!mx_isutf(((wchar_t)text[i]))) {
+        if (!isascii(((int)text[i]))) {
             g_signal_stop_emission_by_name(G_OBJECT(editable), "insert-text");
             return;
         }

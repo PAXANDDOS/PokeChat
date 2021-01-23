@@ -13,34 +13,41 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     //--//
     GtkWidget *user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(account_block), user_box, FALSE, FALSE, 20);
+    
     GtkWidget *avatar_container = gtk_fixed_new();
     gtk_widget_set_valign(GTK_WIDGET(avatar_container), GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(user_box), avatar_container, FALSE, FALSE, 0);
+
     GtkWidget *avatar = gtk_drawing_area_new();
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
+    gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
+    
     GtkWidget *add_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(add_button), "add_button");
     tooltip("Upload picture",add_button);
+    gtk_fixed_put(GTK_FIXED(avatar_container), add_button, 70, 0);
+
     GtkWidget *gallery_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(gallery_button), "gallery_button");
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 100, 100);
     gtk_widget_set_size_request(GTK_WIDGET(add_button), 32, 32);
     gtk_widget_set_size_request(GTK_WIDGET(gallery_button), 32, 32);
     tooltip("Choose picture",gallery_button);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
-    gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container), add_button, 70, 0);
     gtk_fixed_put(GTK_FIXED(avatar_container), gallery_button, 84, 32);
-    gtk_box_pack_start(GTK_BOX(user_box), avatar_container, FALSE, FALSE, 0);
+    
     GtkWidget *names_account = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_valign(GTK_WIDGET(names_account), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(user_box), names_account, FALSE, FALSE, 20);
-    t_settings.username = gtk_label_new(t_account.username);                                                                        // Получить ник пользователя
-    gtk_widget_set_name(GTK_WIDGET(t_settings.username), "nickname-s");                // Имя
+
+    t_settings.username = gtk_label_new(t_account.username);
+    gtk_widget_set_name(GTK_WIDGET(t_settings.username), "nickname-s");
     gtk_widget_set_halign(GTK_WIDGET(t_settings.username), GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(names_account), t_settings.username, FALSE, FALSE, 0);
     t_settings.name = gtk_label_new(t_account.name);
-    gtk_widget_set_name(GTK_WIDGET(t_settings.name), "nickname-n");                // Имя
+    gtk_widget_set_name(GTK_WIDGET(t_settings.name), "nickname-n");
     gtk_widget_set_halign(GTK_WIDGET(t_settings.name), GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(names_account), t_settings.name, FALSE, FALSE, 10);
+
     GtkWidget *exit_button = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(exit_button), 50, 50);
     gtk_widget_set_name(GTK_WIDGET(exit_button), "exit_button");
@@ -51,44 +58,53 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     GtkWidget *info_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(info_box), "info_box");
     gtk_box_pack_start(GTK_BOX(account_block), info_box, FALSE, FALSE, 0);
+
     GtkWidget *username_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(username_field), "settings_fields");
     g_signal_connect(G_OBJECT(username_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(username_field), "changed", G_CALLBACK(username_field_change_event), NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(username_field), "Username");
-    gtk_entry_set_max_length(GTK_ENTRY(username_field), 10);
+    gtk_entry_set_max_length(GTK_ENTRY(username_field), MAX_USERNAME);
     gtk_entry_set_text(GTK_ENTRY(username_field), t_account.username);
     gtk_box_pack_start(GTK_BOX(info_box), username_field, TRUE, TRUE, 10);
-    GtkWidget *firstaname_field = gtk_entry_new();
-    gtk_widget_set_name(GTK_WIDGET(firstaname_field), "settings_fields");
-    g_signal_connect(G_OBJECT(firstaname_field), "changed", G_CALLBACK(firstname_field_change_event), NULL);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(firstaname_field), "Name");
-    gtk_entry_set_max_length(GTK_ENTRY(firstaname_field), 10);
-    gtk_entry_set_text(GTK_ENTRY(firstaname_field), t_account.name);
-    gtk_box_pack_start(GTK_BOX(info_box), firstaname_field, TRUE, TRUE, 10);
+
+    GtkWidget *firstname_field = gtk_entry_new();
+    gtk_widget_set_name(GTK_WIDGET(firstname_field), "settings_fields");
+    g_signal_connect(G_OBJECT(firstname_field), "insert-text", G_CALLBACK(firstname_input_event), NULL);
+    g_signal_connect(G_OBJECT(firstname_field), "changed", G_CALLBACK(firstname_field_change_event), NULL);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(firstname_field), "Name");
+    gtk_entry_set_max_length(GTK_ENTRY(firstname_field), MAX_NAME);
+    gtk_entry_set_text(GTK_ENTRY(firstname_field), t_account.name);
+    gtk_box_pack_start(GTK_BOX(info_box), firstname_field, TRUE, TRUE, 10);
+
     GtkWidget *code_field = gtk_entry_new();
     gtk_entry_set_input_purpose(GTK_ENTRY(code_field), GTK_INPUT_PURPOSE_DIGITS);
     gtk_widget_set_name(GTK_WIDGET(code_field), "settings_fields");
     g_signal_connect(G_OBJECT(code_field), "insert-text", G_CALLBACK(code_input_event), NULL);
     g_signal_connect(G_OBJECT(code_field), "changed", G_CALLBACK(code_field_change_event), NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(code_field), "Trainer code");
-    gtk_entry_set_max_length(GTK_ENTRY(code_field), 12);
+    gtk_entry_set_max_length(GTK_ENTRY(code_field), MAX_CODE);
     gtk_entry_set_text(GTK_ENTRY(code_field), t_account.code);
     gtk_box_pack_start(GTK_BOX(info_box), code_field, TRUE, TRUE, 10);
+
     GtkWidget *password_field = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(password_field), FALSE);
+    g_signal_connect(G_OBJECT(password_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(password_field), "changed", G_CALLBACK(pass_field_change_event), NULL);
     gtk_widget_set_name(GTK_WIDGET(password_field), "settings_fields");
     gtk_entry_set_placeholder_text(GTK_ENTRY(password_field), "Password");
-    gtk_entry_set_max_length(GTK_ENTRY(password_field), 16);
+    gtk_entry_set_max_length(GTK_ENTRY(password_field), MAX_PASS);
     gtk_box_pack_start(GTK_BOX(info_box), password_field, TRUE, TRUE, 10);
+
     GtkWidget *repassword_field = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(repassword_field), FALSE);
+    g_signal_connect(G_OBJECT(repassword_field), "insert-text", G_CALLBACK(all_input_event), NULL);
     g_signal_connect(G_OBJECT(repassword_field), "changed", G_CALLBACK(repass_field_change_event), NULL);
     gtk_widget_set_name(GTK_WIDGET(repassword_field), "settings_fields");
     gtk_entry_set_placeholder_text(GTK_ENTRY(repassword_field), "Repeat password");
-    gtk_entry_set_max_length(GTK_ENTRY(repassword_field), 16);
+    gtk_entry_set_max_length(GTK_ENTRY(repassword_field), MAX_PASS);
     gtk_box_pack_start(GTK_BOX(info_box), repassword_field, TRUE, TRUE, 10);
+
     GtkWidget *apply_butt = gtk_button_new_with_label("Apply");
     gtk_widget_set_name(GTK_WIDGET(apply_butt), "apply_button");
     gtk_button_set_relief(GTK_BUTTON(apply_butt), GTK_RELIEF_NONE);

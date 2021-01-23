@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
     g_object_unref(icon);   // Destroying icon
     Mix_CloseAudio();       // Closing SDL Mixer
     SDL_Quit();             // Closing SDL
-    free(tm_struct);        // Freeing time&date struct
+    // free(tm_struct);        // Freeing time&date struct
     mx_strdel(&t_account.username);
     mx_strdel(&t_account.password);
     mx_strdel(&msg_data.date_prev);
