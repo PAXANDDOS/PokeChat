@@ -49,15 +49,18 @@ static GtkWidget *create_list(int sticker_num)
 void create_stickerlist(GtkWidget *main)
 {
     t_msg.stickers = gtk_event_box_new();
-    gtk_widget_set_size_request(GTK_WIDGET(t_msg.stickers), WINDOW_WIDTH-90, WINDOW_HEIGHT-ENTRY_H);
+    gtk_widget_set_size_request(GTK_WIDGET(t_msg.stickers), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     g_signal_connect(G_OBJECT(t_msg.stickers), "button_press_event", G_CALLBACK(s_click), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_msg.stickers, 0, 0);
+
+    GtkWidget *positionable = gtk_fixed_new();
+    gtk_container_add(GTK_CONTAINER(t_msg.stickers), positionable);
 
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_END);
     g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(s2_click), NULL);
-    gtk_container_add(GTK_CONTAINER(t_msg.stickers), clickable);
+    gtk_fixed_put(GTK_FIXED(positionable), clickable, WINDOW_WIDTH-380, WINDOW_HEIGHT-ENTRY_H-360);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_name(GTK_WIDGET(box), "stickerlist");
