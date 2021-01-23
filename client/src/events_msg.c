@@ -12,10 +12,18 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
 
         // проверить имя пользователя name на существование
         printf("Added: %s\n", name);
+        int user_id = 0, avatar = 0;
+        new_group = malloc(sizeof(t_new_group));
+        new_group->count = 0;
+        new_group->users_id = NULL;
+        new_group->title = NULL;
+        if (!add_user_to_group(name, &user_id, &avatar))
+            return;
+        create_group();
         gtk_entry_set_text(GTK_ENTRY(search_field), "");
 
         // Получить данные пользователя: аватар, имя, статус
-        chat_push_back(&tchatlist, name, 54, true);
+        chat_push_back(&tchatlist, name, avatar, true);  // TODO status
         t_chat_list *copy = tchatlist;
         for(;copy->next; copy = copy->next);
         GtkWidget *single = add_single(copy);
@@ -75,17 +83,24 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1 && msg_data.chat_id)
     {
         msg_data.content = mx_strtrim(msg_data.content);
         if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
             return;
         msg_data.sent = true;
+        if (msg_data.date) {
+            mx_strdel(&msg_data.date_prev);
+            msg_data.date_prev = strdup(msg_data.date);
+        }
+        mx_strdel(&msg_data.date);
+        msg_data.date = mx_str_getdate();
+        mx_strdel(&msg_data.time);
+        msg_data.time = mx_str_gettime();
         msg_data.content_final = strdup(msg_data.content);
         pthread_t thread = NULL;
         pthread_create(&thread, NULL, send_message, NULL);
         new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
-        send_message();
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.sent = false;
     }
@@ -106,7 +121,6 @@ void send_press(GtkWidget *widget) {
 }
 
 void entry_text_change_event(GtkWidget *widget) {
-    msg_data.content_len = strlen(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget))));
     msg_data.content = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
@@ -118,16 +132,22 @@ void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
 
 void person_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
-    if(event->type == GDK_BUTTON_PRESS && event->button == 1)
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1 && !upd_data.busy)
     {
+        upd_data.suspend = true;
+        gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
         GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         children = children->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s\n", chosen);
-        gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
         g_list_free(g_steal_pointer(&children));
         g_list_free(g_steal_pointer(&parent));
+        for (int i = 0; i < upd_data.count; i++)
+            if (upd_data.chats_id[i] == msg_data.chat_id)
+                upd_data.messages_id[i] = 0;
+        msg_data.chat_id = 1; // TODO test
+        upd_data.suspend = false;
     }
     if(event->type == GDK_BUTTON_PRESS && event->button == 3)
     {

@@ -33,22 +33,33 @@ int main(int argc, char *argv[]) {
 
     test_autofill();    // Заполнение данных аккаунта // Оставь это
     build_authorization(&t_application.auth); // Закомментируй это и разкомментируй все ниже, чтобы получить доступ к непосредственно к чату
+    msg_data.date_prev = strdup("");
+    msg_data.date = NULL;
+    msg_data.chat_id = 0;
+    upd_data.suspend = false;
+    upd_data.busy = false;
+    upd_data.filling_init = false;
 
     gtk_widget_show_all(t_application.window);          // Showing window
 
     g_signal_connect(t_application.window, "destroy", G_CALLBACK(gtk_main_quit), NULL); // When window is closed - exit program
 
     // comment 2 lines below if wanna run without getting updates from server
-    // pthread_t thread = NULL;
-    // pthread_create(&thread, NULL, updater, NULL);
+    pthread_t thread = NULL;
+    pthread_create(&thread, NULL, updater, NULL);
 
     gtk_main();             // Looping program
+    upd_data.suspend = true;// Forbid to getting updates
     g_object_unref(icon);   // Destroying icon
     Mix_CloseAudio();       // Closing SDL Mixer
     SDL_Quit();             // Closing SDL
     free(tm_struct);        // Freeing time&date struct
     mx_strdel(&t_account.username);
     mx_strdel(&t_account.password);
+    mx_strdel(&msg_data.date_prev);
+    mx_strdel(&msg_data.date);
+    mx_strdel(&msg_data.time);
+    mx_strdel(&msg_data.username);
 
     return 0;
 }

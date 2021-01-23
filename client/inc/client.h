@@ -143,12 +143,14 @@ struct      // Structure for random pokemon data
 typedef struct s_msg_data   // Structure for data in messages
 {
     bool sent;              // If send button was pressed
-    char *avatar;           // For avatars
-    char *nickname;         // For nicknmes
+    int avatar;             // For avatars
+    char *username;         // For nicknmes
+    char *time;
+    char *date;
+    char *date_prev;
     char *content;          // Content of message
     char *content_final;    // For async func
-    int content_len;        // Length of message
-    int chat_id;            // TODO: implement
+    int chat_id;
 } t_msg_data;
 t_msg_data msg_data;
 
@@ -164,6 +166,9 @@ typedef struct s_updater
     int *chats_id;
     int *messages_id;
     int count;
+    bool suspend;
+    bool busy;
+    bool filling_init;
 }   t_updater;
 t_updater upd_data;
 
@@ -247,6 +252,7 @@ typedef struct s_new_group
     int *users_id;
     int count;
     int current_user_id;
+    char *title;
 }   t_new_group;
 t_new_group *new_group;
 

@@ -28,5 +28,10 @@
 #define DB_LIST     0x01
 #define DB_LAST_ID  0x02
 
+struct async_args {
+    SSL_CTX *ctx;
+    int client;
+};
+
 void requests_handler(SSL*);
 void *sqlite3_exec_db(char *query, int type);

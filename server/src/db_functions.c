@@ -16,7 +16,7 @@ static void sqlite3_create_db() {
     sql = mx_strrejoin(sql, "CREATE TABLE `members` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `admin` BOOLEAN NOT NULL DEFAULT FALSE );");
     sql = mx_strrejoin(sql, "CREATE TABLE `messages` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `message_id` INT NOT NULL , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `date` VARCHAR(10) NOT NULL , `time` VARCHAR(5) NOT NULL , `text` VARCHAR(1024) NULL DEFAULT NULL , `sticker_id` INT NULL DEFAULT NULL , `photo_id` INT NULL DEFAULT NULL );");
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
-    if (rc != SQLITE_OK ) {
+    if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to select data\n");
         fprintf(stderr, "SQL error: %s\n", err_msg);
         sqlite3_free(err_msg);

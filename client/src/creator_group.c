@@ -2,6 +2,9 @@
 
 static void s_click(GtkWidget *widget) {
     gtk_widget_destroy(GTK_WIDGET(widget));
+    mx_strdel(&new_group->title);
+    free(new_group->users_id);
+    free(new_group);
 }
 
 static void s2_click(GtkWidget *widget) {
@@ -112,6 +115,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         g_list_free(g_steal_pointer(&children));
         parent = parent->next;
     }
+    new_group->title = strdup(name);
     create_group();
     g_list_free(g_steal_pointer(&parent));
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));

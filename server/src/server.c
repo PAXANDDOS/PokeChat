@@ -50,6 +50,15 @@ void LoadCertificates(SSL_CTX* ctx, char* CertFile, char* KeyFile) {
     }
 }
 
+void *async_conn(void *args_get) {
+    struct async_args *args = args_get;
+    SSL *ssl = SSL_new(args->ctx);
+    SSL_set_fd(ssl, args-> client);
+    requests_handler(ssl);
+    pthread_exit(NULL);
+    return NULL;
+}
+
 void ssl_server(int portnum) {
     SSL_CTX *ctx;
     int server;
@@ -62,13 +71,15 @@ void ssl_server(int portnum) {
     while (true) {
         struct sockaddr_in addr;
         socklen_t len = sizeof(addr);
-        SSL *ssl;
 
         int client = accept(server, (struct sockaddr*)&addr, &len);
         printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
-        ssl = SSL_new(ctx);
-        SSL_set_fd(ssl, client);
-        requests_handler(ssl);
+
+        struct async_args args;
+        args.ctx = ctx;
+        args.client = client;
+        pthread_t ssl_thread = NULL;
+        pthread_create(&ssl_thread, NULL, async_conn, (void*)&args);
     }
     close(server);
     SSL_CTX_free(ctx);

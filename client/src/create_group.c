@@ -50,6 +50,10 @@ void create_group() {
     cJSON *json_users_id = cJSON_CreateIntArray(new_group->users_id, new_group->count);
     cJSON_AddItemToObject(json_create_chat, "users_id", json_users_id);
     cJSON_AddNumberToObject(json_create_chat, "sender_id", t_account.id);
+    if (new_group->title)
+        cJSON_AddStringToObject(json_create_chat, "title", new_group->title);
+    else
+        cJSON_AddNullToObject(json_create_chat, "title");
     cJSON_AddItemToObject(json,  "create_chat", json_create_chat);
     char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);
@@ -57,6 +61,7 @@ void create_group() {
     ssl_client(json_string, &result);
     mx_strdel(&json_string);
     cJSON_Delete(json);
+    mx_strdel(&new_group->title);
     free(new_group->users_id);
     free(new_group);
 }

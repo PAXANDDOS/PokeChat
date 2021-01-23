@@ -1,10 +1,5 @@
 #include "../inc/client.h"
 
-static bool check_date()
-{
-    return FALSE;
-}
-
 void *scrolling_msg() {
     int height = (strlen(msg_data.content_final) / 50 + 1) * 15;
     mx_strdel(&msg_data.content_final);
@@ -35,15 +30,13 @@ void *scrolling_sticker() {
 
 void new_outgoing_message(GtkWidget *messages_block)
 {
-    // check_date();   // Проверка на совпадение текущей даты с датой последнего сообщения. Если совпадает - не показывать и наоборот
-    if(!check_date() && temp == 0) // temp - переменная чтобы дату показало лишь раз при первой отправке
+    if(strcmp(msg_data.date, msg_data.date_prev))
     {
-        GtkWidget *date = gtk_label_new(mx_str_getdate());
+        GtkWidget *date = gtk_label_new(msg_data.date);
         gtk_widget_set_name(GTK_WIDGET(date), "date");
         gtk_widget_set_halign(GTK_WIDGET(date), GTK_ALIGN_CENTER);
         gtk_box_pack_start(GTK_BOX(messages_block), date, FALSE, FALSE, 10);
         gtk_widget_show_all(GTK_WIDGET(date));
-        temp++;
     }
 
     GtkWidget *message_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
@@ -57,10 +50,10 @@ void new_outgoing_message(GtkWidget *messages_block)
 
     GtkWidget *name_message_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
     gtk_box_pack_end(GTK_BOX(message_body), name_message_block, FALSE, FALSE, 0);
-    GtkWidget *nickname = gtk_label_new(t_account.username);
-    gtk_widget_set_name(GTK_WIDGET(nickname), "msg_name");
-    gtk_widget_set_halign(GTK_WIDGET(nickname), GTK_ALIGN_END);
-    gtk_box_pack_start(GTK_BOX(name_message_block), nickname, FALSE, FALSE, 0);
+    GtkWidget *username = gtk_label_new(t_account.username);
+    gtk_widget_set_name(GTK_WIDGET(username), "msg_name");
+    gtk_widget_set_halign(GTK_WIDGET(username), GTK_ALIGN_END);
+    gtk_box_pack_start(GTK_BOX(name_message_block), username, FALSE, FALSE, 0);
 
     GtkWidget *message = gtk_label_new(msg_data.content);
     gtk_widget_set_name(GTK_WIDGET(message), "message");
@@ -69,7 +62,7 @@ void new_outgoing_message(GtkWidget *messages_block)
     gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
     gtk_box_pack_end(GTK_BOX(name_message_block), message, FALSE, FALSE, 0);
 
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
     gtk_widget_set_valign(GTK_WIDGET(time_label), GTK_ALIGN_CENTER);
     gtk_box_pack_end(GTK_BOX(message_body), time_label, FALSE, FALSE, 0);
@@ -77,8 +70,10 @@ void new_outgoing_message(GtkWidget *messages_block)
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(message_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(message_body));
 
-    pthread_t display_thread = NULL;
-    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_msg, NULL);
+    }
 }
 
 void new_incoming_message(GtkWidget *messages_block)
@@ -89,15 +84,15 @@ void new_incoming_message(GtkWidget *messages_block)
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (gpointer)(intptr_t)msg_data.avatar);
     gtk_box_pack_start(GTK_BOX(message_body), avatar, FALSE, FALSE, 0);
 
     GtkWidget *name_message_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
     gtk_box_pack_start(GTK_BOX(message_body), name_message_block, FALSE, FALSE, 0);
-    GtkWidget *nickname = gtk_label_new("PAXANDDOS");
-    gtk_widget_set_name(GTK_WIDGET(nickname), "msg_name");
-    gtk_widget_set_halign(GTK_WIDGET(nickname), GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(name_message_block), nickname, FALSE, FALSE, 0);
+    GtkWidget *username = gtk_label_new(msg_data.username);
+    gtk_widget_set_name(GTK_WIDGET(username), "msg_name");
+    gtk_widget_set_halign(GTK_WIDGET(username), GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(name_message_block), username, FALSE, FALSE, 0);
 
     GtkWidget *message = gtk_label_new(msg_data.content);
     gtk_widget_set_name(GTK_WIDGET(message), "message");
@@ -106,15 +101,17 @@ void new_incoming_message(GtkWidget *messages_block)
     gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
     gtk_box_pack_start(GTK_BOX(name_message_block), message, FALSE, FALSE, 0);
 
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
     gtk_widget_set_valign(GTK_WIDGET(time_label), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(message_body), time_label, FALSE, FALSE, 0);
 
     gtk_widget_show_all(GTK_WIDGET(message_body));
 
-    pthread_t display_thread = NULL;
-    pthread_create(&display_thread, NULL, scrolling_msg, NULL);
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_msg, NULL);
+    }
 }
 
 void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
@@ -138,20 +135,22 @@ void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
     gtk_box_pack_end(GTK_BOX(sticker_body), sticker, FALSE, FALSE, 0);
 
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
-    GtkWidget *nickname = gtk_label_new(t_account.username);
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
+    GtkWidget *username = gtk_label_new(t_account.username);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
-    gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
+    gtk_widget_set_name(GTK_WIDGET(username), "name_time");
     gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(name_time_block), nickname, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(name_time_block), username, FALSE, FALSE, 0);
     gtk_widget_set_valign(GTK_WIDGET(name_time_block), GTK_ALIGN_CENTER);
     gtk_box_pack_end(GTK_BOX(sticker_body), name_time_block, FALSE, FALSE, 0);
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(sticker_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(sticker_body));
 
-    pthread_t display_thread = NULL;
-    pthread_create(&display_thread, NULL, scrolling_sticker, NULL);
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_sticker, NULL);
+    }
 }
 
 void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
@@ -166,7 +165,7 @@ void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (gpointer)(intptr_t)msg_data.avatar);
     gtk_box_pack_start(GTK_BOX(sticker_body), avatar, FALSE, FALSE, 0);
 
     GtkWidget *sticker = gtk_drawing_area_new();
@@ -175,20 +174,22 @@ void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
     gtk_box_pack_start(GTK_BOX(sticker_body), sticker, FALSE, FALSE, 0);
 
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
-    GtkWidget *nickname = gtk_label_new("Gazaris");
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
+    GtkWidget *username = gtk_label_new(msg_data.username);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
-    gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
+    gtk_widget_set_name(GTK_WIDGET(username), "name_time");
     gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(name_time_block), nickname, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(name_time_block), username, FALSE, FALSE, 0);
     gtk_widget_set_valign(GTK_WIDGET(name_time_block), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(sticker_body), name_time_block, FALSE, FALSE, 0);
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(sticker_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(sticker_body));
 
-    pthread_t display_thread = NULL;
-    pthread_create(&display_thread, NULL, scrolling_sticker, NULL);
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_sticker, NULL);
+    }
 }
 
 void new_outgoing_embedded(GtkWidget *messages_block, char* path)
@@ -218,12 +219,12 @@ void new_outgoing_embedded(GtkWidget *messages_block, char* path)
     gtk_box_pack_end(GTK_BOX(embedded_body), embedded, FALSE, FALSE, 0);
 
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
-    GtkWidget *nickname = gtk_label_new(t_account.username);
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
+    GtkWidget *username = gtk_label_new(t_account.username);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
-    gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
+    gtk_widget_set_name(GTK_WIDGET(username), "name_time");
     gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(name_time_block), nickname, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(name_time_block), username, FALSE, FALSE, 0);
     gtk_widget_set_valign(GTK_WIDGET(name_time_block), GTK_ALIGN_CENTER);
     gtk_box_pack_end(GTK_BOX(embedded_body), name_time_block, FALSE, FALSE, 0);
 
@@ -258,12 +259,12 @@ void new_incoming_embedded(GtkWidget *messages_block, char* path)
     gtk_box_pack_start(GTK_BOX(embedded_body), embedded, FALSE, FALSE, 0);
 
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-    GtkWidget *time_label = gtk_label_new(mx_str_gettime());
-    GtkWidget *nickname = gtk_label_new(t_account.username);
+    GtkWidget *time_label = gtk_label_new(msg_data.time);
+    GtkWidget *username = gtk_label_new(msg_data.username);
     gtk_widget_set_name(GTK_WIDGET(time_label), "name_time");
-    gtk_widget_set_name(GTK_WIDGET(nickname), "name_time");
+    gtk_widget_set_name(GTK_WIDGET(username), "name_time");
     gtk_box_pack_start(GTK_BOX(name_time_block), time_label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(name_time_block), nickname, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(name_time_block), username, FALSE, FALSE, 0);
     gtk_widget_set_valign(GTK_WIDGET(name_time_block), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(embedded_body), name_time_block, FALSE, FALSE, 0);
 

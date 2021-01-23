@@ -52,9 +52,17 @@ static BIO *base64_encrypt(char *data, int dlen) {
 // }
 
 void *send_message() {
-    int chat_id = 1;
+    char *text = strdup(msg_data.content_final);
+    // Easter egg 1
+    if (!strcmp(text, "pikachu") || !strcmp(text, "Pikachu")) {
+        mx_strdel(&t_pokefact.pokemon_fact_audio);
+        t_pokefact.pokemon_fact_audio = strdup("client/data/pokemon-audio/9.wav");
+        printf("aaa\n");
+        play_audio();
+    }
+
+    int chat_id = msg_data.chat_id;
     int sender_id = t_account.id;
-    char *text = msg_data.content_final;
     printf("%s\n", text);
     cJSON *json = cJSON_CreateObject();
     cJSON *json_send_message = cJSON_CreateObject();
@@ -78,6 +86,7 @@ void *send_message() {
     mx_strdel(&result);
     mx_strdel(&json_string);
     mx_strdel(&msg_data.content_final);
+    mx_strdel(&text);
     cJSON_Delete(json);
     cJSON_Delete(response);
     return NULL;
