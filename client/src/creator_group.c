@@ -66,13 +66,13 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
             children2 = children2->next;
             char* copy = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
 
-            // g_list_free(children2_c); // g_list_free(g_steal_pointer(&children2));
-            // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
+            g_list_free(g_steal_pointer(&children2)); // g_list_free(children2_c);
+            g_list_free(g_steal_pointer(&children)); // g_list_free(children_c);
             if(!strcmp(copy, name))
                 return;
             parent = parent->next;
         }
-        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
+        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
 
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
@@ -111,13 +111,13 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         children2 = children2->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
         printf("Found: %s\n", chosen);
-        // g_list_free(children2_c); // g_list_free(g_steal_pointer(&children2));
-        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
+        g_list_free(g_steal_pointer(&children2)); // g_list_free(children2_c); // 
+        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
         parent = parent->next;
     }
     new_group->title = strdup(name);
     create_group();
-    // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
+    g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 

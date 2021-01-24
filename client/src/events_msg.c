@@ -155,8 +155,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         children = children->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s\n", chosen);
-        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
-        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
+        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
+        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
         for (int i = 0; i < upd_data.count; i++)
             if (upd_data.chats_id[i] == msg_data.chat_id)
                 upd_data.messages_id[i] = 0;
@@ -176,8 +176,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             status = true;
 
         creator_userprofile(t_msg.main, username, status);
-        // g_list_free(children_c); // g_list_free(g_steal_pointer(&children));
-        // g_list_free(parent_c); // g_list_free(g_steal_pointer(&parent));
+        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
+        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
     }
 }
 
