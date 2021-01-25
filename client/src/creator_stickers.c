@@ -1,13 +1,5 @@
 #include "../inc/client.h"
 
-static void s_click(GtkWidget *widget) {
-    gtk_widget_destroy(GTK_WIDGET(widget));
-}
-
-static void s2_click(GtkWidget *widget) {
-    if(widget) {}
-}
-
 static void onsticker_click(GtkWidget *widget) {
     GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
@@ -50,7 +42,7 @@ void create_stickerlist(GtkWidget *main)
 {
     t_msg.stickers = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(t_msg.stickers), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
-    g_signal_connect(G_OBJECT(t_msg.stickers), "button_press_event", G_CALLBACK(s_click), NULL);
+    g_signal_connect(G_OBJECT(t_msg.stickers), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_msg.stickers, 0, 0);
 
     GtkWidget *positionable = gtk_fixed_new();
@@ -59,7 +51,7 @@ void create_stickerlist(GtkWidget *main)
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_END);
-    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(s2_click), NULL);
+    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(gtk_widget_show), NULL);
     gtk_fixed_put(GTK_FIXED(positionable), clickable, WINDOW_WIDTH-380, WINDOW_HEIGHT-ENTRY_H-360);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

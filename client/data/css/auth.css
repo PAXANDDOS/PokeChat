@@ -144,3 +144,38 @@
 {
     box-shadow: inset 0 0 0 1.5px #ff0500;
 }
+
+#notification_body
+{
+  transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 10px;
+  background-color: #39456d;
+  box-shadow: inset 0 0 0 2.5px #4564a7;
+}
+#notification_body_error
+{
+  transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 10px;
+  background-color: #f04848;
+  box-shadow: inset 0 0 0 2.5px #ac3434;
+}
+#notification_box
+{
+  padding: 6px;
+}
+#notification_text
+{
+  font-family: Rubik, 'Uni Sans', 'Helvetica Neue Light', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.9px;
+  color: #e7ecff;
+}
+#notification_text_error
+{
+  font-family: Rubik, 'Uni Sans', 'Helvetica Neue Light', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.9px;
+  color: #ebebee;
+}

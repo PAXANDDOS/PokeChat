@@ -64,3 +64,22 @@
 {
   color: #8f9ed1;
 }
+
+#notification_body
+{
+  background-color: #39456d;
+  box-shadow: inset 0 0 0 2.5px #4564a7;
+}
+#notification_body_error
+{
+  background-color: #f04848;
+  box-shadow: inset 0 0 0 2.5px #ac3434;
+}
+#notification_text
+{
+  color: #e7ecff;
+}
+#notification_text_error
+{
+  color: #ebebee;
+}

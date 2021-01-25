@@ -24,14 +24,6 @@ static void avatar_click(GtkWidget *widget) {
     g_list_free(g_steal_pointer(&parent)); // g_list_free(parent); // 
 }
 
-static void sgallery_click(GtkWidget *widget) {
-    gtk_widget_destroy(GTK_WIDGET(widget));
-}
-
-static void sgallery2_click(GtkWidget *widget) {
-    if(widget) {}
-}
-
 static GtkWidget *create_avatar_list(int avatar_num)
 {
     char *path = "client/data/avatars/";
@@ -58,13 +50,13 @@ void create_gallery(GtkWidget *main)
     t_settings.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_settings.background), "sgallery");
     gtk_widget_set_size_request(GTK_WIDGET(t_settings.background), WINDOW_WIDTH-67, WINDOW_HEIGHT);
-    g_signal_connect(G_OBJECT(t_settings.background), "button_press_event", G_CALLBACK(sgallery_click), NULL);
+    g_signal_connect(G_OBJECT(t_settings.background), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_settings.background, 0, 0);
 
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(sgallery2_click), NULL);
+    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(gtk_widget_show), NULL);
     gtk_container_add(GTK_CONTAINER(t_settings.background), clickable);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

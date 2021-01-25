@@ -17,8 +17,10 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
         new_group->count = 0;
         new_group->users_id = NULL;
         new_group->title = NULL;
-        if (!add_user_to_group(name, &user_id, &avatar))
+        if (!add_user_to_group(name, &user_id, &avatar)) {
+            create_notification(t_application.main_area, "Invalid username!", 1, LEFTBAR_W+10, 58, 340, 10);
             return;
+        }
         create_group();
         gtk_entry_set_text(GTK_ENTRY(search_field), "");
 
@@ -45,7 +47,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        dialog = gtk_file_chooser_dialog_new("Select an image (<3 Mb)", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+        dialog = gtk_file_chooser_dialog_new("Select an image (< 3 Mb)", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
         GtkFileFilter *filter = gtk_file_filter_new();
         gtk_file_filter_add_pattern(filter, "*.png");
         gtk_file_filter_add_pattern(filter, "*.jpg");

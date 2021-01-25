@@ -7,10 +7,6 @@ static void s_click(GtkWidget *widget) {
     free(new_group);
 }
 
-static void s2_click(GtkWidget *widget) {
-    if(widget) {}
-}
-
 static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer user_id) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         gtk_widget_destroy(GTK_WIDGET(widget));
@@ -24,6 +20,7 @@ static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer use
         for (int i = 0; i < new_group->count; i++)
             new_group->users_id[i] = temp[i];
         free(temp);
+        create_notification(t_application.main_area, "User deleted", 0, 461, 110, 420, 10);
     }
 }
 
@@ -77,13 +74,16 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
         int avatar = 0, user_id = 0;
-        if (!add_user_to_group(name, &user_id, &avatar))
+        if (!add_user_to_group(name, &user_id, &avatar)) {
+            create_notification(t_application.main_area, "Invalid username!", 1, 461, 110, 420, 10);
             return;
+        }
 
         gtk_entry_set_text(GTK_ENTRY(new_group->search_field), "");
         GtkWidget *single = create_single_person(name, avatar);
         gtk_box_pack_start(GTK_BOX(t_msg.crlist), single, FALSE, FALSE, 0);
         gtk_widget_show_all(GTK_WIDGET(t_msg.crlist));
+        create_notification(t_application.main_area, mx_strjoin(name, " added!"), 0, 461, 110, 420, 10);
 
         g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -95,14 +95,19 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
-    if(parent == NULL)
+    if(parent == NULL){
+        create_notification(t_application.main_area, "No user selected!", 1, 461, 110, 420, 10);
         return;
+    }
 
     char *name = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY((GtkWidget*)group_name)));
     if(name != NULL)
         name = mx_del_extra_spaces(name);
-    if(!strcmp(name, ""))
+    if(!strcmp(name, "")){
+        create_notification(t_application.main_area, "Name your group!", 1, 461, 110, 420, 10);
         return;
+    }
+        
     printf("Group name: %s \n", name);
 
     while(parent != NULL) {
@@ -118,6 +123,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     new_group->title = strdup(name);
     create_group();
     g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
+    gtk_widget_destroy(GTK_WIDGET(t_application.notificaton));
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }
 
@@ -132,7 +138,7 @@ void creator_group(GtkWidget *main)
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(s2_click), NULL);
+    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(gtk_widget_show), NULL);
     gtk_container_add(GTK_CONTAINER(t_msg.background), clickable);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);

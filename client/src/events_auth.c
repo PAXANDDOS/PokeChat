@@ -59,6 +59,16 @@ void valor_event_button_click(GtkWidget *widget, GdkEventButton *event)
 void login_butt_click(GtkWidget *widget){
     if(widget) {}
 
+    t_account_temp.username = mx_del_extra_spaces(t_account_temp.username);
+    t_account_temp.name = mx_del_extra_spaces(t_account_temp.name);
+
+    if(t_account_temp.username == NULL \
+    || !strcmp(t_account_temp.username, "") \
+    || t_account_temp.password == NULL \
+    || !strcmp(t_account_temp.password, "")
+    || strlen(t_account_temp.password) < 5)
+        return;
+
     cJSON *json = cJSON_CreateObject();
     cJSON *json_login_user = cJSON_CreateObject();
     cJSON_AddStringToObject(json_login_user, "username", t_account_temp.username);
@@ -103,14 +113,13 @@ void login_butt_click(GtkWidget *widget){
         gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));// Hiding settings tab
     }
     else {
-        printf("Login error!\n");
+        create_notification(t_application.auth, "Login error!", 1, 430, 160, 420, 10);
     }
     mx_strdel(&result);
     mx_strdel(&json_string);
     mx_strdel(&msg_data.content_final);
     cJSON_Delete(json);
     cJSON_Delete(response);
-
 }
 
 void reg_send_request() {
@@ -160,9 +169,13 @@ void reg_butt_click(GtkWidget *widget){
     || !strcmp(t_account_temp.password, "")
     || t_account_temp.repass == NULL \
     || !strcmp(t_account_temp.repass, "")
-    || strlen(t_account_temp.password) < 5 \
-    || strcmp(t_account_temp.repass, t_account_temp.password))
+    || strlen(t_account_temp.password) < 5)
         return;
+
+     if(strcmp(t_account_temp.repass, t_account_temp.password)){
+        create_notification(t_application.auth, "Passwords do not match!", 1, 430, 30, 420, 10);
+        return;
+     }
 
     t_account.avatar = t_avatar.avatar_generated;
     t_account.username = strdup(t_account_temp.username);
@@ -184,7 +197,7 @@ void reg_butt_click(GtkWidget *widget){
     reg_send_request();
     printf("-- %d\n", t_account.id);
     if (t_account.id <= 0) {
-        // Appears an error message on the screen
+        create_notification(t_application.auth, "This username is already taken!", 1, 430, 30, 420, 10);
         return;
     }
 

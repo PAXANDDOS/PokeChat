@@ -255,7 +255,6 @@ void new_incoming_embedded(GtkWidget *messages_block, char* path)
     GtkWidget *embedded = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(embedded), a, b);
     g_signal_connect(G_OBJECT(embedded), "draw", G_CALLBACK(draw_event_embedded), (char*)path);
-    //gtk_box_pack_end(GTK_BOX(embedded_body), embedded, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(embedded_body), embedded, FALSE, FALSE, 0);
 
     GtkWidget *name_time_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);

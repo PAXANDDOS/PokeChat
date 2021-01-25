@@ -1,25 +1,17 @@
 #include "../inc/client.h"
 
-static void s_click(GtkWidget *widget) {
-    gtk_widget_destroy(GTK_WIDGET(widget));
-}
-
-static void s2_click(GtkWidget *widget) {
-    if(widget) {}
-}
-
 void creator_userprofile(GtkWidget *main, char *username, bool status)
 {
     t_msg.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_msg.background), "crgroup");
     gtk_widget_set_size_request(GTK_WIDGET(t_msg.background), WINDOW_WIDTH-67, WINDOW_HEIGHT);
-    g_signal_connect(G_OBJECT(t_msg.background), "button_press_event", G_CALLBACK(s_click), NULL);
+    g_signal_connect(G_OBJECT(t_msg.background), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_msg.background, 0, 0);
 
     GtkWidget *clickable = gtk_event_box_new();
     gtk_widget_set_halign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
     gtk_widget_set_valign(GTK_WIDGET(clickable), GTK_ALIGN_CENTER);
-    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(s2_click), NULL);
+    g_signal_connect(G_OBJECT(clickable), "button_press_event", G_CALLBACK(gtk_widget_show), NULL);
     gtk_container_add(GTK_CONTAINER(t_msg.background), clickable);
 
     GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -56,7 +48,7 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
         gtk_box_pack_start(GTK_BOX(usernamebox), status_label, FALSE, FALSE, 0);
     }
 
-    short team = 3; // Получить команду (1-3)
+    short team = 1; // Получить команду (1-3)
     char *team_char;
 
     GtkWidget *badge = gtk_event_box_new();

@@ -84,8 +84,10 @@
 //-------> Overall
 struct {
     GtkWidget *window;
+    GtkWidget *main_area;
     GtkWidget *auth;
     GtkWidget *messanger;
+    GtkWidget *notificaton;
     char *app;
     char *user;
 }   t_application;
@@ -298,6 +300,7 @@ void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
 void creator_userprofile(GtkWidget *main, char *username, bool status);
+void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h);
 
 char *get_avatar_by_number(int num);
 GdkPixbuf *create_pixbuf(const gchar *filename);
