@@ -59,6 +59,10 @@ GtkWidget *add_single(t_chat_list* list)
         gtk_box_pack_start(GTK_BOX(single), status, FALSE, FALSE, 0);
     }
 
+    GtkWidget *key = gtk_label_new(mx_itoa(0));           // USER_ID сюда
+    gtk_widget_set_name(GTK_WIDGET(key), "hidden");
+    gtk_box_pack_start(GTK_BOX(single), key, FALSE, FALSE, 0);
+
     return single_event;
 }
 

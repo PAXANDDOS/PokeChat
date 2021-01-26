@@ -64,17 +64,6 @@ void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_destroy(GTK_WIDGET(t_application.messanger));
-        Mix_CloseAudio();
-        SDL_Quit();
-        mx_strdel(&t_account.username);
-        mx_strdel(&t_account.password);
-        mx_strdel(&t_account.name);
-        mx_strdel(&t_account.code);
-        mx_strdel(&t_account.avatar);
-        mx_strdel(&msg_data.date_prev);
-        mx_strdel(&msg_data.date);
-        mx_strdel(&msg_data.time);
-        mx_strdel(&msg_data.username);
         gtk_window_close(GTK_WINDOW(t_application.window));
     }
 }
