@@ -1,12 +1,17 @@
 #include "../inc/client.h"
 
 static void *hide_notification() {
-    usleep(2000000);
-    for (double i = 1; i >= 0; i -= 0.05) {
-        gtk_widget_set_opacity(t_application.notificaton, i);
-        usleep(10000);
+    if(t_application.notificaton != NULL){
+        usleep(2000000);
+        for (double i = 1; i >= 0; i -= 0.05) {
+            if(t_application.notificaton == NULL)
+                return NULL;
+            gtk_widget_set_opacity(t_application.notificaton, i);
+            usleep(10000);
+        }
+        gtk_widget_destroy(t_application.notificaton);
+        t_application.notificaton = NULL;
     }
-    gtk_widget_destroy(t_application.notificaton);
     return NULL;
 }
 
@@ -17,7 +22,7 @@ void create_notification(GtkWidget *widget, char *text, short type, int x, int y
 
     t_application.notificaton = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(t_application.notificaton), w, h);
-    g_signal_connect(G_OBJECT(t_application.notificaton), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
+    //g_signal_connect(G_OBJECT(t_application.notificaton), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(widget), t_application.notificaton, x, y);
 
     GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
