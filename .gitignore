@@ -54,4 +54,10 @@ dkms.conf
 # Cringe
 .DS_Store
 ._.DS_Store
+database.db
+libmx.a
+libcjson.a
+libsqlite3.a
+uchat
+uchat_server
 # ALO
