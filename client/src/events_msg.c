@@ -24,6 +24,9 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
         create_group();
         gtk_entry_set_text(GTK_ENTRY(search_field), "");
 
+        bool online = user_is_online(user_id);
+        chat_push_back(&tchatlist, name, avatar, online);
+
         // Получить данные пользователя: аватар, имя, статус
         chat_push_back(&tchatlist, name, avatar, true);  // TODO status
         t_chat_list *copy = tchatlist;
@@ -189,4 +192,26 @@ void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
         creator_group(main);
+}
+
+static void *scrolling_to_bottom() {
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
+    for (int i = 1; i <= 30; i++) {
+        gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
+        gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
+        usleep(5000);
+    }
+    gtk_adjustment_set_value(adjustment, G_MAXDOUBLE);
+    gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
+    gtk_widget_hide(t_msg.scrolled_message);
+    gtk_widget_show(t_msg.scrolled_message);
+    return NULL;
+}
+
+void arrow_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget) {}
+    if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        pthread_t scrolling_thread = NULL;
+        pthread_create(&scrolling_thread, NULL, scrolling_to_bottom, NULL);
+    }
 }

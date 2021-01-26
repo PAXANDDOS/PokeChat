@@ -43,6 +43,8 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_update_user_team = cJSON_GetObjectItem(json, "update_user_team");
     cJSON *json_update_user_theme = cJSON_GetObjectItem(json, "update_user_theme");
     cJSON *json_update_user_background = cJSON_GetObjectItem(json, "update_user_background");
+    cJSON *json_update_user_online = cJSON_GetObjectItem(json, "update_user_online");
+    cJSON *json_update_user_offline = cJSON_GetObjectItem(json, "update_user_offline");
     cJSON *json_create_chat = cJSON_GetObjectItem(json, "create_chat");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
@@ -177,7 +179,7 @@ static void message_handler(char msg[], char **reply) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_user, "user_id"));
         printf("GET USER\nuser_id: %d\n\n", user_id);
         char *sql_query = NULL;
-        char *sql_pattern = "SELECT username, name, code, team, avatar FROM users WHERE id=(%d);";
+        char *sql_pattern = "SELECT username, name, code, team, avatar, online FROM users WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, user_id);
         t_list *list = NULL;
         list = sqlite3_exec_db(sql_query, DB_LIST);
@@ -198,6 +200,8 @@ static void message_handler(char msg[], char **reply) {
         cJSON_AddNumberToObject(json_user, "team", atoi(list->data));
         list = list->next;
         cJSON_AddNumberToObject(json_user, "avatar", atoi(list->data));
+        list = list->next;
+        cJSON_AddBoolToObject(json_user, "online", atoi(list->data));
         mx_clear_list(&p);
         *reply = strdup(cJSON_PrintUnformatted(json_user));
         cJSON_Delete(json_user);
@@ -453,16 +457,43 @@ static void message_handler(char msg[], char **reply) {
         mx_strdel(&sql_query);
         *reply = strdup("null");
     }
+    else if (json_update_user_online) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_online, "user_id"));
+        printf("UPDATE USER ONLINE\nuser_id: %d\n\n", user_id);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET online=(1) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
+    else if (json_update_user_offline) {
+        int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_offline, "user_id"));
+        printf("UPDATE USER OFFLINE\nuser_id: %d\n\n", user_id);
+        char *sql_query = NULL;
+        char *sql_pattern = "UPDATE users SET online=(0) WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, user_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
     else if (json_create_chat) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_create_chat, "sender_id"));
-        char *title = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_create_chat, "title")));
-        escape_apostrophe(&title);
+        char *title = NULL;
+        if (!cJSON_IsNull(cJSON_GetObjectItem(json_create_chat, "title"))) {
+            title = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_create_chat, "title")));
+            escape_apostrophe(&title);
+        }
         cJSON *users = cJSON_GetObjectItem(json_create_chat, "users_id");
         int members = cJSON_GetArraySize(users);
         printf("CREATE CHAT\n\n");
         char *sql_query = NULL;
-        char *sql_pattern = "INSERT INTO chats (title, members) VALUES ('%s', %d);";
-        asprintf(&sql_query, sql_pattern, title, members + 1);
+        if (title) {
+            char *sql_pattern = "INSERT INTO chats (title, members) VALUES ('%s', %d);";
+            asprintf(&sql_query, sql_pattern, title, members + 1);
+        }
+        else
+            sql_query = strdup("INSERT INTO chats (members) VALUES (2);");
         int *ai = sqlite3_exec_db(sql_query, DB_LAST_ID);
         int chat_id = *ai;
         mx_strdel(&sql_query);

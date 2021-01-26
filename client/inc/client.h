@@ -280,6 +280,7 @@ void send_photo();
 void *updater();
 bool add_user_to_group(char*, int*, int*);
 void create_group();
+bool user_is_online(int);
 
 void load_providers();
 void test_autofill();
@@ -382,6 +383,7 @@ void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void login_butt_click(GtkWidget *widget);
 void reg_butt_click(GtkWidget *widget);
+void arrow_click(GtkWidget *widget, GdkEventButton *event);
 
 
 #endif

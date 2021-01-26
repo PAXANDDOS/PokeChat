@@ -1,5 +1,15 @@
 #include "../inc/client.h"
 
+static void *hide_notification() {
+    usleep(2000000);
+    for (double i = 1; i >= 0; i -= 0.05) {
+        gtk_widget_set_opacity(t_application.notificaton, i);
+        usleep(10000);
+    }
+    gtk_widget_destroy(t_application.notificaton);
+    return NULL;
+}
+
 void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h)
 {
     if(t_application.notificaton != NULL)
@@ -36,6 +46,7 @@ void create_notification(GtkWidget *widget, char *text, short type, int x, int y
             break;
         }
     }
-
     gtk_widget_show_all(GTK_WIDGET(t_application.notificaton));
+    pthread_t hide_thread = NULL;
+    pthread_create(&hide_thread, NULL, hide_notification, NULL);
 }

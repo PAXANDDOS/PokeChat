@@ -65,3 +65,20 @@ void create_group() {
     free(new_group->users_id);
     free(new_group);
 }
+
+bool user_is_online(int user_id) {
+    cJSON *user_request = cJSON_CreateObject();
+    cJSON *get_user = cJSON_CreateObject();
+    cJSON_AddNumberToObject(get_user, "user_id", user_id);
+    cJSON_AddItemToObject(user_request, "get_user", get_user);
+    char *request_string = cJSON_Print(user_request);
+    char *result = NULL;
+    cJSON_Delete(user_request);
+    ssl_client(request_string, &result);
+    mx_strdel(&request_string);
+    cJSON *user_response = cJSON_Parse(result);
+    mx_strdel(&result);
+    bool online = cJSON_IsTrue(cJSON_GetObjectItem(user_response, "online"));
+    cJSON_Delete(user_response);
+    return online;
+}

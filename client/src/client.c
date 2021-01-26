@@ -4,6 +4,33 @@ void tooltip(char *str, void *data) {
     gtk_widget_set_tooltip_text(data, str);
 }
 
+static void before_exit_jobs(GdkPixbuf *icon) {
+    upd_data.suspend = true;// Forbid to getting updates
+
+    cJSON *json_offline = cJSON_CreateObject();
+    cJSON *json_user_id = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_user_id, "user_id", t_account.id);
+    cJSON_AddItemToObject(json_offline, "update_user_offline", json_user_id);
+    char *json_offline_string = cJSON_PrintUnformatted(json_offline);
+    printf("%s\n", json_offline_string);
+    char *result = NULL;
+    ssl_client(json_offline_string, &result);
+    mx_strdel(&json_offline_string);
+    mx_strdel(&result);
+    cJSON_Delete(json_offline);
+
+    g_object_unref(icon);   // Destroying icon
+    Mix_CloseAudio();       // Closing SDL Mixer
+    SDL_Quit();             // Closing SDL
+    // free(tm_struct);        // Freeing time&date struct
+    mx_strdel(&t_account.username);
+    mx_strdel(&t_account.password);
+    mx_strdel(&msg_data.date_prev);
+    mx_strdel(&msg_data.date);
+    mx_strdel(&msg_data.time);
+    mx_strdel(&msg_data.username);
+}
+
 int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);                             // Initializing GTK
     SDL_Init(SDL_INIT_AUDIO);                           // Initializing SDL
@@ -49,17 +76,7 @@ int main(int argc, char *argv[]) {
     pthread_create(&thread, NULL, updater, NULL);
 
     gtk_main();             // Looping program
-    upd_data.suspend = true;// Forbid to getting updates
-    g_object_unref(icon);   // Destroying icon
-    Mix_CloseAudio();       // Closing SDL Mixer
-    SDL_Quit();             // Closing SDL
-    // free(tm_struct);        // Freeing time&date struct
-    mx_strdel(&t_account.username);
-    mx_strdel(&t_account.password);
-    mx_strdel(&msg_data.date_prev);
-    mx_strdel(&msg_data.date);
-    mx_strdel(&msg_data.time);
-    mx_strdel(&msg_data.username);
+    before_exit_jobs(icon);
 
     return 0;
 }

@@ -3,7 +3,8 @@
 static void s_click(GtkWidget *widget) {
     gtk_widget_destroy(GTK_WIDGET(widget));
     mx_strdel(&new_group->title);
-    free(new_group->users_id);
+    if (new_group->users_id)
+        free(new_group->users_id);
     free(new_group);
 }
 
@@ -71,8 +72,6 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         }
         g_list_free(g_steal_pointer(&parent));
 
-        // проверить имя пользователя name на существование
-        printf("Username: %s\n", name);
         int avatar = 0, user_id = 0;
         if (!add_user_to_group(name, &user_id, &avatar)) {
             create_notification(t_application.messanger, "Invalid username!", 1, 461, 110, 420, 10);
@@ -197,6 +196,7 @@ void creator_group(GtkWidget *main)
     new_group->search_field = search_field;
     new_group->count = 0;
     new_group->users_id = NULL;
+    new_group->title = NULL;
 
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);

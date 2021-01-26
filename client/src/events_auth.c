@@ -103,6 +103,18 @@ void login_butt_click(GtkWidget *widget){
         t_account.theme = theme;
         t_account.background = bg;
 
+        cJSON *json_online = cJSON_CreateObject();
+        cJSON *json_user_id = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_user_id, "user_id", user_id);
+        cJSON_AddItemToObject(json_online, "update_user_online", json_user_id);
+        char *json_online_string = cJSON_PrintUnformatted(json_online);
+        printf("%s\n", json_online_string);
+        char *result2 = NULL;
+        ssl_client(json_online_string, &result2);
+        mx_strdel(&json_online_string);
+        mx_strdel(&result2);
+        cJSON_Delete(json_online);
+
         fill_pokemon();     // Filling random data on home tab
         t_leftbar.active = 1;   // Active button in leftbar
         gtk_widget_destroy(GTK_WIDGET(t_application.auth));
