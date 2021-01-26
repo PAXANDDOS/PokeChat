@@ -22,6 +22,10 @@ $(NAME):
 $(SERVER_NAME):
 	@$(MAKE_M) $(SERVER_DIR)
 
+font:
+	@cp client/data/fonts/Rubik/* ${HOME}/Library/Fonts/
+	@cp client/data/fonts/UniSans/* ${HOME}/Library/Fonts/
+
 clean:
 	@$(MAKE_M) $(CLIENT_DIR) $@
 	@$(MAKE_M) $(SERVER_DIR) $@

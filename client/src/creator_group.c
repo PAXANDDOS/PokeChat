@@ -20,7 +20,7 @@ static void remove_person(GtkWidget *widget, GdkEventButton *event, gpointer use
         for (int i = 0; i < new_group->count; i++)
             new_group->users_id[i] = temp[i];
         free(temp);
-        create_notification(t_application.main_area, "User deleted", 0, 461, 110, 420, 10);
+        create_notification(t_application.messanger, "User deleted", 0, 461, 110, 420, 10);
     }
 }
 
@@ -75,7 +75,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         printf("Username: %s\n", name);
         int avatar = 0, user_id = 0;
         if (!add_user_to_group(name, &user_id, &avatar)) {
-            create_notification(t_application.main_area, "Invalid username!", 1, 461, 110, 420, 10);
+            create_notification(t_application.messanger, "Invalid username!", 1, 461, 110, 420, 10);
             return;
         }
 
@@ -83,7 +83,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         GtkWidget *single = create_single_person(name, avatar);
         gtk_box_pack_start(GTK_BOX(t_msg.crlist), single, FALSE, FALSE, 0);
         gtk_widget_show_all(GTK_WIDGET(t_msg.crlist));
-        create_notification(t_application.main_area, mx_strjoin(name, " added!"), 0, 461, 110, 420, 10);
+        create_notification(t_application.messanger, mx_strjoin(name, " added!"), 0, 461, 110, 420, 10);
 
         g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -96,7 +96,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
     GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
     if(parent == NULL){
-        create_notification(t_application.main_area, "No user selected!", 1, 461, 110, 420, 10);
+        create_notification(t_application.messanger, "No user selected!", 1, 461, 110, 420, 10);
         return;
     }
 
@@ -104,7 +104,7 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(name != NULL)
         name = mx_del_extra_spaces(name);
     if(!strcmp(name, "")){
-        create_notification(t_application.main_area, "Name your group!", 1, 461, 110, 420, 10);
+        create_notification(t_application.messanger, "Name your group!", 1, 461, 110, 420, 10);
         return;
     }
         

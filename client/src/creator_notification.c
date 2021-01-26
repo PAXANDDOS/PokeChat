@@ -6,6 +6,7 @@ void create_notification(GtkWidget *widget, char *text, short type, int x, int y
         gtk_widget_destroy(GTK_WIDGET(t_application.notificaton));
 
     t_application.notificaton = gtk_event_box_new();
+    gtk_widget_set_size_request(GTK_WIDGET(t_application.notificaton), w, h);
     g_signal_connect(G_OBJECT(t_application.notificaton), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(widget), t_application.notificaton, x, y);
 

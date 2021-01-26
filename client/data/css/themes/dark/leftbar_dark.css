@@ -88,3 +88,14 @@
   border-radius: 10px;
   background-color: #050505;
 }
+
+
+#notification_body
+{
+  background-color: #353535;
+  box-shadow: inset 0 0 0 2.5px #e6e6e9;
+}
+#notification_text
+{
+  color: #e6e6e9;
+}

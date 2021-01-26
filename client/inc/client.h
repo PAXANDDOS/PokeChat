@@ -84,7 +84,6 @@
 //-------> Overall
 struct {
     GtkWidget *window;
-    GtkWidget *main_area;
     GtkWidget *auth;
     GtkWidget *messanger;
     GtkWidget *notificaton;

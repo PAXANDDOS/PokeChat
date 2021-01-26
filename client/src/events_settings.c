@@ -64,11 +64,17 @@ void exit_button_click(GtkWidget *widget, GdkEventButton *event) {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
         gtk_widget_destroy(GTK_WIDGET(t_application.messanger));
-        t_account.username = NULL;
-        t_account.name = NULL;
-        t_account.password = NULL;
-        t_account.code = NULL;
-        t_account.avatar = NULL;
+        Mix_CloseAudio();
+        SDL_Quit();
+        mx_strdel(&t_account.username);
+        mx_strdel(&t_account.password);
+        mx_strdel(&t_account.name);
+        mx_strdel(&t_account.code);
+        mx_strdel(&t_account.avatar);
+        mx_strdel(&msg_data.date_prev);
+        mx_strdel(&msg_data.date);
+        mx_strdel(&msg_data.time);
+        mx_strdel(&msg_data.username);
         gtk_window_close(GTK_WINDOW(t_application.window));
     }
 }
@@ -82,17 +88,16 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
         GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
         gint res;
 
-        dialog = gtk_file_chooser_dialog_new("Open File", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
+        dialog = gtk_file_chooser_dialog_new("Choose an image", GTK_WINDOW(t_application.window), action,  "_Cancel", GTK_RESPONSE_CANCEL, "_Open", GTK_RESPONSE_ACCEPT, NULL);
         GtkFileFilter *filter = gtk_file_filter_new();
         gtk_file_filter_add_pattern(filter, "*.png");
         gtk_file_filter_add_pattern(filter, "*.jpg");
         gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
+
         res = gtk_dialog_run (GTK_DIALOG (dialog));
         if (res == GTK_RESPONSE_ACCEPT) {
             char *filename;
             GtkFileChooser *chooser = NULL;
-            gtk_file_chooser_add_filter(chooser, filter);
-            gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
             chooser = GTK_FILE_CHOOSER(dialog);
             filename = gtk_file_chooser_get_filename(chooser);
             char *pwd = getenv("PWD");
@@ -106,7 +111,11 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
                     backward = mx_strrejoin(backward, "/");
             }
             backward = mx_strrejoin(backward, filename);
-            t_account.avatar = strdup(backward);
+            struct stat buf;
+            stat(backward, &buf);
+            if (buf.st_size < 3145728) // 3mb
+                t_account.avatar = strdup(backward);
+            else create_notification(t_application.messanger, "Your file is too big!", 1, WINDOW_WIDTH-216, 10, 200, 20);
             mx_strdel(&backward);
             for (int i = 0; path_split[i]; i++)
                 free(path_split[i]);
@@ -217,28 +226,40 @@ void apply_butt_click(GtkWidget *widget){
     if(widget) {}
     t_account_temp.username = mx_del_extra_spaces(t_account_temp.username);
     t_account_temp.name = mx_del_extra_spaces(t_account_temp.name);
-    if(t_account_temp.username == NULL \
-    || !strcmp(t_account_temp.username, "") \
-    || t_account_temp.name == NULL \
-    || !strcmp(t_account_temp.name, ""))
+    t_account_temp.code = mx_del_extra_spaces(t_account_temp.code);
+
+    if(t_account_temp.username == NULL || !strcmp(t_account_temp.username, "")) {
+        create_notification(t_application.messanger, "Incorrect username!", 1, WINDOW_WIDTH-216, 10, 200, 20);
         return;
+    }
+
+    if(t_account_temp.name == NULL || !strcmp(t_account_temp.name, "")) {
+        create_notification(t_application.messanger, "Incorrect name!", 1, WINDOW_WIDTH-216, 10, 200, 20);
+        return;
+    }
+
+    if(strlen(t_account_temp.code) < 12 && strlen(t_account_temp.code) > 0) {
+        create_notification(t_application.messanger, "Incorrect code!", 1, WINDOW_WIDTH-216, 10, 200, 20);
+        return;
+    }
+
     t_account.username = t_account_temp.username;
     t_account.name = t_account_temp.name;
-    t_account.code = t_account_temp.code;
+    if(t_account_temp.code == NULL && !strcmp(t_account_temp.code, ""))
+        t_account.code = "000000000000";
+    else t_account.code = t_account_temp.code;
+
     if(t_account_temp.password != NULL && t_account_temp.repass != NULL \
     && strcmp(t_account_temp.password, "") && strcmp(t_account_temp.repass, "")) {
         if(strlen(t_account_temp.password) > 4 && !strcmp(t_account_temp.repass, t_account_temp.password)){
             t_account.password = t_account_temp.password;
         }
-        else { return; }
+        else { create_notification(t_application.messanger, "Passwords do not match!", 1, WINDOW_WIDTH-216, 10, 200, 20); return; }
     }
 
     gtk_label_set_text(GTK_LABEL(t_settings.username), t_account.username);
     gtk_label_set_text(GTK_LABEL(t_settings.name), t_account.name);
-    printf("User = %s\n", t_account.username);
-    printf("Name = %s\n", t_account.name);
-    printf("Code = %s\n", t_account.code);
-    printf("Pass = %s\n", t_account.password);
+    create_notification(t_application.messanger, "Account data updated!", 0, WINDOW_WIDTH-216, 10, 200, 20);
     update_user_main();
 }
 

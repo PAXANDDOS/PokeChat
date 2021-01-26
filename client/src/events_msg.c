@@ -18,7 +18,7 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
         new_group->users_id = NULL;
         new_group->title = NULL;
         if (!add_user_to_group(name, &user_id, &avatar)) {
-            create_notification(t_application.main_area, "Invalid username!", 1, LEFTBAR_W+10, 58, 340, 10);
+            create_notification(t_application.messanger, "Invalid username!", 1, LEFTBAR_W+10, 58, 340, 10);
             return;
         }
         create_group();
@@ -84,6 +84,8 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
     stat(path, &buf);
     if (buf.st_size < 3145728) // 3mb
         new_outgoing_embedded(t_chat.chat_screen, path);
+    else create_notification(t_application.messanger, "Your file is too big!", 1, WINDOW_WIDTH-216, 10, 200, 20);
+    free(path);
 }
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {

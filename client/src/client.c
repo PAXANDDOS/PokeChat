@@ -19,16 +19,16 @@ int main(int argc, char *argv[]) {
     gtk_window_set_icon(GTK_WINDOW(t_application.window), icon);                    // Setting icon to window
 
     load_providers();   // Loading chosen CSS providers
-    t_application.main_area = gtk_fixed_new();                                         // Creating main area
-    gtk_container_add(GTK_CONTAINER(t_application.window), t_application.main_area);              // Applying main area to current window
-    gtk_widget_set_size_request(GTK_WIDGET(t_application.main_area), WINDOW_WIDTH, WINDOW_HEIGHT);// Setting size
+    GtkWidget *main_area = gtk_fixed_new();                                         // Creating main area
+    gtk_container_add(GTK_CONTAINER(t_application.window), main_area);              // Applying main area to current window
+    gtk_widget_set_size_request(GTK_WIDGET(main_area), WINDOW_WIDTH, WINDOW_HEIGHT);// Setting size
 
     t_application.auth = gtk_fixed_new();
-    gtk_fixed_put(GTK_FIXED(t_application.main_area), t_application.auth, 0, 0);
+    gtk_fixed_put(GTK_FIXED(main_area), t_application.auth, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(t_application.auth), WINDOW_WIDTH, WINDOW_HEIGHT);
 
     t_application.messanger = gtk_fixed_new();
-    gtk_fixed_put(GTK_FIXED(t_application.main_area), t_application.messanger, 0, 0);
+    gtk_fixed_put(GTK_FIXED(main_area), t_application.messanger, 0, 0);
     gtk_widget_set_size_request(GTK_WIDGET(t_application.messanger), WINDOW_WIDTH, WINDOW_HEIGHT);
 
     test_autofill();    // Заполнение данных аккаунта // Оставь это
