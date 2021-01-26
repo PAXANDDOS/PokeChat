@@ -56,20 +56,20 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
         if(!strcmp(name, "") || !strcmp(name, " "))
             return;
 
-        GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
         while(parent != NULL) {
-            GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
-            GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data)); // GList *children2_c = children2;
+            GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+            GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
             children2 = children2->next;
             char* copy = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
 
-            g_list_free(g_steal_pointer(&children2)); // g_list_free(children2_c);
-            g_list_free(g_steal_pointer(&children)); // g_list_free(children_c);
+            g_list_free(g_steal_pointer(&children2));
+            g_list_free(g_steal_pointer(&children));
             if(!strcmp(copy, name))
                 return;
             parent = parent->next;
         }
-        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
+        g_list_free(g_steal_pointer(&parent));
 
         // проверить имя пользователя name на существование
         printf("Username: %s\n", name);
@@ -107,22 +107,31 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         create_notification(t_application.messanger, "Name your group!", 1, 461, 110, 420, 10);
         return;
     }
-        
-    printf("Group name: %s \n", name);
 
     while(parent != NULL) {
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
-        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data)); // GList *children2_c = children2;
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
+        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
         children2 = children2->next;
         char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
         printf("Found: %s\n", chosen);
-        g_list_free(g_steal_pointer(&children2)); // g_list_free(children2_c); // 
-        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
+        g_list_free(g_steal_pointer(&children2));
+        g_list_free(g_steal_pointer(&children));
         parent = parent->next;
     }
     new_group->title = strdup(name);
     create_group();
-    g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
+    chat_push_back(&tchatlist, name, 999, false); // TODO status ДЛЯ НАЗАРА
+    t_chat_list *copy = tchatlist;
+    for(;copy->next; copy = copy->next);
+    GtkWidget *single = add_single(copy);
+    gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
+    gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
+
+    g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
+
+    g_list_free(g_steal_pointer(&parent));
     gtk_widget_destroy(GTK_WIDGET(t_application.notificaton));
     gtk_widget_destroy(GTK_WIDGET(t_msg.background));
 }

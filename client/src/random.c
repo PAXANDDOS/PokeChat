@@ -28,7 +28,7 @@ char *get_avatar_by_number(int num)
     DIR* dir = NULL;
     struct dirent *sd = NULL;
     char *path = "client/data/avatars/";
-    char *error_avatar = "client/data/avatars/0.png";
+    char *error_avatar = "client/data/images/group-people.png";
 
     dir = opendir(path);
     if(dir == NULL) return error_avatar;

@@ -77,13 +77,13 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_size_request(scrollable, LIST_W, LIST_H-104);
     gtk_widget_set_name(GTK_WIDGET(scrollable), "chatlist");
 
-    chat_push_back(&tchatlist, "Neulen", 25, false);
-    chat_push_back(&tchatlist, "Gazaris", 36, true);
-    chat_push_back(&tchatlist, "dashbug", 40, true);
-    chat_push_back(&tchatlist, "Savolus", 89, false);
-    chat_push_back(&tchatlist, "Overwolf", 5, false);
-    chat_push_back(&tchatlist, "sp", 99, true);
-    chat_push_back(&tchatlist, "if", 65, false);
+    // chat_push_back(&tchatlist, "Neulen", 25, false);
+    // chat_push_back(&tchatlist, "Gazaris", 36, true);
+    // chat_push_back(&tchatlist, "dashbug", 40, true);
+    // chat_push_back(&tchatlist, "Savolus", 89, false);
+    // chat_push_back(&tchatlist, "Overwolf", 5, false);
+    // chat_push_back(&tchatlist, "sp", 99, true);
+    // chat_push_back(&tchatlist, "if", 65, false);
     t_msg.chatlist = create_chatlist();
 
     gtk_container_add(GTK_CONTAINER(scrollable), t_msg.chatlist);
