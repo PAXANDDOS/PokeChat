@@ -188,12 +188,33 @@ static void build_entryfield(GtkWidget *main)
 //     return GDK_EVENT_STOP; 
 // }
 
-// static void scrolled(GtkWidget *widget)
+// static void scrolled(GtkWidget *widget, GdkEventButton *event)
 // {
-//     GtkAdjustment *nigger = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(widget));
-//     gdouble maxim = gtk_adjustment_get_lower(GTK_ADJUSTMENT(nigger));
-//     gdouble currentval = gtk_adjustment_get_value(GTK_ADJUSTMENT(nigger));
-//     printf("%f and %f \n", maxim, currentval);
+//     if (event->type == GDK_SCROLL) {
+//         GtkAdjustment *nigger = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(widget));
+//         gdouble maxim = gtk_adjustment_get_upper(GTK_ADJUSTMENT(nigger));
+//         gdouble currentval = gtk_adjustment_get_value(GTK_ADJUSTMENT(nigger));
+//         printf("%f and %f \n", maxim, currentval);
+//         if(event->type == GDK_SCROLL_UP)
+//         {
+//             gtk_adjustment_set_value(nigger, gtk_adjustment_get_value(nigger)-10);
+//             gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), nigger);
+//             gtk_widget_hide(t_msg.scrolled_message);
+//             gtk_widget_show(t_msg.scrolled_message);
+//         }
+//         else if(event->type == GDK_SCROLL_DOWN)
+//         {
+//             gtk_adjustment_set_value(nigger, gtk_adjustment_get_value(nigger)+10);
+//             gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), nigger);
+//             gtk_widget_hide(t_msg.scrolled_message);
+//             gtk_widget_show(t_msg.scrolled_message);
+//         }
+//         gtk_adjustment_set_value(nigger, gtk_adjustment_get_value(nigger)+10);
+//             gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), nigger);
+//             gtk_widget_hide(t_msg.scrolled_message);
+//             gtk_widget_show(t_msg.scrolled_message);
+//     }
+//     // printf("SCROLLED\n");
 // }
 
 static void build_chat(GtkWidget *main)
@@ -203,7 +224,7 @@ static void build_chat(GtkWidget *main)
     gtk_widget_set_name(GTK_WIDGET(t_msg.scrolled_message), "scrollable_msg");                  // Имя 1
     gtk_widget_set_size_request(t_msg.scrolled_message, CHAT_W, CHAT_H);                        // Размер
 
-    // g_signal_connect(G_OBJECT(t_msg.scrolled_message), "scroll-event", G_CALLBACK(scrolled), NULL);
+    // g_signal_connect(G_OBJECT(t_msg.scrolled_message), "scroll_event", G_CALLBACK(scrolled), NULL);
 
     t_chat.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
     gtk_widget_set_size_request(t_chat.chat_screen, CHAT_W, CHAT_H);               // Размер
