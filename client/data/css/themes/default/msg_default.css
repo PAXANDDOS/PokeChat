@@ -25,7 +25,7 @@
 }
 #entry_block
 {
-  background-color: #344065;
+  background-color: rgba(52, 64, 101, 0);
 }
 #entry_text
 {
@@ -35,26 +35,32 @@
 #attach
 {
   background-image: url("../../../images/attach.png");
+  background-color: #344065;
 }
 #attach:hover
 {
   background-image: url("../../../images/attach-hover.png");
+  background-color: #c1ceee;
 }
 #send
 {
   background-image: url("../../../images/send.png");
+  background-color: #344065;
 }
 #send:hover
 {
   background-image: url("../../../images/send-hover.png");
+  background-color: #c1ceee;
 }
 #sticker
 {
   background-image: url("../../../images/sticker.png");
+  background-color: #344065;
 }
 #sticker:hover
 {
   background-image: url("../../../images/sticker-hover.png");
+  background-color: #c1ceee;
 }
 #message
 {
@@ -106,12 +112,11 @@
 #arrowdown
 {
   background-image: url("../../../images/arrow-down.png");
-  background-size: 100%;
-  background-color: rgba(52, 64, 101, 0.4);
+  background-color: #18254e;
 }
 #arrowdown:hover
 {
-  background-color: rgba(52, 64, 101, 0.6);
+  background-color: #344065;
 }
 #msggroup
 {

@@ -11,6 +11,49 @@
 {
   background-color: #353535;
 }
+#dm_text
+{
+  color: #e6e6e9;
+}
+#entry_block
+{
+  background-color: rgba(32, 32, 32, 0);
+}
+#entry_text
+{
+  background-color: #202020;
+  color: #e6e6e9;
+}
+#attach
+{
+  background-image: url("../../../images/attach-dark.png");
+  background-color: #202020;
+}
+#attach:hover
+{
+  background-image: url("../../../images/attach-hover-dark.png");
+  background-color: #e6e6e9;
+}
+#send
+{
+  background-image: url("../../../images/send-dark.png");
+  background-color: #202020;
+}
+#send:hover
+{
+  background-image: url("../../../images/send-hover-dark.png");
+  background-color: #e6e6e9;
+}
+#sticker
+{
+  background-image: url("../../../images/sticker-dark.png");
+  background-color: #202020;
+}
+#sticker:hover
+{
+  background-image: url("../../../images/sticker-hover-dark.png");
+  background-color: #e6e6e9;
+}
 #adduser
 {
   background-image: url("../../../images/add-user-dark.png");
@@ -18,43 +61,6 @@
 #adduser:hover
 {
   background-image: url("../../../images/add-user-hover-dark.png");
-}
-#attach
-{
-  background-image: url("../../../images/attach-dark.png");
-}
-#attach:hover
-{
-  background-image: url("../../../images/attach-hover-dark.png");
-}
-#send
-{
-  background-image: url("../../../images/send-dark.png");
-}
-#send:hover
-{
-  background-image: url("../../../images/send-hover-dark.png");
-}
-#sticker
-{
-  background-image: url("../../../images/sticker-dark.png");
-}
-#sticker:hover
-{
-  background-image: url("../../../images/sticker-hover-dark.png");
-}
-#dm_text
-{
-  color: #e6e6e9;
-}
-#entry_block
-{
-  background-color: #202020;
-}
-#entry_text
-{
-  background-color: #202020;
-  color: #e6e6e9;
 }
 #message
 {

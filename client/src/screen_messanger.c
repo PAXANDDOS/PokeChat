@@ -100,16 +100,23 @@ static void build_list(GtkWidget *main)
 
 static void build_entryfield(GtkWidget *main)
 {
-    GtkWidget *entry_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    GtkWidget *arrow = gtk_event_box_new();
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(arrow), TRUE);
+    gtk_widget_set_name(GTK_WIDGET(arrow), "arrowdown");
+    gtk_widget_set_size_request(GTK_WIDGET(arrow), 40, 70);
+    tooltip("Jump to present",arrow);
+    gtk_fixed_put(GTK_FIXED(main), arrow, WINDOW_WIDTH-117, WINDOW_HEIGHT-82);
+
+    GtkWidget *entry_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_widget_set_name(GTK_WIDGET(entry_block), "entry_block");
     gtk_widget_set_size_request(GTK_WIDGET(entry_block), ENTRY_W, ENTRY_H);
     gtk_fixed_put(GTK_FIXED(main),entry_block, LIST_W, WINDOW_HEIGHT-ENTRY_H);
 
     GtkWidget *attach = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(attach), "attach");
-    gtk_widget_set_size_request(GTK_WIDGET(attach), 26, 26);
-    gtk_box_pack_start(GTK_BOX(entry_block), attach, FALSE, FALSE, 15);
-    gtk_widget_set_halign(GTK_WIDGET(attach), GTK_ALIGN_END);
+    gtk_widget_set_size_request(GTK_WIDGET(attach), 40, 40);
+    gtk_box_pack_start(GTK_BOX(entry_block), attach, FALSE, FALSE, 0);
+    gtk_widget_set_halign(GTK_WIDGET(attach), GTK_ALIGN_START);
     gtk_widget_set_valign(GTK_WIDGET(attach), GTK_ALIGN_CENTER);
     tooltip("Attach image",attach);
 
@@ -124,26 +131,19 @@ static void build_entryfield(GtkWidget *main)
 
     GtkWidget *send = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(send), "send");
-    gtk_widget_set_size_request(GTK_WIDGET(send), 26, 26);
-    gtk_box_pack_end(GTK_BOX(entry_block), send, FALSE, FALSE, 15);
+    gtk_widget_set_size_request(GTK_WIDGET(send), 40, 40);
+    gtk_box_pack_end(GTK_BOX(entry_block), send, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(send), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(send), GTK_ALIGN_CENTER);
     tooltip("Send",send);
 
     GtkWidget *sticker = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(sticker), "sticker");
-    gtk_widget_set_size_request(GTK_WIDGET(sticker), 26, 26);
+    gtk_widget_set_size_request(GTK_WIDGET(sticker), 40, 40);
     gtk_box_pack_end(GTK_BOX(entry_block), sticker, FALSE, FALSE, 0);
     gtk_widget_set_halign(GTK_WIDGET(sticker), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(sticker), GTK_ALIGN_CENTER);
     tooltip("Stickers",sticker);
-
-    GtkWidget *arrow = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(arrow), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(arrow), "arrowdown");
-    gtk_widget_set_size_request(GTK_WIDGET(arrow), 44, 44);
-    tooltip("Jump to present",arrow);
-    gtk_fixed_put(GTK_FIXED(main), arrow, WINDOW_WIDTH-130, WINDOW_HEIGHT-120);
 
     g_signal_connect(G_OBJECT(attach), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(attach), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -163,12 +163,47 @@ static void build_entryfield(GtkWidget *main)
     //g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(attach_click), NULL);
 }
 
+// static gboolean scrolled (GtkWidget *widget, GdkEventButton *event)
+// {
+//     if(widget) {}
+//     GdkScrollDirection *direction = GDK_SCROLL_DOWN;
+//     direction = gdk_event_get_scroll_direction(event, direction);
+
+//     switch(direction)
+//         {
+//         case GDK_SCROLL_UP:
+//         g_debug ("Scrolled up");
+//         break;
+//         case GDK_SCROLL_DOWN:
+//         g_debug ("Scrolled down");
+//         break;
+//         case GDK_SCROLL_RIGHT:
+//         g_debug ("Scrolled right");
+//         break;
+//         case GDK_SCROLL_LEFT:
+//         g_debug ("Scrolled left");
+//         break;
+//         }
+
+//     return GDK_EVENT_STOP; 
+// }
+
+// static void scrolled(GtkWidget *widget)
+// {
+//     GtkAdjustment *nigger = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(widget));
+//     gdouble maxim = gtk_adjustment_get_lower(GTK_ADJUSTMENT(nigger));
+//     gdouble currentval = gtk_adjustment_get_value(GTK_ADJUSTMENT(nigger));
+//     printf("%f and %f \n", maxim, currentval);
+// }
+
 static void build_chat(GtkWidget *main)
 {
     GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CHAT_H, 100, 100, CHAT_H); // Параметры скролла
     t_msg.scrolled_message = gtk_scrolled_window_new(NULL, vadjustment);             // Зона, доступная для бесконечного скролла
     gtk_widget_set_name(GTK_WIDGET(t_msg.scrolled_message), "scrollable_msg");                  // Имя 1
     gtk_widget_set_size_request(t_msg.scrolled_message, CHAT_W, CHAT_H);                        // Размер
+
+    // g_signal_connect(G_OBJECT(t_msg.scrolled_message), "scroll-event", G_CALLBACK(scrolled), NULL);
 
     t_chat.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
     gtk_widget_set_size_request(t_chat.chat_screen, CHAT_W, CHAT_H);               // Размер

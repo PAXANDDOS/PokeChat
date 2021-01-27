@@ -63,7 +63,7 @@
 #define LIST_H WINDOW_HEIGHT
 #define CHAT_W WINDOW_WIDTH-LIST_W-LEFTBAR_W
 #define ENTRY_W CHAT_W
-#define ENTRY_H 72
+#define ENTRY_H 60
 #define CHAT_H WINDOW_HEIGHT-ENTRY_H
 
 // Settings screen size and positions
