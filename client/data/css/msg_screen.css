@@ -226,6 +226,15 @@
   box-shadow: none;
   margin: 20px 0 20px 0;
 }
+#trash_delete
+{
+  background-image: url("../images/trash.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 10px;
+  transition: all .2s cubic-bezier(.17,.67,.83,.67);
+}
 #crgroup_button
 {
   font-family: Rubik, 'Helvetica Neue Light', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

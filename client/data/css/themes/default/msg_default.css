@@ -198,6 +198,10 @@
   background: rgb(193, 206, 236);
   color: #273255;
 }
+#trash_delete:hover
+{
+  background-color: #374676;
+}
 #remove_user:hover
 {
   background-color: #374676;

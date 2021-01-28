@@ -200,7 +200,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         printf("%s %s %s\n", username, chat_id_from_label, user_id_from_label);
 
         if (atoi(user_id_from_label) == 0) {
-            // TODO show group options
+            bool admin = 0;
+            creator_groupsettings(t_msg.main, username, admin);
         }
         else {
             t_user *user = malloc(sizeof(t_user));

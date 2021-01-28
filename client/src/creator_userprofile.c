@@ -4,7 +4,7 @@ void creator_userprofile(GtkWidget *main, t_user *user)
 {
     t_msg.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_msg.background), "crgroup");
-    gtk_widget_set_size_request(GTK_WIDGET(t_msg.background), WINDOW_WIDTH-67, WINDOW_HEIGHT);
+    gtk_widget_set_size_request(GTK_WIDGET(t_msg.background), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
     g_signal_connect(G_OBJECT(t_msg.background), "button_press_event", G_CALLBACK(gtk_widget_destroy), NULL);
     gtk_fixed_put(GTK_FIXED(main), t_msg.background, 0, 0);
 

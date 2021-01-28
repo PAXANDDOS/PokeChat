@@ -13,32 +13,32 @@ static void build_activity(GtkWidget *main)
     gtk_widget_set_halign(active_text, GTK_ALIGN_START);                    // Позиция текста
     gtk_box_pack_start(GTK_BOX(activity_block), active_text, FALSE, FALSE, 0);
 
-    // ACTIVE PEOPLE
-    GtkWidget *active_box = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(active_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active_box), "active");
-    gtk_box_pack_start(GTK_BOX(activity_block), active_box, FALSE, FALSE, 0);
+    // // ACTIVE PEOPLE
+    // GtkWidget *active_box = gtk_event_box_new();
+    // gtk_event_box_set_above_child(GTK_EVENT_BOX(active_box), TRUE);
+    // gtk_widget_set_name(GTK_WIDGET(active_box), "active");
+    // gtk_box_pack_start(GTK_BOX(activity_block), active_box, FALSE, FALSE, 0);
 
-    GtkWidget *active = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(active), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active_box), active);
+    // GtkWidget *active = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    // gtk_widget_set_size_request(GTK_WIDGET(active), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
+    // gtk_widget_set_halign(active, GTK_ALIGN_START);
+    // gtk_container_add(GTK_CONTAINER(active_box), active);
 
-    GtkWidget *avatar = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
-    gtk_widget_set_halign(avatar, GTK_ALIGN_START);
-    gtk_widget_set_valign(avatar, GTK_ALIGN_START);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active), avatar, FALSE, FALSE, 0);
+    // GtkWidget *avatar = gtk_drawing_area_new();
+    // gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
+    // gtk_widget_set_halign(avatar, GTK_ALIGN_START);
+    // gtk_widget_set_valign(avatar, GTK_ALIGN_START);
+    // g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
+    // gtk_box_pack_start(GTK_BOX(active), avatar, FALSE, FALSE, 0);
 
-    GtkWidget *active_name = gtk_label_new("Gazaris");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active_name), "active_name");
-    gtk_widget_set_halign(active_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active), active_name, FALSE, FALSE, 0);
+    // GtkWidget *active_name = gtk_label_new("Gazaris");              // Получить имя
+    // gtk_widget_set_name(GTK_WIDGET(active_name), "active_name");
+    // gtk_widget_set_halign(active_name, GTK_ALIGN_START);
+    // gtk_box_pack_start(GTK_BOX(active), active_name, FALSE, FALSE, 0);
 
-    g_signal_connect(G_OBJECT(active_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active_box), "button_press_event", G_CALLBACK(active_click), NULL);
+    // g_signal_connect(G_OBJECT(active_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    // g_signal_connect(G_OBJECT(active_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    // g_signal_connect(G_OBJECT(active_box), "button_press_event", G_CALLBACK(active_click), NULL);
 }
 
 static void build_fact(GtkWidget *main)

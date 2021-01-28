@@ -194,6 +194,10 @@
   background: #343740;
   color: #d6d6d6;
 }
+#trash_delete:hover
+{
+  background-color: #d6d6d6;
+}
 #remove_user:hover
 {
   background-color: #d6d6d6;

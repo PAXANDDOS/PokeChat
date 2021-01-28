@@ -22,7 +22,7 @@ GdkPixbuf *get_pixbuf_with_size(char *path, int w, int h) {
 
 gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
     char* a = get_avatar_by_number((int)(intptr_t)avatar);
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 34, 34);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(a, 34, 34, FALSE, NULL); // get_pixbuf_with_size(a, 34, 34);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -49,7 +49,7 @@ gboolean draw_event_avatar(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
 
 gboolean draw_event_avatar_profile(GtkWidget *widget, cairo_t *cr, gpointer avatar) {
     char* a = get_avatar_by_number((int)(intptr_t)avatar);
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(a, 90, 90);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(a, 90, 90, FALSE, NULL); // get_pixbuf_with_size(a, 90, 90);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -75,7 +75,7 @@ gboolean draw_event_avatar_profile(GtkWidget *widget, cairo_t *cr, gpointer avat
 }
 
 gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(t_account.avatar, size, size);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(t_account.avatar, size, size, FALSE, NULL); // get_pixbuf_with_size(t_account.avatar, size, size);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 
@@ -101,7 +101,7 @@ gboolean draw_event_avatar_account(GtkWidget *widget, cairo_t *cr, int size) {
 }
 
 gboolean draw_event_pokemon(GtkWidget *widget, cairo_t *cr, int size) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(t_pokefact.pokemon_fact_image, size, size);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(t_pokefact.pokemon_fact_image, size, size, FALSE, NULL); // get_pixbuf_with_size(t_pokefact.pokemon_fact_image, size, size);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);
@@ -135,7 +135,7 @@ gboolean draw_event_status(GtkWidget *widget, cairo_t *cr, int size) {
 }
 
 gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, 80, 80);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(path, 80, 80, FALSE, NULL); // get_pixbuf_with_size(path, 80, 80);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);
@@ -145,7 +145,7 @@ gboolean draw_event_avatar_list(GtkWidget *widget, cairo_t *cr, char* path) {
 }
 
 gboolean draw_event_sticker_list(GtkWidget *widget, cairo_t *cr, char* path) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, 70, 70);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(path, 70, 70, FALSE, NULL); // get_pixbuf_with_size(path, 70, 70);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);
@@ -155,7 +155,7 @@ gboolean draw_event_sticker_list(GtkWidget *widget, cairo_t *cr, char* path) {
 }
 
 gboolean draw_event_sticker(GtkWidget *widget, cairo_t *cr, char* path) {
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, 200, 200);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(path, 200, 200, FALSE, NULL); // get_pixbuf_with_size(path, 200, 200);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
     cairo_paint(cr);
@@ -172,7 +172,7 @@ gboolean draw_event_embedded(GtkWidget *widget, cairo_t *cr, char* path) {
     a = b * a / old_b;
     g_object_unref(G_OBJECT(pb));
 
-    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, a, b);
+    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(path, a, b, FALSE, NULL); // get_pixbuf_with_size(path, a, b);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 

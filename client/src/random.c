@@ -34,16 +34,16 @@ void pokemon_random() {
     DIR* dir = NULL;
     struct dirent *sd = NULL;
 
-    int num = 0;
+    int num = 53;
 
-    dir = opendir("client/data/pokemon/");
-    if(dir == NULL) return;
-    while ((sd = readdir(dir)) != NULL) {
-        if (sd->d_type == DT_REG) { /* If the entry is a regular file */
-            num++;
-        }
-    }
-    closedir(dir);
+    // dir = opendir("client/data/pokemon/");
+    // if(dir == NULL) return;
+    // while ((sd = readdir(dir)) != NULL) {
+    //     if (sd->d_type == DT_REG) { /* If the entry is a regular file */
+    //         num++;
+    //     }
+    // }
+    // closedir(dir);
 
     // CHOOSING IMAGE
 
@@ -51,7 +51,7 @@ void pokemon_random() {
     int pick = rand() % num + 1;
     dir = NULL;
     sd = NULL;
-
+    printf("NOW IS %d\n", pick);
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, mx_itoa(pick));
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, ".png");
     t_pokefact.pokemon_fact_text = mx_strjoin(t_pokefact.pokemon_fact_text, mx_itoa(pick));
