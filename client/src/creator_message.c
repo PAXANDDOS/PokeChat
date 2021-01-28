@@ -60,6 +60,7 @@ void new_outgoing_message(GtkWidget *messages_block)
     gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(message), PANGO_WRAP_WORD_CHAR);
     gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
+    gtk_label_set_selectable(GTK_LABEL(message), TRUE);
     gtk_box_pack_end(GTK_BOX(name_message_block), message, FALSE, FALSE, 0);
 
     GtkWidget *time_label = gtk_label_new(msg_data.time);
@@ -99,6 +100,7 @@ void new_incoming_message(GtkWidget *messages_block)
     gtk_label_set_line_wrap(GTK_LABEL(message), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(message), PANGO_WRAP_WORD_CHAR);
     gtk_label_set_max_width_chars(GTK_LABEL(message), 50);
+    gtk_label_set_selectable(GTK_LABEL(message), TRUE);
     gtk_box_pack_start(GTK_BOX(name_message_block), message, FALSE, FALSE, 0);
 
     GtkWidget *time_label = gtk_label_new(msg_data.time);
