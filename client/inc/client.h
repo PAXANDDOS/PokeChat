@@ -338,11 +338,7 @@ void events_click(GtkWidget *widget, GdkEventButton *event);
 void status_click(GtkWidget *widget, GdkEventButton *event);
 void settings_click(GtkWidget *widget, GdkEventButton *event);
 
-void active1_click(GtkWidget *widget, GdkEventButton *event);
-void active2_click(GtkWidget *widget, GdkEventButton *event);
-void active3_click(GtkWidget *widget, GdkEventButton *event);
-void active4_click(GtkWidget *widget, GdkEventButton *event);
-void active5_click(GtkWidget *widget, GdkEventButton *event);
+void active_click(GtkWidget *widget, GdkEventButton *event);
 
 void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field);
 void attach_click(GtkWidget *widget, GdkEventButton *event);

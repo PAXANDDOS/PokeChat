@@ -1,10 +1,11 @@
 #scrollable_msg
 {
-  background-color: #d7eff9;
+  background-color: #ceeffa;
   background-image: url("../../chat-background/light/starter.png");
   background-size: 100%;
+  background-repeat: no-repeat;
 }
 #messanger
 {
-  background-color: #d7eff9;
+  background-color: #ceeffa;
 }

@@ -45,7 +45,7 @@ static void build_list(GtkWidget *main)
     GtkWidget *search_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(search_block), "search_block");
     gtk_widget_set_size_request(GTK_WIDGET(search_block), 350, 40);
-    gtk_box_pack_start(GTK_BOX(list_block), search_block, FALSE, TRUE, 15);
+    gtk_box_pack_start(GTK_BOX(list_block), search_block, FALSE, FALSE, 15);
     GtkWidget *search_field = gtk_entry_new();
     gtk_widget_set_name(GTK_WIDGET(search_field), "search_field");
     g_signal_connect(G_OBJECT(search_field), "insert-text", G_CALLBACK(all_input_event), NULL);
@@ -54,8 +54,8 @@ static void build_list(GtkWidget *main)
     gtk_box_pack_start(GTK_BOX(search_block), search_field, TRUE, TRUE, 0);
     GtkWidget *adduser = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(adduser), "adduser");
-    gtk_widget_set_size_request(GTK_WIDGET(adduser), 22, 22);
-    gtk_box_pack_start(GTK_BOX(search_block), adduser, FALSE, FALSE, 10);
+    gtk_widget_set_size_request(GTK_WIDGET(adduser), 30, 30);
+    gtk_box_pack_end(GTK_BOX(search_block), adduser, FALSE, FALSE, 10);
     gtk_widget_set_halign(GTK_WIDGET(adduser), GTK_ALIGN_END);
     gtk_widget_set_valign(GTK_WIDGET(adduser), GTK_ALIGN_CENTER);
     tooltip("Add",adduser);
@@ -68,8 +68,8 @@ static void build_list(GtkWidget *main)
 
     GtkWidget *group = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(group), "msggroup");
-    gtk_widget_set_size_request(GTK_WIDGET(group), 50, 50);
-    gtk_fixed_put(GTK_FIXED(main), group, LIST_W-68, LIST_H-66);
+    gtk_widget_set_size_request(GTK_WIDGET(group), 40, 40);
+    gtk_fixed_put(GTK_FIXED(main), group, LIST_W-50, LIST_H-50);
     tooltip("Create group",group);
 
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, LIST_H-100, 100, 100, LIST_H-100);    // Параметры скролла
@@ -77,13 +77,6 @@ static void build_list(GtkWidget *main)
     gtk_widget_set_size_request(scrollable, LIST_W, LIST_H-104);
     gtk_widget_set_name(GTK_WIDGET(scrollable), "chatlist");
 
-    // chat_push_back(&tchatlist, "Neulen", 25, false);
-    // chat_push_back(&tchatlist, "Gazaris", 36, true);
-    // chat_push_back(&tchatlist, "dashbug", 40, true);
-    // chat_push_back(&tchatlist, "Savolus", 89, false);
-    // chat_push_back(&tchatlist, "Overwolf", 5, false);
-    // chat_push_back(&tchatlist, "sp", 99, true);
-    // chat_push_back(&tchatlist, "if", 65, false);
     t_msg.chatlist = create_chatlist();
 
     gtk_container_add(GTK_CONTAINER(scrollable), t_msg.chatlist);

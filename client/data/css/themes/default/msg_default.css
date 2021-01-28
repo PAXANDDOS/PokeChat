@@ -123,11 +123,11 @@
   background-image: url("../../../images/create-group.png");
   background-size: 100%;
   background-color: #18254e;
-  box-shadow: inset 0 0 0 1.5px rgba(69, 100, 167, 0);
 }
 #msggroup:hover
 {
-  box-shadow: inset 0 0 0 2.5px #4564a7;
+  background-image: url("../../../images/create-group-hover.png");
+  background-color: #c1ceee;
 }
 #crgroup_box
 {

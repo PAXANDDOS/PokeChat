@@ -1,10 +1,11 @@
 #scrollable_msg
 {
-  background-color: #2b2b2b;
+  background-color: #272727;
   background-image: url("../../chat-background/dark/dratini.png");
   background-size: 100%;
+  background-repeat: no-repeat;
 }
 #messanger
 {
-  background-color: #2b2b2b;
+  background-color: #272727;
 }

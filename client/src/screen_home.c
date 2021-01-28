@@ -13,130 +13,32 @@ static void build_activity(GtkWidget *main)
     gtk_widget_set_halign(active_text, GTK_ALIGN_START);                    // Позиция текста
     gtk_box_pack_start(GTK_BOX(activity_block), active_text, FALSE, FALSE, 0);
 
-    // ACTIVE PERSON 1
-    GtkWidget *active1_box = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(active1_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active1_box), "active");
-    GtkWidget *active1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_widget_set_size_request(GTK_WIDGET(active1), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active1, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active1_box), active1);
-    gtk_box_pack_start(GTK_BOX(activity_block), active1_box, FALSE, FALSE, 0);
-    GtkWidget *avatar_container = gtk_fixed_new();
-    gtk_widget_set_halign(avatar_container, GTK_ALIGN_START);
+    // ACTIVE PEOPLE
+    GtkWidget *active_box = gtk_event_box_new();
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(active_box), TRUE);
+    gtk_widget_set_name(GTK_WIDGET(active_box), "active");
+    gtk_box_pack_start(GTK_BOX(activity_block), active_box, FALSE, FALSE, 0);
+
+    GtkWidget *active = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_widget_set_size_request(GTK_WIDGET(active), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
+    gtk_widget_set_halign(active, GTK_ALIGN_START);
+    gtk_container_add(GTK_CONTAINER(active_box), active);
+
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 35, 35);
+    gtk_widget_set_halign(avatar, GTK_ALIGN_START);
+    gtk_widget_set_valign(avatar, GTK_ALIGN_START);
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active1), avatar_container, FALSE, FALSE, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 3, 2);
-    GtkWidget *active1_name = gtk_label_new("Gazaris");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active1_name), "active_name");
-    gtk_widget_set_halign(active1_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active1), active1_name, FALSE, FALSE, 5);
+    gtk_box_pack_start(GTK_BOX(active), avatar, FALSE, FALSE, 0);
 
-    // ACTIVE PERSON 2
-    GtkWidget *active2_box = gtk_event_box_new();
-    gtk_event_box_set_above_child (GTK_EVENT_BOX(active2_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active2_box), "active");
-    GtkWidget *active2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_widget_set_size_request(GTK_WIDGET(active2), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active2, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active2_box), active2);
-    gtk_box_pack_start(GTK_BOX(activity_block), active2_box, FALSE, FALSE, 3);
-    GtkWidget *avatar_container2 = gtk_fixed_new();
-    gtk_widget_set_halign(avatar_container2, GTK_ALIGN_START);
-    GtkWidget *avatar2 = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar2), 35, 35);
-    g_signal_connect(G_OBJECT(avatar2), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active2), avatar_container2, FALSE, FALSE, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container2), avatar2, 3, 2);
-    GtkWidget *active2_name = gtk_label_new("leosh1d");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active2_name), "active_name");
-    gtk_widget_set_halign(active2_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active2), active2_name, FALSE, FALSE, 5);
-    //
-    //
-    GtkWidget *active3_box = gtk_event_box_new();
-    gtk_event_box_set_above_child (GTK_EVENT_BOX(active3_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active3_box), "active");
-    GtkWidget *active3 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_widget_set_size_request(GTK_WIDGET(active3), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active3, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active3_box), active3);
-    gtk_box_pack_start(GTK_BOX(activity_block), active3_box, FALSE, FALSE, 3);
-    GtkWidget *avatar_container3 = gtk_fixed_new();
-    gtk_widget_set_halign(avatar_container3, GTK_ALIGN_START);
-    GtkWidget *avatar3 = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar3), 35, 35);
-    g_signal_connect(G_OBJECT(avatar3), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active3), avatar_container3, FALSE, FALSE, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container3), avatar3, 3, 2);
-    GtkWidget *active3_name = gtk_label_new("Overwolf94");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active3_name), "active_name");
-    gtk_widget_set_halign(active3_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active3), active3_name, FALSE, FALSE, 5);
-    //
-    GtkWidget *active4_box = gtk_event_box_new();
-    gtk_event_box_set_above_child (GTK_EVENT_BOX(active4_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active4_box), "active");
-    GtkWidget *active4 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_widget_set_size_request(GTK_WIDGET(active4), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active4, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active4_box), active4);
-    gtk_box_pack_start(GTK_BOX(activity_block), active4_box, FALSE, FALSE, 3);
-    GtkWidget *avatar_container4 = gtk_fixed_new();
-    gtk_widget_set_halign(avatar_container4, GTK_ALIGN_START);
-    GtkWidget *avatar4 = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar4), 35, 35);
-    g_signal_connect(G_OBJECT(avatar4), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active4), avatar_container4, FALSE, FALSE, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container4), avatar4, 3, 2);
-    GtkWidget *active4_name = gtk_label_new("dashbug");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active4_name), "active_name");
-    gtk_widget_set_halign(active4_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active4), active4_name, FALSE, FALSE, 5);
-    //
-    GtkWidget *active5_box = gtk_event_box_new();
-    gtk_event_box_set_above_child (GTK_EVENT_BOX(active5_box), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(active5_box), "active");
-    GtkWidget *active5 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
-    gtk_widget_set_size_request(GTK_WIDGET(active5), ACTIVE_PERSON_W, ACTIVE_PERSON_H);
-    gtk_widget_set_halign(active5, GTK_ALIGN_START);
-    gtk_container_add(GTK_CONTAINER(active5_box), active5);
-    gtk_box_pack_start(GTK_BOX(activity_block), active5_box, FALSE, FALSE, 3);
-    GtkWidget *avatar_container5 = gtk_fixed_new();
-    gtk_widget_set_halign(avatar_container5, GTK_ALIGN_START);
-    GtkWidget *avatar5 = gtk_drawing_area_new();
-    gtk_widget_set_size_request(GTK_WIDGET(avatar5), 35, 35);
-    g_signal_connect(G_OBJECT(avatar5), "draw", G_CALLBACK(draw_event_avatar), (int*)35);
-    gtk_box_pack_start(GTK_BOX(active5), avatar_container5, FALSE, FALSE, 0);
-    gtk_fixed_put(GTK_FIXED(avatar_container5), avatar5, 3, 2);
-    GtkWidget *active5_name = gtk_label_new("Neulen");              // Получить имя
-    gtk_widget_set_name(GTK_WIDGET(active5_name), "active_name");
-    gtk_widget_set_halign(active5_name, GTK_ALIGN_START);
-    gtk_box_pack_start(GTK_BOX(active5), active5_name, FALSE, FALSE, 5);
-    //
+    GtkWidget *active_name = gtk_label_new("Gazaris");              // Получить имя
+    gtk_widget_set_name(GTK_WIDGET(active_name), "active_name");
+    gtk_widget_set_halign(active_name, GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(active), active_name, FALSE, FALSE, 0);
 
-    // ACTIVITY EVENTS
-    g_signal_connect(G_OBJECT(active1_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active1_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active1_box), "button_press_event", G_CALLBACK(active1_click), NULL);
-
-    g_signal_connect(G_OBJECT(active2_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active2_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active2_box), "button_press_event", G_CALLBACK(active2_click), NULL);
-
-    g_signal_connect(G_OBJECT(active3_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active3_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active3_box), "button_press_event", G_CALLBACK(active3_click), NULL);
-
-    g_signal_connect(G_OBJECT(active4_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active4_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active4_box), "button_press_event", G_CALLBACK(active4_click), NULL);
-
-    g_signal_connect(G_OBJECT(active5_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(active5_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(active5_box), "button_press_event", G_CALLBACK(active5_click), NULL);
+    g_signal_connect(G_OBJECT(active_box), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(active_box), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(active_box), "button_press_event", G_CALLBACK(active_click), NULL);
 }
 
 static void build_fact(GtkWidget *main)
@@ -218,7 +120,7 @@ static void build_welcome(GtkWidget *main)
     g_signal_connect(G_OBJECT(togroup), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(togroup_inner), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(togroup_inner), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(togroup), "button_press_event", G_CALLBACK(messages_click), NULL);
+    g_signal_connect(G_OBJECT(togroup), "button_press_event", G_CALLBACK(group_click), NULL);
 
     g_signal_connect(G_OBJECT(tosettings), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(tosettings), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);

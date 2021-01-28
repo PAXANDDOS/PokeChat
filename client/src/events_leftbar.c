@@ -42,6 +42,7 @@ void messages_click(GtkWidget *widget, GdkEventButton *event) {
 void group_click(GtkWidget *widget, GdkEventButton *event) {
     if(t_leftbar.active == 3) return;
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        create_notification(t_application.messanger, "Not available at the moment!", 1, LEFTBAR_W, 160, 0, 30);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.home_box), GTK_STATE_FLAG_LINK);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.msg_box), GTK_STATE_FLAG_LINK);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.events_box), GTK_STATE_FLAG_LINK);
@@ -55,6 +56,7 @@ void group_click(GtkWidget *widget, GdkEventButton *event) {
 void events_click(GtkWidget *widget, GdkEventButton *event) {
     if(t_leftbar.active == 4) return;
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
+        create_notification(t_application.messanger, "Not available at the moment!", 1, LEFTBAR_W, 230, 0, 30);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.home_box), GTK_STATE_FLAG_LINK);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.group_box), GTK_STATE_FLAG_LINK);
         // gtk_widget_unset_state_flags(GTK_WIDGET(t_leftbar.msg_box), GTK_STATE_FLAG_LINK);

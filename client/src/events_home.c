@@ -16,27 +16,8 @@ void event_leave_notify(GtkWidget *widget) {
 
 //--//--//--//         //--//--//--//
 
-void active1_click(GtkWidget *widget, GdkEventButton *event) {
+void active_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event) {}
 }
 
-void active2_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
-
-void active3_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
-
-void active4_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}
-
-void active5_click(GtkWidget *widget, GdkEventButton *event) {
-    if(widget) {}
-    if(event) {}
-}

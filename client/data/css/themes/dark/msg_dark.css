@@ -118,12 +118,12 @@
 {
   background-image: url("../../../images/create-group-dark.png");
   background-size: 100%;
-  background-color: #353535;
-  box-shadow: inset 0 0 0 1.5px rgba(240, 240, 240, 0);
+  background-color: #202020;
 }
 #msggroup:hover
 {
-  box-shadow: inset 0 0 0 2.5px #f0f0f0;
+  background-image: url("../../../images/create-group-dark-hover.png");
+  background-color: #e6e6e9;
 }
 #crgroup_box
 {

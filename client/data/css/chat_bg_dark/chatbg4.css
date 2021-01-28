@@ -1,10 +1,11 @@
 #scrollable_msg
 {
-  background-color: #272525;
+  background-color: #231f20;
   background-image: url("../../chat-background/dark/pikachu.png");
   background-size: 100%;
+  background-repeat: no-repeat;
 }
 #messanger
 {
-  background-color: #272525;
+  background-color: #231f20;
 }
