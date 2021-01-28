@@ -1,17 +1,26 @@
 #include "../inc/client.h"
 
-static t_chat_list *chat_create_node(char *nickname, int avatar, bool status) {
+static t_chat_list *chat_create_node(t_chat_data *chat) {
     t_chat_list *new_node = NULL;
     new_node = malloc(sizeof(t_chat_list));
-    new_node->nickname = nickname;
-    new_node->avatar = avatar;
-    new_node->status = status;
+    new_node->chat_id = chat->chat_id;
+    new_node->username = strdup(chat->title);
+    if (chat->user->id) {
+        new_node->avatar = chat->user->avatar;
+        new_node->status = chat->user->online;
+        new_node->user_id = chat->user->id;
+    }
+    else {
+        new_node->user_id = 0;
+        new_node->avatar = 999;
+        new_node->members = chat->members;
+    }
     new_node->next = NULL;
     return new_node;
 }
 
-void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status) {
-    t_chat_list *back_list = chat_create_node(nickname, avatar, status);
+void chat_push_back(t_chat_list **list, t_chat_data *chat) {
+    t_chat_list *back_list = chat_create_node(chat);
     t_chat_list *p = NULL;
     if (list == NULL || *list == NULL)
         *list = back_list;
@@ -23,17 +32,17 @@ void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status)
     }
 }
 
-// static void chat_clear_list(t_chat_list **list) {
-//     t_chat_list *p;
-//     while (*list) {
-//         p = NULL;
-//         if (list) {
-//             p = (*list)->next;
-//             free(*list);
-//             *list = p;
-//         }
-//     }
-// }
+void chat_clear_list(t_chat_list **list) {
+    t_chat_list *p;
+    while (*list) {
+        p = NULL;
+        if (list) {
+            p = (*list)->next;
+            free(*list);
+            *list = p;
+        }
+    }
+}
 
 static void build_list(GtkWidget *main)
 {
@@ -153,7 +162,7 @@ static void build_entryfield(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(arrow), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(arrow), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    //g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(attach_click), NULL);
+    g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(arrow_click), NULL);
 }
 
 // static gboolean scrolled (GtkWidget *widget, GdkEventButton *event)

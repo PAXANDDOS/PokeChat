@@ -118,17 +118,16 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         parent = parent->next;
     }
     new_group->title = strdup(name);
-    create_group();
-    chat_push_back(&tchatlist, name, 999, false); // TODO status ДЛЯ НАЗАРА
-    t_chat_list *copy = tchatlist;
-    for(;copy->next; copy = copy->next);
-    GtkWidget *single = add_single(copy);
-    gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
-    gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
+    int chat_id = 0;
+    create_group(&chat_id);
+    // t_chat_data *chat = malloc(sizeof(t_chat_data));
+    // chat->title = strdup(name);
+    // chat->user = NULL;
+    // chat_push_back(&chatlist, chat);
+    // mx_strdel(&chat->title);
+    // free(chat);
 
-    g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
+    // display_new_chat();e), "button_press_event", G_CALLBACK(person_click), NULL);
 
     g_list_free(g_steal_pointer(&parent));
     gtk_widget_destroy(GTK_WIDGET(t_application.notificaton));

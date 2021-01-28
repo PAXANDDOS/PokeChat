@@ -73,7 +73,7 @@ int ssl_client(char *message, char **response) {
         SSL_write(ssl, message, strlen(message));
         bytes = SSL_read(ssl, buf, sizeof(buf));
         buf[bytes] = 0;
-        printf("Received: \"%s\"\n", buf);
+        // printf("Received: \"%s\"\n", buf);
         SSL_free(ssl);
     }
     close(server);

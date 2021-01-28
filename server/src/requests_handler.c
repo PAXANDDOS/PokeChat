@@ -32,6 +32,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_update_messages_rest = cJSON_GetObjectItem(json, "update_messages_rest");
     cJSON *json_get_chats_count = cJSON_GetObjectItem(json, "get_chats_count");
     cJSON *json_get_chats = cJSON_GetObjectItem(json, "get_chats");
+    cJSON *json_get_chat = cJSON_GetObjectItem(json, "get_chat");
     cJSON *json_get_user = cJSON_GetObjectItem(json, "get_user");
     cJSON *json_get_user_id = cJSON_GetObjectItem(json, "get_user_id");
     cJSON *json_send_message = cJSON_GetObjectItem(json, "send_message");
@@ -39,7 +40,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
     cJSON *json_login_user = cJSON_GetObjectItem(json, "login_user");
     cJSON *json_update_user_main = cJSON_GetObjectItem(json, "update_user_main");
-    cJSON *json_update_user_avatar= cJSON_GetObjectItem(json, "update_user_avatar");
+    cJSON *json_update_user_avatar = cJSON_GetObjectItem(json, "update_user_avatar");
     cJSON *json_update_user_team = cJSON_GetObjectItem(json, "update_user_team");
     cJSON *json_update_user_theme = cJSON_GetObjectItem(json, "update_user_theme");
     cJSON *json_update_user_background = cJSON_GetObjectItem(json, "update_user_background");
@@ -50,7 +51,7 @@ static void message_handler(char msg[], char **reply) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
         int message_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "message_id"));
-        printf("UPDATE MESSAGE ID\nuser_id: %d\nchat_id: %d\nmessage_id: %d\n\n", sender_id, chat_id, message_id);
+        // printf("UPDATE MESSAGE ID\nuser_id: %d\nchat_id: %d\nmessage_id: %d\n\n", sender_id, chat_id, message_id);
         char *sql_query = NULL;
         // Проверяем действительно ли тот юзер, который запрашивает данные, является участником чата
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
@@ -99,7 +100,7 @@ static void message_handler(char msg[], char **reply) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_messages_rest, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_messages_rest, "chat_id"));
         int message_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_messages_rest, "message_id"));
-        printf("UPDATE MESSAGES REST\nuser_id: %d\nchat_id: %d\nmessage_id: %d\n\n", sender_id, chat_id, message_id);
+        // printf("UPDATE MESSAGES REST\nuser_id: %d\nchat_id: %d\nmessage_id: %d\n\n", sender_id, chat_id, message_id);
         char *sql_query = NULL;
         // Проверяем действительно ли тот юзер, который запрашивает данные, является участником чата
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
@@ -136,27 +137,32 @@ static void message_handler(char msg[], char **reply) {
     }
     else if (json_get_chats_count) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_chats_count, "sender_id"));;
-        printf("GET CHATS COUNT\nuser_id: %d\n\n", sender_id);
+        // printf("GET CHATS COUNT\nuser_id: %d\n\n", sender_id);
         char *sql_query = NULL;
-        char *sql_pattern = "SELECT COUNT(id) FROM members WHERE user_id=(%d);";
+        char *sql_pattern = "SELECT SUM(chats.increment) + SUM(users.increment), COUNT(members.id) FROM chats, users, members \
+                             WHERE chats.id=members.chat_id AND users.id=members.user_id AND members.user_id=(%d);";
         asprintf(&sql_query, sql_pattern, sender_id);
         t_list *list = NULL;
-        int chats_count = 0;
         list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        unsigned long long sum = 0;
+        int chats_count = 0;
         int list_size = mx_list_size(list);
-        if (list_size != 0)
-            chats_count = atoi(list->data);
+        if (list_size != 0) {
+            sum = atoll(list->data);
+            chats_count = atoi(list->next->data);
+        }
         mx_clear_list(&list);
-        printf("chats_count: %d\n", chats_count);
+        // printf("chats_sum: %llu\n", sum);
         cJSON *json_chats_count = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_chats_count, "chats_count", chats_count);
+        cJSON_AddNumberToObject(json_chats_count, "chats_sum", sum);
         *reply = strdup(cJSON_PrintUnformatted(json_chats_count));
-        mx_strdel(&sql_query);
         cJSON_Delete(json_chats_count);
     }
     else if (json_get_chats) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_chats, "sender_id"));
-        printf("GET CHATS\nuser_id: %d\n\n", sender_id);
+        // printf("GET CHATS\nuser_id: %d\n\n", sender_id);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT chat_id FROM members WHERE user_id=(%d);";
         asprintf(&sql_query, sql_pattern, sender_id);
@@ -175,9 +181,58 @@ static void message_handler(char msg[], char **reply) {
         mx_strdel(&sql_query);
         cJSON_Delete(json_chats);
     }
+    else if (json_get_chat) {
+        int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_chat, "sender_id"));
+        int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_chat, "chat_id"));
+        // printf("GET CHAT\nchat: %d\n\n", sender_id);
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
+        asprintf(&sql_query, sql_pattern, sender_id, chat_id);
+        t_list *ex = NULL;
+        ex = sqlite3_exec_db(sql_query, DB_LIST);
+        int exist = atoi(ex->data);
+        mx_clear_list(&ex);
+        mx_strdel(&sql_query);
+        if (exist == 0) {
+            *reply = strdup("null");
+        }
+        sql_pattern = "SELECT title, members FROM chats WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, chat_id);
+        t_list *list = NULL;
+        list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        t_list *p = list;
+        cJSON *json_chat = cJSON_CreateObject();
+        if (strcmp(list->data, "NULL") != 0) {
+            cJSON_AddStringToObject(json_chat, "title", list->data);
+            cJSON_AddNumberToObject(json_chat, "user_id", 0);
+        }
+        else {
+            sql_pattern = "SELECT user_id FROM members WHERE chat_id=(%d) AND user_id!=(%d);";
+            asprintf(&sql_query, sql_pattern, chat_id, sender_id);
+            t_list *interlocutor = NULL;
+            interlocutor = sqlite3_exec_db(sql_query, DB_LIST);
+            int inter_id = atoi(interlocutor->data);
+            mx_clear_list(&interlocutor);
+            mx_strdel(&sql_query);
+            sql_pattern = "SELECT username FROM users WHERE id=(%d);";
+            asprintf(&sql_query, sql_pattern, inter_id);
+            interlocutor = sqlite3_exec_db(sql_query, DB_LIST);
+            cJSON_AddStringToObject(json_chat, "title", interlocutor->data);
+            cJSON_AddNumberToObject(json_chat, "user_id", inter_id);
+            mx_clear_list(&interlocutor);
+            mx_strdel(&sql_query);
+        }
+        list = list->next;
+        cJSON_AddNumberToObject(json_chat, "members", atoi(list->data));
+        mx_clear_list(&p);
+        *reply = strdup(cJSON_PrintUnformatted(json_chat));
+        mx_strdel(&sql_query);
+        cJSON_Delete(json_chat);
+    }
     else if (json_get_user) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_user, "user_id"));
-        printf("GET USER\nuser_id: %d\n\n", user_id);
+        // printf("GET USER\nuser_id: %d\n\n", user_id);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT username, name, code, team, avatar, online FROM users WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, user_id);
@@ -209,7 +264,7 @@ static void message_handler(char msg[], char **reply) {
     else if (json_get_user_id) {
         char *username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_get_user_id, "username")));
         escape_apostrophe(&username);
-        printf("GET USER ID\nusername: %s\n\n", username);
+        // printf("GET USER ID\nusername: %s\n\n", username);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT id, avatar FROM users WHERE username=('%s');";
         asprintf(&sql_query, sql_pattern, username);
@@ -240,14 +295,14 @@ static void message_handler(char msg[], char **reply) {
         char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "date"));
         char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "time"));
         escape_apostrophe(&text);
-        printf("SEND MESSAGE\nchat_id: %d\nuser_id: %d\ntext: %s\n\n", chat_id, sender_id, text);
+        // printf("SEND MESSAGE\nchat_id: %d\nuser_id: %d\ntext: %s\n\n", chat_id, sender_id, text);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
         asprintf(&sql_query, sql_pattern, sender_id, chat_id);
         t_list *ex = NULL;
         ex = sqlite3_exec_db(sql_query, DB_LIST);
         int exist = atoi(ex->data);
-        printf("exist: %d\n", exist);
+        // printf("exist: %d\n", exist);
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
@@ -282,14 +337,14 @@ static void message_handler(char msg[], char **reply) {
         int sticker_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "sticker_id"));
         char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "date"));
         char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "time"));
-        printf("SEND STICKER\nchat_id: %d\nuser_id: %d\nsticker: %d\n\n", chat_id, sender_id, sticker_id);
+        // printf("SEND STICKER\nchat_id: %d\nuser_id: %d\nsticker: %d\n\n", chat_id, sender_id, sticker_id);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
         asprintf(&sql_query, sql_pattern, sender_id, chat_id);
         t_list *ex = NULL;
         ex = sqlite3_exec_db(sql_query, DB_LIST);
         int exist = atoi(ex->data);
-        printf("exist: %d\n", exist);
+        // printf("exist: %d\n", exist);
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
@@ -321,19 +376,19 @@ static void message_handler(char msg[], char **reply) {
         char *name = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "name")));
         char *code = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "code")));
         char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "password")));
-        printf("%s\n", username);
+        // printf("%s\n", username);
         escape_apostrophe(&username);
         escape_apostrophe(&name);
         escape_apostrophe(&code);
         escape_apostrophe(&password);
-        printf("REGISTER USER\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
+        // printf("REGISTER USER\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM users WHERE username=('%s'));";
         asprintf(&sql_query, sql_pattern, username);
         t_list *ex = NULL;
         ex = sqlite3_exec_db(sql_query, DB_LIST);
         int exist = atoi(ex->data);
-        printf("exist: %d\n", exist);
+        // printf("exist: %d\n", exist);
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 1) {
@@ -359,7 +414,7 @@ static void message_handler(char msg[], char **reply) {
         char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_login_user, "password")));
         escape_apostrophe(&username);
         escape_apostrophe(&password);
-        printf("LOGIN USER\nusername: %s\npassword: %s\n\n", username, password);
+        // printf("LOGIN USER\nusername: %s\npassword: %s\n\n", username, password);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT id, name, code, team, avatar, theme, background FROM users WHERE username=('%s') AND password=('%s');";
         asprintf(&sql_query, sql_pattern, username, password);
@@ -401,7 +456,7 @@ static void message_handler(char msg[], char **reply) {
         escape_apostrophe(&name);
         escape_apostrophe(&code);
         escape_apostrophe(&password);
-        printf("UPDATE USER MAIN\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
+        // printf("UPDATE USER MAIN\nusername: %s\nname: %s\ncode: %s\npassword: %s\n\n", username, name, code, password);
         char *sql_query = NULL;
         char *sql_pattern = "UPDATE users SET username=('%s'), name=('%s'), code=('%s'), password=('%s') WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, username, name, code, password, user_id);
@@ -416,9 +471,9 @@ static void message_handler(char msg[], char **reply) {
     else if (json_update_user_avatar) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_avatar, "user_id"));
         int avatar_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_avatar, "avatar"));
-        printf("UPDATE USER AVATAR\navatar_id: %d\n\n", avatar_id);
+        // printf("UPDATE USER AVATAR\navatar_id: %d\n\n", avatar_id);
         char *sql_query = NULL;
-        char *sql_pattern = "UPDATE users SET avatar=(%d) WHERE id=(%d);";
+        char *sql_pattern = "UPDATE users SET avatar=(%d), increment=increment+1 WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, avatar_id, user_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         mx_strdel(&sql_query);
@@ -427,7 +482,7 @@ static void message_handler(char msg[], char **reply) {
     else if (json_update_user_team) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_team, "user_id"));
         int team = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_team, "team"));
-        printf("UPDATE USER TEAM\nteam: %d\n\n", team);
+        // printf("UPDATE USER TEAM\nteam: %d\n\n", team);
         char *sql_query = NULL;
         char *sql_pattern = "UPDATE users SET team=(%d) WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, team, user_id);
@@ -438,7 +493,7 @@ static void message_handler(char msg[], char **reply) {
     else if (json_update_user_theme) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_theme, "user_id"));
         int theme = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_theme, "theme"));
-        printf("UPDATE USER THEME\ntheme: %d\n\n", theme);
+        // printf("UPDATE USER THEME\ntheme: %d\n\n", theme);
         char *sql_query = NULL;
         char *sql_pattern = "UPDATE users SET theme=(%d) WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, theme, user_id);
@@ -449,7 +504,7 @@ static void message_handler(char msg[], char **reply) {
     else if (json_update_user_background) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_background, "user_id"));
         int bg = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_background, "background"));
-        printf("UPDATE USER BG\nbackground: %d\n\n", bg);
+        // printf("UPDATE USER BG\nbackground: %d\n\n", bg);
         char *sql_query = NULL;
         char *sql_pattern = "UPDATE users SET background=(%d) WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, bg, user_id);
@@ -459,9 +514,9 @@ static void message_handler(char msg[], char **reply) {
     }
     else if (json_update_user_online) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_online, "user_id"));
-        printf("UPDATE USER ONLINE\nuser_id: %d\n\n", user_id);
+        // printf("UPDATE USER ONLINE\nuser_id: %d\n\n", user_id);
         char *sql_query = NULL;
-        char *sql_pattern = "UPDATE users SET online=(1) WHERE id=(%d);";
+        char *sql_pattern = "UPDATE users SET online=(1), increment=increment+1 WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, user_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         mx_strdel(&sql_query);
@@ -469,9 +524,9 @@ static void message_handler(char msg[], char **reply) {
     }
     else if (json_update_user_offline) {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_user_offline, "user_id"));
-        printf("UPDATE USER OFFLINE\nuser_id: %d\n\n", user_id);
+        // printf("UPDATE USER OFFLINE\nuser_id: %d\n\n", user_id);
         char *sql_query = NULL;
-        char *sql_pattern = "UPDATE users SET online=(0) WHERE id=(%d);";
+        char *sql_pattern = "UPDATE users SET online=(0), increment=increment+1 WHERE id=(%d);";
         asprintf(&sql_query, sql_pattern, user_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         mx_strdel(&sql_query);
@@ -486,14 +541,43 @@ static void message_handler(char msg[], char **reply) {
         }
         cJSON *users = cJSON_GetObjectItem(json_create_chat, "users_id");
         int members = cJSON_GetArraySize(users);
-        printf("CREATE CHAT\n\n");
+        // printf("CREATE CHAT\n\n");
         char *sql_query = NULL;
         if (title) {
             char *sql_pattern = "INSERT INTO chats (title, members) VALUES ('%s', %d);";
             asprintf(&sql_query, sql_pattern, title, members + 1);
         }
-        else
+        else {
+            int user_id = cJSON_GetNumberValue(cJSON_GetArrayItem(users, 0));
+            char *sql_pattern = "SELECT chats.id FROM chats, members WHERE members.chat_id=chats.id AND chats.title IS NULL AND members.user_id=(%d);";
+            asprintf(&sql_query, sql_pattern, sender_id);
+            t_list *list1 = NULL;
+            list1 = sqlite3_exec_db(sql_query, DB_LIST);
+            mx_strdel(&sql_query);
+            t_list *p1 = list1;
+            int list1_size = mx_list_size(list1);
+            if (list1_size > 0) {
+                asprintf(&sql_query, sql_pattern, user_id);
+                t_list *list2 = NULL;
+                list2 = sqlite3_exec_db(sql_query, DB_LIST);
+                mx_strdel(&sql_query);
+                t_list *p2 = list2;
+                int list2_size = mx_list_size(list2);
+                if (list2_size > 0) {
+                    for (int i = 0; i < list1_size; i++, list1 = list1->next)
+                        for (int j = 0; j < list2_size; j++, list2 = list2->next)
+                            if (atoi(list1->data) == atoi(list2->data)) {
+                                mx_clear_list(&p1);
+                                mx_clear_list(&p2);
+                                *reply = strdup("null");
+                                return;
+                            }
+                    mx_clear_list(&p2);
+                }
+                mx_clear_list(&p1);
+            }
             sql_query = strdup("INSERT INTO chats (members) VALUES (2);");
+        }
         int *ai = sqlite3_exec_db(sql_query, DB_LAST_ID);
         int chat_id = *ai;
         mx_strdel(&sql_query);
@@ -525,7 +609,10 @@ static void message_handler(char msg[], char **reply) {
         mx_strdel(&title);
         mx_strdel(&sql_query);
         mx_strdel(&sql_array);
-        *reply = strdup("null");
+        cJSON *new_chat = cJSON_CreateObject();
+        cJSON_AddNumberToObject(new_chat, "chat_id", chat_id);
+        *reply = strdup(cJSON_PrintUnformatted(new_chat));
+        cJSON_Delete(new_chat);
     }
     else {
         *reply = strdup("null");
@@ -544,10 +631,10 @@ void requests_handler(SSL *ssl) {
         bytes = SSL_read(ssl, buf, sizeof(buf));
         if (bytes > 0) {
             buf[bytes] = 0;
-            printf("Client message: \"%s\"\n", buf);
+            // printf("Client message: \"%s\"\n", buf);
 
             message_handler(buf, &reply);
-            printf("reply: %s\n", reply);
+            // printf("reply: %s\n", reply);
 
             SSL_write(ssl, reply, strlen(reply));
         }

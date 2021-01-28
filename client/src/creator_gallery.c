@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-static void update_user_avatar(int num) {
+void update_user_avatar(int num) {
     cJSON *json = cJSON_CreateObject();
     cJSON *json_fields = cJSON_CreateObject();
     cJSON_AddNumberToObject(json_fields, "user_id", t_account.id);

@@ -1,5 +1,17 @@
 #include "../inc/client.h"
 
+void display_new_chat() {
+    t_chat_list *p = chatlist;
+    for(;p->next; p = p->next);
+    GtkWidget *single = add_single(p);
+    gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
+    gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
+
+    g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
+}
+
 void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
@@ -21,23 +33,25 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
             create_notification(t_application.messanger, "Invalid username!", 1, LEFTBAR_W+10, 58, 340, 10);
             return;
         }
-        create_group();
         gtk_entry_set_text(GTK_ENTRY(search_field), "");
 
-        bool online = user_is_online(user_id);
-        chat_push_back(&tchatlist, name, avatar, online);
+        int chat_id = 0;
+        create_group(&chat_id);
+        if (!chat_id) {
+            create_notification(t_application.messanger, "You already have DM with this user!", 1, LEFTBAR_W+10, 58, 340, 10);
+            return;
+        }
+        // t_chat_data *chat = malloc(sizeof(t_chat_data));
+        // chat->user = malloc(sizeof(t_user));
+        // chat->chat_id = chat_id;
+        // get_chat(chat);
+        // get_user(chat->user);
+        // chat_push_back(&chatlist, chat);
+        // free_user(chat->user);
+        // mx_strdel(&chat->title);
+        // free(chat);
 
-        // Получить данные пользователя: аватар, имя, статус
-        chat_push_back(&tchatlist, name, avatar, true);  // TODO status
-        t_chat_list *copy = tchatlist;
-        for(;copy->next; copy = copy->next);
-        GtkWidget *single = add_single(copy);
-        gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
-        gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
-
-        g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-        g_signal_connect(G_OBJECT(single), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-        g_signal_connect(G_OBJECT(single), "button_press_event", G_CALLBACK(person_click), NULL);
+        // display_new_chat();
     }
 }
 
@@ -160,14 +174,17 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         GList *parent = gtk_container_get_children(GTK_CONTAINER(widget)); // GList *parent_c = parent;
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
         children = children->next;
-        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        printf("%s\n", chosen);
+        // char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        children = children->next;
+        char* chat_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        children = children->next;
+        // char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
         g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
         for (int i = 0; i < upd_data.count; i++)
             if (upd_data.chats_id[i] == msg_data.chat_id)
                 upd_data.messages_id[i] = 0;
-        msg_data.chat_id = 1; // TODO test
+        msg_data.chat_id = atoi(chat_id_from_label);
         upd_data.suspend = false;
     }
     if(event->type == GDK_BUTTON_PRESS && event->button == 3)
@@ -176,13 +193,22 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
         children = children->next;
         char* username = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-
-        bool status = false;
         children = children->next;
-        if(children != NULL)
-            status = true;
+        char* chat_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        children = children->next;
+        char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+        printf("%s %s %s\n", username, chat_id_from_label, user_id_from_label);
 
-        creator_userprofile(t_msg.main, username, status);
+        if (atoi(user_id_from_label) == 0) {
+            // TODO show group options
+        }
+        else {
+            t_user *user = malloc(sizeof(t_user));
+            user->id = atoi(user_id_from_label);
+            get_user(user);
+            creator_userprofile(t_msg.main, user);
+            free_user(user);
+        }
         g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
         g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
     }
@@ -209,6 +235,7 @@ static void *scrolling_to_bottom() {
 }
 
 void arrow_click(GtkWidget *widget, GdkEventButton *event) {
+    printf("OK\n");
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         pthread_t scrolling_thread = NULL;

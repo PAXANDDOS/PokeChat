@@ -44,7 +44,7 @@ bool add_user_to_group(char *name, int *user_id, int *avatar) {
     return true;
 }
 
-void create_group() {
+void create_group(int *chat_id) {
     cJSON *json = cJSON_CreateObject();
     cJSON *json_create_chat = cJSON_CreateObject();
     cJSON *json_users_id = cJSON_CreateIntArray(new_group->users_id, new_group->count);
@@ -60,16 +60,23 @@ void create_group() {
     char *result = NULL;
     ssl_client(json_string, &result);
     mx_strdel(&json_string);
+    cJSON *response = cJSON_Parse(result);
+    if (cJSON_IsNull(response))
+        *chat_id = 0;
+    else
+        *chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "chat_id"));
+    mx_strdel(&result);
+    cJSON_Delete(response);
     cJSON_Delete(json);
     mx_strdel(&new_group->title);
     free(new_group->users_id);
     free(new_group);
 }
 
-bool user_is_online(int user_id) {
+void get_user(t_user *user) {
     cJSON *user_request = cJSON_CreateObject();
     cJSON *get_user = cJSON_CreateObject();
-    cJSON_AddNumberToObject(get_user, "user_id", user_id);
+    cJSON_AddNumberToObject(get_user, "user_id", user->id);
     cJSON_AddItemToObject(user_request, "get_user", get_user);
     char *request_string = cJSON_Print(user_request);
     char *result = NULL;
@@ -78,7 +85,39 @@ bool user_is_online(int user_id) {
     mx_strdel(&request_string);
     cJSON *user_response = cJSON_Parse(result);
     mx_strdel(&result);
-    bool online = cJSON_IsTrue(cJSON_GetObjectItem(user_response, "online"));
+    user->username = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(user_response, "username")));
+    user->name = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(user_response, "name")));
+    user->code = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(user_response, "code")));
+    user->team = cJSON_GetNumberValue(cJSON_GetObjectItem(user_response, "team"));
+    user->avatar = cJSON_GetNumberValue(cJSON_GetObjectItem(user_response, "avatar"));
+    user->online = cJSON_IsTrue(cJSON_GetObjectItem(user_response, "online"));
     cJSON_Delete(user_response);
-    return online;
+}
+
+void free_user(t_user *user) {
+    if (user->id) {
+        mx_strdel(&user->username);
+        mx_strdel(&user->name);
+        mx_strdel(&user->code);
+    }
+    free(user);
+}
+
+void get_chat(t_chat_data *chat) {
+    cJSON *chat_request = cJSON_CreateObject();
+    cJSON *get_chat = cJSON_CreateObject();
+    cJSON_AddNumberToObject(get_chat, "sender_id", t_account.id);
+    cJSON_AddNumberToObject(get_chat, "chat_id", chat->chat_id);
+    cJSON_AddItemToObject(chat_request, "get_chat", get_chat);
+    char *request_string = cJSON_Print(chat_request);
+    char *result = NULL;
+    cJSON_Delete(chat_request);
+    ssl_client(request_string, &result);
+    mx_strdel(&request_string);
+    cJSON *user_response = cJSON_Parse(result);
+    mx_strdel(&result);
+    chat->title = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(user_response, "title")));
+    chat->members = cJSON_GetNumberValue(cJSON_GetObjectItem(user_response, "members"));
+    chat->user->id = cJSON_GetNumberValue(cJSON_GetObjectItem(user_response, "user_id"));
+    cJSON_Delete(user_response);
 }

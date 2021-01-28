@@ -3,24 +3,9 @@
 void avatar_random() {
     srand(time(NULL));                  // Initialization, should only be called once.
     int pick = rand() % 101 + 1;         // Returns a pseudo-random integer between 0 and RAND_MAX.
-
-    int counter = 1;
-
-    DIR* dir = NULL;
-    struct dirent *sd = NULL;
-
-    dir = opendir("client/data/avatars/");
-    if(dir == NULL) return;
-
-    while((sd = readdir(dir)) != NULL)
-    {
-        if(sd->d_name[0] == '.')
-            continue;
-        if(counter == pick)
-            t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, sd->d_name);
-        counter++;
-    }
-    closedir(dir);
+    t_avatar.avatar_num = pick;
+    t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, mx_itoa(pick));
+    t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, ".png");
 }
 
 char *get_avatar_by_number(int num)

@@ -12,7 +12,7 @@ static GtkWidget *create_single(t_chat_list* list)
     gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(single), avatar, FALSE, FALSE, 0);
 
-    GtkWidget *nickname = gtk_label_new(list->nickname);                        // Получить username пользователя
+    GtkWidget *nickname = gtk_label_new(list->username);                        // Получить username пользователя
     gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");                 // Имя
     gtk_box_pack_start(GTK_BOX(single), nickname, FALSE, FALSE, 5);
 
@@ -46,9 +46,17 @@ GtkWidget *add_single(t_chat_list* list)
     gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(single), avatar, FALSE, FALSE, 0);
 
-    GtkWidget *nickname = gtk_label_new(list->nickname);                        // Получить username пользователя
+    GtkWidget *nickname = gtk_label_new(list->username);                        // Получить username пользователя
     gtk_widget_set_name(GTK_WIDGET(nickname), "nickname");                 // Имя
     gtk_box_pack_start(GTK_BOX(single), nickname, FALSE, FALSE, 5);
+
+    GtkWidget *chat_id = gtk_label_new(mx_itoa(list->chat_id));           // CHAT_ID сюда
+    gtk_widget_set_name(GTK_WIDGET(chat_id), "hidden");
+    gtk_box_pack_start(GTK_BOX(single), chat_id, FALSE, FALSE, 0);
+
+    GtkWidget *user_id = gtk_label_new(mx_itoa(list->user_id));           // USER_ID сюда
+    gtk_widget_set_name(GTK_WIDGET(user_id), "hidden");
+    gtk_box_pack_start(GTK_BOX(single), user_id, FALSE, FALSE, 0);
 
     if(list->status){
         GtkWidget *status = gtk_drawing_area_new();
@@ -59,26 +67,22 @@ GtkWidget *add_single(t_chat_list* list)
         gtk_box_pack_start(GTK_BOX(single), status, FALSE, FALSE, 0);
     }
 
-    GtkWidget *key = gtk_label_new(mx_itoa(0));           // USER_ID сюда
-    gtk_widget_set_name(GTK_WIDGET(key), "hidden");
-    gtk_box_pack_start(GTK_BOX(single), key, FALSE, FALSE, 0);
-
     return single_event;
 }
 
 GtkWidget *create_chatlist() {
-    GtkWidget *chatlist = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_size_request(chatlist, LIST_W-20, LIST_H-104);
+    GtkWidget *chatlist_widget = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_size_request(chatlist_widget, LIST_W-20, LIST_H-104);
 
-    t_chat_list *copy = tchatlist;
-    while(copy)
+    t_chat_list *p = chatlist;
+    while(p)
     {
         GtkWidget *single_event = gtk_event_box_new();
         gtk_widget_set_name(GTK_WIDGET(single_event), "single");
         gtk_event_box_set_above_child(GTK_EVENT_BOX(single_event), TRUE);
-        gtk_box_pack_start(GTK_BOX(chatlist), single_event, FALSE, FALSE, 3);
+        gtk_box_pack_start(GTK_BOX(chatlist_widget), single_event, FALSE, FALSE, 3);
 
-        GtkWidget *single = create_single(copy);
+        GtkWidget *single = create_single(p);
         gtk_widget_set_name(GTK_WIDGET(single), "singlepad");
         gtk_container_add(GTK_CONTAINER(single_event), single);
 
@@ -86,8 +90,8 @@ GtkWidget *create_chatlist() {
         g_signal_connect(G_OBJECT(single_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "button_press_event", G_CALLBACK(person_click), NULL);
         tooltip("Message/Profile",single_event);
-        copy = copy->next;
+        p = p->next;
     }
 
-    return chatlist;
+    return chatlist_widget;
 }

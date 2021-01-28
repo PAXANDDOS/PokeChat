@@ -1,7 +1,8 @@
 #include "../inc/client.h"
 
 static void generate_new_message(uint user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, int photo) {
-    printf("User: %d\nText: %s\nSticker: %d\nPhoto: %d\n\n", user_id, text, sticker, photo);
+    // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %d\n\n", user_id, text, sticker, photo);
+    (void)photo;
     if (msg_data.date) {
         mx_strdel(&msg_data.date_prev);
         msg_data.date_prev = strdup(msg_data.date);
@@ -39,6 +40,7 @@ void *updater() {
     upd_data.chats_id = NULL;
     upd_data.messages_id = NULL;
     upd_data.count = 0;
+    upd_data.control_sum = 0;
     while (true) {
         if (!upd_data.suspend) {
             if (upd_data.count > 0) {
@@ -125,29 +127,31 @@ void *updater() {
                     usleep(1000);  // 1 millisecond
                 }
             }
-            else {
-                cJSON *get_chats_count = cJSON_CreateObject();
-                cJSON *json_sender = cJSON_CreateObject();
-                cJSON_AddNumberToObject(json_sender, "sender_id", t_account.id);
-                cJSON_AddItemToObject(get_chats_count, "get_chats_count", json_sender);
-                char *request = cJSON_Print(get_chats_count);
-                char *result = NULL;
-                ssl_client(request, &result);
-                cJSON *response = cJSON_Parse(result);
-                cJSON *chats_count = cJSON_GetObjectItem(response, "chats_count");
-                int count = cJSON_GetNumberValue(chats_count);
-                cJSON_Delete(get_chats_count);
-                cJSON_Delete(response);
-                mx_strdel(&request);
-                mx_strdel(&result);
+            cJSON *get_chats_count = cJSON_CreateObject();
+            cJSON *json_sender = cJSON_CreateObject();
+            cJSON_AddNumberToObject(json_sender, "sender_id", t_account.id);
+            cJSON_AddItemToObject(get_chats_count, "get_chats_count", json_sender);
+            char *request = cJSON_Print(get_chats_count);
+            char *result = NULL;
+            ssl_client(request, &result);
+            cJSON *response = cJSON_Parse(result);
+            int count = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "chats_count"));
+            csum_t control_sum = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "chats_sum"));
+            cJSON_Delete(get_chats_count);
+            cJSON_Delete(response);
+            mx_strdel(&request);
+            mx_strdel(&result);
 
-                if (count > 0) {
-                    // implement all below
+            if (count > 0) {
+                if (upd_data.count != count && upd_data.control_sum != control_sum) {
                     if (upd_data.chats_id) free(upd_data.chats_id);
                     if (upd_data.messages_id) free(upd_data.messages_id);
                     upd_data.chats_id = malloc(sizeof(int) * count);
                     upd_data.messages_id = malloc(sizeof(int) * count);
                     upd_data.count = count;
+                    upd_data.control_sum = control_sum;
+                    chat_clear_list(&chatlist);
+                    gtk_container_forall(GTK_CONTAINER(t_msg.chatlist), (GtkCallback)gtk_widget_destroy, NULL);
                     cJSON *get_chats = cJSON_CreateObject();
                     json_sender = cJSON_CreateObject();
                     cJSON_AddNumberToObject(json_sender, "sender_id", t_account.id);
@@ -160,7 +164,22 @@ void *updater() {
                     cJSON_ArrayForEach(chat_item, response) {
                         upd_data.chats_id[i] = cJSON_GetNumberValue(cJSON_GetArrayItem(response, i));
                         upd_data.messages_id[i] = 0;
+
+                        // Adding chat to chats list
+                        t_chat_data *chat = malloc(sizeof(t_chat_data));
+                        chat->user = malloc(sizeof(t_user));
+                        chat->chat_id = upd_data.chats_id[i];;
+                        get_chat(chat);
+                        if (chat->user->id)
+                            get_user(chat->user);
+                        chat_push_back(&chatlist, chat);
+                        free_user(chat->user);
+                        mx_strdel(&chat->title);
+                        free(chat);
+
+                        display_new_chat();
                         i++;
+                        usleep(10000);
                     }
                     cJSON_Delete(get_chats);
                     cJSON_Delete(response);
@@ -168,7 +187,7 @@ void *updater() {
                     mx_strdel(&result);
                 }
             }
-            usleep(1 * 1000000);  // 1 second
+            usleep(0.5 /* <- seconds */ * 1000000);
         }
     }
     return NULL;

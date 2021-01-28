@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-void creator_userprofile(GtkWidget *main, char *username, bool status)
+void creator_userprofile(GtkWidget *main, t_user *user)
 {
     t_msg.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_msg.background), "crgroup");
@@ -25,7 +25,7 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
 
     GtkWidget *avatar = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(avatar), 90, 90);
-    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_profile), (gpointer)(intptr_t)54);   // Получить номер avatar пользователя
+    g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_profile), (gpointer)(intptr_t)user->avatar);   // Получить номер avatar пользователя
     gtk_widget_set_halign(avatar, GTK_ALIGN_START);
     gtk_widget_set_valign(avatar, GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(avatarbox), avatar, FALSE, FALSE, 0);
@@ -36,24 +36,22 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
     GtkWidget *usernamebox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(infobox), usernamebox, FALSE, TRUE, 0);
 
-    GtkWidget *username_label = gtk_label_new(username);                                                                     // Получить ник пользователя
+    GtkWidget *username_label = gtk_label_new(user->username);                                                                     // Получить ник пользователя
     gtk_widget_set_name(GTK_WIDGET(username_label), "username_profile");
     gtk_widget_set_halign(GTK_WIDGET(username_label), GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(usernamebox), username_label, FALSE, FALSE, 0);
 
-    if(status){
+    if(user->online){
         GtkWidget *status_label = gtk_label_new("Online");
         gtk_widget_set_name(GTK_WIDGET(status_label), "status_profile");
         gtk_widget_set_halign(GTK_WIDGET(status_label), GTK_ALIGN_START);
         gtk_box_pack_start(GTK_BOX(usernamebox), status_label, FALSE, FALSE, 0);
     }
 
-    short team = 1; // Получить команду (1-3)
     char *team_char;
-
     GtkWidget *badge = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(badge), 26, 26);
-    switch(team) {
+    switch(user->team) {
         case 1: gtk_widget_set_name(GTK_WIDGET(badge), "teammystic_profile"); team_char = "Mystic"; break;
         case 2: gtk_widget_set_name(GTK_WIDGET(badge), "teaminstinct_profile"); team_char = "Instinct"; break;
         case 3: gtk_widget_set_name(GTK_WIDGET(badge), "teamvalor_profile"); team_char = "Valor"; break;
@@ -85,7 +83,7 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
     //
 
     GtkWidget *bg = gtk_event_box_new();
-    switch(team) {
+    switch(user->team) {
         case 1: gtk_widget_set_name(GTK_WIDGET(bg), "bg_mystic_profile"); break;
         case 2: gtk_widget_set_name(GTK_WIDGET(bg), "bg_instinct_profile"); break;
         case 3: gtk_widget_set_name(GTK_WIDGET(bg), "bg_valor_profile"); break;
@@ -102,18 +100,18 @@ void creator_userprofile(GtkWidget *main, char *username, bool status)
     gtk_widget_set_name(GTK_WIDGET(name_label), "infolabel_profile");
     gtk_widget_set_halign(name_label, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(namebox), name_label, FALSE, FALSE, 0);
-    GtkWidget *realname = gtk_label_new("Paul");                        // Получить настоящее имя
+    GtkWidget *realname = gtk_label_new(user->name);                        // Получить настоящее имя
     gtk_widget_set_name(GTK_WIDGET(realname), "realdata_profile");
     gtk_widget_set_halign(realname, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(namebox), realname, FALSE, FALSE, 0);
-    
+
     GtkWidget *codebox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(databox), codebox, TRUE, TRUE, 10);
     GtkWidget *code_label = gtk_label_new("Trainer code:");
     gtk_widget_set_name(GTK_WIDGET(code_label), "infolabel_profile");
     gtk_widget_set_halign(code_label, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(codebox), code_label, FALSE, FALSE, 0);
-    GtkWidget *realcode = gtk_label_new("133742069420");                // Получить тренерский код
+    GtkWidget *realcode = gtk_label_new(user->code);                // Получить тренерский код
     gtk_widget_set_name(GTK_WIDGET(realcode), "realdata_profile");
     gtk_widget_set_halign(realcode, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(codebox), realcode, FALSE, FALSE, 0);

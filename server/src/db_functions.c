@@ -11,8 +11,8 @@ static void sqlite3_create_db() {
         exit(EXIT_FAILURE);
     }
     sql = mx_strrejoin(sql, "PRAGMA encoding = \"UTF-8\";");
-    sql = mx_strrejoin(sql, "CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `username` VARCHAR(10) NOT NULL , `name` VARCHAR(10) NOT NULL , `code` VARCHAR(12) NOT NULL , `password` VARCHAR(16) NOT NULL, `team` INT(1) NOT NULL DEFAULT '1', `avatar` INT(9) NOT NULL DEFAULT '0', `theme` INT(1) NOT NULL DEFAULT '2', `background` INT(1) NOT NULL DEFAULT '1', `online` BOOLEAN NOT NULL DEFAULT TRUE );");
-    sql = mx_strrejoin(sql, "CREATE TABLE `chats` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `title` VARCHAR(16) DEFAULT NULL , `members` INT(4) NOT NULL DEFAULT '2' );");
+    sql = mx_strrejoin(sql, "CREATE TABLE `users` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `username` VARCHAR(10) NOT NULL , `name` VARCHAR(10) NOT NULL , `code` VARCHAR(12) NOT NULL , `password` VARCHAR(16) NOT NULL, `team` INT(1) NOT NULL DEFAULT '1', `avatar` INT(9) NOT NULL DEFAULT '0', `theme` INT(1) NOT NULL DEFAULT '2', `background` INT(1) NOT NULL DEFAULT '1', `online` BOOLEAN NOT NULL DEFAULT TRUE, `increment` UNSIGNED INT NOT NULL DEFAULT 0 );");
+    sql = mx_strrejoin(sql, "CREATE TABLE `chats` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `title` VARCHAR(16) DEFAULT NULL , `members` INT(4) NOT NULL DEFAULT '2', `increment` UNSIGNED INT NOT NULL DEFAULT 0 );");
     sql = mx_strrejoin(sql, "CREATE TABLE `members` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `admin` BOOLEAN NOT NULL DEFAULT FALSE );");
     sql = mx_strrejoin(sql, "CREATE TABLE `messages` ( `id` INTEGER PRIMARY KEY AUTOINCREMENT , `message_id` INT NOT NULL , `chat_id` INT NOT NULL , `user_id` INT NOT NULL , `date` VARCHAR(10) NOT NULL , `time` VARCHAR(5) NOT NULL , `text` VARCHAR(1024) NULL DEFAULT NULL , `sticker_id` INT NULL DEFAULT NULL , `photo_id` INT NULL DEFAULT NULL );");
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
@@ -34,7 +34,7 @@ static int callback(void *data, int argc, char **argv, char **azColName) {
     if (argc == 0)
         return 0;
     for (int i = 0; i < argc; i++) {
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+        // printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
         if(argv[i] == NULL)
             mx_push_back(*(&list_data), strdup("NULL"));
         else
@@ -58,7 +58,7 @@ void *sqlite3_exec_db(char *query, int type) {
     t_list *list = NULL;
     int auto_inc;
 
-    printf("database_request: %s\n", query);
+    // printf("database_request: %s\n", query);
     if (type == DB_LIST) {
         rc = sqlite3_exec(db, query, callback, &list, &err_msg);
         sqlite3_close(db);

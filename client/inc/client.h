@@ -81,6 +81,8 @@
 #define UCHAT_PORT 10000
 #define DB_NAME "database.db"
 
+typedef unsigned long long csum_t;
+
 //-------> Overall
 struct {
     GtkWidget *window;
@@ -170,6 +172,7 @@ typedef struct s_updater
     int *chats_id;
     int *messages_id;
     int count;
+    csum_t control_sum;
     bool suspend;
     bool busy;
     bool filling_init;
@@ -178,12 +181,15 @@ t_updater upd_data;
 
 typedef struct s_chat_list              // Structure for people in the chat list
 {
-    char *nickname;
+    int chat_id;
+    int user_id;
+    char *username;
     int avatar;
+    int members;
     bool status;
     struct s_chat_list *next;   // To next person
 }   t_chat_list;
-t_chat_list *tchatlist;
+t_chat_list *chatlist;
 
 struct s_chat   // Selected user in chatlist
 {
@@ -202,6 +208,25 @@ struct
     GtkWidget *scrolled_message;
     char* current;
 }   t_msg;
+
+typedef struct s_user
+{
+    int id;
+    char *username;
+    char *name;
+    char *code;
+    int team;
+    int avatar;
+    bool online;
+} t_user;
+
+typedef struct s_group
+{
+    int chat_id;
+    char *title;
+    int members;
+    t_user *user;
+} t_chat_data;
 
 //-------> Settings
 struct
@@ -265,6 +290,7 @@ struct      // Удалить после нормальной реализаци
 {
     char *avatar_generated;
     char *avatar_path;
+    int avatar_num;
 }   t_avatar;
 
 struct tm *tm_struct;
@@ -279,8 +305,11 @@ void *send_sticker();
 void send_photo();
 void *updater();
 bool add_user_to_group(char*, int*, int*);
-void create_group();
-bool user_is_online(int);
+void create_group(int*);
+void get_user(t_user*);
+void free_user(t_user*);
+void get_chat(t_chat_data*);
+void chat_clear_list(t_chat_list**);
 
 void load_providers();
 void test_autofill();
@@ -289,6 +318,8 @@ void play_audio();
 void avatar_random();
 void pokemon_random();
 char* random_phrase();
+void display_new_chat();
+void update_user_avatar(int);
 
 void build_authorization(GtkWidget **main_area);
 void build_registration(GtkWidget **main_area);
@@ -299,7 +330,7 @@ void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
-void creator_userprofile(GtkWidget *main, char *username, bool status);
+void creator_userprofile(GtkWidget *main, t_user *user);
 void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h);
 
 char *get_avatar_by_number(int num);
@@ -346,7 +377,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
 void send_press(GtkWidget *widget);
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
-void chat_push_back(t_chat_list **list, char *nickname, int avatar, bool status);
+void chat_push_back(t_chat_list **list, t_chat_data* chat);
 void person_click(GtkWidget *widget, GdkEventButton *event);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
 

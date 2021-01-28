@@ -154,10 +154,7 @@ void reg_send_request() {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "user_id"));
         t_account.id = user_id;
         if (user_id == -1) {
-            printf("This username is already occuped, choose another one\n");
-        }
-        else {
-            printf("My new user id: %d\n", user_id);
+            update_user_avatar(t_avatar.avatar_num);
         }
     }
     mx_strdel(&result);

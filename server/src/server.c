@@ -73,7 +73,7 @@ void ssl_server(int portnum) {
         socklen_t len = sizeof(addr);
 
         int client = accept(server, (struct sockaddr*)&addr, &len);
-        printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+        // printf("Connection: %s:%d\n",inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
 
         struct async_args args;
         args.ctx = ctx;
