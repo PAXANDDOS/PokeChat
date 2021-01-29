@@ -3,7 +3,7 @@
         <a href="https://github.com/PAXANDDOS/PokeChat/">
             <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/PokeChat.png?raw=true" height="200px">
         </a>
-        <h1 align="center">PokéChat — Pokémon-themed instant messaging service!</h1>
+        <h2 align="center">PokéChat — Pokémon-themed instant messaging service!</h2>
     </p>
 </head>
 <p align="center">
