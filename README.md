@@ -3,7 +3,7 @@
         <a href="https://github.com/PAXANDDOS/PokeChat/">
             <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/PokeChat.png?raw=true" height="200px">
         </a>
-        <h2 align="center">PokéChat — Pokémon-themed instant messaging service!</h2>
+        <h1 align="center">PokéChat — Pokémon-themed instant messaging service!</h1>
     </p>
 </head>
 <p align="center">
@@ -23,4 +23,9 @@
             <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/cjson.png?raw=true" height="100px">
         </a>
 </p>
-<h1>History of creation</h1>
+<h2>Download</h2>
+    <p align="center">
+    <a href="https://github.com/PAXANDDOS/PokeChat/archive/0.8.9-alpha.zip" target="_blank"><b>Latest alpha version</b></a><br>
+    <a href="https://github.com/PAXANDDOS/PokeChat/releases" target="_blank">All releases</a>
+    </p>
+<h2>History of creation</h2>
