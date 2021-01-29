@@ -93,7 +93,7 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 
 static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
     if(widget) {}
-    GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist)); // GList *parent_c = parent;
+    GList *parent = gtk_container_get_children(GTK_CONTAINER(t_msg.crlist));
     if(parent == NULL){
         create_notification(t_application.messanger, "No user selected!", 1, 461, 110, 420, 10);
         return;

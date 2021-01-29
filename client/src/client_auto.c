@@ -14,6 +14,7 @@ void test_autofill()
     avatar_random();
 
     t_msg.current = "here..."; // Имя выбранного пользователя в плейсхолдере
+    msg_data.content = NULL;
 
     t_application.app = "PokeChat alpha 0.8.9";
     t_application.user = getenv("USER");

@@ -122,14 +122,14 @@ static void build_entryfield(GtkWidget *main)
     gtk_widget_set_valign(GTK_WIDGET(attach), GTK_ALIGN_CENTER);
     tooltip("Attach image",attach);
 
-    GtkWidget *entry_text = gtk_entry_new();
-    gtk_widget_set_name(GTK_WIDGET(entry_text), "entry_text");
+    t_msg.entry = gtk_entry_new();
+    gtk_widget_set_name(GTK_WIDGET(t_msg.entry), "entry_text");
     char* entry_placeholder_text = mx_strjoin("Message ", t_msg.current);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry_text), entry_placeholder_text);
-    g_signal_connect(G_OBJECT(entry_text), "insert-text", G_CALLBACK(all_input_event), NULL);
-    gtk_entry_set_max_length(GTK_ENTRY(entry_text), MAX_MESSAGE);
-    gtk_box_pack_start(GTK_BOX(entry_block), entry_text, TRUE, TRUE, 0);
-    g_signal_connect(G_OBJECT(entry_text), "changed", G_CALLBACK(entry_text_change_event), NULL);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(t_msg.entry), entry_placeholder_text);
+    g_signal_connect(G_OBJECT(t_msg.entry), "insert-text", G_CALLBACK(all_input_event), NULL);
+    gtk_entry_set_max_length(GTK_ENTRY(t_msg.entry), MAX_MESSAGE);
+    gtk_box_pack_start(GTK_BOX(entry_block), t_msg.entry, TRUE, TRUE, 0);
+    g_signal_connect(G_OBJECT(t_msg.entry), "changed", G_CALLBACK(entry_text_change_event), NULL);
 
     GtkWidget *send = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(send), "send");
@@ -153,8 +153,8 @@ static void build_entryfield(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(send), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(send), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), entry_text);
-    g_signal_connect(G_OBJECT(entry_text), "activate", G_CALLBACK(send_press), NULL);
+    g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), t_msg.entry);
+    g_signal_connect(G_OBJECT(t_msg.entry), "activate", G_CALLBACK(send_press), NULL);
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -187,7 +187,7 @@ static void build_entryfield(GtkWidget *main)
 //         break;
 //         }
 
-//     return GDK_EVENT_STOP; 
+//     return GDK_EVENT_STOP;
 // }
 
 // static void scrolled(GtkWidget *widget, GdkEventButton *event)

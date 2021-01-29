@@ -13,7 +13,7 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     //--//
     GtkWidget *user_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(account_block), user_box, FALSE, FALSE, 20);
-    
+
     GtkWidget *avatar_container = gtk_fixed_new();
     gtk_widget_set_valign(GTK_WIDGET(avatar_container), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(user_box), avatar_container, FALSE, FALSE, 0);
@@ -21,7 +21,7 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     GtkWidget *avatar = gtk_drawing_area_new();
     g_signal_connect(G_OBJECT(avatar), "draw", G_CALLBACK(draw_event_avatar_account), (int*)100);
     gtk_fixed_put(GTK_FIXED(avatar_container), avatar, 0, 0);
-    
+
     GtkWidget *add_button = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(add_button), "add_button");
     tooltip("Upload picture",add_button);
@@ -34,7 +34,7 @@ static void build_account_menu(GtkWidget *menu_block, GtkWidget *main)
     gtk_widget_set_size_request(GTK_WIDGET(gallery_button), 32, 32);
     tooltip("Choose picture",gallery_button);
     gtk_fixed_put(GTK_FIXED(avatar_container), gallery_button, 84, 32);
-    
+
     GtkWidget *names_account = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_valign(GTK_WIDGET(names_account), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(user_box), names_account, FALSE, FALSE, 20);

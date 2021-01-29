@@ -95,7 +95,7 @@ struct {
 
 struct                      // Structure for current user account data
 {
-    unsigned int id;
+    int id;
     char *username;         // For account username
     char *name;             // For account real name
     char *password;         // char* for password
@@ -148,7 +148,6 @@ struct      // Structure for random pokemon data
 //-------> Messages
 typedef struct s_msg_data   // Structure for data in messages
 {
-    bool sent;              // If send button was pressed
     int avatar;             // For avatars
     char *username;         // For nicknmes
     char *time;
@@ -200,6 +199,7 @@ struct s_chat   // Selected user in chatlist
 struct
 {
     GtkWidget *main;
+    GtkWidget *entry;
     GtkWidget *embedded_view;
     GtkWidget *background;
     GtkWidget *stickers;

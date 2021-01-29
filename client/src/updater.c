@@ -1,6 +1,6 @@
 #include "../inc/client.h"
 
-static void generate_new_message(uint user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, int photo) {
+static void generate_new_message(int user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, int photo) {
     // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %d\n\n", user_id, text, sticker, photo);
     (void)photo;
     if (msg_data.date) {

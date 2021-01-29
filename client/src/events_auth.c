@@ -153,7 +153,7 @@ void reg_send_request() {
     else {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "user_id"));
         t_account.id = user_id;
-        if (user_id == -1) {
+        if (user_id != -1) {
             update_user_avatar(t_avatar.avatar_num);
         }
     }
@@ -181,10 +181,15 @@ void reg_butt_click(GtkWidget *widget){
     || strlen(t_account_temp.password) < 5)
         return;
 
-     if(strcmp(t_account_temp.repass, t_account_temp.password)){
+    if(strcmp(t_account_temp.repass, t_account_temp.password)){
         create_notification(t_application.auth, "Passwords do not match!", 1, 430, 30, 420, 10);
         return;
-     }
+    }
+
+    if(t_account_temp.code == 0){
+        create_notification(t_application.auth, "Select a team!", 1, 430, 30, 420, 10);
+        return;
+    }
 
     t_account.avatar = t_avatar.avatar_generated;
     t_account.username = strdup(t_account_temp.username);

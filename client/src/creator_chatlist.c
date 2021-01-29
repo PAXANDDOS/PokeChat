@@ -86,7 +86,7 @@ GtkWidget *create_chatlist() {
         gtk_widget_set_name(GTK_WIDGET(single), "singlepad");
         gtk_container_add(GTK_CONTAINER(single_event), single);
 
-        g_signal_connect(G_OBJECT(single_event), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+        g_signal_connect(G_OBJECT(single_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
         g_signal_connect(G_OBJECT(single_event), "button_press_event", G_CALLBACK(person_click), NULL);
         tooltip("Message/Profile",single_event);

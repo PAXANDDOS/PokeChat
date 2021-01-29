@@ -51,7 +51,6 @@ void pokemon_random() {
     int pick = rand() % num + 1;
     dir = NULL;
     sd = NULL;
-    printf("NOW IS %d\n", pick);
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, mx_itoa(pick));
     t_pokefact.pokemon_fact_image = mx_strjoin(t_pokefact.pokemon_fact_image, ".png");
     t_pokefact.pokemon_fact_text = mx_strjoin(t_pokefact.pokemon_fact_text, mx_itoa(pick));

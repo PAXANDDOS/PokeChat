@@ -112,7 +112,6 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         msg_data.content = mx_strtrim(msg_data.content);
         if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
             return;
-        msg_data.sent = true;
         if (msg_data.date) {
             mx_strdel(&msg_data.date_prev);
             msg_data.date_prev = strdup(msg_data.date);
@@ -127,8 +126,9 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.content = NULL;
-        msg_data.sent = false;
     }
+    else if(!msg_data.chat_id)
+        create_notification(t_application.messanger, "Select recipient first!", 1, WINDOW_WIDTH-206, WINDOW_HEIGHT-ENTRY_H-28, 200, 20);
 }
 
 void send_press(GtkWidget *widget) {
@@ -137,7 +137,6 @@ void send_press(GtkWidget *widget) {
         msg_data.content = mx_strtrim(msg_data.content);
         if(msg_data.content == NULL || !strcmp(msg_data.content, "") || !strcmp(msg_data.content, " "))
             return;
-        msg_data.sent = true;
         if (msg_data.date) {
             mx_strdel(&msg_data.date_prev);
             msg_data.date_prev = strdup(msg_data.date);
@@ -151,8 +150,8 @@ void send_press(GtkWidget *widget) {
         pthread_create(&thread, NULL, send_message, NULL);
         new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(widget), "");
-        msg_data.sent = false;
     }
+    else create_notification(t_application.messanger, "Select recipient first!", 1, WINDOW_WIDTH-206, WINDOW_HEIGHT-ENTRY_H-28, 200, 20);
 }
 
 void entry_text_change_event(GtkWidget *widget) {
@@ -169,23 +168,57 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1 && !upd_data.busy)
     {
-        upd_data.suspend = true;
-        gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
-        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget)); // GList *parent_c = parent;
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data)); // GList *children_c = children;
+        GList *parent = gtk_container_get_children(GTK_CONTAINER(widget));
+        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
         children = children->next;
-        // char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        children = children->next;
-        char* chat_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        children = children->next;
-        // char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
-        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
-        for (int i = 0; i < upd_data.count; i++)
-            if (upd_data.chats_id[i] == msg_data.chat_id)
-                upd_data.messages_id[i] = 0;
-        msg_data.chat_id = atoi(chat_id_from_label);
-        upd_data.suspend = false;
+
+        if(strcmp(t_msg.current, (char*)gtk_label_get_text(GTK_LABEL(children->data))))
+        {
+            gtk_entry_set_text(GTK_ENTRY(t_msg.entry), "");
+            msg_data.content = NULL;
+            upd_data.suspend = true;
+            gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
+        }
+
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        if(strcmp(t_msg.current, "here...")){
+            if(strcmp(t_msg.current, (char*)gtk_label_get_text(GTK_LABEL(children->data)))) {
+                GList *inner = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
+                while(inner != NULL)
+                {
+                    GList *inner_child = gtk_container_get_children(GTK_CONTAINER(inner->data));
+                    GList *inner_child2 = gtk_container_get_children(GTK_CONTAINER(inner_child->data));
+                    inner_child2 = inner_child2->next;
+                    char* chosen = (char*)gtk_label_get_text(GTK_LABEL(inner_child2->data));
+                    g_list_free(g_steal_pointer(&inner_child2));
+                    g_list_free(g_steal_pointer(&inner_child));
+                    if(!strcmp(t_msg.current, chosen)) {
+                        gtk_widget_unset_state_flags(GTK_WIDGET(inner->data), GTK_STATE_FLAG_LINK);
+                        break;
+                    }
+                    inner = inner->next;
+                }
+                g_list_free(g_steal_pointer(&inner));
+            }
+        }
+
+        if(strcmp(t_msg.current, (char*)gtk_label_get_text(GTK_LABEL(children->data))))
+        {
+            t_msg.current = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+
+            children = children->next;
+            char* chat_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+            children = children->next;
+            // char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
+            for (int i = 0; i < upd_data.count; i++)
+                if (upd_data.chats_id[i] == msg_data.chat_id)
+                    upd_data.messages_id[i] = 0;
+            msg_data.chat_id = atoi(chat_id_from_label);
+            upd_data.suspend = false;
+        }
+
+        g_list_free(g_steal_pointer(&children));
+        g_list_free(g_steal_pointer(&parent));
     }
     if(event->type == GDK_BUTTON_PRESS && event->button == 3)
     {
@@ -210,8 +243,8 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             creator_userprofile(t_msg.main, user);
             free_user(user);
         }
-        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); // 
-        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); // 
+        g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); //
+        g_list_free(g_steal_pointer(&parent)); // g_list_free(parent_c); //
     }
 }
 
