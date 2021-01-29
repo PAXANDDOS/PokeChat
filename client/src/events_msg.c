@@ -180,7 +180,7 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
         }
 
-        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, FALSE);
         if(strcmp(t_msg.current, "here...")){
             if(strcmp(t_msg.current, (char*)gtk_label_get_text(GTK_LABEL(children->data)))) {
                 GList *inner = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
