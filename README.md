@@ -8,19 +8,19 @@
 </head>
 <p align="center">
         <a href="https://www.gtk.org/" target="_blank">
-            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/gtk+3.png?raw=true" height="80">
+            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/gtk+3.png?raw=true" height="70">
         </a>
         <a href="https://www.openssl.org/" target="_blank">
-            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/openssl.png?raw=true" height="80">
+            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/openssl.png?raw=true" height="70">
         </a>
         <a href="https://sqlite.org/index.html" target="_blank">
-            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/sqlite3.png?raw=true" height="80">
+            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/sqlite3.png?raw=true" height="70">
         </a>
         <a href="https://www.libsdl.org/index.php" target="_blank">
-            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/Images/Endgame/sdl.png?raw=true" height="80">
+            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/Images/Endgame/sdl.png?raw=true" height="70">
         </a>
         <a href="https://github.com/DaveGamble/cJSON" target="_blank">
-            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/cjson.png?raw=true" height="80">
+            <img src="https://github.com/PAXANDDOS/PAXANDDOS/blob/main/PokeChat/Header/cjson.png?raw=true" height="70">
         </a>
 </p>
 <h2>Download</h2>
