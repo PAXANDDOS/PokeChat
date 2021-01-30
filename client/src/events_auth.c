@@ -186,7 +186,7 @@ void reg_butt_click(GtkWidget *widget){
         return;
     }
 
-    if(t_account_temp.code == 0){
+    if(t_account_temp.team == 0){
         create_notification(t_application.auth, "Select a team!", 1, 430, 30, 420, 10);
         return;
     }

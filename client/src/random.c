@@ -34,7 +34,7 @@ void pokemon_random() {
     DIR* dir = NULL;
     struct dirent *sd = NULL;
 
-    int num = 53;
+    int num = 65;
 
     // dir = opendir("client/data/pokemon/");
     // if(dir == NULL) return;
@@ -62,7 +62,7 @@ void pokemon_random() {
 char* random_phrase()
 {
     srand(time(NULL));
-    int num = rand() % 20 + 1;
+    int num = rand() % 42 + 1;
     char *phrase[] = {"There's no one here!",
     "Hey, I know. I’ll use my trusty frying pan as a drying pan.",
     "Don’t worry that pretty blue head of yours, I’ve got a plan.",
@@ -83,7 +83,28 @@ char* random_phrase()
     "You see, sometimes friends have to go away, but a part of them stays behind with you.",
     "The important thing is not how long you live. It’s what you accomplish with your life.",
     "I will show you that my love for my friends permeates every cell in my body.",
-    "Me give up? No way!"};
+    "Me give up? No way!",
+    "12/10. Best Chat of 2021",
+    "The Last of Chats",
+    "Just a regular chat, but with a little bit of Pokemon",
+    "Don't forget the plug in the microwave!",
+    "Jason Citron has not seen this chat",
+    "Houston, we have a problem",
+    "Try to find a JoJo reference",
+    "Yep, we have Easter Eggs in this chat",
+    "Are you chatting, son?",
+    "You’re a Pokemon trainer, Harry.",
+    "First Time?",
+    "I’m something of a Pokemon trainer",
+    "Alright then, keep your secrets",
+    "Pika-Pika-Pikachu",
+    "ピカチュウ",
+    "Stay at home and use PokeChat",
+    "Who said 'Pika Pika'?",
+    "*Angry Pokemon noises*",
+    "Catch 'em all!",
+    "Have you seen Vaporeon?",
+    "Random Pokemon vibes"};
 
     return phrase[num];
 }

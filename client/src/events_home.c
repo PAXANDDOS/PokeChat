@@ -3,7 +3,9 @@
 //--//--//--// OVERALL //--//--//--//
 
 void event_enter_notify(GtkWidget *widget) {
-    gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+    if (!(flags & GTK_STATE_FLAG_LINK))
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
 }
 
 void event_false_enter_notify(GtkWidget *widget) {
