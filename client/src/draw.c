@@ -171,8 +171,7 @@ gboolean draw_event_embedded(GtkWidget *widget, cairo_t *cr, char* path) {
     if(b > 200) b = 200;
     a = b * a / old_b;
     g_object_unref(G_OBJECT(pb));
-
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file_at_scale(path, a, b, FALSE, NULL); // get_pixbuf_with_size(path, a, b);
+    GdkPixbuf *pixbuf = get_pixbuf_with_size(path, a, b);
     gdk_cairo_set_source_pixbuf(cr, pixbuf, 0, 0);
     g_object_unref(G_OBJECT(pixbuf));
 

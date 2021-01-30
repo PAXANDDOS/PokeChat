@@ -102,7 +102,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
     if (buf.st_size < 3145728) // 3mb
         new_outgoing_embedded(t_chat.chat_screen, path);
     else create_notification(t_application.messanger, "Your file is too big!", 1, WINDOW_WIDTH-216, 10, 200, 20);
-    free(path);
+    //free(path);
 }
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
