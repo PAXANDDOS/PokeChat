@@ -29,3 +29,35 @@
     <a href="https://github.com/PAXANDDOS/PokeChat/releases" target="_blank">All releases</a>
     </p>
 <h2>History of creation</h2>
+<p align="left">
+PokéChat is a challenge of <b><a href="https://ucode.world/" target="_blank">UCODE IT Academy</a> - uchat</b>. The challenge was to write your own instant messaging application <b>using only C</b> programming language. However, the learning task became a personal goal for me.<br>The estimated time to create a chatting application was 1 month (04.01-15.02) but I started working on it back in November. I was doing all the work by myself during the first 2 months, learning how to work with GTK + and all of its stuff... It was tough times but I've made it! In the beginning, the application looked and worked awful, but over time I've learned how to deal with GTK and rewrote old code for the program to be more optimized and prettier. Inspired by the still popular <strike>anime</strike> cartoon I've created something bigger than a common messanger. Why Pokémon? Well, back in November we were playing Pokémon GO and thought that this app needs something to chat with, it was a quick choice.<br>Then, in mid-December, one person from the team joined the work. @naztar0 was doing server-side work using OpenSSL and SQLite.<br>I can't believe that 2/4 people can make such work using C. Also @Overwolf-live helped with different Pokémon data: images, description and sounds.
+</p>
+<h3>First concepts</h3>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/Concept1.png" height="300"><br>
+    That's how the first concept looked back in November. It had no theme at the beginning and messenger looked simple, common. I don't think it was ugly but I've rejected that idea.
+</p>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/Concept2.png" height="250"><img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/Concept2StatusTab.png" height="250"><br>
+    Now it looks more like the final version. First concept of PokéChat! Pretty Discord-like colors and user-friendly interface.
+</p>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/Concept2.5WelcomeScreenUpdate.png" height="260">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/Concept2.5.png" height="260"><br>
+    Here's the first and almost the final look of home screen with three big buttons, activity block and Pokémon facts! Messanger screen is the same as the previous, but prettier: message blocks, icons, images.
+</p>
+<h3>Logo</h3>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/logo1.png" height="150"><br>
+    I was not planning to make a messenger logo but more I was doing the work more I wanted to make a logo. That was the first one.
+</p>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/logo2.png" height="150">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/logo2%2C5.png" height="150"><br>
+    The second.
+</p>
+<p align="left">
+    <img src="https://raw.githubusercontent.com/PAXANDDOS/PAXANDDOS/main/PokeChat/description/logo3.png" height="150"><br>
+    And the final one. I think that's the best one.
+</p>
+<h2>Functionality</h2>
