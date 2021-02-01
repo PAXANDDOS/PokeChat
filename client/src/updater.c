@@ -78,15 +78,20 @@ static char *get_bitmap(int photo_id) {
     ssl_client(json_string, &result);
     mx_strdel(&json_string);
     cJSON_Delete(json);
-
     cJSON *response = cJSON_Parse(result);
+    if (cJSON_IsNull(response)) {
+        cJSON_Delete(response);
+        mx_strdel(&result);
+        mx_strdel(&filepath);
+        filepath = strdup("client/data/images/invalid-image.png");
+        return filepath;
+    }
     char *bitmap64 = cJSON_GetStringValue(cJSON_GetObjectItem(response, "bitmap"));
     char *extension = cJSON_GetStringValue(cJSON_GetObjectItem(response, "extension"));
     filepath = mx_strrejoin(filepath, extension);
     int length = strlen(bitmap64);
     const int img_size = length * 3 / 4;
     u_char *bitmap = malloc(img_size + 1);
-    // printf("%s\n\n%s\n\n", result, bitmap64);
     printf("len: %d\n", img_size);
     EVP_DecodeBlock(bitmap, (const u_char*)bitmap64, length);
     cJSON_Delete(response);

@@ -54,12 +54,14 @@ dkms.conf
 # Cringe
 .DS_Store
 ._.DS_Store
-database.db
 libmx.a
 libcjson.a
 libsqlite3.a
 uchat
 uchat_server
+database.db
 media_count
-media_server/*
+media_server/
+media_client/
+temp/
 # ALO
