@@ -34,7 +34,6 @@
     <img alt="css" src="https://img.shields.io/badge/-CSS3-3581E5?style=flat-square&logo=css3&logoColor=white" />
     <img alt="git" src="https://img.shields.io/badge/-Git-3581E5?style=flat-square&logo=git&logoColor=white" /><br>
     <a href="https://github.com/PAXANDDOS/PokeChat/commits/main" target="_blank"><img alt="commit" src="https://img.shields.io/github/last-commit/PAXANDDOS/PokeChat?color=3581E5&label=last%20commit&style=flat-square" /></a>
-    <img alt="checks" src="https://img.shields.io/github/checks-status/PAXANDDOS/PokeChat/main?color=3581E5&style=flat-square" />
     <img alt="size" src="https://img.shields.io/github/repo-size/PAXANDDOS/PokeChat?color=3581E5&style=flat-square" />
     <a href="https://github.com/PAXANDDOS/PokeChat/issues" target="_blank"><img alt="issues" src="https://img.shields.io/github/issues/PAXANDDOS/PokeChat?color=3581E5&style=flat-square" /></a>
     <a href="https://github.com/PAXANDDOS/PokeChat/releases" target="_blank"><img alt="downloads" src="https://img.shields.io/github/downloads/PAXANDDOS/PokeChat/total?color=3581E5&style=flat-square" /></a>
