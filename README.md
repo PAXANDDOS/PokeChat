@@ -24,15 +24,15 @@
         </a>
 </p>
 <p align="center">
-    <img alt="pokemon" src="https://img.shields.io/badge/Pokémon-3581E5.svg?style=flat&logo=pokémon&logoColor=white" />
-    <img alt="C" src="https://img.shields.io/badge/C-3581E5.svg?style=flat&logo=c&logoColor=white" />
-    <img alt="gtk3" src="https://img.shields.io/badge/-GTK+3.0-3581E5?style=flat-flat&logo=gtk+&logoColor=white" />
-    <img alt="openssl" src="https://img.shields.io/badge/-OpenSSL-3581E5?style=flat-flat&logo=openssl&logoColor=white" />
-    <img alt="sqlite" src="https://img.shields.io/badge/-SQLite-3581E5?style=flat-flat&logo=sqlite&logoColor=white" />
-    <img alt="sdl" src="https://img.shields.io/badge/-SDL-3581E5?style=flat-flat&logo=sdl&logoColor=white" />
-    <img alt="json" src="https://img.shields.io/badge/-JSON-3581E5?style=flat-flat&logo=json&logoColor=white" />
-    <img alt="css" src="https://img.shields.io/badge/-CSS3-3581E5?style=flat-flat&logo=css3&logoColor=white" />
-    <img alt="git" src="https://img.shields.io/badge/-Git-3581E5?style=flat-flat&logo=git&logoColor=white" />
+    <img alt="pokemon" src="https://img.shields.io/badge/Pokémon-3581E5.svg?style=flat-square&logo=pokémon&logoColor=white" />
+    <img alt="C" src="https://img.shields.io/badge/C-3581E5.svg?style=flat-square&logo=c&logoColor=white" />
+    <img alt="gtk3" src="https://img.shields.io/badge/-GTK+3.0-3581E5?style=flat-square&logo=gtk+&logoColor=white" />
+    <img alt="openssl" src="https://img.shields.io/badge/-OpenSSL-3581E5?style=flat-square&logo=openssl&logoColor=white" />
+    <img alt="sqlite" src="https://img.shields.io/badge/-SQLite-3581E5?style=flat-square&logo=sqlite&logoColor=white" />
+    <img alt="sdl" src="https://img.shields.io/badge/-SDL-3581E5?style=flat-square&logo=sdl&logoColor=white" />
+    <img alt="json" src="https://img.shields.io/badge/-JSON-3581E5?style=flat-square&logo=json&logoColor=white" />
+    <img alt="css" src="https://img.shields.io/badge/-CSS3-3581E5?style=flat-square&logo=css3&logoColor=white" />
+    <img alt="git" src="https://img.shields.io/badge/-Git-3581E5?style=flat-square&logo=git&logoColor=white" />
 </p>
 <h2>Download</h2>
     <p align="center">
