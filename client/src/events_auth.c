@@ -141,7 +141,7 @@ void reg_send_request() {
     cJSON_AddStringToObject(json_reg_user, "name", t_account.name);
     cJSON_AddStringToObject(json_reg_user, "code", t_account.code);
     cJSON_AddStringToObject(json_reg_user, "password", t_account.password);
-    cJSON_AddStringToObject(json_reg_user, "password", t_account.password);
+    cJSON_AddNumberToObject(json_reg_user, "team", t_account.team);
     cJSON_AddItemToObject(json, "register_user", json_reg_user);
     char *json_string = cJSON_PrintUnformatted(json);
     printf("%s\n", json_string);
