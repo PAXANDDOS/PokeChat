@@ -13,10 +13,9 @@ MAKE_M = make -sf Makefile -C
 MKDIR_M = mkdir -p
 RM = /bin/rm -rf
 
-all:
+all: required_dirs
 	@$(MAKE_M) $(CLIENT_DIR) $@
 	@$(MAKE_M) $(SERVER_DIR) $@
-	required_dirs
 
 $(NAME):
 	@$(MAKE_M) $(CLIENT_DIR)
