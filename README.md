@@ -32,7 +32,16 @@
     <img alt="sdl" src="https://img.shields.io/badge/-SDL-3581E5?style=flat-square&logo=sdl&logoColor=white" />
     <img alt="json" src="https://img.shields.io/badge/-JSON-3581E5?style=flat-square&logo=json&logoColor=white" />
     <img alt="css" src="https://img.shields.io/badge/-CSS3-3581E5?style=flat-square&logo=css3&logoColor=white" />
-    <img alt="git" src="https://img.shields.io/badge/-Git-3581E5?style=flat-square&logo=git&logoColor=white" />
+    <img alt="git" src="https://img.shields.io/badge/-Git-3581E5?style=flat-square&logo=git&logoColor=white" /><br>
+    <img alt="git" src="https://img.shields.io/github/last-commit/PAXANDDOS/PokeChat?color=3581E5&label=last%20commit&style=flat-square" />
+    <img alt="git" src="https://img.shields.io/github/checks-status/PAXANDDOS/PokeChat/main?color=3581E5&style=flat-square" />
+    <img alt="git" src="https://img.shields.io/github/repo-size/PAXANDDOS/PokeChat?color=3581E5&style=flat-square" />
+    <img alt="git" src="https://img.shields.io/github/issues/PAXANDDOS/PokeChat?color=3581E5&style=flat-square" />
+    <img alt="git" src="https://img.shields.io/github/downloads/PAXANDDOS/PokeChat/total?color=3581E5&style=flat-square" />
+    <img alt="git" src="https://img.shields.io/github/v/release/PAXANDDOS/PokeChat?color=3581E5&include_prereleases&style=flat-square" /><br>
+    <img alt="git" src="https://img.shields.io/github/followers/PAXANDDOS?color=3581E5&label=Follow%20me&style=social" />
+    <img alt="git" src="https://img.shields.io/github/watchers/PAXANDDOS/PokeChat?label=Watch&style=social" />
+    <img alt="git" src="https://img.shields.io/github/stars/PAXANDDOS/PokeChat?style=social" />
 </p>
 <h2>Download</h2>
     <p align="center">
