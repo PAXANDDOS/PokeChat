@@ -45,7 +45,7 @@
 </p>
 <h2>Download</h2>
     <p align="center">
-    <a href="https://github.com/PAXANDDOS/PokeChat/archive/0.8.9-alpha.zip" target="_blank"><b>Latest alpha version</b></a><br>
+    <a href="https://github.com/PAXANDDOS/PokeChat/releases/tag/0.9.5-beta" target="_blank"><b>Latest beta version</b></a> — <a href="https://github.com/PAXANDDOS/PokeChat/archive/0.9.5-beta.zip" target="_blank">Download</a><br>
     <a href="https://github.com/PAXANDDOS/PokeChat/releases" target="_blank">All releases</a>
     </p>
 <h2>History of creation</h2>
