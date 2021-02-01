@@ -27,6 +27,8 @@
 #define DB_TABLE_MESSAGES "messages"
 #define DB_LIST     0x01
 #define DB_LAST_ID  0x02
+#define MEDIA_DIR   "media_server/"
+#define TEMP_DIR    "temp/"
 
 struct async_args {
     SSL_CTX *ctx;

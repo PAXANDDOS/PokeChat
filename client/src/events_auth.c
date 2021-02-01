@@ -153,7 +153,7 @@ void reg_send_request() {
     else {
         int user_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "user_id"));
         t_account.id = user_id;
-        if (user_id != -1) {
+        if (user_id > 0) {
             update_user_avatar(t_avatar.avatar_num);
         }
     }
@@ -209,8 +209,7 @@ void reg_butt_click(GtkWidget *widget){
     printf("Team = %hd\n", t_account.team);
 
     reg_send_request();
-    printf("-- %d\n", t_account.id);
-    if (t_account.id <= 0) {
+    if (t_account.id == 0) {
         create_notification(t_application.auth, "This username is already taken!", 1, 430, 30, 420, 10);
         return;
     }

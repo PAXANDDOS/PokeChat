@@ -228,11 +228,11 @@ static void build_chat(GtkWidget *main)
 
     // g_signal_connect(G_OBJECT(t_msg.scrolled_message), "scroll_event", G_CALLBACK(scrolled), NULL);
 
-    t_chat.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
-    gtk_widget_set_size_request(t_chat.chat_screen, CHAT_W, CHAT_H);               // Размер
-    gtk_widget_set_name(GTK_WIDGET(t_chat.chat_screen), "messages_block");         // Имя 2
+    t_msg.chat_screen = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);                 // Главный блок с сообщениями - вертикальный, все сообщения - горизонтальные
+    gtk_widget_set_size_request(t_msg.chat_screen, CHAT_W, CHAT_H);               // Размер
+    gtk_widget_set_name(GTK_WIDGET(t_msg.chat_screen), "messages_block");         // Имя 2
 
-    gtk_container_add(GTK_CONTAINER(t_msg.scrolled_message), t_chat.chat_screen);              // Кладем чат в скролл зону
+    gtk_container_add(GTK_CONTAINER(t_msg.scrolled_message), t_msg.chat_screen);              // Кладем чат в скролл зону
     gtk_fixed_put(GTK_FIXED(main),t_msg.scrolled_message, LIST_W, 0);                           // Кладем скролл зону на главный экран
 }
 

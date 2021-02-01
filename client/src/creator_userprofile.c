@@ -1,6 +1,45 @@
 #include "../inc/client.h"
 
-void creator_userprofile(GtkWidget *main, t_user *user)
+static void userprofile_send_click(GtkWidget *widget, gpointer chat_id) {
+    if(widget) {}
+    if(!upd_data.busy) {
+        upd_data.suspend = true;
+        gtk_widget_destroy(t_msg.background);
+        for (int i = 0; i < upd_data.count; i++)
+            if (upd_data.chats_id[i] == msg_data.chat_id) {
+                upd_data.messages_id[i] = 0;
+                break;
+            }
+        msg_data.chat_id = (int)(intptr_t)chat_id;
+        upd_data.suspend = false;
+    }
+}
+
+static void userprofile_remove_click(GtkWidget *widget, GdkEventButton *event, gpointer chat_id) {
+    if(widget) {}
+    if(event->button == 1 && !upd_data.busy) {
+        upd_data.suspend = true;
+        gtk_widget_destroy(t_msg.background);
+        gtk_widget_destroy(t_msg.chat_screen);
+        if (msg_data.chat_id == (int)(intptr_t)chat_id)
+            msg_data.chat_id = 0;
+
+        cJSON *json = cJSON_CreateObject();
+        cJSON *json_remove_chat = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_remove_chat, "sender_id", t_account.id);
+        cJSON_AddNumberToObject(json_remove_chat, "chat_id", (int)(intptr_t)chat_id);
+        cJSON_AddItemToObject(json, "remove_chat", json_remove_chat);
+        char *json_string = cJSON_PrintUnformatted(json);
+        char *result = NULL;
+        ssl_client(json_string, &result);
+        mx_strdel(&result);
+        mx_strdel(&json_string);
+        cJSON_Delete(json);
+        upd_data.suspend = false;
+    }
+}
+
+void creator_userprofile(GtkWidget *main, t_user *user, int chat_id)
 {
     t_msg.background = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(t_msg.background), "crgroup");
@@ -60,7 +99,6 @@ void creator_userprofile(GtkWidget *main, t_user *user)
     gtk_widget_set_halign(GTK_WIDGET(badge), GTK_ALIGN_START);
     tooltip(team_char, badge);
     gtk_box_pack_start(GTK_BOX(infobox), badge, FALSE, FALSE, 6);
-    //
 
     GtkWidget *interactions = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_end(GTK_BOX(avatarbox), interactions, FALSE, TRUE, 15);
@@ -70,7 +108,7 @@ void creator_userprofile(GtkWidget *main, t_user *user)
     gtk_button_set_relief(GTK_BUTTON(send_button), GTK_RELIEF_NONE);
     gtk_widget_set_size_request(GTK_WIDGET(send_button), 100, 10);
     gtk_box_pack_start(GTK_BOX(interactions), send_button, FALSE, FALSE, 0);
-    //g_signal_connect(G_OBJECT(send_button), "clicked", G_CALLBACK(create_group_button_click), group_name);
+    g_signal_connect(G_OBJECT(send_button), "clicked", G_CALLBACK(userprofile_send_click), (gpointer)(intptr_t)chat_id);
 
     GtkWidget *remove = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(remove), 30, 30);
@@ -79,8 +117,7 @@ void creator_userprofile(GtkWidget *main, t_user *user)
     gtk_box_pack_start(GTK_BOX(interactions), remove, FALSE, FALSE, 10);
     g_signal_connect(G_OBJECT(remove), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(remove), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    //g_signal_connect(G_OBJECT(remove), "button_press_event", G_CALLBACK(remove_person), (gpointer)(intptr_t)user_id);
-    //
+    g_signal_connect(G_OBJECT(remove), "button_press_event", G_CALLBACK(userprofile_remove_click), (gpointer)(intptr_t)chat_id);
 
     GtkWidget *bg = gtk_event_box_new();
     switch(user->team) {

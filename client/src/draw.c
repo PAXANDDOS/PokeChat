@@ -165,6 +165,9 @@ gboolean draw_event_sticker(GtkWidget *widget, cairo_t *cr, char* path) {
 }
 
 gboolean draw_event_embedded(GtkWidget *widget, cairo_t *cr, char* path) {
+    if (!path)
+        return 0;
+
     GdkPixbuf *pb = gdk_pixbuf_new_from_file(path, NULL);
     int a = gdk_pixbuf_get_width(pb), b = gdk_pixbuf_get_height(pb);
     int old_b = b;

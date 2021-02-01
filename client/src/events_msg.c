@@ -70,7 +70,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
         gtk_file_filter_add_pattern(filter, "*.jpg");
         gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
 
-        res = gtk_dialog_run (GTK_DIALOG (dialog));
+        res = gtk_dialog_run(GTK_DIALOG(dialog));
         if (res == GTK_RESPONSE_ACCEPT) {
             char *filename;
             GtkFileChooser *chooser = GTK_FILE_CHOOSER(dialog);
@@ -99,10 +99,16 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
         return;
     struct stat buf;
     stat(path, &buf);
-    if (buf.st_size < 3145728) // 3mb
-        new_outgoing_embedded(t_chat.chat_screen, path);
-    else create_notification(t_application.messanger, "Your file is too big!", 1, WINDOW_WIDTH-216, 10, 200, 20);
-    //free(path);
+    if (buf.st_size < 3145728) { // 3mb
+        photo_data.chat_id = msg_data.chat_id;
+        photo_data.photo_path = strdup(path);
+        pthread_t thread = NULL;
+        pthread_create(&thread, NULL, send_photo, NULL);
+        new_outgoing_embedded(t_msg.chat_screen, path);
+    }
+    else
+        create_notification(t_application.messanger, "Your file is too big!", 1, WINDOW_WIDTH-216, 10, 200, 20);
+    free(path);
 }
 
 void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
@@ -123,7 +129,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         msg_data.content_final = strdup(msg_data.content);
         pthread_t thread = NULL;
         pthread_create(&thread, NULL, send_message, NULL);
-        new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
+        new_outgoing_message(t_msg.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.content = NULL;
     }
@@ -148,7 +154,7 @@ void send_press(GtkWidget *widget) {
         msg_data.content_final = strdup(msg_data.content);
         pthread_t thread = NULL;
         pthread_create(&thread, NULL, send_message, NULL);
-        new_outgoing_message(t_chat.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
+        new_outgoing_message(t_msg.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(widget), "");
     }
     else create_notification(t_application.messanger, "Select recipient first!", 1, WINDOW_WIDTH-206, WINDOW_HEIGHT-ENTRY_H-28, 200, 20);
@@ -177,11 +183,11 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_entry_set_text(GTK_ENTRY(t_msg.entry), "");
             msg_data.content = NULL;
             upd_data.suspend = true;
-            gtk_container_forall(GTK_CONTAINER(t_chat.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
+            gtk_container_forall(GTK_CONTAINER(t_msg.chat_screen), (GtkCallback)gtk_widget_destroy, NULL);
         }
 
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
-        if(strcmp(t_msg.current, "here...")){
+        if(strcmp(t_msg.current, "here...")) {
             if(strcmp(t_msg.current, (char*)gtk_label_get_text(GTK_LABEL(children->data)))) {
                 GList *inner = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
                 while(inner != NULL)
@@ -211,8 +217,10 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             children = children->next;
             // char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
             for (int i = 0; i < upd_data.count; i++)
-                if (upd_data.chats_id[i] == msg_data.chat_id)
+                if (upd_data.chats_id[i] == msg_data.chat_id) {
                     upd_data.messages_id[i] = 0;
+                    break;
+                }
             msg_data.chat_id = atoi(chat_id_from_label);
             upd_data.suspend = false;
         }
@@ -237,10 +245,11 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
             creator_groupsettings(t_msg.main, username, admin);
         }
         else {
+            int chat_id = atoi(chat_id_from_label);
             t_user *user = malloc(sizeof(t_user));
             user->id = atoi(user_id_from_label);
             get_user(user);
-            creator_userprofile(t_msg.main, user);
+            creator_userprofile(t_msg.main, user, chat_id);
             free_user(user);
         }
         g_list_free(g_steal_pointer(&children)); // g_list_free(children_c); //

@@ -60,4 +60,6 @@ libcjson.a
 libsqlite3.a
 uchat
 uchat_server
+media_count
+media_server/*
 # ALO

@@ -36,6 +36,7 @@ uninstall:
 	@$(MAKE_M) $(LIBMX_DIR) $@
 	@$(MAKE_M) $(LIBCJSON_DIR) $@
 	@$(MAKE_M) $(LIBSQLITE_DIR) $@
+	rm -f media_client/*
 
 reinstall: uninstall all
 

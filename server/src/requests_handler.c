@@ -26,7 +26,7 @@ static void escape_apostrophe(char **str) {
     mx_strdel(&temp);
 }
 
-static void message_handler(char msg[], char **reply) {
+static void message_handler(char msg[], char **reply, bool *alloc) {
     cJSON *json = cJSON_Parse(msg);
     cJSON *json_update_message_id = cJSON_GetObjectItem(json, "update_message_id");
     cJSON *json_update_messages_rest = cJSON_GetObjectItem(json, "update_messages_rest");
@@ -35,8 +35,11 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_get_chat = cJSON_GetObjectItem(json, "get_chat");
     cJSON *json_get_user = cJSON_GetObjectItem(json, "get_user");
     cJSON *json_get_user_id = cJSON_GetObjectItem(json, "get_user_id");
+    cJSON *json_get_bitmap = cJSON_GetObjectItem(json, "get_bitmap");
     cJSON *json_send_message = cJSON_GetObjectItem(json, "send_message");
     cJSON *json_send_sticker = cJSON_GetObjectItem(json, "send_sticker");
+    cJSON *json_send_bitmap = cJSON_GetObjectItem(json, "send_bitmap");
+    cJSON *json_send_photo = cJSON_GetObjectItem(json, "send_photo");
     cJSON *json_register_user = cJSON_GetObjectItem(json, "register_user");
     cJSON *json_login_user = cJSON_GetObjectItem(json, "login_user");
     cJSON *json_update_user_main = cJSON_GetObjectItem(json, "update_user_main");
@@ -47,6 +50,7 @@ static void message_handler(char msg[], char **reply) {
     cJSON *json_update_user_online = cJSON_GetObjectItem(json, "update_user_online");
     cJSON *json_update_user_offline = cJSON_GetObjectItem(json, "update_user_offline");
     cJSON *json_create_chat = cJSON_GetObjectItem(json, "create_chat");
+    cJSON *json_remove_chat = cJSON_GetObjectItem(json, "remove_chat");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
@@ -288,6 +292,69 @@ static void message_handler(char msg[], char **reply) {
         *reply = strdup(cJSON_PrintUnformatted(json_user_id));
         cJSON_Delete(json_user_id);
     }
+    else if (json_get_bitmap) {
+        int photo_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_get_bitmap, "photo_id"));
+        char *count_str = mx_itoa(photo_id);
+        char *filepath = mx_strjoin(MEDIA_DIR, count_str);
+        char *filepath1 = mx_strjoin(filepath, ".png");
+        char *filepath2 = mx_strjoin(filepath, ".jpg");
+        char *filepath3 = mx_strjoin(filepath, ".jpeg");
+
+        bool e1 = false, e2 = false, e3 = false;
+        if(!access(filepath1, F_OK))
+            e1 = true;
+        else {
+            if(!access(filepath2, F_OK))
+                e2 = true;
+            else {
+                if(!access(filepath3, F_OK))
+                    e3 = true;
+            }
+        }
+        mx_strdel(&filepath1);
+        mx_strdel(&filepath2);
+        mx_strdel(&filepath3);
+        mx_strdel(&count_str);
+        if (!e1 && !e2 && !e3) {
+            mx_strdel(&filepath);
+            *reply = strdup("null");
+            return;
+        }
+        if (e1)
+            filepath = mx_strrejoin(filepath, ".png");
+        else if (e2)
+            filepath = mx_strrejoin(filepath, ".jpg");
+        else if (e3)
+            filepath = mx_strrejoin(filepath, ".jpeg");
+
+        FILE *f = fopen(filepath, "rb");
+        int img_size;
+        for(img_size = 0; getc(f) != EOF; ++img_size);
+        fclose(f);
+
+        char *bitmap = malloc(img_size);
+        BIO *file_bio = BIO_new_file(filepath, "rb");
+        BIO_read(file_bio, bitmap, img_size);
+
+        BIO *b64 = BIO_new(BIO_f_base64());
+        BIO *fo = BIO_new_file(mx_strjoin(TEMP_DIR, "b64"), "w");
+        BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+        BIO_push(b64, fo);
+        BIO_write(b64, bitmap, img_size);
+        BIO_flush(b64);
+        BIO_free_all(b64);
+        BIO_free_all(file_bio);
+        mx_strdel(&bitmap);
+
+        u_char *result = (u_char*)mx_file_to_str(mx_strjoin(TEMP_DIR, "b64"));
+
+        cJSON *json_send_bitmap = cJSON_CreateObject();
+        cJSON_AddStringToObject(json_send_bitmap, "bitmap", (const char*)result);
+        cJSON_AddStringToObject(json_send_bitmap, "extension", e1 ? ".png" : (e2 ? ".jpg" : "jpeg"));
+        *reply = cJSON_PrintUnformatted(json_send_bitmap);
+        *alloc = true;
+        cJSON_Delete(json_send_bitmap);
+    }
     else if (json_send_message) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_message, "chat_id"));
@@ -335,8 +402,8 @@ static void message_handler(char msg[], char **reply) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "chat_id"));
         int sticker_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_sticker, "sticker_id"));
-        char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "date"));
-        char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_message, "time"));
+        char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_sticker, "date"));
+        char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_sticker, "time"));
         // printf("SEND STICKER\nchat_id: %d\nuser_id: %d\nsticker: %d\n\n", chat_id, sender_id, sticker_id);
         char *sql_query = NULL;
         char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
@@ -364,6 +431,82 @@ static void message_handler(char msg[], char **reply) {
         mx_clear_list(&mes_list);
         sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, date, time, sticker_id) VALUES (%d, %d, %d, '%s', '%s', %d);";
         asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, date, time, sticker_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        cJSON *json_reply = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_reply, "message_id", last_id + 1);
+        *reply = strdup(cJSON_PrintUnformatted(json_reply));
+        mx_strdel(&sql_query);
+        cJSON_Delete(json_reply);
+    }
+    else if (json_send_bitmap) {
+        char *bitmap64 = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_bitmap, "bitmap"));
+        char *extension = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_bitmap, "extension"));
+
+        FILE *file = fopen("media_count", "rb");
+        int buf, count = 1;
+        if (file) {
+            fread(&buf, sizeof(buf), 1, file);
+            count = buf + 1;
+            fclose(file);
+        }
+        file = NULL;
+        file = fopen("media_count", "wb");
+        fwrite(&count, sizeof(buf), 1, file);
+        fclose(file);
+        file = NULL;
+
+        int length = strlen((const char*)bitmap64);
+        const int img_size = length * 3 / 4;
+        u_char *bitmap = malloc(img_size + 1);
+        EVP_DecodeBlock(bitmap, (const u_char*)bitmap64, length);
+
+        char *count_str = mx_itoa(count);
+        char *filepath = mx_strjoin(MEDIA_DIR, count_str);
+        filepath = mx_strrejoin(filepath, extension);
+        file = fopen(filepath, "wb");
+        fwrite(bitmap, img_size, 1, file);
+        fclose(file);
+        if (bitmap)
+            free(bitmap);
+
+        cJSON *json_reply = cJSON_CreateObject();
+        cJSON_AddNumberToObject(json_reply, "photo_id", count);
+        *reply = strdup(cJSON_PrintUnformatted(json_reply));
+        mx_strdel(&count_str);
+        cJSON_Delete(json_reply);
+    }
+    else if (json_send_photo) {
+        int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_photo, "sender_id"));
+        int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_photo, "chat_id"));
+        int photo_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_send_photo, "photo_id"));
+        char *date = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_photo, "date"));
+        char *time = cJSON_GetStringValue(cJSON_GetObjectItem(json_send_photo, "time"));
+
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
+        asprintf(&sql_query, sql_pattern, sender_id, chat_id);
+        t_list *ex = NULL;
+        ex = sqlite3_exec_db(sql_query, DB_LIST);
+        int exist = atoi(ex->data);
+        mx_clear_list(&ex);
+        mx_strdel(&sql_query);
+        if (exist == 0) {
+            mx_strdel(&sql_query);
+            *reply = strdup("null");
+            return;
+        }
+        sql_pattern = "SELECT message_id FROM messages WHERE chat_id=(%d) ORDER BY message_id DESC;";
+        asprintf(&sql_query, sql_pattern, chat_id);
+        t_list *mes_list = NULL;
+        mes_list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        int list_size = mx_list_size(mes_list);
+        int last_id = 0;
+        if (list_size > 0)
+            last_id = atoi(mes_list->data);
+        mx_clear_list(&mes_list);
+        sql_pattern = "INSERT INTO messages (message_id, chat_id, user_id, date, time, photo_id) VALUES (%d, %d, %d, '%s', '%s', %d);";
+        asprintf(&sql_query, sql_pattern, last_id + 1, chat_id, sender_id, date, time, photo_id);
         sqlite3_exec_db(sql_query, DB_LAST_ID);
         cJSON *json_reply = cJSON_CreateObject();
         cJSON_AddNumberToObject(json_reply, "message_id", last_id + 1);
@@ -614,6 +757,38 @@ static void message_handler(char msg[], char **reply) {
         *reply = strdup(cJSON_PrintUnformatted(new_chat));
         cJSON_Delete(new_chat);
     }
+    else if (json_remove_chat) {
+        int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_remove_chat, "sender_id"));
+        int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_remove_chat, "chat_id"));
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT members FROM chats WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, chat_id);
+        t_list *list = NULL;
+        list = sqlite3_exec_db(sql_query, DB_LIST);
+        mx_strdel(&sql_query);
+        if (mx_list_size(list) == 0) {
+            *reply = strdup("null");
+            return;
+        }
+        bool direct = atoi(list->data) == 2;
+        mx_clear_list(&list);
+        if (direct) {
+            sql_pattern = "DELETE FROM chats WHERE id=(%d);";
+            asprintf(&sql_query, sql_pattern, chat_id);
+            sqlite3_exec_db(sql_query, DB_LAST_ID);
+            mx_strdel(&sql_query);
+            sql_pattern = "DELETE FROM members WHERE chat_id=(%d);";
+            asprintf(&sql_query, sql_pattern, chat_id);
+            sqlite3_exec_db(sql_query, DB_LAST_ID);
+        }
+        else {
+            sql_pattern = "DELETE FROM members WHERE user_id=(%d);";
+            asprintf(&sql_query, sql_pattern, sender_id);
+            sqlite3_exec_db(sql_query, DB_LAST_ID);
+        }
+        mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
     else {
         *reply = strdup("null");
     }
@@ -631,12 +806,40 @@ void requests_handler(SSL *ssl) {
         bytes = SSL_read(ssl, buf, sizeof(buf));
         if (bytes > 0) {
             buf[bytes] = 0;
-            // printf("Client message: \"%s\"\n", buf);
-
-            message_handler(buf, &reply);
-            // printf("reply: %s\n", reply);
-
-            SSL_write(ssl, reply, strlen(reply));
+            if (is_num(buf)) {  // For requests with more than 4096 bytes
+                int len = atoi(buf);
+                char *buf_alloc = NULL;
+                SSL_write(ssl, "", 1);
+                bytes = 0;
+                while (bytes < len) {
+                    bytes += SSL_read(ssl, buf, sizeof(buf) - 1);
+                    buf[sizeof(buf) - 1] = 0;
+                    buf_alloc = mx_strrejoin(buf_alloc, buf);
+                    for (int i = 0; i < (int)sizeof(buf); i++)
+                        buf[i] = 0;
+                }
+                if (bytes > 0) {
+                    message_handler(buf_alloc, &reply, NULL);
+                    SSL_write(ssl, reply, strlen(reply));
+                    mx_strdel(&buf_alloc);
+                }
+                else
+                    ERR_print_errors_fp(stderr);
+            }
+            else {
+                bool alloc = false;
+                message_handler(buf, &reply, &alloc);
+                if (!alloc)
+                    SSL_write(ssl, reply, strlen(reply));
+                else {
+                    int len = strlen(reply);
+                    char *len_str = mx_itoa(len);
+                    SSL_write(ssl, len_str, strlen(len_str));
+                    SSL_read(ssl, buf, sizeof(buf));
+                    SSL_write(ssl, reply, len);
+                    mx_strdel(&len_str);
+                }
+            }
         }
         else
             ERR_print_errors_fp(stderr);

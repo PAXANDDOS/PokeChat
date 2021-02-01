@@ -26,6 +26,12 @@
 #include "openssl/bio.h"
 #include "openssl/evp.h"
 #include <pthread.h>
+#include <errno.h>
+#include <malloc/malloc.h>
+#include <resolv.h>
+#include <netdb.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
 
 // Windows
 #define WINDOW_WIDTH 1280
@@ -80,6 +86,8 @@
 #define UCHAT_HOST "127.0.0.1"  // UCODE-PC "10.11.4.9" // PUBLIC SERVER - "31.131.19.78"
 #define UCHAT_PORT 10000
 #define DB_NAME "database.db"
+#define MEDIA_DIR "media_client/"
+#define TEMP_DIR "temp/"
 
 typedef unsigned long long csum_t;
 
@@ -166,6 +174,13 @@ typedef struct s_sticker_data
 } t_sticker_data;
 t_sticker_data sticker_data;
 
+typedef struct s_photo_data
+{
+    char *photo_path;
+    int chat_id;
+} t_photo_data;
+t_photo_data photo_data;
+
 typedef struct s_updater
 {
     int *chats_id;
@@ -190,12 +205,6 @@ typedef struct s_chat_list              // Structure for people in the chat list
 }   t_chat_list;
 t_chat_list *chatlist;
 
-struct s_chat   // Selected user in chatlist
-{
-    GtkWidget *chat_screen;
-    struct s_chat *next;
-}   t_chat;
-
 struct
 {
     GtkWidget *main;
@@ -206,6 +215,7 @@ struct
     GtkWidget *crlist;
     GtkWidget *chatlist;
     GtkWidget *scrolled_message;
+    GtkWidget *chat_screen;
     char* current;
 }   t_msg;
 
@@ -299,10 +309,13 @@ void tooltip(char *str, void *data);
 char *mx_str_gettime();
 char *mx_str_getdate();
 
+SSL_CTX* InitCTX(void);
+int OpenConnection(const char *hostname, int port);
 int ssl_client(char*, char**);
+int ssl_client_alloc_len(char*, char**);
 void *send_message();
 void *send_sticker();
-void send_photo();
+void *send_photo();
 void *updater();
 bool add_user_to_group(char*, int*, int*);
 void create_group(int*);
@@ -330,7 +343,7 @@ void build_settings_menu(GtkWidget **stgscreen);
 void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
-void creator_userprofile(GtkWidget *main, t_user *user);
+void creator_userprofile(GtkWidget *main, t_user *user, int);
 void creator_groupsettings(GtkWidget *main, char *name, bool admin);
 void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h);
 

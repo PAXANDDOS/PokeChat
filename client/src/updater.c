@@ -1,8 +1,7 @@
 #include "../inc/client.h"
 
-static void generate_new_message(int user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, int photo) {
+static void generate_new_message(int user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, char *photo_path) {
     // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %d\n\n", user_id, text, sticker, photo);
-    (void)photo;
     if (msg_data.date) {
         mx_strdel(&msg_data.date_prev);
         msg_data.date_prev = strdup(msg_data.date);
@@ -18,22 +17,87 @@ static void generate_new_message(int user_id, int avatar, char *username, char *
         if (text) {
             msg_data.content = text;
             msg_data.content_final = strdup(msg_data.content);  // TODO эта хрень очень мешает, сделать переменную независимой, чтобы не пересекались инициализации
-            new_outgoing_message(t_chat.chat_screen);           // PS: все еще нужно переделать, но не могу, это пиздец как сложно. Пробовал передавать в new_outgoing_message вторым параметром текст, но каким-то хером происходит сегфолт в sll_client: 42. При чем эта функция вообще НИКАК не связана с вышеперечисленными изменениями
+            new_outgoing_message(t_msg.chat_screen);
             // mx_strdel(&msg_data.content_final);
         }
         else if (sticker)
-            new_outgoing_sticker(t_chat.chat_screen, sticker);
+            new_outgoing_sticker(t_msg.chat_screen, sticker);
+        else if (photo_path)
+            new_outgoing_embedded(t_msg.chat_screen, photo_path);
     }
     else {
         if (text) {
             msg_data.content = text;
             msg_data.content_final = strdup(msg_data.content);
-            new_incoming_message(t_chat.chat_screen);
+            new_incoming_message(t_msg.chat_screen);
             // mx_strdel(&msg_data.content_final);
         }
         else if (sticker)
-            new_incoming_sticker(t_chat.chat_screen, sticker);
+            new_incoming_sticker(t_msg.chat_screen, sticker);
+        else if (photo_path)
+            new_incoming_embedded(t_msg.chat_screen, photo_path);
     }
+}
+
+static char *get_bitmap(int photo_id) {
+    char *count_str = mx_itoa(photo_id);
+    char *filepath = mx_strjoin(MEDIA_DIR, count_str);
+    char *filepath1 = mx_strjoin(filepath, ".png");
+    char *filepath2 = mx_strjoin(filepath, ".jpg");
+    char *filepath3 = mx_strjoin(filepath, ".jpeg");
+
+    bool e1 = false, e2 = false, e3 = false;
+    if(!access(filepath1, F_OK))
+       e1 = true;
+    if(!access(filepath2, F_OK))
+       e2 = true;
+    if(!access(filepath3, F_OK))
+       e3 = true;
+    mx_strdel(&filepath1);
+    mx_strdel(&filepath2);
+    mx_strdel(&filepath3);
+    mx_strdel(&count_str);
+    if (e1) {
+        filepath = mx_strrejoin(filepath, ".png");
+        return filepath;
+    }
+    if (e2) {
+        filepath = mx_strrejoin(filepath, ".jpg");
+        return filepath;
+    }
+    if (e3) {
+        filepath = mx_strrejoin(filepath, ".jpeg");
+        return filepath;
+    }
+    cJSON *json = cJSON_CreateObject();
+    cJSON *json_get_bitmap = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_get_bitmap, "photo_id", photo_id);
+    cJSON_AddItemToObject(json, "get_bitmap", json_get_bitmap);
+    char *json_string = cJSON_PrintUnformatted(json);
+    char *result = NULL;
+    ssl_client(json_string, &result);
+    mx_strdel(&json_string);
+    cJSON_Delete(json);
+
+    cJSON *response = cJSON_Parse(result);
+    char *bitmap64 = cJSON_GetStringValue(cJSON_GetObjectItem(response, "bitmap"));
+    char *extension = cJSON_GetStringValue(cJSON_GetObjectItem(response, "extension"));
+    filepath = mx_strrejoin(filepath, extension);
+    int length = strlen(bitmap64);
+    const int img_size = length * 3 / 4;
+    u_char *bitmap = malloc(img_size + 1);
+    // printf("%s\n\n%s\n\n", result, bitmap64);
+    printf("len: %d\n", img_size);
+    EVP_DecodeBlock(bitmap, (const u_char*)bitmap64, length);
+    cJSON_Delete(response);
+    mx_strdel(&result);
+
+    FILE *file = fopen(filepath, "wb");
+    fwrite(bitmap, img_size, 1, file);
+    fclose(file);
+    if (bitmap)
+        free(bitmap);
+    return filepath;
 }
 
 void *updater() {
@@ -54,7 +118,7 @@ void *updater() {
                     cJSON_AddNumberToObject(updated_chat, "chat_id", upd_data.chats_id[i]);
                     cJSON_AddNumberToObject(updated_chat, "message_id", upd_data.messages_id[i]);
                     cJSON_AddItemToObject(update_request, "update_messages_rest", updated_chat);
-                    char *request_string = cJSON_Print(update_request);
+                    char *request_string = cJSON_PrintUnformatted(update_request);
                     cJSON_Delete(update_request);
                     char *result = NULL;
                     ssl_client(request_string, &result);
@@ -75,7 +139,7 @@ void *updater() {
                             cJSON_AddNumberToObject(updated_chat, "chat_id", upd_data.chats_id[i]);
                             cJSON_AddNumberToObject(updated_chat, "message_id", upd_data.messages_id[i]);
                             cJSON_AddItemToObject(update_request, "update_message_id", updated_chat);
-                            char *request_string = cJSON_Print(update_request);
+                            char *request_string = cJSON_PrintUnformatted(update_request);
                             cJSON_Delete(update_request);
                             char *result = NULL;
                             ssl_client(request_string, &result);
@@ -91,7 +155,7 @@ void *updater() {
                                 cJSON *get_user = cJSON_CreateObject();
                                 cJSON_AddNumberToObject(get_user, "user_id", user_id);
                                 cJSON_AddItemToObject(user_request, "get_user", get_user);
-                                request_string = cJSON_Print(user_request);
+                                request_string = cJSON_PrintUnformatted(user_request);
                                 cJSON_Delete(user_request);
                                 ssl_client(request_string, &result);
                                 mx_strdel(&request_string);
@@ -106,16 +170,19 @@ void *updater() {
                                 cJSON *json_text = cJSON_GetObjectItemCaseSensitive(mes_response, "text");
                                 cJSON *json_sticker = cJSON_GetObjectItemCaseSensitive(mes_response, "sticker_id");
                                 cJSON *json_photo = cJSON_GetObjectItemCaseSensitive(mes_response, "photo_id");
-                                char *text = NULL;
-                                int sticker = 0, photo = 0;
+                                char *text = NULL, *photo_path = NULL;
+                                int sticker_id = 0, photo_id = 0;
                                 if (json_text)
                                     text = cJSON_GetStringValue(json_text);
                                 if (json_sticker)
-                                    sticker = cJSON_GetNumberValue(json_sticker);
-                                if (json_photo)
-                                    photo = cJSON_GetNumberValue(json_photo);
-                                generate_new_message(user_id, avatar, username, time, date, text, sticker, photo);
+                                    sticker_id = cJSON_GetNumberValue(json_sticker);
+                                if (json_photo) {
+                                    photo_id = cJSON_GetNumberValue(json_photo);
+                                    photo_path = get_bitmap(photo_id);
+                                }
+                                generate_new_message(user_id, avatar, username, time, date, text, sticker_id, photo_path);
                                 mx_strdel(&username);
+                                mx_strdel(&photo_path);
                                 cJSON_Delete(mes_response);
                                 usleep(1000);
                             }
@@ -131,7 +198,7 @@ void *updater() {
             cJSON *json_sender = cJSON_CreateObject();
             cJSON_AddNumberToObject(json_sender, "sender_id", t_account.id);
             cJSON_AddItemToObject(get_chats_count, "get_chats_count", json_sender);
-            char *request = cJSON_Print(get_chats_count);
+            char *request = cJSON_PrintUnformatted(get_chats_count);
             char *result = NULL;
             ssl_client(request, &result);
             cJSON *response = cJSON_Parse(result);
@@ -156,7 +223,7 @@ void *updater() {
                     json_sender = cJSON_CreateObject();
                     cJSON_AddNumberToObject(json_sender, "sender_id", t_account.id);
                     cJSON_AddItemToObject(get_chats, "get_chats", json_sender);
-                    request = cJSON_Print(get_chats);
+                    request = cJSON_PrintUnformatted(get_chats);
                     ssl_client(request, &result);
                     response = cJSON_Parse(result);
                     const cJSON *chat_item = NULL;

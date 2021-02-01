@@ -1,14 +1,4 @@
 #include "../inc/client.h"
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
-#include <malloc/malloc.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <resolv.h>
-#include <netdb.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
 
 int OpenConnection(const char *hostname, int port) {
     int sd;
@@ -71,18 +61,34 @@ int ssl_client(char *message, char **response) {
     else {
         // printf("Connected with %s encryption\n", SSL_get_cipher(ssl));
         SSL_write(ssl, message, strlen(message));
-        bytes = SSL_read(ssl, buf, sizeof(buf));
+        bytes = SSL_read(ssl, buf, sizeof(buf) - 1);
         buf[bytes] = 0;
-        // printf("Received: \"%s\"\n", buf);
+        if (is_num(buf)) {  // For requests with more than 4096 bytes
+            int len = atoi(buf);
+            char *buf_alloc = NULL;
+            SSL_write(ssl, "", 1);
+            bytes = 0;
+            while (bytes < len) {
+                bytes += SSL_read(ssl, buf, sizeof(buf) - 1);
+                buf[sizeof(buf) - 1] = 0;
+                buf_alloc = mx_strrejoin(buf_alloc, buf);
+                for (int i = 0; i < (int)sizeof(buf); i++)
+                    buf[i] = 0;
+            }
+            if (bytes > 0) {
+                *response = strdup(buf_alloc);
+                mx_strdel(&buf_alloc);
+            }
+            else
+                ERR_print_errors_fp(stderr);
+        }
+        else {
+            *response = strdup(buf);
+        }
         SSL_free(ssl);
     }
     close(server);
     SSL_CTX_free(ctx);
-
-    *response = strdup(buf);
-    // just for test
-    // msg_data.content = strdup(buf);
-    // new_incoming_message(t_chats.chat_screen);
 
     return EXIT_SUCCESS;
 }
