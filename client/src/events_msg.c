@@ -5,6 +5,7 @@ void display_new_chat() {
     for(;p->next; p = p->next);
     GtkWidget *single = add_single(p);
     gtk_box_pack_start(GTK_BOX(t_msg.chatlist), single, FALSE, FALSE, 3);
+    gtk_box_reorder_child(GTK_BOX(t_msg.chatlist), single, 0);
     gtk_widget_show_all(GTK_WIDGET(t_msg.chatlist));
 
     g_signal_connect(G_OBJECT(single), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
@@ -132,6 +133,16 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         new_outgoing_message(t_msg.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
         gtk_entry_set_text(GTK_ENTRY(entry_text), "");
         msg_data.content = NULL;
+
+        GList *inner = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
+            while(inner != NULL)
+            {
+                GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(inner->data));
+                if (flags & GTK_STATE_FLAG_LINK)
+                    gtk_box_reorder_child(GTK_BOX(t_msg.chatlist), inner->data, 0);
+                inner = inner->next;
+            }
+        g_list_free(g_steal_pointer(&inner));
     }
     else if(!msg_data.chat_id)
         create_notification(t_application.messanger, "Select recipient first!", 1, WINDOW_WIDTH-206, WINDOW_HEIGHT-ENTRY_H-28, 200, 20);
