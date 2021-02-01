@@ -519,6 +519,7 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         char *name = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "name")));
         char *code = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "code")));
         char *password = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_register_user, "password")));
+        int team = cJSON_GetNumberValue(cJSON_GetObjectItem(json_register_user, "team"));
         // printf("%s\n", username);
         escape_apostrophe(&username);
         escape_apostrophe(&name);
@@ -535,11 +536,11 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 1) {
-            *reply = strdup("{\"user_id\": -1}");
+            *reply = strdup("{\"user_id\": 0}");
             return;
         }
-        sql_pattern = "INSERT INTO users (username, name, code, password) VALUES ('%s', '%s', '%s', '%s');";
-        asprintf(&sql_query, sql_pattern, username, name, code, password);
+        sql_pattern = "INSERT INTO users (username, name, code, password, team) VALUES ('%s', '%s', '%s', '%s', %d);";
+        asprintf(&sql_query, sql_pattern, username, name, code, password, team);
         int *ai = sqlite3_exec_db(sql_query, DB_LAST_ID);
         int user_id = *ai;
         mx_strdel(&username);
