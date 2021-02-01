@@ -29,9 +29,21 @@ static void before_exit_jobs(GdkPixbuf *icon) {
     mx_strdel(&msg_data.date);
     mx_strdel(&msg_data.time);
     mx_strdel(&msg_data.username);
+    unsetenv("UCHAT_HOST");
+    unsetenv("UCHAT_PORT");
+}
+
+static void init_server_connection(int argc, char *argv[]) {
+    if (argc != 3) {
+        fprintf(stderr, "usage : ./uchat [ip] [port]\n");
+        exit(EXIT_FAILURE);
+    }
+    setenv("UCHAT_HOST", argv[1], true);
+    setenv("UCHAT_PORT", argv[2], true);
 }
 
 int main(int argc, char *argv[]) {
+    init_server_connection(argc, argv);
     gtk_init(&argc, &argv);                             // Initializing GTK
     SDL_Init(SDL_INIT_AUDIO);                           // Initializing SDL
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);  // Initializing SDL Mixer

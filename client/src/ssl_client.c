@@ -43,6 +43,9 @@ int ssl_client(char *message, char **response) {
     SSL *ssl;
     char buf[4096];
     int bytes;
+
+    char *host = getenv("UCHAT_HOST");
+    int port = atoi(getenv("UCHAT_PORT"));
     // int fd = socket(AF_INET, SOCK_STREAM, 0);
     // struct timeval tv;
 
@@ -52,7 +55,7 @@ int ssl_client(char *message, char **response) {
     SSL_library_init();
 
     ctx = InitCTX();
-    server = OpenConnection(UCHAT_HOST, UCHAT_PORT);
+    server = OpenConnection(host, port);
     ssl = SSL_new(ctx);
     SSL_set_mode(ssl, SSL_MODE_ASYNC);
     SSL_set_fd(ssl, server);

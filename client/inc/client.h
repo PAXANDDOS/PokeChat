@@ -82,9 +82,6 @@
 #define MAX_PASS 16
 #define MAX_MESSAGE 1000
 
-#define UCHAT_HOST "10.11.4.10"  // UCODE-PC "10.11.4.9" // PUBLIC SERVER - "31.131.19.78"
-#define UCHAT_PORT 10000
-#define DB_NAME "database.db"
 #define MEDIA_DIR "media_client/"
 #define TEMP_DIR "temp/"
 
