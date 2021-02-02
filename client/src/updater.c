@@ -1,7 +1,7 @@
 #include "../inc/client.h"
 
 static void generate_new_message(int user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, char *photo_path) {
-    // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %d\n\n", user_id, text, sticker, photo);
+    // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %s\n\n", user_id, text, sticker, photo_path);
     if (msg_data.date) {
         mx_strdel(&msg_data.date_prev);
         msg_data.date_prev = strdup(msg_data.date);

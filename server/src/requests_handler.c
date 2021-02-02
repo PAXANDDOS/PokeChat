@@ -90,12 +90,18 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         list = list->next;
         if (strcmp(list->data, "NULL") != 0)
             cJSON_AddStringToObject(json_message, "text", list->data);
+        else
+            cJSON_AddNullToObject(json_message, "text");
         list = list->next;
         if (strcmp(list->data, "NULL") != 0)
             cJSON_AddNumberToObject(json_message, "sticker_id", atoi(list->data));
+        else
+            cJSON_AddNullToObject(json_message, "sticker_id");
         list = list->next;
         if (strcmp(list->data, "NULL") != 0)
             cJSON_AddNumberToObject(json_message, "photo_id", atoi(list->data));
+        else
+            cJSON_AddNullToObject(json_message, "photo_id");
         mx_clear_list(&p);
         *reply = strdup(cJSON_PrintUnformatted(json_message));
         cJSON_Delete(json_message);
