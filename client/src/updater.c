@@ -177,11 +177,11 @@ void *updater() {
                                 cJSON *json_photo = cJSON_GetObjectItemCaseSensitive(mes_response, "photo_id");
                                 char *text = NULL, *photo_path = NULL;
                                 int sticker_id = 0, photo_id = 0;
-                                if (json_text)
+                                if (!cJSON_IsNull(json_text))
                                     text = cJSON_GetStringValue(json_text);
-                                if (json_sticker)
+                                if (!cJSON_IsNull(json_sticker))
                                     sticker_id = cJSON_GetNumberValue(json_sticker);
-                                if (json_photo) {
+                                if (!cJSON_IsNull(json_photo)) {
                                     photo_id = cJSON_GetNumberValue(json_photo);
                                     photo_path = get_bitmap(photo_id);
                                 }

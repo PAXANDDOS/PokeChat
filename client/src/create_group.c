@@ -109,7 +109,7 @@ void get_chat(t_chat_data *chat) {
     cJSON_AddNumberToObject(get_chat, "sender_id", t_account.id);
     cJSON_AddNumberToObject(get_chat, "chat_id", chat->chat_id);
     cJSON_AddItemToObject(chat_request, "get_chat", get_chat);
-    char *request_string = cJSON_Print(chat_request);
+    char *request_string = cJSON_PrintUnformatted(chat_request);
     char *result = NULL;
     cJSON_Delete(chat_request);
     ssl_client(request_string, &result);
