@@ -62,7 +62,7 @@ void pokemon_random() {
 char* random_phrase()
 {
     srand(time(NULL));
-    int num = rand() % 42 + 1;
+    int num = rand() % 56 + 1;
     char *phrase[] = {"There's no one here!",
     "Hey, I know. I’ll use my trusty frying pan as a drying pan.",
     "Don’t worry that pretty blue head of yours, I’ve got a plan.",
@@ -104,7 +104,22 @@ char* random_phrase()
     "*Angry Pokemon noises*",
     "Catch 'em all!",
     "Have you seen Vaporeon?",
-    "Random Pokemon vibes"};
+    "Random Pokemon vibes",
+    "12345 is a bad password!",
+    "Absolutely no memes",
+    "Have you seen Vaporeon?",
+    "Déjà vu",
+    "Don’t touch your face!",
+    "Exclusive!",
+    "Save the world – stay inside!",
+    "Stay home and use PokeChat",
+    "日本ハロー！",
+    "한국 안녕하세요!",
+    "Donate us",
+    "https://github.com/PAXANDDOS",
+    "Team Mystic!",
+    "The future is now",
+    "PAXANDDOS wass here"};
 
     return phrase[num];
 }
