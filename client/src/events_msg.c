@@ -274,7 +274,8 @@ void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
         creator_group(main);
 }
 
-static void *scrolling_to_bottom() {
+static void *scrolling_to_bottom(void *p) {
+    GtkWidget *arrow = (GtkWidget*)p;
     GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
     for (int i = 1; i <= 30; i++) {
         gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
@@ -285,14 +286,15 @@ static void *scrolling_to_bottom() {
     gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
     gtk_widget_hide(t_msg.scrolled_message);
     gtk_widget_show(t_msg.scrolled_message);
+    gtk_widget_hide(arrow);
+    gtk_widget_show(arrow);
     return NULL;
 }
 
-void arrow_click(GtkWidget *widget, GdkEventButton *event) {
-    printf("OK\n");
+void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *arrow) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         pthread_t scrolling_thread = NULL;
-        pthread_create(&scrolling_thread, NULL, scrolling_to_bottom, NULL);
+        pthread_create(&scrolling_thread, NULL, scrolling_to_bottom, (void*)arrow);
     }
 }

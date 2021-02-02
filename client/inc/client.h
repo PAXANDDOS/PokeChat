@@ -420,7 +420,7 @@ void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);
 void login_butt_click(GtkWidget *widget);
 void reg_butt_click(GtkWidget *widget);
-void arrow_click(GtkWidget *widget, GdkEventButton *event);
+void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget* arrow);
 
 
 #endif

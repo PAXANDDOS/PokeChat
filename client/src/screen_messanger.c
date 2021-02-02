@@ -162,7 +162,7 @@ static void build_entryfield(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(arrow), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(arrow), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(arrow_click), NULL);
+    g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(arrow_click), arrow);
 }
 
 // static gboolean scrolled (GtkWidget *widget, GdkEventButton *event)

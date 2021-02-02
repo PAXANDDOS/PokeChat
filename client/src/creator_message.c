@@ -28,6 +28,14 @@ void *scrolling_sticker() {
     return NULL;
 }
 
+void *scrolling_photo() {
+    usleep(100000);
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
+    gtk_adjustment_set_value(adjustment, G_MAXDOUBLE);
+    gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
+    return NULL;
+}
+
 void new_outgoing_message(GtkWidget *messages_block)
 {
     if(strcmp(msg_data.date, msg_data.date_prev))
@@ -233,6 +241,11 @@ void new_outgoing_embedded(GtkWidget *messages_block, char* path)
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(embedded_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(embedded_body));
+
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_photo, NULL);
+    }
 }
 
 void new_incoming_embedded(GtkWidget *messages_block, char* path)
@@ -273,4 +286,9 @@ void new_incoming_embedded(GtkWidget *messages_block, char* path)
 
     gtk_container_set_focus_vadjustment(GTK_CONTAINER(embedded_body), NULL);
     gtk_widget_show_all(GTK_WIDGET(embedded_body));
+
+    if (!upd_data.filling_init) {
+        pthread_t display_thread = NULL;
+        pthread_create(&display_thread, NULL, scrolling_photo, NULL);
+    }
 }

@@ -16,9 +16,8 @@ static void generate_new_message(int user_id, int avatar, char *username, char *
     if (user_id == t_account.id) {
         if (text) {
             msg_data.content = text;
-            msg_data.content_final = strdup(msg_data.content);  // TODO эта хрень очень мешает, сделать переменную независимой, чтобы не пересекались инициализации
+            msg_data.content_final = strdup(msg_data.content);
             new_outgoing_message(t_msg.chat_screen);
-            // mx_strdel(&msg_data.content_final);
         }
         else if (sticker)
             new_outgoing_sticker(t_msg.chat_screen, sticker);
@@ -30,7 +29,6 @@ static void generate_new_message(int user_id, int avatar, char *username, char *
             msg_data.content = text;
             msg_data.content_final = strdup(msg_data.content);
             new_incoming_message(t_msg.chat_screen);
-            // mx_strdel(&msg_data.content_final);
         }
         else if (sticker)
             new_incoming_sticker(t_msg.chat_screen, sticker);
