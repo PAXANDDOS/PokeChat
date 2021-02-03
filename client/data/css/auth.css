@@ -44,6 +44,7 @@
     border-color: #242b42;
     border-width: 1px;
     color: #c3c8da;
+    caret-color: rgb(180, 191, 216);
 }
 #login_fields:link
 {

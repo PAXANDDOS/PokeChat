@@ -38,6 +38,8 @@ void *scrolling_photo() {
 
 void new_outgoing_message(GtkWidget *messages_block)
 {
+    if (!messages_block)
+        return;
     if(strcmp(msg_data.date, msg_data.date_prev))
     {
         GtkWidget *date = gtk_label_new(msg_data.date);
@@ -87,6 +89,8 @@ void new_outgoing_message(GtkWidget *messages_block)
 
 void new_incoming_message(GtkWidget *messages_block)
 {
+    if (!messages_block)
+        return;
     GtkWidget *message_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(message_body), "messages_body");
     gtk_box_pack_start(GTK_BOX(messages_block), message_body, FALSE, FALSE, 0);
@@ -126,6 +130,8 @@ void new_incoming_message(GtkWidget *messages_block)
 
 void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
 {
+    if (!messages_block)
+        return;
     char *path = "client/data/stickers/";
     path = mx_strjoin(path, mx_itoa(sticker_num));
     path = mx_strjoin(path, ".png");
@@ -165,6 +171,8 @@ void new_outgoing_sticker(GtkWidget *messages_block, int sticker_num)
 
 void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
 {
+    if (!messages_block)
+        return;
     char *path = "client/data/stickers/";
     path = mx_strjoin(path, mx_itoa(sticker_num));
     path = mx_strjoin(path, ".png");
@@ -204,6 +212,8 @@ void new_incoming_sticker(GtkWidget *messages_block, int sticker_num)
 
 void new_outgoing_embedded(GtkWidget *messages_block, char* path)
 {
+    if (!messages_block)
+        return;
     GtkWidget *embedded_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(embedded_body), "embedded_body");
     gtk_box_pack_start(GTK_BOX(messages_block), embedded_body, FALSE, FALSE, 0);
@@ -249,6 +259,8 @@ void new_outgoing_embedded(GtkWidget *messages_block, char* path)
 
 void new_incoming_embedded(GtkWidget *messages_block, char* path)
 {
+    if (!messages_block)
+        return;
     GtkWidget *embedded_body = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_widget_set_name(GTK_WIDGET(embedded_body), "embedded_body");
     gtk_box_pack_start(GTK_BOX(messages_block), embedded_body, FALSE, FALSE, 0);
