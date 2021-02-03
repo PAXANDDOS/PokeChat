@@ -44,35 +44,35 @@ static void build_activity(GtkWidget *main)
 static void build_fact(GtkWidget *main)
 {
     // Creating block for "FACT BANNER"
-    GtkWidget *fact_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-    gtk_widget_set_name(GTK_WIDGET(fact_block), "fact");
+    GtkWidget *fact_block = gtk_event_box_new();
     gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
     gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
-    // Label for header
-    GtkWidget *fact_text = gtk_label_new("───── DID YOU KNOW? ─────");
+    tooltip("Play sound",fact_block);
+
+    GtkWidget *fact_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+    gtk_widget_set_name(GTK_WIDGET(fact_box), "fact");
+    gtk_widget_set_size_request(GTK_WIDGET(fact_box), FACT_W, FACT_H);
+    gtk_container_add(GTK_CONTAINER(fact_block), fact_box);
+    
+    GtkWidget *fact_text = gtk_label_new("───── DID YOU KNOW? ─────");      // Label for header
     gtk_widget_set_name(GTK_WIDGET(fact_text), "fact_text");                // Имя
     gtk_widget_set_halign(fact_text, GTK_ALIGN_CENTER);                     // Позиция текста
-    gtk_box_pack_start(GTK_BOX(fact_block), fact_text, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(fact_box), fact_text, FALSE, FALSE, 0);
 
     GtkWidget *pokemon = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(pokemon), POKEMON_SIZE, POKEMON_SIZE);
     gtk_widget_set_halign(pokemon, GTK_ALIGN_CENTER);
     g_signal_connect(G_OBJECT(pokemon), "draw", G_CALLBACK(draw_event_pokemon), (int*)POKEMON_SIZE);
-    gtk_box_pack_start(GTK_BOX(fact_block), pokemon, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(fact_box), pokemon, FALSE, FALSE, 0);
     t_pokefact.pokemon_text = gtk_label_new(mx_file_to_str(t_pokefact.pokemon_fact_text));
     gtk_label_set_line_wrap(GTK_LABEL(t_pokefact.pokemon_text), TRUE);
     gtk_label_set_max_width_chars(GTK_LABEL(t_pokefact.pokemon_text), 100);
     gtk_label_set_line_wrap_mode(GTK_LABEL(t_pokefact.pokemon_text), PANGO_WRAP_WORD);
-    gtk_widget_set_name(GTK_WIDGET(t_pokefact.pokemon_text), "pokemon-text");                // Имя
-    gtk_widget_set_halign(t_pokefact.pokemon_text, GTK_ALIGN_START);                        // Позиция текста
-    gtk_box_pack_start(GTK_BOX(fact_block), t_pokefact.pokemon_text, FALSE, FALSE, 0);
+    gtk_widget_set_name(GTK_WIDGET(t_pokefact.pokemon_text), "pokemon-text");
+    gtk_widget_set_halign(t_pokefact.pokemon_text, GTK_ALIGN_START);
+    gtk_box_pack_start(GTK_BOX(fact_box), t_pokefact.pokemon_text, FALSE, FALSE, 0);
 
-    GtkWidget *pokemon_trigger = gtk_event_box_new();
-    gtk_widget_set_size_request(GTK_WIDGET(pokemon_trigger), FACT_W, FACT_H);               // Размер
-    gtk_fixed_put(GTK_FIXED(main), pokemon_trigger, FACT_X, FACT_Y);
-    tooltip("Play sound",pokemon_trigger);
-
-    g_signal_connect(G_OBJECT(pokemon_trigger), "button_press_event", G_CALLBACK(play_audio), NULL);
+    g_signal_connect(G_OBJECT(fact_block), "button_press_event", G_CALLBACK(event_play_audio), (gpointer)(intptr_t)0);
 }
 
 static void build_welcome(GtkWidget *main)

@@ -6,7 +6,7 @@ void *send_message() {
     if (!strcmp(text, "pikachu") || !strcmp(text, "Pikachu")) {
         mx_strdel(&t_pokefact.pokemon_fact_audio);
         t_pokefact.pokemon_fact_audio = strdup("client/data/pokemon-audio/9.wav");
-        play_audio();
+        play_audio(0);
     }
 
     int chat_id = msg_data.chat_id;
