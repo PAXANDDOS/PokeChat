@@ -45,12 +45,14 @@ static void build_fact(GtkWidget *main)
 {
     // Creating block for "FACT BANNER"
     GtkWidget *fact_block = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(fact_block), "fact");
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(fact_block), TRUE);
     gtk_widget_set_size_request(GTK_WIDGET(fact_block), FACT_W, FACT_H);
     gtk_fixed_put(GTK_FIXED(main), fact_block, FACT_X, FACT_Y);
     tooltip("Play sound",fact_block);
 
     GtkWidget *fact_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-    gtk_widget_set_name(GTK_WIDGET(fact_box), "fact");
+    gtk_widget_set_name(GTK_WIDGET(fact_box), "fact_box");
     gtk_widget_set_size_request(GTK_WIDGET(fact_box), FACT_W, FACT_H);
     gtk_container_add(GTK_CONTAINER(fact_block), fact_box);
     
@@ -72,6 +74,8 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_halign(t_pokefact.pokemon_text, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(fact_box), t_pokefact.pokemon_text, FALSE, FALSE, 0);
 
+    g_signal_connect(G_OBJECT(fact_block), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(fact_block), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(fact_block), "button_press_event", G_CALLBACK(event_play_audio), (gpointer)(intptr_t)SOUND_POKEMON);
 }
 

@@ -17,6 +17,12 @@
 #fact
 {
   border-radius: 13px;
+  padding-bottom: 0px;
+  transition: .3s cubic-bezier(0.18,0.62,0.71,0.5);
+}
+#fact_box
+{
+  border-radius: 13px;
   padding: 13px;
   padding-bottom: 0px;
 }
@@ -42,7 +48,7 @@
 {
   border-radius: 13px;
   background-size: 100%;
-  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+  transition: .2s cubic-bezier(0.18,0.62,0.71,0.5);
   opacity: 1;
 }
 #tomsg_inner
@@ -53,7 +59,7 @@
 }
 #tomsg_inner:hover
 {
-  transition: 0.2s cubic-bezier(0.18,0.62,0.71,0.5);
+  transition: .2s cubic-bezier(0.18,0.62,0.71,0.5);
   background-size: 100%;
   background-image: url("../images/tomsg_bg.png");
 }
@@ -61,7 +67,7 @@
 {
   border-radius: 13px;
   background-size: 100%;
-  transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
+  transition: .2s cubic-bezier(0.18,0.62,0.71,0.5);
   opacity: 0.3;
 }
 #togroup_inner
@@ -72,7 +78,7 @@
 }
 #togroup_inner:hover
 {
-  transition: 0.2s cubic-bezier(0.18,0.62,0.71,0.5);
+  transition: .2s cubic-bezier(0.18,0.62,0.71,0.5);
   background-size: 100%;
   background-image: url("../images/togroup_bg.png");
 }
