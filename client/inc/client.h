@@ -84,6 +84,9 @@
 
 #define MEDIA_DIR "media_client/"
 #define TEMP_DIR "temp/"
+#define SOUND_POKEMON 0x01
+#define SOUND_LOW_POP 0x02
+#define SOUND_HIGH_POP 0x03
 
 typedef unsigned long long csum_t;
 

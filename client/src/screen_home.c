@@ -72,7 +72,7 @@ static void build_fact(GtkWidget *main)
     gtk_widget_set_halign(t_pokefact.pokemon_text, GTK_ALIGN_START);
     gtk_box_pack_start(GTK_BOX(fact_box), t_pokefact.pokemon_text, FALSE, FALSE, 0);
 
-    g_signal_connect(G_OBJECT(fact_block), "button_press_event", G_CALLBACK(event_play_audio), (gpointer)(intptr_t)0);
+    g_signal_connect(G_OBJECT(fact_block), "button_press_event", G_CALLBACK(event_play_audio), (gpointer)(intptr_t)SOUND_POKEMON);
 }
 
 static void build_welcome(GtkWidget *main)

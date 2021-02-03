@@ -34,6 +34,8 @@ static void generate_new_message(int user_id, int avatar, char *username, char *
             new_incoming_sticker(t_msg.chat_screen, sticker);
         else if (photo_path)
             new_incoming_embedded(t_msg.chat_screen, photo_path);
+        if (!upd_data.filling_init)
+            play_audio(SOUND_LOW_POP);
     }
 }
 

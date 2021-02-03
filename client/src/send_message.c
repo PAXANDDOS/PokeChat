@@ -6,7 +6,7 @@ void *send_message() {
     if (!strcmp(text, "pikachu") || !strcmp(text, "Pikachu")) {
         mx_strdel(&t_pokefact.pokemon_fact_audio);
         t_pokefact.pokemon_fact_audio = strdup("client/data/pokemon-audio/9.wav");
-        play_audio(0);
+        play_audio(SOUND_POKEMON);
     }
 
     int chat_id = msg_data.chat_id;
@@ -40,6 +40,7 @@ void *send_message() {
     mx_strdel(&text);
     cJSON_Delete(json);
     cJSON_Delete(response);
+    play_audio(SOUND_HIGH_POP);
     return NULL;
 }
 
@@ -72,6 +73,7 @@ void *send_sticker() {
     mx_strdel(&json_string);
     cJSON_Delete(json);
     cJSON_Delete(response);
+    play_audio(SOUND_HIGH_POP);
     return NULL;
 }
 
@@ -177,5 +179,6 @@ void *send_photo() {
     mx_strdel(&json_string);
     cJSON_Delete(json_photo);
     cJSON_Delete(response);
+    play_audio(SOUND_HIGH_POP);
     return NULL;
 }
