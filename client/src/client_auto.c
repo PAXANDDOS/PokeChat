@@ -16,6 +16,6 @@ void test_autofill()
     t_msg.current = "here..."; // Имя выбранного пользователя в плейсхолдере
     msg_data.content = NULL;
 
-    t_application.app = "PokeChat beta 0.9.5";
+    t_application.app = "PokeChat beta 0.9.7";
     t_application.user = getenv("USER");
 }
