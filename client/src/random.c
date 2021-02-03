@@ -62,7 +62,7 @@ void pokemon_random() {
 char* random_phrase()
 {
     srand(time(NULL));
-    int num = rand() % 56 + 1;
+    int num = rand() % 57 + 1;
     char *phrase[] = {"There's no one here!",
     "Hey, I know. I’ll use my trusty frying pan as a drying pan.",
     "Don’t worry that pretty blue head of yours, I’ve got a plan.",
@@ -116,10 +116,10 @@ char* random_phrase()
     "日本ハロー！",
     "한국 안녕하세요!",
     "Donate us",
-    "https://github.com/PAXANDDOS",
+    "github.com/PAXANDDOS",
     "Team Mystic!",
     "The future is now",
-    "PAXANDDOS wass here"};
+    "PAXANDDOS was here"};
 
     return phrase[num];
 }
