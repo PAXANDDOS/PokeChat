@@ -84,9 +84,13 @@
 
 #define MEDIA_DIR "media_client/"
 #define TEMP_DIR "temp/"
-#define SOUND_POKEMON 0x01
-#define SOUND_LOW_POP 0x02
-#define SOUND_HIGH_POP 0x03
+
+enum E_SOUNDS
+{
+    SOUND_POKEMON,
+    SOUND_LOW_POP, 
+    SOUND_HIGH_POP
+};
 
 typedef unsigned long long csum_t;
 
@@ -102,7 +106,7 @@ struct {
 
 struct                      // Structure for current user account data
 {
-    int id;
+    int id;                 // Account ID
     char *username;         // For account username
     char *name;             // For account real name
     char *password;         // char* for password
@@ -111,7 +115,6 @@ struct                      // Structure for current user account data
     short theme;            // 1-3 app theme
     short background;       // 1-4 chat background
     char *avatar;           // Path to chosen avatar
-    short avatar_chosen;    // Number of chosen avatar. Transfers to t_account.avatar
 } t_account;
 
 struct                  // TEMPORAL Structure for tracking entries
@@ -125,22 +128,15 @@ struct                  // TEMPORAL Structure for tracking entries
 } t_account_temp;
 
 
-//-------> Leftbar
+//-------> Screens
 struct
 {
-    GtkWidget *home_box;
-    GtkWidget *msg_box;
-    GtkWidget *group_box;
-    GtkWidget *events_box;
-    //GtkWidget *status_box;
-    GtkWidget *settings_box;
     short active;
     GtkWidget *home_scr;
     GtkWidget *msg_scr;
     GtkWidget *settings_scr;
     GtkWidget *active_screen;
 }   t_leftbar;
-
 
 //-------> Home
 struct      // Structure for random pokemon data
@@ -150,7 +146,6 @@ struct      // Structure for random pokemon data
     char* pokemon_fact_text;
     char* pokemon_fact_audio;
 }   t_pokefact;
-
 
 //-------> Messages
 typedef struct s_msg_data   // Structure for data in messages
@@ -252,28 +247,6 @@ struct                  // Labels for settings screen
     GtkWidget *background;
 }   t_settings;
 
-struct
-{
-    GtkWidget *team_mystic;
-    GtkWidget *team_instinct;
-    GtkWidget *team_valor;
-}   t_teams;
-
-struct
-{
-    GtkWidget *theme_default;
-    GtkWidget *theme_dark;
-    GtkWidget *theme_light;
-}   t_theme;
-
-struct
-{
-    GtkWidget *bg1;
-    GtkWidget *bg2;
-    GtkWidget *bg3;
-    GtkWidget *bg4;
-}   t_chat_bg;
-
 //-------> Authorization
 struct
 {
@@ -295,7 +268,7 @@ typedef struct s_new_group
 }   t_new_group;
 t_new_group *new_group;
 
-struct      // Удалить после нормальной реализации аватаров к людям. Сейчас это заглушка с рандомным аватаром
+struct
 {
     char *avatar_generated;
     char *avatar_path;
@@ -376,12 +349,12 @@ void event_false_enter_notify(GtkWidget *widget);
 void event_leave_notify(GtkWidget *widget);
 void all_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 
-void home_click(GtkWidget *widget, GdkEventButton *event);
-void messages_click(GtkWidget *widget, GdkEventButton *event);
-void group_click(GtkWidget *widget, GdkEventButton *event);
-void events_click(GtkWidget *widget, GdkEventButton *event);
-void status_click(GtkWidget *widget, GdkEventButton *event);
-void settings_click(GtkWidget *widget, GdkEventButton *event);
+void home_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void messages_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void group_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void events_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void status_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void settings_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 
 void active_click(GtkWidget *widget, GdkEventButton *event);
 
@@ -406,16 +379,16 @@ void apply_butt_click(GtkWidget *widget);
 void exit_button_click(GtkWidget *widget, GdkEventButton *event);
 void add_button_click(GtkWidget *widget, GdkEventButton *event);
 void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
-void team_mystic_click(GtkWidget *widget, GdkEventButton *event);
-void team_instinct_click(GtkWidget *widget, GdkEventButton *event);
-void team_valor_click(GtkWidget *widget, GdkEventButton *event);
-void theme_default_click(GtkWidget *widget, GdkEventButton *event);
-void theme_dark_click(GtkWidget *widget, GdkEventButton *event);
-void theme_light_click(GtkWidget *widget, GdkEventButton *event);
-void bg1_preview_click(GtkWidget *widget, GdkEventButton *event);
-void bg2_preview_click(GtkWidget *widget, GdkEventButton *event);
-void bg3_preview_click(GtkWidget *widget, GdkEventButton *event);
-void bg4_preview_click(GtkWidget *widget, GdkEventButton *event);
+void team_mystic_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void team_instinct_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void team_valor_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void theme_default_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void theme_dark_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void theme_light_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void bg1_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void bg2_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void bg3_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void bg4_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 
 void login_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);
 void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);

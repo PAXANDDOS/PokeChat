@@ -253,49 +253,65 @@ void apply_butt_click(GtkWidget *widget){
 }
 
 //
-void team_mystic_click(GtkWidget *widget, GdkEventButton *event) {
+void team_mystic_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.team == 1) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_instinct), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_valor), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.team = 1;
     }
-    printf("Team: %i\n", t_account.team);
     update_user_team();
 
 }
 
-void team_instinct_click(GtkWidget *widget, GdkEventButton *event) {
+void team_instinct_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.team == 2) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_mystic), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_valor), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.team = 2;
     }
-    printf("Team: %i\n", t_account.team);
     update_user_team();
 }
 
-void team_valor_click(GtkWidget *widget, GdkEventButton *event) {
+void team_valor_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.team == 3) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_instinct), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_teams.team_mystic), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.team = 3;
     }
-    printf("Team: %i\n", t_account.team);
     update_user_team();
 }
 
 //
-void theme_light_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_light_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.theme == 1) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 1;
         g_object_unref(G_OBJECT(t_providers.theme));
@@ -327,15 +343,19 @@ void theme_light_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Theme: %i\n", t_account.theme);
     update_user_theme();
 }
 
-void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_default_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.theme == 2) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 2;
         g_object_unref(G_OBJECT(t_providers.theme));
@@ -367,15 +387,19 @@ void theme_default_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Theme: %i\n", t_account.theme);
     update_user_theme();
 }
 
-void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
+void theme_dark_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.theme == 3) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.theme = 3;
         g_object_unref(G_OBJECT(t_providers.theme));
@@ -407,18 +431,21 @@ void theme_dark_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Theme: %i\n", t_account.theme);
     update_user_theme();
 }
 
 //
 
-void bg1_preview_click(GtkWidget *widget, GdkEventButton *event) {
+void bg1_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.background == 1) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg2), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg3), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg4), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 1;
         g_object_unref(G_OBJECT(t_providers.chat));
@@ -441,16 +468,19 @@ void bg1_preview_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Background: %i\n", t_account.background);
     update_user_background();
 }
 
-void bg2_preview_click(GtkWidget *widget, GdkEventButton *event) {
+void bg2_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.background == 2) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg1), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg3), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg4), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 2;
         g_object_unref(G_OBJECT(t_providers.chat));
@@ -473,16 +503,19 @@ void bg2_preview_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Background: %i\n", t_account.background);
     update_user_background();
 }
 
-void bg3_preview_click(GtkWidget *widget, GdkEventButton *event) {
+void bg3_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.background == 3) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg1), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg2), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg4), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 3;
         g_object_unref(G_OBJECT(t_providers.chat));
@@ -505,16 +538,19 @@ void bg3_preview_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Background: %i\n", t_account.background);
     update_user_background();
 }
 
-void bg4_preview_click(GtkWidget *widget, GdkEventButton *event) {
+void bg4_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     if(t_account.background == 4) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg1), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg2), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_chat_bg.bg3), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account.background = 4;
         g_object_unref(G_OBJECT(t_providers.chat));
@@ -537,6 +573,5 @@ void bg4_preview_click(GtkWidget *widget, GdkEventButton *event) {
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(t_providers.chat), GTK_STYLE_PROVIDER_PRIORITY_USER);
         }
     }
-    printf("Background: %i\n", t_account.background);
     update_user_background();
 }

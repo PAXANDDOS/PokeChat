@@ -136,40 +136,40 @@ static void build_teams_menu(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(teams_block), "teams_block");
     gtk_box_pack_start(GTK_BOX(menu_block), teams_block, FALSE, FALSE, 0);
     //--//
-    t_teams.team_mystic = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_teams.team_mystic), "mystic");
-    gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_mystic), TEAM_W, TEAM_H);
-    gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_mystic, TRUE, FALSE, 0);
-    tooltip("Choose Mystic",t_teams.team_mystic);
-    t_teams.team_instinct = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_teams.team_instinct), "instinct");
-    gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_instinct), TEAM_W, TEAM_H);
-    gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_instinct, TRUE, FALSE, 0);
-    tooltip("Choose Instinct",t_teams.team_instinct);
-    t_teams.team_valor = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_teams.team_valor), "valor");
-    gtk_widget_set_size_request(GTK_WIDGET(t_teams.team_valor), TEAM_W, TEAM_H);
-    gtk_box_pack_start(GTK_BOX(teams_block), t_teams.team_valor, TRUE, FALSE, 0);
-    tooltip("Choose Valor",t_teams.team_valor);
+    GtkWidget *team_mystic = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_mystic), "mystic");
+    gtk_widget_set_size_request(GTK_WIDGET(team_mystic), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams_block), team_mystic, TRUE, FALSE, 0);
+    tooltip("Choose Mystic", team_mystic);
+    GtkWidget *team_instinct = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_instinct), "instinct");
+    gtk_widget_set_size_request(GTK_WIDGET(team_instinct), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams_block), team_instinct, TRUE, FALSE, 0);
+    tooltip("Choose Instinct", team_instinct);
+    GtkWidget *team_valor = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(team_valor), "valor");
+    gtk_widget_set_size_request(GTK_WIDGET(team_valor), TEAM_W, TEAM_H);
+    gtk_box_pack_start(GTK_BOX(teams_block), team_valor, TRUE, FALSE, 0);
+    tooltip("Choose Valor", team_valor);
 
     if(t_account.team == 1)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_teams.team_mystic), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(team_mystic), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.team == 2)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_teams.team_instinct), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(team_instinct), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.team == 3)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_teams.team_valor), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(team_valor), GTK_STATE_FLAG_LINK, TRUE);
 
-    g_signal_connect(G_OBJECT(t_teams.team_mystic), "enter-notify-event",G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_mystic), "leave-notify-event",G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_mystic), "button_press_event",G_CALLBACK(team_mystic_click), NULL);
+    g_signal_connect(G_OBJECT(team_mystic), "enter-notify-event",G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(team_mystic), "leave-notify-event",G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(team_mystic), "button_press_event",G_CALLBACK(team_mystic_click), teams_block);
 
-    g_signal_connect(G_OBJECT(t_teams.team_instinct), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_instinct), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_instinct), "button_press_event", G_CALLBACK(team_instinct_click), NULL);
+    g_signal_connect(G_OBJECT(team_instinct), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(team_instinct), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(team_instinct), "button_press_event", G_CALLBACK(team_instinct_click), teams_block);
 
-    g_signal_connect(G_OBJECT(t_teams.team_valor), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_valor), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_teams.team_valor), "button_press_event", G_CALLBACK(team_valor_click), NULL);
+    g_signal_connect(G_OBJECT(team_valor), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(team_valor), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(team_valor), "button_press_event", G_CALLBACK(team_valor_click), teams_block);
 }
 
 static void build_appearance_menu(GtkWidget *menu_block)
@@ -193,51 +193,51 @@ static void build_appearance_menu(GtkWidget *menu_block)
     gtk_widget_set_name(GTK_WIDGET(appearance_menu), "chat_bgs_box");
     gtk_box_pack_start(GTK_BOX(appearance_block), appearance_menu, FALSE, FALSE, 0);
 
-    t_theme.theme_light = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_light), "theme_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_light), 260, 50);
+    GtkWidget *theme_light = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(theme_light), "theme_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(theme_light), 260, 50);
     GtkWidget *light_label = gtk_label_new("LIGHT");
     gtk_widget_set_name(GTK_WIDGET(light_label), "theme_label");
     gtk_widget_set_halign(GTK_WIDGET(light_label), GTK_ALIGN_CENTER);
-    gtk_container_add(GTK_CONTAINER(t_theme.theme_light), light_label);
-    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_light, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(theme_light), light_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), theme_light, TRUE, FALSE, 0);
 
-    t_theme.theme_default = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_default), "theme_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_default), 260, 50);
+    GtkWidget *theme_default = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(theme_default), "theme_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(theme_default), 260, 50);
     GtkWidget *default_label = gtk_label_new("DEFAULT");
     gtk_widget_set_name(GTK_WIDGET(default_label), "theme_label");
     gtk_widget_set_halign(GTK_WIDGET(default_label), GTK_ALIGN_CENTER);
-    gtk_container_add(GTK_CONTAINER(t_theme.theme_default), default_label);
-    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_default, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(theme_default), default_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), theme_default, TRUE, FALSE, 0);
 
-    t_theme.theme_dark = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_theme.theme_dark), "theme_bgs");
-    gtk_widget_set_size_request(GTK_WIDGET(t_theme.theme_dark), 260, 50);
+    GtkWidget *theme_dark = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(theme_dark), "theme_bgs");
+    gtk_widget_set_size_request(GTK_WIDGET(theme_dark), 260, 50);
     GtkWidget *dark_label = gtk_label_new("DARK");
     gtk_widget_set_name(GTK_WIDGET(dark_label), "theme_label");
     gtk_widget_set_halign(GTK_WIDGET(dark_label), GTK_ALIGN_CENTER);
-    gtk_container_add(GTK_CONTAINER(t_theme.theme_dark ), dark_label);
-    gtk_box_pack_start(GTK_BOX(appearance_menu), t_theme.theme_dark, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(theme_dark ), dark_label);
+    gtk_box_pack_start(GTK_BOX(appearance_menu), theme_dark, TRUE, FALSE, 0);
 
     if(t_account.theme == 1)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_light), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(theme_light), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.theme == 2)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_default), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(theme_default), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.theme == 3)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_theme.theme_dark), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(theme_dark), GTK_STATE_FLAG_LINK, TRUE);
 
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_light), "button_press_event", G_CALLBACK(theme_light_click), NULL);
+    g_signal_connect(G_OBJECT(theme_light), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_light), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_light), "button_press_event", G_CALLBACK(theme_light_click), appearance_menu);
 
-    g_signal_connect(G_OBJECT(t_theme.theme_default), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_default), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_default), "button_press_event", G_CALLBACK(theme_default_click), NULL);
+    g_signal_connect(G_OBJECT(theme_default), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_default), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_default), "button_press_event", G_CALLBACK(theme_default_click), appearance_menu);
 
-    g_signal_connect(G_OBJECT(t_theme.theme_dark), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_dark), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_theme.theme_dark), "button_press_event", G_CALLBACK(theme_dark_click), NULL);
+    g_signal_connect(G_OBJECT(theme_dark), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_dark), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(theme_dark), "button_press_event", G_CALLBACK(theme_dark_click), appearance_menu);
 
     //
 
@@ -250,47 +250,47 @@ static void build_appearance_menu(GtkWidget *menu_block)
     GtkWidget *previews_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_widget_set_name(GTK_WIDGET(previews_box), "chat_bgs_box");
     gtk_box_pack_start(GTK_BOX(appearance_block), previews_box, FALSE, FALSE, 0);
-    t_chat_bg.bg1 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg1), "chat_bg1");
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg1), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg1, TRUE, FALSE, 0);
-    t_chat_bg.bg2 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg2), "chat_bg2");
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg2), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg2, TRUE, FALSE, 0);
-    t_chat_bg.bg3 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg3), "chat_bg3");
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg3), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg3, TRUE, FALSE, 0);
-    t_chat_bg.bg4 = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_chat_bg.bg4), "chat_bg4");
-    gtk_widget_set_size_request(GTK_WIDGET(t_chat_bg.bg4), 200, 300);
-    gtk_box_pack_start(GTK_BOX(previews_box), t_chat_bg.bg4, TRUE, FALSE, 0);
+    GtkWidget *bg1 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(bg1), "chat_bg1");
+    gtk_widget_set_size_request(GTK_WIDGET(bg1), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), bg1, TRUE, FALSE, 0);
+    GtkWidget *bg2 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(bg2), "chat_bg2");
+    gtk_widget_set_size_request(GTK_WIDGET(bg2), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), bg2, TRUE, FALSE, 0);
+    GtkWidget *bg3 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(bg3), "chat_bg3");
+    gtk_widget_set_size_request(GTK_WIDGET(bg3), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), bg3, TRUE, FALSE, 0);
+    GtkWidget *bg4 = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(bg4), "chat_bg4");
+    gtk_widget_set_size_request(GTK_WIDGET(bg4), 200, 300);
+    gtk_box_pack_start(GTK_BOX(previews_box), bg4, TRUE, FALSE, 0);
 
     if(t_account.background == 1)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg1), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(bg1), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.background == 2)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg2), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(bg2), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.background == 3)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg3), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(bg3), GTK_STATE_FLAG_LINK, TRUE);
     else if(t_account.background == 4)
-        gtk_widget_set_state_flags(GTK_WIDGET(t_chat_bg.bg4), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_set_state_flags(GTK_WIDGET(bg4), GTK_STATE_FLAG_LINK, TRUE);
 
-    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg1), "button_press_event", G_CALLBACK(bg1_preview_click), NULL);
+    g_signal_connect(G_OBJECT(bg1), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(bg1), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(bg1), "button_press_event", G_CALLBACK(bg1_preview_click), previews_box);
 
-    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg2), "button_press_event", G_CALLBACK(bg2_preview_click), NULL);
+    g_signal_connect(G_OBJECT(bg2), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(bg2), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(bg2), "button_press_event", G_CALLBACK(bg2_preview_click), previews_box);
 
-    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg3), "button_press_event", G_CALLBACK(bg3_preview_click), NULL);
+    g_signal_connect(G_OBJECT(bg3), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(bg3), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(bg3), "button_press_event", G_CALLBACK(bg3_preview_click), previews_box);
 
-    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_chat_bg.bg4), "button_press_event", G_CALLBACK(bg4_preview_click), NULL);
+    g_signal_connect(G_OBJECT(bg4), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(bg4), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(bg4), "button_press_event", G_CALLBACK(bg4_preview_click), previews_box);
 }
 
 static void build_about_info(GtkWidget *menu_block)
