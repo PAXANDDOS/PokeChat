@@ -116,10 +116,10 @@ void add_button_click(GtkWidget *widget, GdkEventButton *event) {
     }
 }
 
-void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
+void gallery_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
-        create_gallery(main);
+        create_gallery((GtkWidget*)main);
 }
 
 //

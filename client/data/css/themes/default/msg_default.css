@@ -111,11 +111,11 @@
 }
 #arrowdown
 {
-  background-image: url("../../../images/arrow-down.png");
   background-color: #18254e;
 }
 #arrowdown:hover
 {
+  background-image: url("../../../images/arrow-down.png");
   background-color: #344065;
 }
 #msggroup

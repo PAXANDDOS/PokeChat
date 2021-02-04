@@ -112,7 +112,7 @@ void attach_click(GtkWidget *widget, GdkEventButton *event) {
     free(path);
 }
 
-void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text) {
+void send_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1 && msg_data.chat_id)
     {
@@ -131,7 +131,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
         pthread_t thread = NULL;
         pthread_create(&thread, NULL, send_message, NULL);
         new_outgoing_message(t_msg.chat_screen);   // Передавать как параметры: имя, фото, текст сообщения
-        gtk_entry_set_text(GTK_ENTRY(entry_text), "");
+        gtk_entry_set_text(GTK_ENTRY(t_msg.entry), "");
         msg_data.content = NULL;
 
         GList *inner = gtk_container_get_children(GTK_CONTAINER(t_msg.chatlist));
@@ -175,10 +175,10 @@ void entry_text_change_event(GtkWidget *widget) {
     msg_data.content = (char*)gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(widget)));
 }
 
-void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
+void sticker_click(GtkWidget *widget, GdkEventButton *event, gpointer main) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
-        create_stickerlist(main);
+        create_stickerlist((GtkWidget*)main);
 }
 
 void person_click(GtkWidget *widget, GdkEventButton *event) {
@@ -268,14 +268,13 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
     }
 }
 
-void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main) {
+void msggroup_click(GtkWidget *widget, GdkEventButton *event, gpointer main) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
-        creator_group(main);
+        creator_group((GtkWidget*)main);
 }
 
-static void *scrolling_to_bottom(void *p) {
-    GtkWidget *arrow = (GtkWidget*)p;
+static void *scrolling_to_bottom() {
     GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
     for (int i = 1; i <= 30; i++) {
         gtk_adjustment_set_value(adjustment, gtk_adjustment_get_value(adjustment) + i);
@@ -284,17 +283,15 @@ static void *scrolling_to_bottom(void *p) {
     }
     gtk_adjustment_set_value(adjustment, G_MAXDOUBLE);
     gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
-    gtk_widget_hide(t_msg.scrolled_message);
-    gtk_widget_show(t_msg.scrolled_message);
-    gtk_widget_hide(arrow);
-    gtk_widget_show(arrow);
+    gtk_widget_reshow(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.arrow);
     return NULL;
 }
 
-void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *arrow) {
+void arrow_click(GtkWidget *widget, GdkEventButton *event) {
     if(widget) {}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         pthread_t scrolling_thread = NULL;
-        pthread_create(&scrolling_thread, NULL, scrolling_to_bottom, (void*)arrow);
+        pthread_create(&scrolling_thread, NULL, scrolling_to_bottom, NULL);
     }
 }

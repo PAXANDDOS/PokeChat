@@ -10,8 +10,8 @@ void *scrolling_msg() {
         gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
         usleep(5000);
     }
-    gtk_widget_hide(t_msg.scrolled_message);
-    gtk_widget_show(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.arrow);
     return NULL;
 }
 
@@ -23,8 +23,7 @@ void *scrolling_sticker() {
         gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
         usleep(5000);
     }
-    gtk_widget_hide(t_msg.scrolled_message);
-    gtk_widget_show(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.scrolled_message);
     return NULL;
 }
 

@@ -153,10 +153,12 @@
 }
 #arrowdown
 {
-  border-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
   background-size: 100%;
   background-position: top;
   background-repeat: no-repeat;
+  background-image: none;
   transition: 0.1s cubic-bezier(0.18,0.62,0.71,0.5);
 }
 #msggroup

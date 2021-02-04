@@ -44,6 +44,22 @@ void chat_clear_list(t_chat_list **list) {
     }
 }
 
+static void arrow_move_enter_event(GtkWidget *widget) {
+    GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+    if (!(flags & GTK_STATE_FLAG_LINK))
+        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT, TRUE);
+    gtk_fixed_move(GTK_FIXED(t_msg.main), GTK_WIDGET(widget), WINDOW_WIDTH-LEFTBAR_W-40, WINDOW_HEIGHT-ENTRY_H-40);
+    gtk_widget_set_size_request(GTK_WIDGET(widget), 40, 40);
+}
+
+static void arrow_move_leave_event(GtkWidget *widget) {
+    GtkStateFlags flags = gtk_widget_get_state_flags(GTK_WIDGET(widget));
+    if (!(flags & GTK_STATE_FLAG_LINK)) 
+        gtk_widget_unset_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_PRELIGHT);
+    gtk_fixed_move(GTK_FIXED(t_msg.main), GTK_WIDGET(widget), WINDOW_WIDTH-LEFTBAR_W-16, WINDOW_HEIGHT-ENTRY_H-40);
+    gtk_widget_set_size_request(GTK_WIDGET(widget), 16, 40);
+}
+
 static void build_list(GtkWidget *main)
 {
     GtkWidget *list_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -103,12 +119,12 @@ static void build_list(GtkWidget *main)
 
 static void build_entryfield(GtkWidget *main)
 {
-    GtkWidget *arrow = gtk_event_box_new();
-    gtk_event_box_set_above_child(GTK_EVENT_BOX(arrow), TRUE);
-    gtk_widget_set_name(GTK_WIDGET(arrow), "arrowdown");
-    gtk_widget_set_size_request(GTK_WIDGET(arrow), 40, 70);
-    tooltip("Jump to present",arrow);
-    gtk_fixed_put(GTK_FIXED(main), arrow, WINDOW_WIDTH-117, WINDOW_HEIGHT-82);
+    t_msg.arrow = gtk_event_box_new();
+    gtk_event_box_set_above_child(GTK_EVENT_BOX(t_msg.arrow), TRUE);
+    gtk_widget_set_name(GTK_WIDGET(t_msg.arrow), "arrowdown");
+    gtk_widget_set_size_request(GTK_WIDGET(t_msg.arrow), 16, 40);
+    tooltip("Jump to present", t_msg.arrow);
+    gtk_fixed_put(GTK_FIXED(main), t_msg.arrow, WINDOW_WIDTH-LEFTBAR_W-16, WINDOW_HEIGHT-ENTRY_H-40);
 
     GtkWidget *entry_block = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     gtk_widget_set_name(GTK_WIDGET(entry_block), "entry_block");
@@ -154,16 +170,16 @@ static void build_entryfield(GtkWidget *main)
 
     g_signal_connect(G_OBJECT(send), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(send), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), t_msg.entry);
+    g_signal_connect(G_OBJECT(send), "button_press_event", G_CALLBACK(send_click), NULL);
     g_signal_connect(G_OBJECT(t_msg.entry), "activate", G_CALLBACK(send_press), NULL);
 
     g_signal_connect(G_OBJECT(sticker), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(sticker), "button_press_event", G_CALLBACK(sticker_click), main);
 
-    g_signal_connect(G_OBJECT(arrow), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(arrow), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(arrow), "button_press_event", G_CALLBACK(arrow_click), arrow);
+    g_signal_connect(G_OBJECT(t_msg.arrow), "enter-notify-event", G_CALLBACK(arrow_move_enter_event), NULL);
+    g_signal_connect(G_OBJECT(t_msg.arrow), "leave-notify-event", G_CALLBACK(arrow_move_leave_event), NULL);
+    g_signal_connect(G_OBJECT(t_msg.arrow), "button_press_event", G_CALLBACK(arrow_click), NULL);
 }
 
 // static gboolean scrolled (GtkWidget *widget, GdkEventButton *event)

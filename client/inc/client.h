@@ -210,6 +210,7 @@ struct
     GtkWidget *chatlist;
     GtkWidget *scrolled_message;
     GtkWidget *chat_screen;
+    GtkWidget *arrow;
     char* current;
 }   t_msg;
 
@@ -354,17 +355,18 @@ void status_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 void settings_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 
 void active_click(GtkWidget *widget, GdkEventButton *event);
+void gtk_widget_reshow(GtkWidget *widget);
 
 void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_field);
 void attach_click(GtkWidget *widget, GdkEventButton *event);
-void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text);
+void send_click(GtkWidget *widget, GdkEventButton *event);
 void send_press(GtkWidget *widget);
 void entry_text_change_event(GtkWidget *widget);
-void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
-void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget* arrow);
+void sticker_click(GtkWidget *widget, GdkEventButton *event, gpointer main);
+void arrow_click(GtkWidget *widget, GdkEventButton *event);
 void chat_push_back(t_chat_list **list, t_chat_data* chat);
 void person_click(GtkWidget *widget, GdkEventButton *event);
-void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void msggroup_click(GtkWidget *widget, GdkEventButton *event, gpointer main);
 
 void username_field_change_event(GtkWidget *widget);
 void firstname_field_change_event(GtkWidget *widget);
@@ -376,7 +378,7 @@ void repass_field_change_event(GtkWidget *widget);
 void apply_butt_click(GtkWidget *widget);
 void exit_button_click(GtkWidget *widget, GdkEventButton *event);
 void add_button_click(GtkWidget *widget, GdkEventButton *event);
-void gallery_button_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void gallery_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main);
 void team_mystic_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 void team_instinct_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 void team_valor_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);

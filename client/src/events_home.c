@@ -27,3 +27,8 @@ void active_click(GtkWidget *widget, GdkEventButton *event) {
     if(event) {}
 }
 
+void gtk_widget_reshow(GtkWidget *widget)
+{
+    gtk_widget_hide(GTK_WIDGET(widget));
+    gtk_widget_show_all(GTK_WIDGET(widget));
+}
