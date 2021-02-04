@@ -97,26 +97,26 @@ void build_registration(GtkWidget **main_area)
     GtkWidget *team_buttons = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start(GTK_BOX(box), team_buttons, FALSE, FALSE, 0);
 
-    t_auth.mystic_event = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_auth.mystic_event), "mystic_event");
+    GtkWidget *mystic_event = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(mystic_event), "mystic_event");
     GtkWidget *team_mystic = gtk_label_new("Mystic");
     gtk_widget_set_name(GTK_WIDGET(team_mystic), "team_mystic_selection");
-    gtk_container_add(GTK_CONTAINER(t_auth.mystic_event), team_mystic);
-    gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.mystic_event, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(mystic_event), team_mystic);
+    gtk_box_pack_start(GTK_BOX(team_buttons), mystic_event, TRUE, FALSE, 0);
 
-    t_auth.instinct_event = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_auth.instinct_event), "instinct_event");
+    GtkWidget *instinct_event = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(instinct_event), "instinct_event");
     GtkWidget *team_instinct = gtk_label_new("Instinct");
     gtk_widget_set_name(GTK_WIDGET(team_instinct), "team_instinct_selection");
-    gtk_container_add(GTK_CONTAINER(t_auth.instinct_event), team_instinct);
-    gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.instinct_event, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(instinct_event), team_instinct);
+    gtk_box_pack_start(GTK_BOX(team_buttons), instinct_event, TRUE, FALSE, 0);
 
-    t_auth.valor_event = gtk_event_box_new();
-    gtk_widget_set_name(GTK_WIDGET(t_auth.valor_event), "valor_event");
+    GtkWidget *valor_event = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(valor_event), "valor_event");
     GtkWidget *team_valor = gtk_label_new("Valor");
     gtk_widget_set_name(GTK_WIDGET(team_valor), "team_valor_selection");
-    gtk_container_add(GTK_CONTAINER(t_auth.valor_event), team_valor);
-    gtk_box_pack_start(GTK_BOX(team_buttons), t_auth.valor_event, TRUE, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(valor_event), team_valor);
+    gtk_box_pack_start(GTK_BOX(team_buttons), valor_event, TRUE, FALSE, 0);
 
     GtkWidget *reg_button = gtk_button_new_with_label("Create an account");
     gtk_widget_set_name(GTK_WIDGET(reg_button), "login_button");
@@ -137,19 +137,19 @@ void build_registration(GtkWidget **main_area)
 
     g_signal_connect(G_OBJECT(event_login), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(event_login), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(event_login), "button_press_event", G_CALLBACK(login_button_click), (gpointer)main_area);
+    g_signal_connect(G_OBJECT(event_login), "button_press_event", G_CALLBACK(login_button_click), main_area);
 
-    g_signal_connect(G_OBJECT(t_auth.mystic_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.mystic_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.mystic_event), "button_press_event", G_CALLBACK(mystic_event_button_click), NULL);
+    g_signal_connect(G_OBJECT(mystic_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(mystic_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(mystic_event), "button_press_event", G_CALLBACK(mystic_event_button_click), team_buttons);
 
-    g_signal_connect(G_OBJECT(t_auth.instinct_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.instinct_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.instinct_event), "button_press_event", G_CALLBACK(instinct_event_button_click), NULL);
+    g_signal_connect(G_OBJECT(instinct_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(instinct_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(instinct_event), "button_press_event", G_CALLBACK(instinct_event_button_click), team_buttons);
 
-    g_signal_connect(G_OBJECT(t_auth.valor_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.valor_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(t_auth.valor_event), "button_press_event", G_CALLBACK(valor_event_button_click), NULL);
+    g_signal_connect(G_OBJECT(valor_event), "enter-notify-event", G_CALLBACK(event_false_enter_notify), NULL);
+    g_signal_connect(G_OBJECT(valor_event), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
+    g_signal_connect(G_OBJECT(valor_event), "button_press_event", G_CALLBACK(valor_event_button_click), team_buttons);
 }
 
 void build_authorization(GtkWidget **main_area)
@@ -230,5 +230,5 @@ void build_authorization(GtkWidget **main_area)
     gtk_widget_show_all(GTK_WIDGET(t_auth.login_menu));
     g_signal_connect(G_OBJECT(event_register), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(event_register), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
-    g_signal_connect(G_OBJECT(event_register), "button_press_event", G_CALLBACK(register_button_click), (gpointer)main_area);
+    g_signal_connect(G_OBJECT(event_register), "button_press_event", G_CALLBACK(register_button_click), main_area);
 }

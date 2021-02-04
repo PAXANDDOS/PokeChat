@@ -136,7 +136,7 @@ struct
     GtkWidget *msg_scr;
     GtkWidget *settings_scr;
     GtkWidget *active_screen;
-}   t_leftbar;
+}   t_screen;
 
 //-------> Home
 struct      // Structure for random pokemon data
@@ -252,9 +252,6 @@ struct
 {
     GtkWidget *login_menu;
     GtkWidget *registration_menu;
-    GtkWidget *mystic_event;
-    GtkWidget *instinct_event;
-    GtkWidget *valor_event;
 }   t_auth;
 
 //-------> Group creation
@@ -364,6 +361,7 @@ void send_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *entry_text)
 void send_press(GtkWidget *widget);
 void entry_text_change_event(GtkWidget *widget);
 void sticker_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
+void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget* arrow);
 void chat_push_back(t_chat_list **list, t_chat_data* chat);
 void person_click(GtkWidget *widget, GdkEventButton *event);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, GtkWidget *main);
@@ -392,12 +390,10 @@ void bg4_preview_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 
 void login_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);
 void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_area);
-void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event);
-void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event);
-void valor_event_button_click(GtkWidget *widget, GdkEventButton *event);
+void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void valor_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
 void login_butt_click(GtkWidget *widget);
 void reg_butt_click(GtkWidget *widget);
-void arrow_click(GtkWidget *widget, GdkEventButton *event, GtkWidget* arrow);
-
 
 #endif

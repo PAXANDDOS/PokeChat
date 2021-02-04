@@ -2,7 +2,7 @@
 
 void avatar_random() {
     srand(time(NULL));                  // Initialization, should only be called once.
-    int pick = rand() % 101 + 1;         // Returns a pseudo-random integer between 0 and RAND_MAX.
+    int pick = rand() % 100 + 1;         // Returns a pseudo-random integer between 0 and RAND_MAX.
     t_avatar.avatar_num = pick;
     t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, mx_itoa(pick));
     t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, ".png");

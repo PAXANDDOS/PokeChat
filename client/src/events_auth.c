@@ -4,9 +4,6 @@ void login_button_click(GtkWidget *widget, GdkEventButton *event, gpointer main_
 {
     if(widget){}
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        gtk_widget_destroy(GTK_WIDGET(t_auth.mystic_event));
-        gtk_widget_destroy(GTK_WIDGET(t_auth.instinct_event));
-        gtk_widget_destroy(GTK_WIDGET(t_auth.valor_event));
         gtk_widget_destroy(GTK_WIDGET(t_auth.registration_menu));
         build_authorization((GtkWidget**)main_area);
     }
@@ -21,36 +18,51 @@ void register_button_click(GtkWidget *widget, GdkEventButton *event, gpointer ma
     }
 }
 
-void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event)
+void mystic_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu)
 {
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.instinct_event), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.valor_event), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account_temp.team = 1;
     }
 }
 
-void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event)
+void instinct_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu)
 {
     if(widget){}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.mystic_event), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.valor_event), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account_temp.team = 2;
     }
 }
 
-void valor_event_button_click(GtkWidget *widget, GdkEventButton *event)
+void valor_event_button_click(GtkWidget *widget, GdkEventButton *event, gpointer menu)
 {
     if(widget){}
     if(event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.mystic_event), GTK_STATE_FLAG_LINK);
-        gtk_widget_unset_state_flags(GTK_WIDGET(t_auth.instinct_event), GTK_STATE_FLAG_LINK);
+        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
+        while(parent) {
+            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
+            parent = parent->next;
+        }
+        g_list_free(g_steal_pointer(&parent));
+        
         gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
         t_account_temp.team = 3;
     }
@@ -116,13 +128,13 @@ void login_butt_click(GtkWidget *widget){
         cJSON_Delete(json_online);
 
         fill_pokemon();     // Filling random data on home tab
-        t_leftbar.active = 1;   // Active button in leftbar
+        t_screen.active = 1;   // Active button in leftbar
         gtk_widget_destroy(GTK_WIDGET(t_application.auth));
         load_providers();
         build_all(&t_application.messanger);  // Main builder function
         gtk_widget_show_all(t_application.messanger);          // Showing window
-        gtk_widget_hide(GTK_WIDGET(t_leftbar.msg_scr));     // Hiding messanger tab
-        gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));// Hiding settings tab
+        gtk_widget_hide(GTK_WIDGET(t_screen.msg_scr));     // Hiding messanger tab
+        gtk_widget_hide(GTK_WIDGET(t_screen.settings_scr));// Hiding settings tab
     }
     else {
         create_notification(t_application.auth, "Login error!", 1, 430, 160, 420, 10);
@@ -216,11 +228,11 @@ void reg_butt_click(GtkWidget *widget){
     }
 
     fill_pokemon();     // Filling random data on home tab
-    t_leftbar.active = 1;   // Active button in leftbar
+    t_screen.active = 1;   // Active button in leftbar
     gtk_widget_destroy(GTK_WIDGET(t_application.auth));
     load_providers();
     build_all(&t_application.messanger);  // Main builder function
     gtk_widget_show_all(t_application.messanger);          // Showing window
-    gtk_widget_hide(GTK_WIDGET(t_leftbar.msg_scr));     // Hiding messanger tab
-    gtk_widget_hide(GTK_WIDGET(t_leftbar.settings_scr));// Hiding settings tab
+    gtk_widget_hide(GTK_WIDGET(t_screen.msg_scr));     // Hiding messanger tab
+    gtk_widget_hide(GTK_WIDGET(t_screen.settings_scr));// Hiding settings tab
 }

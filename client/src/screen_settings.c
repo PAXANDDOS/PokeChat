@@ -314,12 +314,13 @@ void build_settings_menu(GtkWidget **stgscreen)
 {
     // Creating workspace
     //GtkAdjustment *vadjustment = gtk_adjustment_new(0, 0, CUR_WIDTH-LEFTBAR_W, 200, 200, CUR_HEIGHT);    // Параметры скролла
-    t_leftbar.settings_scr = gtk_scrolled_window_new(NULL, NULL);
-    gtk_widget_set_name(GTK_WIDGET(t_leftbar.settings_scr), "settings_scr");
-    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.settings_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
-    gtk_fixed_put(GTK_FIXED(*stgscreen), t_leftbar.settings_scr, LEFTBAR_W, 0);
+    t_screen.settings_scr = gtk_scrolled_window_new(NULL, NULL);
+    gtk_widget_set_name(GTK_WIDGET(t_screen.settings_scr), "settings_scr");
+    gtk_widget_set_size_request(GTK_WIDGET(t_screen.settings_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
+    gtk_fixed_put(GTK_FIXED(*stgscreen), t_screen.settings_scr, LEFTBAR_W, 0);
     GtkWidget *main = gtk_fixed_new();
-    gtk_container_add(GTK_CONTAINER(t_leftbar.settings_scr), main);
+    gtk_container_add(GTK_CONTAINER(t_screen.settings_scr), main);
+    gtk_widget_hide(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(t_screen.settings_scr)));
     //--//--//
     GtkWidget *menu_block = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_widget_set_size_request(GTK_WIDGET(menu_block), WINDOW_WIDTH-LEFTBAR_W, 0);

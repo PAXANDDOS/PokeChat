@@ -90,6 +90,7 @@ static void build_list(GtkWidget *main)
 
     gtk_container_add(GTK_CONTAINER(scrollable), t_msg.chatlist);
     gtk_box_pack_start(GTK_BOX(list_block), scrollable, FALSE, FALSE, 0);              // Кладем скролл зону на главный экран
+    gtk_widget_hide(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(scrollable)));
 
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
@@ -234,17 +235,18 @@ static void build_chat(GtkWidget *main)
 
     gtk_container_add(GTK_CONTAINER(t_msg.scrolled_message), t_msg.chat_screen);              // Кладем чат в скролл зону
     gtk_fixed_put(GTK_FIXED(main),t_msg.scrolled_message, LIST_W, 0);                           // Кладем скролл зону на главный экран
+    gtk_widget_hide(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(t_msg.scrolled_message)));
 }
 
 void build_messanger_screen(GtkWidget **msgscreen)
 {
     // Creating workspace
-    t_leftbar.msg_scr = gtk_grid_new();
-    gtk_widget_set_name(GTK_WIDGET(t_leftbar.msg_scr), "messanger");
-    gtk_widget_set_size_request(GTK_WIDGET(t_leftbar.msg_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
-    gtk_fixed_put(GTK_FIXED(*msgscreen), t_leftbar.msg_scr, LEFTBAR_W, 0);
+    t_screen.msg_scr = gtk_event_box_new();
+    gtk_widget_set_name(GTK_WIDGET(t_screen.msg_scr), "messanger");
+    gtk_widget_set_size_request(GTK_WIDGET(t_screen.msg_scr), WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
+    gtk_fixed_put(GTK_FIXED(*msgscreen), t_screen.msg_scr, LEFTBAR_W, 0);
     t_msg.main = gtk_fixed_new();
-    gtk_grid_attach(GTK_GRID(t_leftbar.msg_scr), t_msg.main, 0, 0, WINDOW_WIDTH-LEFTBAR_W, WINDOW_HEIGHT);
+    gtk_container_add(GTK_CONTAINER(t_screen.msg_scr), t_msg.main);
     //
     //
     build_list(t_msg.main);

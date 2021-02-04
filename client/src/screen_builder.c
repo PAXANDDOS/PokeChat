@@ -10,7 +10,7 @@ void build_all(GtkWidget **main_area)
     build_home_screen(main_area);       // Вызываю постройку домашнего экрана
     build_messanger_screen(main_area);  // Вызываю постройку экрана сообщений
     build_settings_menu(main_area);     // Вызываю постройку экрана настроек
-    t_leftbar.active_screen = t_leftbar.home_scr;           // Назначаю домашний экран активным
+    t_screen.active_screen = t_screen.home_scr;           // Назначаю домашний экран активным
 
     GtkWidget *home_box = gtk_event_box_new();
     gtk_widget_set_name(GTK_WIDGET(home_box), "homebutton");
