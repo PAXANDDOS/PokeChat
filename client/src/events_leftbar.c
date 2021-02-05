@@ -1,17 +1,11 @@
 #include "../inc/client.h"
 
-void home_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(t_screen.active == 1) return;
+void home_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget && t_screen.active == 1) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
-        while(parent) {
-            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
-            parent = parent->next;
-        }
-        g_list_free(g_steal_pointer(&parent));
-
-        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK);
         t_screen.active = 1;
+        gtk_widget_set_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK, TRUE);
 
         gtk_widget_hide(GTK_WIDGET(t_screen.active_screen));
         t_screen.active_screen = t_screen.home_scr;
@@ -25,18 +19,12 @@ void home_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     }
 }
 
-void messages_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(t_screen.active == 2) return;
+void messages_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget && t_screen.active == 2) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
-        while(parent) {
-            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
-            parent = parent->next;
-        }
-        g_list_free(g_steal_pointer(&parent));
-
-        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK);
         t_screen.active = 2;
+        gtk_widget_set_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK, TRUE);
 
         gtk_widget_hide(GTK_WIDGET(t_screen.active_screen));
         t_screen.active_screen = t_screen.msg_scr;
@@ -44,57 +32,39 @@ void messages_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
     }
 }
 
-void group_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(t_screen.active == 3) return;
+void group_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget && t_screen.active == 3) return;
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         create_notification(t_application.messanger, "Not available at the moment!", 1, LEFTBAR_W, 160, 0, 30);
-        // GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
-        // while(parent) {
-        //     gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
-        //     parent = parent->next;
-        // }
-        // g_list_free(g_steal_pointer(&parent));
-
-        // gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        
+        // gtk_widget_unset_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK);
         // t_screen.active = 3;
+        // gtk_widget_set_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK, TRUE);
     }
-    if(widget || menu) {}
+    if(widget) {}
 }
 
-void events_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(t_screen.active == 4) return;
+void events_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget && t_screen.active == 4) return;
     if(event->type == GDK_BUTTON_PRESS && event->button == 1) {
         create_notification(t_application.messanger, "Not available at the moment!", 1, LEFTBAR_W, 230, 0, 30);
-        if(menu) {}
-        // GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
-        // while(parent) {
-        //     gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
-        //     parent = parent->next;
-        // }
-        // g_list_free(g_steal_pointer(&parent));
-
-        // gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        // gtk_widget_unset_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK);
         // t_screen.active = 4;
+        // gtk_widget_set_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK, TRUE);
     }
-    if(widget || menu) {}
+    if(widget) {}
 }
 
-void status_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(widget || event || menu) {}
+void status_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget || event) {}
 }
 
-void settings_click(GtkWidget *widget, GdkEventButton *event, gpointer menu) {
-    if(t_screen.active == 6) return;
+void settings_click(GtkWidget *widget, GdkEventButton *event) {
+    if(widget && t_screen.active == 6) return;
     if (event->type == GDK_BUTTON_PRESS && event->button == 1) {
-        GList *parent = gtk_container_get_children(GTK_CONTAINER((GtkWidget*)menu));
-        while(parent) {
-            gtk_widget_unset_state_flags(GTK_WIDGET(parent->data), GTK_STATE_FLAG_LINK);
-            parent = parent->next;
-        }
-        g_list_free(g_steal_pointer(&parent));
-
-        gtk_widget_set_state_flags(GTK_WIDGET(widget), GTK_STATE_FLAG_LINK, TRUE);
+        gtk_widget_unset_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK);
         t_screen.active = 6;
+        gtk_widget_set_state_flags(GTK_WIDGET(t_screen.boxes[t_screen.active-1]), GTK_STATE_FLAG_LINK, TRUE);
 
         gtk_widget_hide(GTK_WIDGET(t_screen.active_screen));
         t_screen.active_screen = t_screen.settings_scr;

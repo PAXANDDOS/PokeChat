@@ -131,7 +131,8 @@ struct                  // TEMPORAL Structure for tracking entries
 //-------> Screens
 struct
 {
-    short active;
+    unsigned short active;
+    GtkWidget *boxes[6];
     GtkWidget *home_scr;
     GtkWidget *msg_scr;
     GtkWidget *settings_scr;
@@ -347,12 +348,12 @@ void event_false_enter_notify(GtkWidget *widget);
 void event_leave_notify(GtkWidget *widget);
 void all_input_event(GtkEditable *editable, const gchar *text, gint length, gint *position, gpointer data);
 
-void home_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
-void messages_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
-void group_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
-void events_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
-void status_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
-void settings_click(GtkWidget *widget, GdkEventButton *event, gpointer menu);
+void home_click(GtkWidget *widget, GdkEventButton *event);
+void messages_click(GtkWidget *widget, GdkEventButton *event);
+void group_click(GtkWidget *widget, GdkEventButton *event);
+void events_click(GtkWidget *widget, GdkEventButton *event);
+void status_click(GtkWidget *widget, GdkEventButton *event);
+void settings_click(GtkWidget *widget, GdkEventButton *event);
 
 void active_click(GtkWidget *widget, GdkEventButton *event);
 void gtk_widget_reshow(GtkWidget *widget);

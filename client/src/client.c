@@ -4,7 +4,7 @@ void tooltip(char *str, void *data) {
     gtk_widget_set_tooltip_text(data, str);
 }
 
-static void before_exit_jobs(GdkPixbuf *icon) {
+static void before_exit_jobs() {
     upd_data.suspend = true;// Forbid to getting updates
 
     cJSON *json_offline = cJSON_CreateObject();
@@ -19,7 +19,7 @@ static void before_exit_jobs(GdkPixbuf *icon) {
     mx_strdel(&result);
     cJSON_Delete(json_offline);
 
-    g_object_unref(icon);   // Destroying icon
+    //g_object_unref(icon);   // Destroying icon
     Mix_CloseAudio();       // Closing SDL Mixer
     SDL_Quit();             // Closing SDL
     // free(tm_struct);        // Freeing time&date struct
@@ -54,8 +54,8 @@ int main(int argc, char *argv[]) {
     gtk_window_set_position(GTK_WINDOW(t_application.window), GTK_WIN_POS_CENTER);              // Setting window start position
     gtk_window_set_resizable(GTK_WINDOW(t_application.window), FALSE);                          // Disabling window resize
 
-    GdkPixbuf *icon = create_pixbuf("client/data/images/logo.png");                 // Creating icon for window tab (windows only)
-    gtk_window_set_icon(GTK_WINDOW(t_application.window), icon);                    // Setting icon to window
+    gtk_window_set_icon_from_file(GTK_WINDOW(t_application.window), "client/data/images/logo.png", NULL);// Setting icon to window
+    gtk_window_set_icon_name(GTK_WINDOW(t_application.window), "PokeChat");
 
     load_providers();   // Loading chosen CSS providers
     GtkWidget *main_area = gtk_fixed_new();                                         // Creating main area
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     pthread_create(&thread, NULL, updater, NULL);
 
     gtk_main();             // Looping program
-    before_exit_jobs(icon);
+    before_exit_jobs();
 
     return 0;
 }

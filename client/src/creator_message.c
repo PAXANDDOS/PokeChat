@@ -24,6 +24,7 @@ void *scrolling_sticker() {
         usleep(5000);
     }
     gtk_widget_reshow(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.arrow);
     return NULL;
 }
 
@@ -32,6 +33,8 @@ void *scrolling_photo() {
     GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message));
     gtk_adjustment_set_value(adjustment, G_MAXDOUBLE);
     gtk_scrolled_window_set_vadjustment(GTK_SCROLLED_WINDOW(t_msg.scrolled_message), adjustment);
+    gtk_widget_reshow(t_msg.scrolled_message);
+    gtk_widget_reshow(t_msg.arrow);
     return NULL;
 }
 
@@ -225,11 +228,9 @@ void new_outgoing_embedded(GtkWidget *messages_block, char* path)
     const GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(path, NULL);
     int a = gdk_pixbuf_get_width(pixbuf), b = gdk_pixbuf_get_height(pixbuf);
     g_object_unref(G_OBJECT(pixbuf));
-    printf("File: %i x %i\n", a, b);
     int old_b = b;
     if(b > 200) b = 200;
     a = b * a / old_b;
-    printf("Resized: %i x %i\n", a, b);
 
     GtkWidget *embedded = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(embedded), a, b);
@@ -272,11 +273,9 @@ void new_incoming_embedded(GtkWidget *messages_block, char* path)
     const GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(path, NULL);
     int a = gdk_pixbuf_get_width(pixbuf), b = gdk_pixbuf_get_height(pixbuf);
     g_object_unref(G_OBJECT(pixbuf));
-    printf("File: %i x %i\n", a, b);
     int old_b = b;
     if(b > 200) b = 200;
     a = b * a / old_b;
-    printf("Resized: %i x %i\n", a, b);
 
     GtkWidget *embedded = gtk_drawing_area_new();
     gtk_widget_set_size_request(GTK_WIDGET(embedded), a, b);
