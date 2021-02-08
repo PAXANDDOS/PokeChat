@@ -111,6 +111,7 @@ static void build_list(GtkWidget *main)
     g_signal_connect(G_OBJECT(adduser), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
     g_signal_connect(G_OBJECT(adduser), "button_press_event", G_CALLBACK(adduser_click), search_field);
+    g_signal_connect(G_OBJECT(search_field), "activate", G_CALLBACK(adduser_click), search_field);
 
     g_signal_connect(G_OBJECT(group), "enter-notify-event", G_CALLBACK(event_enter_notify), NULL);
     g_signal_connect(G_OBJECT(group), "leave-notify-event", G_CALLBACK(event_leave_notify), NULL);
