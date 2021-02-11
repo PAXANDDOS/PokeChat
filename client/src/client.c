@@ -4,6 +4,16 @@ void tooltip(char *str, void *data) {
     gtk_widget_set_tooltip_text(data, str);
 }
 
+void free_uchat() {
+    // free(tm_struct);        // Freeing time&date struct
+    mx_strdel(&t_account.username);
+    mx_strdel(&t_account.password);
+    mx_strdel(&msg_data.date_prev);
+    mx_strdel(&msg_data.date);
+    mx_strdel(&msg_data.time);
+    mx_strdel(&msg_data.username);
+}
+
 static void before_exit_jobs() {
     upd_data.suspend = true;// Forbid to getting updates
 
@@ -19,16 +29,11 @@ static void before_exit_jobs() {
     mx_strdel(&result);
     cJSON_Delete(json_offline);
 
-    //g_object_unref(icon);   // Destroying icon
+    // g_object_unref(t_application.icon);   // Destroying icon
     Mix_CloseAudio();       // Closing SDL Mixer
     SDL_Quit();             // Closing SDL
-    // free(tm_struct);        // Freeing time&date struct
-    mx_strdel(&t_account.username);
-    mx_strdel(&t_account.password);
-    mx_strdel(&msg_data.date_prev);
-    mx_strdel(&msg_data.date);
-    mx_strdel(&msg_data.time);
-    mx_strdel(&msg_data.username);
+
+    free_uchat();
     unsetenv("UCHAT_HOST");
     unsetenv("UCHAT_PORT");
 }
@@ -47,6 +52,7 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);                             // Initializing GTK
     SDL_Init(SDL_INIT_AUDIO);                           // Initializing SDL
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);  // Initializing SDL Mixer
+    srand(time(NULL));
 
     t_application.window = gtk_window_new(GTK_WINDOW_TOPLEVEL);                                 // Creating main window
     gtk_window_set_title(GTK_WINDOW(t_application.window), "PokeChat");                         // Setting window title

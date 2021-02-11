@@ -117,9 +117,13 @@ static void *display_running() {
     return NULL;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     pthread_t display_thread = NULL;
     pthread_create(&display_thread, NULL, display_running, NULL);
-    int portnum = 10000;
+    if (argc != 2) {
+        fprintf(stderr, "usage : ./uchat_server [port]\n");
+        exit(EXIT_FAILURE);
+    }
+    int portnum = atoi(argv[1]);
     ssl_server(portnum);
 }

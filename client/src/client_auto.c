@@ -16,6 +16,9 @@ void test_autofill()
     t_msg.current = "here..."; // Имя выбранного пользователя в плейсхолдере
     msg_data.content = NULL;
 
-    t_application.app = "PokeChat beta 0.9.7";
+    t_application.app = "PokeChat beta 0.9.9";
     t_application.user = getenv("USER");
+    t_application.id = "org.ucode.uchat";
+    t_application.application = g_application_new(t_application.id, G_APPLICATION_FLAGS_NONE);
+    g_application_register(t_application.application, NULL, NULL);
 }

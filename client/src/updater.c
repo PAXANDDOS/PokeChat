@@ -1,5 +1,42 @@
 #include "../inc/client.h"
 
+static void generate_notification(char *text, bool sticker, bool photo) {
+    gchar *body = strdup(msg_data.username);
+    body = mx_strrejoin(body, ": ");
+    if (text)
+        body = mx_strrejoin(body, text);
+    else if (sticker)
+        body = mx_strrejoin(body, "Sticker");
+    else if (photo)
+        body = mx_strrejoin(body, "Photo");
+    char *avatar = get_avatar_by_number(msg_data.avatar);
+    #if !defined (__APPLE__)
+        GNotification *notify = g_notification_new("New message");
+        g_notification_set_body(notify, body);
+        GFile *file = g_file_new_for_path(avatar);
+        GIcon *icon = g_file_icon_new(file);
+        g_notification_set_icon(notify, G_ICON(icon));
+        g_notification_set_priority(notify, G_NOTIFICATION_PRIORITY_HIGH);
+        g_application_send_notification(t_application.application, NULL, notify);
+        g_object_unref(icon);
+        g_object_unref(file);
+        g_object_unref(notify);
+    #else
+        pid_t pid = fork();
+        if (pid == 0) {
+            free_uchat();
+            execl("local_lib/lib/notifier/Contents/MacOS/notifier", " ",
+                  "-title", "PokeChat", "-subtitle", "New message", "-sound", "default",
+                  "-message", body, "-activate", t_application.id,
+                  "-contentImage", avatar, "-appIcon", "client/data/images/logo.png", NULL);
+            exit(EXIT_SUCCESS);
+            // Тут происходят утечки памяти переменных avatar, body; Этого избежать невозможно
+        }
+    #endif
+    mx_strdel(&avatar);
+    mx_strdel(&body);
+}
+
 static void generate_new_message(int user_id, int avatar, char *username, char *time, char *date, char *text, int sticker, char *photo_path) {
     // printf("User: %d\nText: %s\nSticker: %d\nPhoto: %s\n\n", user_id, text, sticker, photo_path);
     if (msg_data.date) {
@@ -34,8 +71,10 @@ static void generate_new_message(int user_id, int avatar, char *username, char *
             new_incoming_sticker(t_msg.chat_screen, sticker);
         else if (photo_path)
             new_incoming_embedded(t_msg.chat_screen, photo_path);
-        if (!upd_data.filling_init)
+        if (!upd_data.filling_init) {
             play_audio(SOUND_LOW_POP);
+            generate_notification(text, sticker ? 1 : 0, photo_path ? 1 : 0);
+        }
     }
 }
 
@@ -215,7 +254,7 @@ void *updater() {
             mx_strdel(&result);
 
             if (count > 0) {
-                if (upd_data.count != count && upd_data.control_sum != control_sum) {
+                if (upd_data.count != count || upd_data.control_sum != control_sum) {
                     if (upd_data.chats_id) free(upd_data.chats_id);
                     if (upd_data.messages_id) free(upd_data.messages_id);
                     upd_data.chats_id = malloc(sizeof(int) * count);

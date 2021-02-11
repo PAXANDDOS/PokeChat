@@ -251,12 +251,11 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         printf("%s %s %s\n", username, chat_id_from_label, user_id_from_label);
 
+        int chat_id = atoi(chat_id_from_label);
         if (atoi(user_id_from_label) == 0) {
-            bool admin = 0;
-            creator_groupsettings(t_msg.main, username, admin);
+            creator_groupsettings(t_msg.main, username, chat_id);
         }
         else {
-            int chat_id = atoi(chat_id_from_label);
             t_user *user = malloc(sizeof(t_user));
             user->id = atoi(user_id_from_label);
             get_user(user);

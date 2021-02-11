@@ -51,6 +51,7 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
     cJSON *json_update_user_offline = cJSON_GetObjectItem(json, "update_user_offline");
     cJSON *json_create_chat = cJSON_GetObjectItem(json, "create_chat");
     cJSON *json_remove_chat = cJSON_GetObjectItem(json, "remove_chat");
+    cJSON *json_rename_group = cJSON_GetObjectItem(json, "rename_group");
     if (json_update_message_id) {
         int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "sender_id"));
         int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_update_message_id, "chat_id"));
@@ -379,7 +380,6 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
-            mx_strdel(&sql_query);
             mx_strdel(&text);
             *reply = strdup("null");
             return;
@@ -421,7 +421,6 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
-            mx_strdel(&sql_query);
             *reply = strdup("null");
             return;
         }
@@ -497,7 +496,6 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
         mx_clear_list(&ex);
         mx_strdel(&sql_query);
         if (exist == 0) {
-            mx_strdel(&sql_query);
             *reply = strdup("null");
             return;
         }
@@ -794,6 +792,31 @@ static void message_handler(char msg[], char **reply, bool *alloc) {
             sqlite3_exec_db(sql_query, DB_LAST_ID);
         }
         mx_strdel(&sql_query);
+        *reply = strdup("null");
+    }
+    else if (json_rename_group) {
+        int sender_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_rename_group, "sender_id"));
+        int chat_id = cJSON_GetNumberValue(cJSON_GetObjectItem(json_rename_group, "chat_id"));
+        char *title = strdup(cJSON_GetStringValue(cJSON_GetObjectItem(json_rename_group, "title")));
+        escape_apostrophe(&title);
+        char *sql_query = NULL;
+        char *sql_pattern = "SELECT EXISTS (SELECT id FROM members WHERE user_id=(%d) AND chat_id=(%d));";
+        asprintf(&sql_query, sql_pattern, sender_id, chat_id);
+        t_list *ex = NULL;
+        ex = sqlite3_exec_db(sql_query, DB_LIST);
+        int exist = atoi(ex->data);
+        mx_clear_list(&ex);
+        mx_strdel(&sql_query);
+        if (exist == 0) {
+            mx_strdel(&title);
+            *reply = strdup("null");
+            return;
+        }
+        sql_pattern = "UPDATE chats SET title=('%s'), increment=increment+1 WHERE id=(%d);";
+        asprintf(&sql_query, sql_pattern, title, chat_id);
+        sqlite3_exec_db(sql_query, DB_LAST_ID);
+        mx_strdel(&sql_query);
+        mx_strdel(&title);
         *reply = strdup("null");
     }
     else {

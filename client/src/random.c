@@ -1,7 +1,6 @@
 #include "../inc/client.h"
 
 void avatar_random() {
-    srand(time(NULL));                  // Initialization, should only be called once.
     int pick = rand() % 100 + 1;         // Returns a pseudo-random integer between 0 and RAND_MAX.
     t_avatar.avatar_num = pick;
     t_avatar.avatar_generated = mx_strjoin(t_avatar.avatar_generated, mx_itoa(pick));
@@ -47,7 +46,6 @@ void pokemon_random() {
 
     // CHOOSING IMAGE
 
-    srand(time(NULL));
     int pick = rand() % num + 1;
     dir = NULL;
     sd = NULL;
@@ -61,7 +59,6 @@ void pokemon_random() {
 
 char* random_phrase()
 {
-    srand(time(NULL));
     int num = rand() % 57 + 1;
     char *phrase[] = {"There's no one here!",
     "Hey, I know. I’ll use my trusty frying pan as a drying pan.",

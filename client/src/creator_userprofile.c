@@ -15,7 +15,7 @@ static void userprofile_send_click(GtkWidget *widget, gpointer chat_id) {
     }
 }
 
-static void userprofile_remove_click(GtkWidget *widget, GdkEventButton *event, gpointer chat_id) {
+void userprofile_remove_click(GtkWidget *widget, GdkEventButton *event, gpointer chat_id) {
     if(widget) {}
     if(event->button == 1 && !upd_data.busy) {
         upd_data.suspend = true;

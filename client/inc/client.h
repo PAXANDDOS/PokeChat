@@ -102,6 +102,8 @@ struct {
     GtkWidget *notificaton;
     char *app;
     char *user;
+    char *id;
+    GApplication *application;
 }   t_application;
 
 struct                      // Structure for current user account data
@@ -294,6 +296,7 @@ void get_user(t_user*);
 void free_user(t_user*);
 void get_chat(t_chat_data*);
 void chat_clear_list(t_chat_list**);
+void free_uchat();
 
 void load_providers();
 void test_autofill();
@@ -316,7 +319,7 @@ void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
 void creator_userprofile(GtkWidget *main, t_user *user, int);
-void creator_groupsettings(GtkWidget *main, char *name, bool admin);
+void creator_groupsettings(GtkWidget *main, char *name, int chat_id);
 void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h);
 
 char *get_avatar_by_number(int num);
@@ -368,6 +371,7 @@ void arrow_click(GtkWidget *widget, GdkEventButton *event);
 void chat_push_back(t_chat_list **list, t_chat_data* chat);
 void person_click(GtkWidget *widget, GdkEventButton *event);
 void msggroup_click(GtkWidget *widget, GdkEventButton *event, gpointer main);
+void userprofile_remove_click(GtkWidget *widget, GdkEventButton *event, gpointer chat_id);
 
 void username_field_change_event(GtkWidget *widget);
 void firstname_field_change_event(GtkWidget *widget);
