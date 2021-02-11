@@ -1,0 +1,14 @@
+prefix=/Library/Frameworks/Gtk3.framework
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+targets=quartz broadway
+
+gtk_binary_version=3.0.0
+gtk_host=i386-apple-darwin9.2.0
+
+Name: GTK+
+Description: GTK+ Unix print support
+Version: 3.6.4
+Requires: gtk+-3.0 atk cairo cairo-gobject gdk-pixbuf-2.0 gio-2.0
+Cflags: -I${includedir}/gtk-3.0/unix-print
