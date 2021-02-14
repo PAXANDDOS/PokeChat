@@ -5,7 +5,7 @@
 #search_field
 {
   background-color: #ebebeb;
-  color: #d6d6d6;
+  color: #343740;;
 }
 #search_block
 {
@@ -21,7 +21,7 @@
 }
 #dm_text
 {
-  color: #d6d6d6;
+  color: #343740;;
 }
 #entry_block
 {
@@ -111,7 +111,7 @@
 #arrowdown:hover
 {
   background-image: url("../../../images/arrow-down-light.png");
-  background-color: rgba(214, 214, 214, 0.6);
+  background-color: #343740;
 }
 #msggroup
 {
@@ -203,13 +203,15 @@
 }
 #databox_profile
 {
-  background-color: #3f434d;
+  background: linear-gradient(90deg, rgb(65, 69, 80) 50%, rgba(52, 55, 64, 0.7) 80%, rgba(52, 55, 64, 0) 100%);
 }
 #infolabel_profile
 {
   color: #ebebeb;
+  background-color: rgba(52, 55, 64, 0.6);
 }
 #realdata_profile
 {
   color: rgba(235, 235, 235, 0.8);
+  background-color: #272930;
 }

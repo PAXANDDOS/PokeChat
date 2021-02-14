@@ -203,13 +203,15 @@
 }
 #databox_profile
 {
-  background-color: #1b1b1b;
+  background: linear-gradient(90deg, #1d1d1d 50%, rgba(14, 14, 14, 0.7) 80%, rgba(22,28,48,0) 100%);
 }
 #infolabel_profile
 {
   color: #e0e0e0;
+  background-color: rgba(22, 22, 22, 0.6);
 }
 #realdata_profile
 {
   color: rgba(224, 224, 224, 0.8);
+  background-color: #161616;
 }
