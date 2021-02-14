@@ -66,8 +66,10 @@ static void add_person(GtkWidget *widget, GdkEventButton *event) {
 
             g_list_free(g_steal_pointer(&children2));
             g_list_free(g_steal_pointer(&children));
-            if(!strcmp(copy, name))
+            if(!strcmp(copy, name)) {
+                create_notification(t_application.messanger, "This user is already added!", 1, 461, 110, 420, 10);
                 return;
+            }
             parent = parent->next;
         }
         g_list_free(g_steal_pointer(&parent));
@@ -107,16 +109,6 @@ static void create_group_button_click(GtkWidget *widget, gpointer group_name) {
         return;
     }
 
-    while(parent != NULL) {
-        GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
-        GList *children2 = gtk_container_get_children(GTK_CONTAINER(children->data));
-        children2 = children2->next;
-        char* chosen = (char*)gtk_label_get_text(GTK_LABEL(children2->data));
-        printf("Found: %s\n", chosen);
-        g_list_free(g_steal_pointer(&children2));
-        g_list_free(g_steal_pointer(&children));
-        parent = parent->next;
-    }
     new_group->title = strdup(name);
     int chat_id = 0;
     create_group(&chat_id);

@@ -20,7 +20,7 @@ bool add_user_to_group(char *name, int *user_id, int *avatar) {
     cJSON_AddStringToObject(json_get_user_id, "username", name);
     cJSON_AddItemToObject(json,  "get_user_id", json_get_user_id);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // printf("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     cJSON *response = cJSON_Parse(result);
@@ -56,7 +56,7 @@ void create_group(int *chat_id) {
         cJSON_AddNullToObject(json_create_chat, "title");
     cJSON_AddItemToObject(json,  "create_chat", json_create_chat);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // printf("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     mx_strdel(&json_string);

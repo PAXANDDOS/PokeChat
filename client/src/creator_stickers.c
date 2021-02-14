@@ -5,7 +5,6 @@ static void onsticker_click(GtkWidget *widget) {
     GList *children = gtk_container_get_children(GTK_CONTAINER(parent->data));
     int sticker_id = atoi((char*)gtk_label_get_text(GTK_LABEL(children->data)));
     new_outgoing_sticker(t_msg.chat_screen, sticker_id);
-    printf("Sticker: %d\n", sticker_id);
     gtk_widget_destroy(GTK_WIDGET(t_msg.stickers));
     if(widget) {}
     sticker_data.chat_id = msg_data.chat_id;

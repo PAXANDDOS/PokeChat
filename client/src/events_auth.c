@@ -87,7 +87,7 @@ void login_butt_click(GtkWidget *widget){
     cJSON_AddStringToObject(json_login_user, "password", t_account_temp.password);
     cJSON_AddItemToObject(json, "login_user", json_login_user);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // printf("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     cJSON *response = cJSON_Parse(result);
@@ -99,12 +99,12 @@ void login_butt_click(GtkWidget *widget){
         int avatar = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "avatar"));
         short theme = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "theme"));
         short bg = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "background"));
-        printf("My old user id: %d\n", user_id);
-        printf("My name: %s\n", name);
-        printf("My code: %s\n", code);
-        printf("My team: %d\n", team);
-        printf("My theme: %d\n", theme);
-        printf("My bg: %d\n", bg);
+        // printf("My old user id: %d\n", user_id);
+        // printf("My name: %s\n", name);
+        // printf("My code: %s\n", code);
+        // printf("My team: %d\n", team);
+        // printf("My theme: %d\n", theme);
+        // printf("My bg: %d\n", bg);
         t_account.id = user_id;
         t_account.name = name;
         t_account.code = code;
@@ -120,7 +120,7 @@ void login_butt_click(GtkWidget *widget){
         cJSON_AddNumberToObject(json_user_id, "user_id", user_id);
         cJSON_AddItemToObject(json_online, "update_user_online", json_user_id);
         char *json_online_string = cJSON_PrintUnformatted(json_online);
-        printf("%s\n", json_online_string);
+        // printf("%s\n", json_online_string);
         char *result2 = NULL;
         ssl_client(json_online_string, &result2);
         mx_strdel(&json_online_string);
@@ -156,7 +156,7 @@ void reg_send_request() {
     cJSON_AddNumberToObject(json_reg_user, "team", t_account.team);
     cJSON_AddItemToObject(json, "register_user", json_reg_user);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // ("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     cJSON *response = cJSON_Parse(result);
@@ -215,11 +215,11 @@ void reg_butt_click(GtkWidget *widget){
     t_account.background = 1;
     t_account.id = 0;
 
-    printf("REGISTERED:\nUser = %s\n", t_account.username);
-    printf("Name = %s\n", t_account.name);
-    printf("Code = %s\n", t_account.code);
-    printf("Pass = %s\n", t_account.password);
-    printf("Team = %hd\n", t_account.team);
+    // printf("REGISTERED:\nUser = %s\n", t_account.username);
+    // printf("Name = %s\n", t_account.name);
+    // printf("Code = %s\n", t_account.code);
+    // printf("Pass = %s\n", t_account.password);
+    // printf("Team = %hd\n", t_account.team);
 
     reg_send_request();
     if (t_account.id == 0) {

@@ -6,16 +6,18 @@
 #homebutton
 {
   background-image: url("../../../images/home.png");
+  background-color: #c1ceee;
+  border-radius: 13px;
 }
 #homebutton:hover
 {
+  background-color: rgba(193, 206, 238, 0.7);
   border-radius: 10px;
-  background-color: #39456d;
 }
 #homebutton:link
 {
+  background-color: rgba(193, 206, 238, 0.7);
   border-radius: 10px;
-  background-color: #39456d;
 }
 
 #msgbutton

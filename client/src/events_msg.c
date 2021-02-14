@@ -24,7 +24,7 @@ void adduser_click(GtkWidget *widget, GdkEventButton *event, gpointer search_fie
             return;
 
         // проверить имя пользователя name на существование
-        printf("Added: %s\n", name);
+        // printf("Added: %s\n", name);
         int user_id = 0, avatar = 0;
         new_group = malloc(sizeof(t_new_group));
         new_group->count = 0;
@@ -249,11 +249,11 @@ void person_click(GtkWidget *widget, GdkEventButton *event) {
         char* chat_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
         children = children->next;
         char* user_id_from_label = (char*)gtk_label_get_text(GTK_LABEL(children->data));
-        printf("%s %s %s\n", username, chat_id_from_label, user_id_from_label);
+        // printf("%s %s %s\n", username, chat_id_from_label, user_id_from_label);
 
         int chat_id = atoi(chat_id_from_label);
         if (atoi(user_id_from_label) == 0) {
-            creator_groupsettings(t_msg.main, username, chat_id);
+            creator_groupsettings(t_msg.main, username, 0); /*chat_id*/
         }
         else {
             t_user *user = malloc(sizeof(t_user));

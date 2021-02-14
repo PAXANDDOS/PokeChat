@@ -22,7 +22,7 @@ static void before_exit_jobs() {
     cJSON_AddNumberToObject(json_user_id, "user_id", t_account.id);
     cJSON_AddItemToObject(json_offline, "update_user_offline", json_user_id);
     char *json_offline_string = cJSON_PrintUnformatted(json_offline);
-    printf("%s\n", json_offline_string);
+    // printf("%s\n", json_offline_string);
     char *result = NULL;
     ssl_client(json_offline_string, &result);
     mx_strdel(&json_offline_string);

@@ -26,7 +26,7 @@ int ssl_client_alloc_len(char *message, char **response) {
         SSL_write(ssl, message, len);
         bytes = SSL_read(ssl, buf, sizeof(buf));
         buf[bytes] = 0;
-        printf("Received: \"%s\"\n", buf);
+        // printf("Received: \"%s\"\n", buf);
         mx_strdel(&len_str);
         SSL_free(ssl);
     }

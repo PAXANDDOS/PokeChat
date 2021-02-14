@@ -11,7 +11,7 @@ void *send_message() {
 
     int chat_id = msg_data.chat_id;
     int sender_id = t_account.id;
-    printf("%s\n", text);
+    // printf("%s\n", text);
     cJSON *json = cJSON_CreateObject();
     cJSON *json_send_message = cJSON_CreateObject();
     cJSON_AddNumberToObject(json_send_message, "sender_id", sender_id);
@@ -21,7 +21,7 @@ void *send_message() {
     cJSON_AddStringToObject(json_send_message, "time", mx_str_gettime());
     cJSON_AddItemToObject(json, "send_message", json_send_message);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // printf("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     cJSON *response = cJSON_Parse(result);
@@ -56,7 +56,7 @@ void *send_sticker() {
     cJSON_AddStringToObject(json_send_sticker, "time", mx_str_gettime());
     cJSON_AddItemToObject(json, "send_sticker", json_send_sticker);
     char *json_string = cJSON_PrintUnformatted(json);
-    printf("%s\n", json_string);
+    // printf("%s\n", json_string);
     char *result = NULL;
     ssl_client(json_string, &result);
     cJSON *response = cJSON_Parse(result);
@@ -147,7 +147,7 @@ void *send_photo() {
     cJSON_Delete(json);
 
     cJSON *response = cJSON_Parse(reply);
-    printf("%s\n", reply);
+    // printf("%s\n", reply);
     int photo_id = cJSON_GetNumberValue(cJSON_GetObjectItem(response, "photo_id"));
     cJSON_Delete(response);
     mx_strdel(&reply);

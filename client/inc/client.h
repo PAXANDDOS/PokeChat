@@ -319,7 +319,7 @@ void create_gallery(GtkWidget *main);
 void create_stickerlist(GtkWidget *main);
 void creator_group(GtkWidget *main);
 void creator_userprofile(GtkWidget *main, t_user *user, int);
-void creator_groupsettings(GtkWidget *main, char *name, int chat_id);
+void creator_groupsettings(GtkWidget *main, char *name, bool admin); // void creator_groupsettings(GtkWidget *main, char *name, int chat_id);
 void create_notification(GtkWidget *widget, char *text, short type, int x, int y, int w, int h);
 
 char *get_avatar_by_number(int num);

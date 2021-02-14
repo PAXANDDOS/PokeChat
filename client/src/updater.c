@@ -131,7 +131,7 @@ static char *get_bitmap(int photo_id) {
     int length = strlen(bitmap64);
     const int img_size = length * 3 / 4;
     u_char *bitmap = malloc(img_size + 1);
-    printf("len: %d\n", img_size);
+    // printf("len: %d\n", img_size);
     EVP_DecodeBlock(bitmap, (const u_char*)bitmap64, length);
     cJSON_Delete(response);
     mx_strdel(&result);

@@ -5,16 +5,19 @@
 
 #homebutton
 {
+  border-radius: 13px;
   background-color: #343740;
-  background-image: url("../../../images/logo.png");
+  background-image: url("../../../images/home-light.png");
 }
 #homebutton:hover
 {
-  background-color: #dddddd;
+  border-radius: 10px;
+  background-color: rgba(52, 55, 64, 0.7);
 }
 #homebutton:link
 {
-  background-color: #d6d6d6;
+  border-radius: 10px;
+  background-color: rgba(52, 55, 64, 0.7);
 }
 
 #msgbutton

@@ -5,17 +5,19 @@
 
 #homebutton
 {
-  background-image: url("../../../images/home.png");
+  background-image: url("../../../images/home-dark.png");
+  background-color: #e6e6e9;
+  border-radius: 13px;
 }
 #homebutton:hover
 {
   border-radius: 10px;
-  background-color: #333333;
+  background-color: rgba(230, 230, 233, 0.7);
 }
 #homebutton:link
 {
   border-radius: 10px;
-  background-color: #050505;
+  background-color: rgba(230, 230, 233, 0.7);
 }
 
 #msgbutton
