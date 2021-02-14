@@ -85,45 +85,74 @@ void ssl_server(int portnum) {
     SSL_CTX_free(ctx);
 }
 
-static void *display_running() {
-    char load[] = "\\|/-";
-    int i = 0, msec = 0;
-    long sec = 0, min = 0, hour = 0;
-    mx_printstr("\033[1;33mNOTE: \033[33mPress \033[1;33mCtrl+C \033[33mto exit\033[0m\n");
-    while (true) {
-        if (i == 4)
-            i = 0;
-        if (++msec % 5 == 0)
-            msec = 0, sec++;
-        if (sec == 60)
-            sec = 0, min++;
-        if (min == 60)
-            min = 0, hour++;
-        mx_printstr("\r\033[32mServer is running \033[35m");
-        if (hour > 0) {
-            mx_printint(hour);
-            mx_printstr(" h. ");
-        }
-        if (min > 0) {
-            mx_printint(min);
-            mx_printstr(" m. ");
-        }
-        mx_printint(sec);
-        mx_printstr(" s. \033[36m");
-        mx_printchar(load[i++]);
-        mx_printstr("\033[0m  ");
-        usleep(200000);
-    }
-    return NULL;
+// static void *display_running() {
+//     char load[] = "\\|/-";
+//     int i = 0, msec = 0;
+//     long sec = 0, min = 0, hour = 0;
+//     mx_printstr("\033[1;33mNOTE: \033[33mPress \033[1;33mCtrl+C \033[33mto exit\033[0m\n");
+//     while (true) {
+//         if (i == 4)
+//             i = 0;
+//         if (++msec % 5 == 0)
+//             msec = 0, sec++;
+//         if (sec == 60)
+//             sec = 0, min++;
+//         if (min == 60)
+//             min = 0, hour++;
+//         mx_printstr("\r\033[32mServer is running \033[35m");
+//         if (hour > 0) {
+//             mx_printint(hour);
+//             mx_printstr(" h. ");
+//         }
+//         if (min > 0) {
+//             mx_printint(min);
+//             mx_printstr(" m. ");
+//         }
+//         mx_printint(sec);
+//         mx_printstr(" s. \033[36m");
+//         mx_printchar(load[i++]);
+//         mx_printstr("\033[0m  ");
+//         usleep(200000);
+//     }
+//     return NULL;
+// }
+
+static void daemonize() {
+    pid_t pid;
+    pid = fork();
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+    if (setsid() < 0)
+        exit(EXIT_FAILURE);
+    signal(SIGCHLD, SIG_IGN);
+    signal(SIGHUP, SIG_IGN);
+
+    pid = fork();
+    if (pid < 0)
+        exit(EXIT_FAILURE);
+    if (pid > 0)
+        exit(EXIT_SUCCESS);
+    umask(0);
+
+    int uchat_pid = getpid();
+    printf("\033[32muchat_server started successfully\033[0m\n");
+    printf("\033[36muchat_server pid: \033[0m%d\n", uchat_pid);
+    printf("\033[1;33mTo \033[1;31mSTOP \033[1;33muchat_server: \033[0mkill %d\n", uchat_pid);
+    printf("\033[1;33mIf you lost uchat_server pid:\033[0m ps -ax | grep uchat_server\n");
+    for (int x = sysconf(_SC_OPEN_MAX); x >= 0; x--)
+        close(x);
 }
 
 int main(int argc, char *argv[]) {
-    pthread_t display_thread = NULL;
-    pthread_create(&display_thread, NULL, display_running, NULL);
+    // pthread_t display_thread = NULL;
+    // pthread_create(&display_thread, NULL, display_running, NULL);
     if (argc != 2) {
         fprintf(stderr, "usage : ./uchat_server [port]\n");
         exit(EXIT_FAILURE);
     }
+    daemonize();
     int portnum = atoi(argv[1]);
     ssl_server(portnum);
 }
